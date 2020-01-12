@@ -1,8 +1,12 @@
 import os
 import sys
 
+from .env import *
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 PROJECT_ROOT = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
@@ -21,7 +25,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'mainpage',
+    'search',
+    'main',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,8 +50,7 @@ ROOT_URLCONF = 'part4_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -54,6 +58,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "context_processors.views.main_menu",
             ],
         },
     },
@@ -66,8 +71,20 @@ WSGI_APPLICATION = 'part4_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DEFAULT_NAME,
+        'USER': DEFAULT_USER,
+        'PASSWORD': DEFAULT_PASS,
+        'HOST': 'localhost',
+        'PORT': 5433
+    },
+    'part4': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': PART4_NAME,
+        'USER': PART4_USER,
+        'PASSWORD': PART4_PASS,
+        'HOST': 'localhost',
+        'PORT': 5433
     }
 }
 

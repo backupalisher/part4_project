@@ -3,13 +3,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static "style.css" %}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-{#    {% block title %}part4 base{% endblock title %}#}
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>
+        {% block title %}
+            Blog Engine
+        {% endblock %}
+    </title>
 </head>
 <body>
+{% block head %}
+    {% block nav %}
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+            <a class="navbar-brand" href="#">Part 4</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    {% for item in menu_list %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if item.1 == menu_item_active %}active{% endif %}"
+                               href="{{ item.0 }}">{{ item.1 }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
+    {% endblock %}
+{% endblock %}
 
-<h1>{% block content %}{% endblock content %}</h1>
+{% block search %}
+    <div class="container-row p-2">
+        <form action="search" method="get">
+            <div class="input-group mb-3">
+                <input class="form-control" type="search" name="s" placeholder="Search" aria-label="Search"
+                       aria-describedby="button-search">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-search">Найти</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+<div class="container mt-5">
+    {% block content %}
+        There is no any content for you
+    {% endblock %}
+</div>
+
+{% block footer %}
+    {% block copyright %}
+    {% endblock %}
+{% endblock %}
 
 </body>
 </html>
