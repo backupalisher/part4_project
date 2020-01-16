@@ -31,15 +31,27 @@
                     {% endfor %}
                 </ul>
             </div>
+            <div>
+                <ul class="float-right navbar-nav" >
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="accounts/logout">Выйти {{ user.username }}</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="accounts/login">Войти</a></li>
+                        <li class="nan-item"><a class="nav-link" href="auth/register">Регистрация</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </nav>
     {% endblock %}
 {% endblock %}
 
+{% block login %}{% endblock login %}
+
 {% block search %}
-    <div class="container-row p-2">
+    <div class="container p-2">
         <form action="search" method="get">
             <div class="input-group mb-3">
-                <input class="form-control" type="search" name="s" placeholder="Search" aria-label="Search"
+                <input class="form-control" type="search" name="s" placeholder="Поиск" aria-label="Search"
                        aria-describedby="button-search">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" id="button-search">Найти</button>

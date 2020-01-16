@@ -7,7 +7,12 @@ def main_menu(request):
     menuList = [
         ['/', 'Главная'],
         ['/contacts', 'Контакты'],
-        ['about', 'О нас']
+        ['/about', 'О нас']
+    ]
+
+    menuAuth = [
+        ['/', 'Вход'],
+        ['/', 'Выход']
     ]
     try:
         for menu in menuList:
@@ -15,4 +20,4 @@ def main_menu(request):
                 curItem = menu[1]
     except KeyError as e:
         curItem = 'Главная'
-    return {'menu_list': menuList, 'menu_item_active': curItem}
+    return {'menu_list': menuList, 'menu_item_active': curItem, 'menu_auth': menuAuth}
