@@ -34,10 +34,10 @@
             <div>
                 <ul class="float-right navbar-nav" >
                     {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="accounts/logout">Выйти {{ user.username }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Выйти {{ user.username }}</a></li>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="accounts/login">Войти</a></li>
-                        <li class="nan-item"><a class="nav-link" href="auth/register">Регистрация</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>
+                        <li class="nan-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a></li>
                     {% endif %}
                 </ul>
             </div>

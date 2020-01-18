@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 
-def index(request):
+def login(request):
     return render(request, 'user_passport/index.html')
 
 
@@ -17,7 +19,7 @@ def register(request):
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('index')
+            return redirect('registration/index.html')
     else:
         form = UserCreationForm()
 
