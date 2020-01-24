@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'search',
     'main',
     'user_passport',
+    'detail',
+    'model',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

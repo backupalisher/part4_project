@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
     {% if form.errors %}
         <p>Не верный логин или пароль</p>
     {% endif %}
@@ -22,5 +17,6 @@
         <p><input type="submit" value="login"></p>
         <input type="hidden" name="next" value="{{ next }}">
     </form>
-</body>
-</html>
+{% endblock %}
+{% block search %}
+{% endblock %}

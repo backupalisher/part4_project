@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for s in sresult %}
+    {% for index in sresult %}
         <p>
-            {{s}}
+            <a href="/detail/{{ index.2 }}">{{ index.3 }}</a>
+            <span>
+                {{ index.2 }}
+                {% if index.5 != None %}
+                    &nbsp; Парткод: {{ index.5 }}
+                {% endif %}
+                {% if index.3 != None %}
+                    &nbsp; Модель: {{ index.7 }}
+                {% endif %}
+            </span>
         </p>
     {% endfor %}
 {% endblock %}
