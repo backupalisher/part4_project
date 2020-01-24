@@ -25,6 +25,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'db_model',
     'search',
     'main',
     'user_passport',
@@ -92,6 +93,8 @@ DATABASES = {
         'PORT': DEFAULT_PORT
     }
 }
+
+DATABASE_ROUTERS = ['db_model.router.part4router']
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
