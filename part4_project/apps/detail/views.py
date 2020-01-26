@@ -28,10 +28,18 @@ def index(request, detail_id):
             module = '-'
         try:
             spr_detail_id = models.Details.objects.filter(id=detail_id).values('detail_id')[0]['detail_id']
-            detail_name = models.Spr_details.objects.filter(id=spr_detail_id).values('name')[0]['name']
+            detail_name = models.Spr_details.objects.filter(id=spr_detail_id).values('name_ru')[0]['name_ru']
             print(detail_name)
         except:
             detail_name = '-'
+
+        if detail_name == '-':
+            try:
+                spr_detail_id = models.Details.objects.filter(id=detail_id).values('detail_id')[0]['detail_id']
+                detail_name = models.Spr_details.objects.filter(id=spr_detail_id).values('name')[0]['name']
+                print(detail_name)
+            except:
+                detail_name = '-'
 
     except:
         raise Http404('Страница отсутствует, с id: ' + str(partcode))

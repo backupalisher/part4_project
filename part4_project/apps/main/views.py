@@ -15,6 +15,7 @@ def search(request):
             c.callproc('details_search_v2', (s_value,))
             r = c.fetchall()
             c.execute("COMMIT")
+            print(r)
             return render(request, 'main/index.html', context={'sresult': r})
         finally:
             c.close()
