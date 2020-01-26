@@ -1,14 +1,59 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
     {{ partcode.code }}
 {% endblock %}
 
 {% block content %}
-    {{ detail_id }}
-    <h3>Парткод: {{ partcode }}</h3>
-    <h3>Деталь: {{ detail_name }}</h3>
-    <h3>Модель: {{ model }}</h3>
-    <h3>Модуль: {{ module }}</h3>
+    <div class="row">
+        <div class="col-lg-4 col-sm-12">
+            <img src="{% static "/image/no-image.jpg" %}" class="img-fluid"/>
+        </div>
+        <div class="col-lg-8 col-sm-12">
+            <h3>Деталь: {{ detail_name }}</h3>
+            <h4>Парткод: {{ partcode }}</h4>
+            <h4>Модель: {{ model }}</h4>
+            <h4>Модуль: {{ module }}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="py-2">
+                <ul class="nav nav-tabs" id="detailTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="options-tab" data-toggle="tab" href="#options" role="tab"
+                           aria-controls="options"
+                           aria-selected="true">Характеристики</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="parts-tab" data-toggle="tab" href="#parts" role="tab"
+                           aria-controls="parts" aria-selected="false">Парткаталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
+                           aria-controls="description" aria-selected="false">Описание</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="options" role="tabpanel" aria-labelledby="options-tab">
+                        <h3>Характеристики</h3>
+                        <div class="p-3">
+                            {% for item in options %}
+                                <p>{{ item }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="parts" role="tabpanel" aria-labelledby="parts-tab">
+                        <h3>Парткаталог</h3>
+                    </div>
+                    <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
+                        <h3>Описание</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block search %}

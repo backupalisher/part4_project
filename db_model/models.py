@@ -7,13 +7,13 @@ class Brands(models.Model):
     logotype = models.CharField(max_length=255)
 
     class Meta:
-        db_table = 'spr_details'
+        db_table = 'brands'
 
 class Cartridge(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=255)
     model = models.CharField(max_length=255)
-    code =  models.CharField(max_length=255)
+    code = models.CharField(max_length=255)
     analogs = models.TextField()
     techs = models.TextField()
     brand_id = models.ForeignKey('Brands', on_delete=models.DO_NOTHING)
