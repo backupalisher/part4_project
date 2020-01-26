@@ -26,7 +26,7 @@ class Details(models.Model):
     partcode_id = models.IntegerField()
     model_id = models.IntegerField()
     module_id = models.IntegerField()
-    detail_id = models.IntegerField()
+    spr_detail_id = models.IntegerField()
 
     class Meta:
         db_table = 'details'
