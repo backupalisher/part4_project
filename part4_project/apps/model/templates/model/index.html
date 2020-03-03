@@ -1,10 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Model</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ partcode.code }}
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+    <div class="row">
+        <div class="col-lg-4 col-sm-12">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    {% if model_images|length > 0 %}
+                        {% for i in model_images %}
+                            <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter }}"></li>
+                        {% endfor %}
+                    {% endif %}
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        {% if model_main_image %}
+                            <img src="{{ model_main_image }} " class="d-block w-100" alt="{{ detail_name }}"/>
+                        {% else %}
+                            <img src="{% static "/image/no-image.jpg" %}" class="d-block w-100"
+                                 alt="{{ detail_name }}"/>
+                        {% endif %}
+                    </div>
+                    {% if model_images|length > 0 %}
+                        {% for image in model_images %}
+                            <div class="carousel-item">
+                                <img src="{{ MEDIA_URL }}{{ image }}" class="d-block w-100" alt="detail_name">
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-sm-12">
+            <h3>Модель: {{ detail_name }}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="py-2">
+                <ul class="nav nav-tabs" id="detailTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="options-tab" data-toggle="tab" href="#options" role="tab"
+                           aria-controls="options"
+                           aria-selected="true">Характеристики</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="parts-tab" data-toggle="tab" href="#parts" role="tab"
+                           aria-controls="parts" aria-selected="false">Парткаталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
+                           aria-controls="description" aria-selected="false">Описание</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="options" role="tabpanel" aria-labelledby="options-tab">
+                        <div class="p-3">
+                            {% for caption in captions.0.3 %}
+                                <h5>{{ caption }}</h5>
+                                {% for subcaption in subcaptions %}
+                                    {% if subcaption.2 == caption %}
+                                        {% for subcap in subcaption.3 %}
+                                            <div class="pl-3"><span>{% if 'SubCaption' not in subcap %}
+                                                {{ subcap }}{% endif %}</span>
+                                                {% for value in values %}
+                                                    {% if value.0 == subcaption.1 %}
+                                                        <div class="pl-3">{{ value.2 }}
+                                                            {% for val in value.3 %}
+                                                                <br><span class="pl-2">{{ val }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="parts" role="tabpanel" aria-labelledby="parts-tab">
+                        <h3>Парткаталог</h3>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-auto">
+                                    {% for module in modules %}
+                                        <div class="mb-3 module-title"
+                                             onclick=" $('.module-title').css('font-weight', '400'),
+                                                     $(this).css('font-weight', '900'),
+                                                     $( '.model-opts' ).css('display', 'none'),
+                                                     $( '#opts{{ forloop.counter }}' ).toggle();">
+                                            {{ module }}</div>
+                                    {% endfor %}
+                                </div>
+                                <div class="col">
+                                    {% for module in modules %}
+                                        <div class="position-absolute model-opts pl-3" id="opts{{ forloop.counter }}"
+                                             style="display: none;">
+                                            {% for partc in partcatalog %}
+                                                {% if module == partc.3 %}
+                                                    <p>
+                                                        <a href="/detail/{{ partc.14 }}">Парткод: {{ partc.7 }}</a><br>
+                                                        Деталь: {{ partc.9 }}<br>
+                                                        Картинка: {{ partc.1 }}<br>
+                                                        Схема: {{ partc.2 }}<br>
+                                                    </p>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
+                        <h3>Описание</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block search %}
+{% endblock %}

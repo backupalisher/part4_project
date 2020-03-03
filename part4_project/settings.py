@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'user_passport',
     'detail',
     'model',
+    'about',
+    'contacts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
                 "context_processors.views.main_menu",
             ],
         },
@@ -137,8 +140,8 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, "static"),
 )
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'image')
+MEDIA_URL = '/image/'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

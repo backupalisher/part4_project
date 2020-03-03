@@ -19,11 +19,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('', include('main.urls')),
     path('admin/', admin.site.urls),
     path('search/', include('main.urls')),
-    path('', include('main.urls')),
+    path('about/', include('about.urls')),
+    path('contacts/', include('contacts.urls')),
     path('auth/', include('user_passport.urls')),
+    path('cabinet/', include('user_passport.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('detail/', include('detail.urls')),
     path('model/', include('model.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_URL)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_URL) \
+  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

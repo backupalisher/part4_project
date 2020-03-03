@@ -75,11 +75,13 @@ class Models(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
     brand_id = models.IntegerField()
-    scheme_picture = models.TextField()
-    picture = models.TextField()
+    main_image = models.ImageField()
+    image = models.TextField()
 
     class Meta:
         db_table = 'models'
+        #verbose_name = "Модели"
+        verbose_name_plural = "Модели"
 
 class Modules(models.Model):
     id = models.IntegerField(primary_key=True)

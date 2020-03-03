@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login
 
+
+def cabinet(request):
+    return render(request, 'cabinet/index.html')
 
 def login(request):
     return render(request, 'user_passport/index.html')
-
 
 def register(request):
     if request.method == 'POST':
@@ -16,8 +18,8 @@ def register(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('registration/index.html')
+            auth_login(request, user)
+            return redirect('/cabinet/')
     else:
         form = UserCreationForm()
 
