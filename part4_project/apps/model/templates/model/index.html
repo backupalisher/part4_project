@@ -21,7 +21,7 @@
                         {% if model_main_image %}
                             <img src="{{ model_main_image }} " class="d-block w-100" alt="{{ detail_name }}"/>
                         {% else %}
-                            <img src="{% static "/image/no-image.jpg" %}" class="d-block w-100"
+                            <img src="{{ STATIC_URL }}/image/no-image.jpg" class="d-block w-100"
                                  alt="{{ detail_name }}"/>
                         {% endif %}
                     </div>

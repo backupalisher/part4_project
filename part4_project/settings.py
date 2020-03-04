@@ -20,7 +20,12 @@ SECRET_KEY = '59bh9hwmjovry$@gjah!7pe5vrh*d+&_srj=udw*^w0w*y81ds'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '.d.part4.info',
+    'www.d.part4.info'
+]
 
 # Application definition
 
@@ -138,6 +143,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, "static"),
+    ("static", "/static"),
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'image')
