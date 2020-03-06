@@ -6,10 +6,24 @@ h1 {
 .model-opts {
 
 }
+.card .card_image {
+    height: 200px;
+    width: 200px;
+}
+.search_result_model {
+    color: #447e9b;
+}
+.search_result_partcode {
+    color: #003366;
+    font-style: oblique;
+}
 .module-title {
     cursor: pointer;
 }
+.carousel-indicators {
+    margin-bottom: -7%;
+}
 .carousel-indicators li {
-    border-top: 10px solid #00a8ff;
+    border-top: 5px solid #00a8ff;
     background-color: transparent;
 }
