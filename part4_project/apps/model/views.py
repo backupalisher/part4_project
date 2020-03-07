@@ -58,8 +58,7 @@ def index(request, detail_id):
         except:
             detail_name = '-'
         # Запрос на получение парткодов и модулей
-        q_code_module = "SELECT m.name model_name, m.image model_picture, m.main_image model_scheme, mo.name module_name, mo.description module_desc, mo.scheme_picture module_picture, p.description code_desc, p.code partcode, p.images code_image, sd.name detail_name, sd.name_ru detail_name_ru, sd.desc detail_desc, sd.seo detail_seo, sd.base_img detail_img, d.id FROM details d left JOIN modules mo on d.module_id = mo.id LEFT JOIN partcodes p on d.partcode_id = p.id LEFT JOIN models m on d.model_id = m.id LEFT JOIN spr_details sd on d.spr_detail_id = sd.id WHERE mo.name is not null and d.model_id =%d  ORDER BY mo.name" % (
-            model_id)
+        q_code_module = "SELECT m.name model_name, m.image model_picture, m.main_image model_scheme, mo.name module_name, mo.description module_desc, mo.scheme_picture module_picture, p.description code_desc, p.code partcode, p.images code_image, sd.name detail_name, sd.name_ru detail_name_ru, sd.desc detail_desc, sd.seo detail_seo, sd.base_img detail_img, d.id FROM details d left JOIN modules mo on d.module_id = mo.id LEFT JOIN partcodes p on d.partcode_id = p.id LEFT JOIN models m on d.model_id = m.id LEFT JOIN spr_details sd on d.spr_detail_id = sd.id WHERE mo.name is not null and d.model_id = %d ORDER BY mo.name" % (model_id)
         option_vals = _query(q_options)
         captions = []
         subcaptions = []

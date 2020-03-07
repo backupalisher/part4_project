@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    {{ partcode.code }}
+    {{ detail_name }}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,9 @@
             <div class="col">
                 <h3>Деталь: {{ detail_name }}</h3>
                 <h4>Парткод: {{ partcode }}</h4>
-                <h4>Модель: {{ model }}</h4>
+                {% if model != '-' %}
+                    <h4>Модель: <a href="/model/{{ model_d_id }}">{{ model }}</a></h4>
+                {% endif %}
                 <h4>Модуль: {{ module }}</h4>
             </div>
         </div>

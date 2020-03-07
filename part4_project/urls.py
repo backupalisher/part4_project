@@ -26,8 +26,7 @@ urlpatterns = [
     path('contacts/', include('contacts.urls')),
     path('auth/', include('user_passport.urls')),
     path('cabinet/', include('user_passport.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('detail/', include('detail.urls')),
     path('model/', include('model.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_URL) \
-  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('detail/', include('detail.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+] #+ static(settings.STATIC_URL, document_root=settings.STATIC_URL) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

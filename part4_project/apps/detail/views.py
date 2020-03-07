@@ -46,6 +46,10 @@ def index(request, detail_id):
                 detail_name = models.Spr_details.objects.filter(id=spr_detail_id).values('name')[0]['name']
         except:
             detail_name = '-'
+        try:
+            model_d_id = models.Details.objects.filter(model_id=model_id).filter(module_id__isnull=True).values('id')[0]['id']
+        except:
+            model_d_id = 0
         # Запрос на получение парткодов и модулей
         q_code_module = "SELECT m.name model_name, m.image model_picture, m.main_image model_scheme, mo.name module_name, mo.description module_desc, mo.scheme_picture module_picture, p.description code_desc, p.code partcode, p.images code_image, sd.name detail_name, sd.name_ru detail_name_ru, sd.desc detail_desc, sd.seo detail_seo, sd.base_img detail_img FROM details d left JOIN modules mo on d.module_id = mo.id LEFT JOIN partcodes p on d.partcode_id = p.id LEFT JOIN models m on d.model_id = m.id LEFT JOIN spr_details sd on d.spr_detail_id = sd.id WHERE d.model_id =%d" % (
                 model_id)
@@ -75,6 +79,6 @@ def index(request, detail_id):
 
 
     return render(request, 'detail/index.html',
-                  {'partcode': partcode, 'detail_id': detail_id, 'model': model, 'module': module,
+                  {'partcode': partcode, 'detail_id': detail_id, 'model': model, 'module': module, 'model_d_id': model_d_id,
                    'detail_name': detail_name, 'options': options, 'partcatalog': partcatalog, 'captions': captions,
                    'subcaptions': subcaptions, 'values': values})
