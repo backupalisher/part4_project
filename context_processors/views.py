@@ -6,6 +6,7 @@ def main_menu(request):
     curItem = 'Главная'
     menuList = [
         ['/', 'Главная'],
+        ['/brand/brands', 'Бренды'],
         ['/contacts', 'Контакты'],
         ['/about', 'О нас']
     ]
