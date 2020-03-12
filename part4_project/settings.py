@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'model',
     'about',
     'contacts',
+    'brand',
+    'filter',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

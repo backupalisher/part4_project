@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h3>{{ title }}:</h3>
+    <div class="row">
+        {% for brand in brands %}
+            <div class="col-lg-3">
+            <a href="/brand/{{ brand.id }}">
+                {{ brand.name }}
+            </a>
+            <p> {{ brand.logotype }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Главная</a></li>
+            <li class="breadcrumb-item active">{{ title }}</li>
+        </ol>
+    </nav>
+{% endblock %}

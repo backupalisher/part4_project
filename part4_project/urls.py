@@ -28,5 +28,7 @@ urlpatterns = [
     path('cabinet/', include('user_passport.urls')),
     path('model/', include('model.urls')),
     path('detail/', include('detail.urls')),
+    path('brand/', include('brand.urls')),
+    path('filter/', include('filter.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 ] #+ static(settings.STATIC_URL, document_root=settings.STATIC_URL) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

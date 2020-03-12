@@ -38,6 +38,29 @@
             </div>
             <div class="col">
                 <h3>Модель: {{ detail_name }}</h3>
+                {% for caption in captions.0.3 %}
+                    {% if 'Status' in caption %}
+                        <h5>{{ caption }}</h5>
+                        {% for subcaption in subcaptions %}
+                            {% if subcaption.2 == caption %}
+                                {% for subcap in subcaption.3 %}
+                                    <div class="pl-3"><span>{% if 'SubCaption' not in subcap %}
+                                        {{ subcap }}{% endif %}</span>
+                                        {% for value in values %}
+                                            {% if value.0 == subcaption.1 %}
+                                                <div class="pl-3">{{ value.2 }}
+                                                    {% for val in value.3 %}
+                                                        <br><span class="pl-2">{{ val }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
         <div class="row">
@@ -45,12 +68,12 @@
                 <div class="py-2">
                     <ul class="nav nav-tabs" id="detailTabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="options-tab" data-toggle="tab" href="#options" role="tab"
+                            <a class="nav-link {% if cur_module is None %} active {% endif %}" id="options-tab" data-toggle="tab" href="#options" role="tab"
                                aria-controls="options"
                                aria-selected="true">Характеристики</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="parts-tab" data-toggle="tab" href="#parts" role="tab"
+                            <a class="nav-link {% if cur_module is not None %} active {% endif %}" id="parts-tab" data-toggle="tab" href="#parts" role="tab"
                                aria-controls="parts" aria-selected="false">Парткаталог</a>
                         </li>
                         <!--li class="nav-item">
@@ -59,38 +82,41 @@
                         </li-->
                     </ul>
                     <div class="tab-content" id="myTabContent">
-                        <div class="p-3 tab-pane fade show active" id="options" role="tabpanel"
+                        <div class="p-3 tab-pane {% if cur_module is None %} active {% endif %}" id="options" role="tabpanel"
                              aria-labelledby="options-tab">
                             <div class="">
                                 {% for caption in captions.0.3 %}
-                                    <h5>{{ caption }}</h5>
-                                    {% for subcaption in subcaptions %}
-                                        {% if subcaption.2 == caption %}
-                                            {% for subcap in subcaption.3 %}
-                                                <div class="pl-3"><span>{% if 'SubCaption' not in subcap %}
-                                                    {{ subcap }}{% endif %}</span>
-                                                    {% for value in values %}
-                                                        {% if value.0 == subcaption.1 %}
-                                                            <div class="pl-3">{{ value.2 }}
-                                                                {% for val in value.3 %}
-                                                                    <br><span class="pl-2">{{ val }}</span>
-                                                                {% endfor %}
-                                                            </div>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
-                                            {% endfor %}
-                                        {% endif %}
-                                    {% endfor %}
+                                    {% if 'Status' not in caption %}
+                                        <h5>{{ caption }}</h5>
+                                        {% for subcaption in subcaptions %}
+                                            {% if subcaption.2 == caption %}
+                                                {% for subcap in subcaption.3 %}
+                                                    <div class="pl-3"><span>{% if 'SubCaption' not in subcap %}
+                                                        {{ subcap }}{% endif %}</span>
+                                                        {% for value in values %}
+                                                            {% if value.0 == subcaption.1 %}
+                                                                <div class="pl-3">{{ value.2 }}
+                                                                    {% for val in value.3 %}
+                                                                        <br><span class="pl-2">{{ val }}</span>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                         </div>
-                        <div class="p-3 tab-pane fade" id="parts" role="tabpanel" aria-labelledby="parts-tab">
+                        <div class="p-3 tab-pane {% if cur_module is not None %} active {% endif %}" id="parts" role="tabpanel" aria-labelledby="parts-tab">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-3">
                                         {% for module in modules %}
                                             <div class="mb-3 module-title"
+                                                 {% if cur_module == module %}style="font-weight: 900"{% endif %}
                                                  onclick=" $('.module-title').css('font-weight', '400'),
                                                          $(this).css('font-weight', '900'),
                                                          $( '.model-opts' ).css('display', 'none'),
@@ -102,7 +128,12 @@
                                         {% for module in modules %}
                                             <div class="position-absolute model-opts pl-3"
                                                  id="opts{{ forloop.counter }}"
-                                                 style="display: none;">
+                                                 {% if cur_module == module %}
+                                                    style="display: block;"
+                                                 {% else %}
+                                                    style="display: none;"
+                                                 {% endif %}
+                                                 >
                                                 {% for partc in partcatalog %}
                                                     {% if module == partc.3 %}
                                                         <p>
@@ -117,7 +148,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-3 tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
+                        <div class="p-3 tab-pane fade" id="description" role="tabpanel"
+                             aria-labelledby="description-tab">
                             <h3>Описание</h3>
                         </div>
                     </div>
@@ -129,4 +161,14 @@
 {% endblock %}
 
 {% block search %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Главная</a></li>
+            <li class="breadcrumb-item"><a href="/brand/{{ brand_id }}">{{ brand_name }}</a></li>
+            <li class="breadcrumb-item active">{{ detail_name }}</li>
+        </ol>
+    </nav>
 {% endblock %}

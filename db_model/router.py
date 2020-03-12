@@ -1,6 +1,6 @@
 class part4router(object):
     def db_for_read(self, model, **hints):
-        print('label', model._meta.app_label)
+        #print('label', model._meta.app_label)
         if model._meta.app_label == 'auth':
             return 'default'
         elif model._meta.app_label == 'sessions':
@@ -12,7 +12,7 @@ class part4router(object):
         return 'part4'
 
     def db_for_write(self, model, **hints):
-        print('label', model._meta.app_label)
+        #print('label', model._meta.app_label)
         if model._meta.app_label == 'auth':
             return 'default'
         elif model._meta.app_label == 'sessions':

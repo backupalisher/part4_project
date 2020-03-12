@@ -3,6 +3,9 @@ h1 {
     text-align: center;
     font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
 }
+.main-content {
+    min-height: calc(100vh - 175px);
+}
 .model-opts {
 
 }
@@ -26,4 +29,14 @@ h1 {
 .carousel-indicators li {
     border-top: 5px solid #00a8ff;
     background-color: transparent;
+}
+.breadcrumb-item+.breadcrumb-item {
+    padding-left: 1rem;
+}
+.breadcrumb-item a {
+    font-size: 1em;
+    line-height: 1.5em;
+}
+.breadcrumb-item a:hover {
+    text-decoration: none;
 }
