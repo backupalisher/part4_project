@@ -35,7 +35,7 @@ def index(request, brand_id):
     limit = 5000
     offset = 50 * page
     #q_model = "SELECT d.id, mo.name model_name, mo.main_image, mo.image FROM models mo LEFT JOIN details d ON mo.id = d.model_id WHERE mo.brand_id = %d and d.module_id is NULL ORDER BY d.id LIMIT %d OFFSET %d" % (brand_id, limit, offset)
-    brand_models = _query(f'SELECT m.*, opt_ids FROM ( SELECT detail_id, array_agg(detail_option_id) opt_ids FROM link_details_options GROUP BY detail_id) ldoi LEFT JOIN details d ON ldoi.detail_id = d.id LEFT JOIN models m ON d.model_id = m.id WHERE brand_id = {brand_id} ORDER BY id;')
+    brand_models = _query(f'SELECT d.id, m.*, opt_ids FROM ( SELECT detail_id, array_agg(detail_option_id) opt_ids FROM link_details_options GROUP BY detail_id) ldoi LEFT JOIN details d ON ldoi.detail_id = d.id LEFT JOIN models m ON d.model_id = m.id WHERE brand_id = {brand_id} ORDER BY m.id;')
     model_count = _query(f'SELECT COUNT(id) from (SELECT d.id, mo.name model_name, mo.main_image, mo.image FROM models mo LEFT JOIN details d ON mo.id = d.model_id WHERE mo.brand_id = {brand_id} and d.module_id is NULL ORDER BY d.id) as f')
     brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
     pages = math.ceil(int(model_count[0][0]) / limit)

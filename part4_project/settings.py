@@ -89,8 +89,7 @@ DATABASES = {
         'NAME': DEFAULT_NAME,
         'USER': DEFAULT_USER,
         'PASSWORD': DEFAULT_PASS,
-        #'HOST': '198.245.61.187',
-        'HOST': 'localhost',
+        'HOST': HOST,
         'PORT': DEFAULT_PORT
     },
     'part4': {
@@ -98,8 +97,7 @@ DATABASES = {
         'NAME': PART4_NAME,
         'USER': PART4_USER,
         'PASSWORD': PART4_PASS,
-        #'HOST': '198.245.61.187',
-        'HOST': 'localhost',
+        'HOST': HOST,
         'PORT': DEFAULT_PORT
     }
 }
