@@ -51,7 +51,7 @@ class FilterSettings(models.Model):
     values = models.TextField()
     caption_en = models.CharField(max_length=255)
     subcaption_en = models.CharField(max_length=255)
-    main_filter = models.IntegerField()
+    parent_id = models.IntegerField()
 
     class Meta:
         db_table = 'filter_settings'
@@ -80,17 +80,7 @@ class Models(models.Model):
 
     class Meta:
         db_table = 'models'
-        #verbose_name = "Модели"
         verbose_name_plural = "Модели"
-
-class Modules(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=255)
-    description = models.CharField(max_length=1500)
-    scheme_picture = models.CharField(max_length=255)
-
-    class Meta:
-        db_table = 'modules'
 
 class Partcodes(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -109,7 +99,7 @@ class SprDetailOptions(models.Model):
     class Meta:
         db_table = 'spr_detail_options'
 
-class Spr_details(models.Model):
+class SprDetails(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.TextField()
     name_ru = models.TextField()
@@ -120,3 +110,11 @@ class Spr_details(models.Model):
     class Meta:
         db_table = 'spr_details'
 
+class SprModules(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=1500)
+    scheme_picture = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = 'spr_modules'

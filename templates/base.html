@@ -1,10 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="h-100">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <title>
         {% block title %}
@@ -12,69 +13,77 @@
         {% endblock %}
     </title>
 </head>
-<body>
-{% block head %}
-    {% block nav %}
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-            <a class="navbar-brand" href="#">Part 4</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    {% for item in menu_list %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if item.1 == menu_item_active %}active{% endif %}"
-                               href="{{ item.0 }}">{{ item.1 }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <div class="wrap">
+        {% block head %}
+            {% block nav %}
+                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+                    <a class="navbar-brand" href="#">Part 4</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            {% for item in menu_list %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if item.1 == menu_item_active %}active{% endif %}"
+                                       href="{{ item.0 }}">{{ item.1 }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="float-right navbar-nav">
+                            {% if user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link"
+                                                        href="{% url 'logout' %}">Выйти {{ user.username }}</a></li>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>
+                                <li class="nan-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            {% endblock %}
+            <div class="container p-2">
+                <form action="/search" method="get">
+                    <div class="input-group mb-3">
+                        <input class="form-control" type="search" name="s" placeholder="Поиск" aria-label="Search"
+                               aria-describedby="button-search">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-search">Найти</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div>
-                <ul class="float-right navbar-nav" >
-                    {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Выйти {{ user.username }}</a></li>
-                    {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>
-                        <li class="nan-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
-    {% endblock %}
-    <div class="container p-2">
-        <form action="/search" method="get">
-            <div class="input-group mb-3">
-                <input class="form-control" type="search" name="s" placeholder="Поиск" aria-label="Search"
-                       aria-describedby="button-search">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit" id="button-search">Найти</button>
-                </div>
-            </div>
-        </form>
+        {% endblock %}
+        {% block breadcrumbs %}
+            <div class="breadcrumb"><a href="/">Главная</a></div>
+        {% endblock %}
+        {% block login %}{% endblock login %}
+
+        <div class="container mt-2 main-content">
+            {% block content %}
+                There is no any content for you
+            {% endblock %}
+        </div>
     </div>
-{% endblock %}
-{% block breadcrumbs %}
-    <div class="breadcrumb"><a href="/">Главная</a></div>
-{% endblock %}
-{% block login %}{% endblock login %}
-
-<div class="container mt-2 main-content">
-    {% block content %}
-        There is no any content for you
+</main>
+<footer class="footer mt-auto py-3">
+    {% block footer %}
+        {% block copyright %}
+            <p class="text-center">&copy; Part4</p>
+        {% endblock %}
     {% endblock %}
-</div>
-
-{% block footer %}
-    {% block copyright %}
-        <p class="text-center">&copy; Part4</p>
-    {% endblock %}
-{% endblock %}
-
+</footer>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="{% static 'main.js' %}"></script>
 </body>
 </html>

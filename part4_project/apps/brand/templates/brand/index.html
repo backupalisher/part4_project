@@ -7,21 +7,83 @@
 {% block content %}
     <h3>Модели (всего {{ model_count.0.0 }}):</h3>
     <div class="row">
-        {% for model in brand_models %}
-            <div class="col-lg-3">
-                <a href="/model/{{ model.0 }}">{{ model.1 }}</a>
+        <div class="col-3">
+            <h4>Фильтр:</h4>
+            <form class="filter_settings" method="post" action="">
+                {% csrf_token %}
+                {% for caption in filter_captions %}
+                    <h5>{{ caption }}</h5>
+                    {% for filter in sfilter %}
+                        {% if filter.caption == caption %}
+                            <div class="pl-2 pb-3">
+                                <h6>{{ filter.subcaption }}</h6>
+                                {% if filter.type == 'checkbox' %}
+                                    {% for fval in filter.values %}
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" name="{{ filter.sub_id }}" id="{{ fval.id }}" value="{{ fval.id }}">
+                                            <label class="form-check-label" for="{{ fval.id }}">{{ fval.val }}</label>
+                                          </div>
+                                    {% endfor %}
+                                {% endif %}
+                                {% if filter.type == 'radio' %}
+                                    {% for fval in filter.values %}
+                                        <div class="form-group form-check">
+                                            <input type="radio" class="form-check-input" name="{{ filter.sub_id }}" id="{{ fval.id }}" value="{{ fval.id }}">
+                                            <label class="form-check-label" for="{{ fval.id }}">
+                                                {% if fval.val == '+' %} есть {% endif %}
+                                                {% if fval.val == '-' %} нет {% endif %}
+                                            </label>
+                                          </div>
+                                    {% endfor %}
+                                {% endif %}
+                                {% if filter.type == 'range' %}
+                                    <div class="form-row">
+                                        <div class="input_num">
+                                            <input type="number" class="form-control" name="{{ filter.sub_id }}"
+                                                   id="{{ filter.sub_id }}" value="{{ filter.values.0.min }}"
+                                                   min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
+                                                   required>
+                                        </div>
+                                        <div class="input_num">
+                                            <input type="number" class="form-control" name="{{ filter.sub_id }}"
+                                                   id="{{ filter.sub_id }}" value="{{ filter.values.1.max }}"
+                                                   min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
+                                                   required>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                <button type="submit" class="btn btn-filter">Применить</button>
+            </form>
+        </div>
+        <div class="col">
+            <div class="row">
+                {% for model in brand_models %}
+                    <div class="col-lg-3 col-md-3 col-sm-4 p-3">
+                        <div class="brand_model_card">
+                            <a href="/model/{{ model.0 }}" class="brand_model_link" style="background-image:
+                                    url('{% if model.2 is not None %}{% static '/image/' %}{{ model.2|cut:';' }}{% else %}{% static '/image/no-image.jpg' %}{% endif %}')">
+                            </a>
+                            <h6 class="brand_model_title">{{ model.1 }}</h6>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+            <div class="row">
+                <nav class="p-4">
+                  <ul class="pagination">
+                      {% for i in pages %}
+                          <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
+                      {% endfor %}
+                  </ul>
+                </nav>
+            </div>
+        </div>
     </div>
-    <div class="row">
-        <nav class="p-4">
-          <ul class="pagination">
-              {% for i in pages %}
-                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
-              {% endfor %}
-          </ul>
-        </nav>
-    </div>
+
 {% endblock %}
 
 {% block breadcrumbs %}
