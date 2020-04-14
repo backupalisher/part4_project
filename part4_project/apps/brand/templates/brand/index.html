@@ -1,71 +1,90 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static brand_extras %}
 {% block title %}
     {{ brand_name }}
 {% endblock %}
 
 {% block content %}
-    <h3>Модели (всего {{ model_count.0.0 }}):</h3>
     <div class="row">
         <div class="col-3">
-            <h4>Фильтр:</h4>
-            <form class="filter_settings" method="post" action="">
+            <h4 class="pt-1">Фильтр:</h4>
+            <!--span>моделей {{ model_count.0.0 }}</span-->
+            <form method="post" action="">
                 {% csrf_token %}
-                {% for caption in filter_captions %}
-                    <h5>{{ caption }}</h5>
-                    {% for filter in sfilter %}
-                        {% if filter.caption == caption %}
-                            <div class="pl-2 pb-3">
-                                <h6>{{ filter.subcaption }}</h6>
-                                {% if filter.type == 'checkbox' %}
-                                    {% for fval in filter.values %}
-                                        <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input" name="{{ filter.sub_id }}" id="{{ fval.id }}" value="{{ fval.id }}">
-                                            <label class="form-check-label" for="{{ fval.id }}">{{ fval.val }}</label>
-                                          </div>
-                                    {% endfor %}
-                                {% endif %}
-                                {% if filter.type == 'radio' %}
-                                    {% for fval in filter.values %}
-                                        <div class="form-group form-check">
-                                            <input type="radio" class="form-check-input" name="{{ filter.sub_id }}" id="{{ fval.id }}" value="{{ fval.id }}">
-                                            <label class="form-check-label" for="{{ fval.id }}">
-                                                {% if fval.val == '+' %} есть {% endif %}
-                                                {% if fval.val == '-' %} нет {% endif %}
-                                            </label>
-                                          </div>
-                                    {% endfor %}
-                                {% endif %}
-                                {% if filter.type == 'range' %}
-                                    <div class="form-row">
-                                        <div class="input_num">
-                                            <input type="number" class="form-control" name="{{ filter.sub_id }}"
-                                                   id="{{ filter.sub_id }}" value="{{ filter.values.0.min }}"
-                                                   min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
-                                                   required>
+                <div class="filter_settings pt-3 mb-3">
+                    {% for caption in filter_captions %}
+                        <h5>{{ caption }}</h5>
+                        {% for filter in sfilter %}
+                            {% if filter.caption == caption %}
+                                <div class="float-left w-100 pl-2 pb-3">
+                                    <h6>{{ filter.subcaption }}</h6>
+                                    {% if filter.type == 'checkbox' %}
+                                        {% for fval in filter.values %}
+                                            <div class="form-group form-check checkbox">
+                                                <input type="checkbox" class="form-check-input"
+                                                       name="checkbox{{ filter.sub_id }}" id="{{ fval.id }}"
+                                                       value="{{ fval.id }}">
+                                                <label class="form-check-label"
+                                                       for="{{ fval.id }}">{{ fval.val }}</label>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if filter.type == 'radio' %}
+                                        {% for fval in filter.values %}
+                                            <div class="form-group form-check radio">
+                                                <input type="radio" class="form-check-input"
+                                                       name="radio{{ filter.sub_id }}" id="{{ fval.id }}"
+                                                       value="{{ fval.id }}">
+                                                <label class="form-check-label" for="{{ fval.id }}">
+                                                    {% if fval.val == '+' %} есть {% endif %}
+                                                    {% if fval.val == '-' %} нет {% endif %}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if filter.type == 'range' %}
+                                        <div class="form-row">
+                                            <div class="input_num">
+                                                <input type="number" class="form-control"
+                                                       name="range{{ filter.sub_id }}"
+                                                       id="{{ filter.sub_id }}" placeholder="{{ filter.values.0.min }}"
+                                                       min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
+                                                >
+                                            </div>
+                                            <div class="input_num">
+                                                <input type="number" class="form-control"
+                                                       name="range{{ filter.sub_id }}"
+                                                       id="{{ filter.sub_id }}" placeholder="{{ filter.values.1.max }}"
+                                                       min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
+                                                >
+                                            </div>
                                         </div>
-                                        <div class="input_num">
-                                            <input type="number" class="form-control" name="{{ filter.sub_id }}"
-                                                   id="{{ filter.sub_id }}" value="{{ filter.values.1.max }}"
-                                                   min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
-                                                   required>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-                <button type="submit" class="btn btn-filter">Применить</button>
+                </div>
+                <button type="reset" class="btn bg-red text-light float-left">Сбросить</button>
+                <button type="submit" class="btn btn-filter bg-blue text-light float-right">Применить</button>
             </form>
         </div>
-        <div class="col">
+        <div class="col-9">
+            <!--div class="row">
+                <div class="col-12">
+                    <div class="input-group w-100">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"> > </span>
+                      </div>
+                      <input type="text" id="filter_search" name="filter_search" class="form-control filter_search" placeholder="Поиск по модели">
+                    </div>
+                </div>
+            </div-->
             <div class="row">
                 {% for model in brand_models %}
                     <div class="col-lg-3 col-md-3 col-sm-4 p-3">
-                        <div class="brand_model_card">
-                            <a href="/model/{{ model.0 }}" class="brand_model_link" style="background-image:
-                                    url('{% if model.4 is not None %}{% static '/image/' %}{{ model.4|cut:';' }}{% else %}{% static '/image/no-image.png' %}{% endif %}')">
+                        <div class="card card-model btn">
+                            <a href="/model/{{ model.0 }}" class="brand_model_link" style="background-image:url('{% if model.4 is not None %}{% static '/image/' %}{{ model.4|cut:';' }}{% else %}{% static '/image/no-image.png' %}{% endif %}')">
                             </a>
                             <h6 class="brand_model_title">{{ model.2 }}</h6>
                         </div>
@@ -73,12 +92,30 @@
                 {% endfor %}
             </div>
             <div class="row">
-                <nav class="p-4">
-                  <ul class="pagination">
-                      {% for i in pages %}
-                          <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
-                      {% endfor %}
-                  </ul>
+                <nav class="p-4 w-100">
+                    <ul class="pagination justify-content-center">
+                        {% for i in pages %}
+                            {% if page >= 3 and i != page and i == 0 %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
+                                {% if page > 3 %}
+                                    <li class="page-item"><a class="page-link">...</a></li>
+                                {% endif %}
+                            {% endif %}
+                            {% if i > page|minus:3 and i < page|plus:3 and  i != page %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
+                            {% endif %}
+                            {% if i == page %}
+                                <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a>
+                                </li>
+                            {% endif %}
+                            {% if i == pages|length|minus:1 and page < pages|length|minus:3 %}
+                                {% if page|minus:1 <= pages|length and page < pages|length|minus:4 %}
+                                    <li class="page-item"><a class="page-link">...</a></li>
+                                {% endif %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
                 </nav>
             </div>
         </div>
@@ -87,11 +124,15 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Главная</a></li>
-            <li class="breadcrumb-item"><a href="/brand/brands">Все бренды</a></li>
-            <li class="breadcrumb-item active">{{ brand_name }}</li>
-        </ol>
-    </nav>
+    <div class="container">
+        <div class="row">
+            <nav class="nav-breadcrumb w-100">
+                <ul>
+                    <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="nav-breadcrumb-item"><a href="/brand/brands">Все бренды</a></li>
+                    <li class="nav-breadcrumb-item active">{{ brand_name }}</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 {% endblock %}

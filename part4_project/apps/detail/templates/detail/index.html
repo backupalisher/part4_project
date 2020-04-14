@@ -87,12 +87,16 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Главная</a></li>
-            <li class="breadcrumb-item"><a href="/brand/{{ brand_id }}">{{ brand_name }}</a></li>
-            <li class="breadcrumb-item"><a href="/model/{{ model_d_id }}">{{ model }}</a></li>
-            <li class="breadcrumb-item active">{{ detail_name }}</li>
-        </ol>
-    </nav>
+     <div class="container">
+        <div class="row">
+            <nav class="nav-breadcrumb w-100">
+                <ul>
+                    <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="nav-breadcrumb-item"><a href="/brand/{{ brand_id }}">{{ brand_name }}</a></li>
+                    <li class="nav-breadcrumb-item"><a href="/model/{{ model_d_id }}">{{ model }}</a></li>
+                    <li class="nav-breadcrumb-item active">{{ detail_name }}</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 {% endblock %}
