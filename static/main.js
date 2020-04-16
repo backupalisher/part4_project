@@ -40,7 +40,7 @@ $(document).ready(function(){
     $('#filter_search').keyup(function (e) {
         val = $(this).val()
         //if(e.which == 13) {
-        if(val.length > 2) {
+        if(val.length > 1) {
             console.log(val)
             filter_search(val)
         } else {
@@ -48,4 +48,16 @@ $(document).ready(function(){
         }
     })
 
+    //Toggle themes
+    $('#toggle-theme').click(function () {
+        console.log('change')
+        if ($('#body').hasClass('dark-theme')) {
+            $('#body').removeClass('dark-theme')
+            $('#body').addClass('light-theme')
+        } else {
+            $('#body').removeClass('light-theme')
+            $('#body').addClass('dark-theme')
+        }
+
+    })
 })

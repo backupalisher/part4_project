@@ -15,7 +15,7 @@ Colors
 .text-red:hover {color: #eb5c59 !important;}
 .text-green:hover {color: #78b857 !important;}
 .text-blue:hover {color: #2e79f6 !important;}
-a.text-light:hover {color: #323235 !important;}
+.text-light:hover {color: #323235 !important;}
 .text-grey:hover {color: #898989 !important;}
 .text-dark:hover {color: #323235 !important;}
 
@@ -27,178 +27,10 @@ a.text-light:hover {color: #323235 !important;}
 .bg-light {background-color: #e9e9eb !important;}
 .bg-grey {background-color: #898989 !important;}
 .bg-dark {background-color: #323235 !important;}
-.btn:hover {box-shadow: 0 0 5px #00000080}
 
 body {
     font-family: -apple-system,BlinkMacSystemFont,"GT Walsheim Regular", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
 a, a:hover {
     color: #2e79f6;
-}
-.form-control:focus {
-    color: #495057;
-    background-color: #fff;
-    border: none;
-    outline: 0;
-    box-shadow: 0 0 5px #00000080;
-}
-h1 {
-    color: #bbccdd;
-    text-align: center;
-    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
-}
-
-.model-opts {
-    overflow-y: scroll;
-    min-height: 360px;
-}
-.brand_model_card {
-    box-shadow: 0px 0px 3px 0px #5b80b290;
-    padding: 0.2em 0.4em;
-    height: 266px;
-    overflow: hidden;
-}
-.brand_model_card:hover {
-    box-shadow: 0px 0px 4px 0px #5b80b2;
-}
-.brand_model_link {
-    display: block;
-    height: 200px;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-.brand_model_title {
-    text-align: center;
-}
-.card {
-    padding: 1em 0.5em;
-}
-.card .card_image {
-    height: 200px;
-    width: 200px;
-}
-.search_result_model {
-    color: #447e9b;
-}
-.search_result_partcode {
-    color: #003366;
-    font-style: oblique;
-}
-.module-title {
-    cursor: pointer;
-}
-.carousel-indicators {
-    margin-bottom: -7%;
-}
-.carousel-indicators li {
-    border-top: 5px solid #00a8ff;
-    background-color: transparent;
-}
-.breadcrumb-item+.breadcrumb-item {
-    padding-left: 1rem;
-}
-.breadcrumb-item a {
-    font-size: 1em;
-    line-height: 1.5em;
-}
-.breadcrumb-item a:hover {
-    text-decoration: none;
-}
-.filter_settings {
-    max-height: 100vh;
-    overflow-y: scroll;
-    padding-right: 1em;
-}
-.form-group {
-    margin-bottom: 0rem;
-}
-.filter_settings .form-check label {
-    cursor: pointer;
-    position: relative;
-}
-.filter_settings .form-check.radio {
-    width: 48%;
-    margin-right: 2%;
-    float: left;
-}
-.filter_settings .form-check.checkbox label {
-    padding-left: 1.2em;
-}
-.filter_settings .form-check.checkbox input {
-    position: relative;
-    width: 0px;
-}
-.filter_settings .form-check.checkbox input:before {
-    content: '';
-    border: 1px solid #898989;
-    width: 1em;
-    height: 1em;
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-.filter_settings .form-check.checkbox input:checked:before {
-    background-color: #e98839;
-}
-.filter_settings .input_num {
-    width: 90px;
-}
-.filter_settings .input_num input {
-    text-align: center;
-    padding: .375rem;
-}
-.filter_settings .btn-filter {
-    /*position: absolute;*/
-    /*top: 50vh;*/
-    /*z-index: 9;*/
-    /*right: -50px;*/
-}
-.filter_settings .btn-filter:hover {
-    box-shadow: 0 0 2px 1px #003366;
-}
-.nav-tabs .nav-link.active {
-    background-color: #2e79f6 !important;
-    color: #e9e9eb;
-}
-.card-model .brand_model_title {
-    height: 2.4em;
-    overflow: hidden;
-}
-.nav-breadcrumb {
-    background: #fff;
-}
-.nav-breadcrumb ul {
-    list-style: none;
-    padding: 0 15px;
-}
-.nav-breadcrumb ul li {
-    float: left;
-    position: relative;
-    padding: 0 0.2em 0 0;
-}
-.nav-breadcrumb ul li:after {
-    content: '';
-    position: absolute;
-    transform: rotate(45deg);
-    width: 1.2em;
-    height: 1.2em;
-    top: 0.4em;
-    right: 0.8em;
-    border: 1px solid #2e79f6;
-}
-.nav-breadcrumb ul li:last-child:after {
-    display: none;
-}
-.nav-breadcrumb ul li a {
-    float: left;
-    position: relative;
-    padding: 0 0.4em 0 0;
-    margin-right: 0.8em;
-    background: #fff;
-    line-height: 2em;
-    z-index: 2;
-}
-.nav-breadcrumb ul li.active {
-    line-height: 2em;
 }

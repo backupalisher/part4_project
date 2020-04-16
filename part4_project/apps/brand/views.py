@@ -93,20 +93,18 @@ def index(request, brand_id):
         page = 0
     limit = 24
     offset = 24 * page
-    # q_model = "SELECT d.id, mo.name model_name, mo.main_image, mo.image FROM models mo LEFT JOIN details d ON mo.id = d.model_id WHERE mo.brand_id = %d and d.module_id is NULL ORDER BY d.id LIMIT %d OFFSET %d" % (brand_id, limit, offset)
     if ops > 0:
         brand_models = _query(f_sql)
+        model_count = len(brand_models)
+        pages = 0
     else:
         brand_models = _query(f'SELECT d.id, m.* FROM models m LEFT JOIN details d ON m.id = d.model_id AND d.partcode_id is NULL WHERE brand_id = {brand_id} ORDER BY m.id LIMIT {limit} OFFSET {offset};')
-            # _query(
-            # f'SELECT d.id, m.*, opt_ids FROM ( SELECT detail_id, array_agg(detail_option_id) opt_ids '
-            # f'FROM link_details_options GROUP BY detail_id) ldoi LEFT JOIN details d ON ldoi.detail_id = d.id '
-            # f'LEFT JOIN models m ON d.model_id = m.id WHERE brand_id = {brand_id} ORDER BY m.id;')
-    model_count = _query(
-        f'SELECT COUNT(id) from (SELECT d.id, mo.name model_name, mo.main_image, mo.image '
-        f'FROM models mo LEFT JOIN details d ON mo.id = d.model_id WHERE mo.brand_id = {brand_id} and d.module_id is NULL ORDER BY d.id) as f')
+        model_count = _query(
+            f'SELECT COUNT(id) from (SELECT d.id, mo.name model_name, mo.main_image, mo.image '
+            f'FROM models mo LEFT JOIN details d ON mo.id = d.model_id WHERE mo.brand_id = {brand_id} and d.module_id is NULL ORDER BY d.id) as f')
+        pages = math.ceil(int(model_count[0][0]) / limit)
+
     brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
-    pages = math.ceil(int(model_count[0][0]) / limit)
     return render(request, 'brand/index.html', {'brand_models': brand_models, 'brand_name': brand_name,
                                                 'model_count': model_count, 'page': page, 'pages': range(pages),
                                                 'sfilter': sfilter, 'filter_captions': filter_captions})

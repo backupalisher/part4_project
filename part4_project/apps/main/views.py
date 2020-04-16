@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.db import connections
 from django.core import serializers
-
+import db_model.models as models
 
 def index(request):
-    return render(request, 'main/index.html', context={'search_block': True})
+    brands = models.Brands.objects.all().order_by('name')
+    return render(request, 'main/index.html', context={'search_block': True, 'brands': brands})
 
 
 def search(request):

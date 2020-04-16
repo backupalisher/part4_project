@@ -1,4 +1,4 @@
-{% load static %}
+{% load static compress %}
 <!DOCTYPE html>
 <html lang="ru" class="h-100">
 <head>
@@ -7,19 +7,23 @@
     <link rel="stylesheet" type="text/css"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+    {% compress css %}
+        <link type="text/x-scss" href="{% static 'scss/style.scss' %}" rel="stylesheet" media="screen">
+    {% endcompress %}
     <title>
         {% block title %}
             Part4
         {% endblock %}
     </title>
 </head>
-<body class="d-flex flex-column h-100">
+<body id="body" class="d-flex flex-column h-100 dark-theme">
 <main class="flex-shrink-0">
     <div class="wrap">
         {% block head %}
             {% block nav %}
-                <nav class="navbar navbar-expand-lg navbar-light bg-grey">
-                    <a class="navbar-brand" href="#">Part 4</a>
+                <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand" href="#">&nbsp;</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,23 +33,24 @@
                         <ul class="navbar-nav mr-auto">
                             {% for item in menu_list %}
                                 <li class="nav-item">
-                                    <a class="nav-link text-light {% if item.1 == menu_item_active %}active{% endif %}"
+                                    <a class="nav-link {% if item.1 == menu_item_active %}active{% endif %}"
                                        href="{{ item.0 }}">{{ item.1 }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
                     </div>
-                    <div>
+                    <div class="auth-block">
                         <ul class="float-right navbar-nav">
                             {% if user.is_authenticated %}
-                                <li class="nav-item"><a class="nav-link text-light"
+                                <li class="nav-item"><a class="nav-link"
                                                         href="{% url 'logout' %}">Выйти {{ user.username }}</a></li>
                             {% else %}
-                                <li class="nav-item"><a class="nav-link text-light" href="{% url 'login' %}">Войти</a></li>
-                                <li class="nan-item"><a class="nav-link text-light" href="{% url 'register' %}">Регистрация</a>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>
+                                <li class="nan-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a>
                                 </li>
                             {% endif %}
                         </ul>
+                        <a id="toggle-theme">Тема</a>
                     </div>
                 </nav>
             {% endblock %}

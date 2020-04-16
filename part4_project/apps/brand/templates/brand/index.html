@@ -6,8 +6,8 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-3">
-            <h4 class="pt-1">Фильтр:</h4>
+        <div class="col-3 filter">
+            <h4 class="pt-1 title">Фильтр:</h4>
             <!--span>моделей {{ model_count.0.0 }}</span-->
             <form method="post" action="">
                 {% csrf_token %}
@@ -70,16 +70,18 @@
             </form>
         </div>
         <div class="col-9">
-            <!--div class="row">
-                <div class="col-12">
-                    <div class="input-group w-100">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"> > </span>
-                      </div>
-                      <input type="text" id="filter_search" name="filter_search" class="form-control filter_search" placeholder="Поиск по модели">
+            {% if pages|length == 0 %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="input-group w-100">
+                          <!--div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"> > </span>
+                          </div-->
+                          <input type="text" id="filter_search" name="filter_search" class="form-control filter_search" placeholder="Поиск по модели">
+                        </div>
                     </div>
                 </div>
-            </div-->
+            {% endif %}
             <div class="row">
                 {% for model in brand_models %}
                     <div class="col-lg-3 col-md-3 col-sm-4 p-3">
@@ -91,33 +93,35 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="row">
-                <nav class="p-4 w-100">
-                    <ul class="pagination justify-content-center">
-                        {% for i in pages %}
-                            {% if page >= 3 and i != page and i == 0 %}
-                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
-                                {% if page > 3 %}
-                                    <li class="page-item"><a class="page-link">...</a></li>
+            {% if pages.1 > 0 %}
+                <div class="row">
+                    <nav class="p-4 w-100">
+                        <ul class="pagination justify-content-center">
+                            {% for i in pages %}
+                                {% if page >= 3 and i != page and i == 0 %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
+                                    {% if page > 3 %}
+                                        <li class="page-item"><a class="page-link">...</a></li>
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
-                            {% if i > page|minus:3 and i < page|plus:3 and  i != page %}
-                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
-                            {% endif %}
-                            {% if i == page %}
-                                <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a>
-                                </li>
-                            {% endif %}
-                            {% if i == pages|length|minus:1 and page < pages|length|minus:3 %}
-                                {% if page|minus:1 <= pages|length and page < pages|length|minus:4 %}
-                                    <li class="page-item"><a class="page-link">...</a></li>
+                                {% if i > page|minus:3 and i < page|plus:3 and  i != page %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
                                 {% endif %}
-                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </nav>
-            </div>
+                                {% if i == page %}
+                                    <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a>
+                                    </li>
+                                {% endif %}
+                                {% if i == pages|length|minus:1 and page < pages|length|minus:3 %}
+                                    {% if page|minus:1 <= pages|length and page < pages|length|minus:4 %}
+                                        <li class="page-item"><a class="page-link">...</a></li>
+                                    {% endif %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                </div>
+            {% endif %}
         </div>
     </div>
 
@@ -129,7 +133,7 @@
             <nav class="nav-breadcrumb w-100">
                 <ul>
                     <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="nav-breadcrumb-item"><a href="/brand/brands">Все бренды</a></li>
+                    <li class="nav-breadcrumb-item"><a href="/brand/brands">Бренды</a></li>
                     <li class="nav-breadcrumb-item active">{{ brand_name }}</li>
                 </ul>
             </nav>

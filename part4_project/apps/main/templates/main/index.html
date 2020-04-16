@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     {% for index in sresult %}
@@ -20,6 +21,23 @@
             {% endif %}
         </p>
     {% endfor %}
+    <div class="row">
+        {% for brand in brands %}
+            <div class="col-lg-2 col-md-3 col-sm-4 mb-3">
+                <div class="card btn">
+                    <a href="/brand/{{ brand.id }}">
+                        <!--h5 class="text-center">{{ brand.name }}</h5-->
+                        {% if brand.logotype is not None %}
+                            <img src="{% static '/image/brands/' %}{{ brand.logotype }}" class="img-fluid"
+                                 alt="{{ brand.name }}">
+                        {% else %}
+                            <img src="{% static '/image/no-image.png' %}" class="img-fluid" alt="{{ brand.name }}">
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block title %}

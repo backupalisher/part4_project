@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    {{ partcode.code }}
+    {{ model }}
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@
             <div class="col-auto">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
-                        {% if model_images|length > 0 %}
+                        {% if model_images|length > 1 %}
                             {% for i in model_images %}
                                 {% if forloop.first %}
                                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -19,8 +19,6 @@
                                         data-slide-to="{{ forloop.counter0 }}"></li>
                                 {% endif %}
                             {% endfor %}
-                        {% else %}
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                         {% endif %}
                     </ol>
                     <div class="carousel-inner card_image">
@@ -44,7 +42,7 @@
                                     <img src="{% static model_main_image %}" class="d-block w-100"
                                          alt="{{ detail_name }}"/>
                                 {% else %}
-                                    <img src="{% static '/image/no-image.jpg' %}" class="d-block w-100"
+                                    <img src="{% static '/image/no-image.png' %}" class="d-block w-100"
                                          alt="{{ detail_name }}"/>
                                 {% endif %}
                             </div>
@@ -53,7 +51,7 @@
                 </div>
             </div>
             <div class="col">
-                <h3>Модель: {{ detail_name }}</h3>
+                <h3>Модель: {{ model }}</h3>
                 {% for caption in captions.0.3 %}
                     {% if 'Status' in caption %}
                         <h5>{{ caption }}</h5>
@@ -79,20 +77,27 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="row">
+        <div class="row pt-3">
             <div class="col-sm-12">
                 <div class="py-2">
                     <ul class="nav nav-tabs" id="detailTabs" role="tablist">
+                    {% if captions|length > 0 %}
                         <li class="nav-item">
                             <a class="nav-link {% if cur_module is None %} active {% endif %}" id="options-tab"
                                data-toggle="tab" href="#options" role="tab"
                                aria-controls="options"
                                aria-selected="true">Характеристики</a>
                         </li>
+                    {% endif %}
                         <li class="nav-item">
-                            <a class="nav-link {% if cur_module is not None %} active {% endif %}" id="parts-tab"
+                            <a class="nav-link {% if cur_module is not None or captions|length == 0 %} active {% endif %}" id="parts-tab"
                                data-toggle="tab" href="#parts" role="tab"
                                aria-controls="parts" aria-selected="false">Парткаталог</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if cur_module is not None %} active {% endif %}" id="errors-tab"
+                               data-toggle="tab" href="#errors" role="tab"
+                               aria-controls="errors" aria-selected="false">Коды ошибок</a>
                         </li>
                         <!--li class="nav-item">
                             <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
@@ -100,7 +105,8 @@
                         </li-->
                     </ul>
                     <div class="tab-content" id="myTabContent">
-                        <div class="p-3 tab-pane {% if cur_module is None %} active {% endif %}" id="options"
+                    {% if captions|length > 0 %}
+                        <div class="py-3 tab-pane {% if cur_module is None %} active {% endif %}" id="options"
                              role="tabpanel"
                              aria-labelledby="options-tab">
                             <div class="table-responsive">
@@ -138,7 +144,8 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="p-3 tab-pane {% if cur_module is not None %} active {% endif %}" id="parts"
+                    {% endif %}
+                        <div class="py-3 tab-pane {% if cur_module is not None or captions|length == 0 %} active {% endif %}" id="parts"
                              role="tabpanel" aria-labelledby="parts-tab">
                             <div class="container">
                                 <div class="row">
@@ -177,7 +184,36 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="p-3 tab-pane fade" id="description" role="tabpanel"
+                        <div class="py-3 tab-pane fade" id="errors" role="tabpanel"
+                             aria-labelledby="errors-tab">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Display</th>
+                                                    <th>Description</th>
+                                                    <th>Causes</th>
+                                                    <th>Remedy</th>
+                                                </tr>
+                                            </thead>
+                                            {% for error in verrors %}
+                                                <tr>
+                                                    <td>{{ error.2 }}</td>
+                                                    <td>{{ error.3 }}</td>
+                                                    <td>{{ error.4 }}</td>
+                                                    <td>{{ error.5 }}</td>
+                                                    <td>{{ error.6 }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-3 tab-pane fade" id="description" role="tabpanel"
                              aria-labelledby="description-tab">
                             <h3>Описание</h3>
                         </div>
@@ -198,8 +234,9 @@
             <nav class="nav-breadcrumb w-100">
                 <ul>
                     <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="nav-breadcrumb-item"><a href="/brand/brands">Бренды</a></li>
                     <li class="nav-breadcrumb-item"><a href="/brand/{{ brand_id }}">{{ brand_name }}</a></li>
-                    <li class="nav-breadcrumb-item active">{{ detail_name }}</li>
+                    <li class="nav-breadcrumb-item active">{{ model }}</li>
                 </ul>
             </nav>
         </div>
