@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card">
+    <div class="card card-model">
         <div class="row">
             <div class="col-auto">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -153,11 +153,11 @@
                                         {% for module in modules %}
                                             <div class="mb-3 module-title"
                                                  {% if cur_module == module %}style="font-weight: 900"{% endif %}
-                                                 onclick=" $('.module-title').css('font-weight', '400'),
-                                                         $(this).css('font-weight', '900'),
+                                                 onclick=" $('.module-title').removeClass('selected-module'),
+                                                         $(this).addClass('selected-module')
                                                          $( '.model-opts' ).css('display', 'none'),
                                                          $( '#opts{{ forloop.counter }}' ).toggle();">
-                                                {{ module }}</div>
+                                                <span class="module_name">{{ module }}</span></div>
                                         {% endfor %}
                                     </div>
                                     <div class="col">
@@ -173,8 +173,10 @@
                                                 {% for partc in partcatalog %}
                                                     {% if module == partc.3 %}
                                                         <p>
-                                                            <a href="/detail/{{ partc.14 }}">Парткод: {{ partc.7 }}</a><br>
-                                                            Деталь: {{ partc.9 }}<br>
+                                                            <a href="/detail/{{ partc.14 }}">
+                                                                Парткод: {{ partc.7 }}
+                                                            </a><br>
+                                                            <span class="part-name">Деталь: </span>&nbsp;&nbsp; {{ partc.9 }} <br>
                                                         </p>
                                                     {% endif %}
                                                 {% endfor %}
@@ -188,27 +190,27 @@
                              aria-labelledby="errors-tab">
                             <div class="container">
                                 <div class="row">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Code</th>
-                                                    <th>Display</th>
-                                                    <th>Description</th>
-                                                    <th>Causes</th>
-                                                    <th>Remedy</th>
-                                                </tr>
-                                            </thead>
-                                            {% for error in verrors %}
-                                                <tr>
-                                                    <td>{{ error.2 }}</td>
-                                                    <td>{{ error.3 }}</td>
-                                                    <td>{{ error.4 }}</td>
-                                                    <td>{{ error.5 }}</td>
-                                                    <td>{{ error.6 }}</td>
-                                                </tr>
-                                            {% endfor %}
-                                        </table>
+                                    <div id="accordion">
+                                        {% for error in verrors %}
+                                            <div class="card error-list">
+                                                <div class="card-header" id="headingOne">
+                                                    <h5 class="mb-0">
+                                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseOne">
+                                                            {{ error.2 }}
+                                                        </button>
+                                                    </h5>
+                                                </div>
+
+                                                <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        {% if error.3 %} <p><span class="display">Display:</span> {{ error.3 }} </p> {% endif %}
+                                                        {% if error.4 %} <p><span class="description">Description:</span> {{ error.4 }} </p> {% endif %}
+                                                        {% if error.5 %} <p><span class="causes">Causes:</span> {{ error.5 }} </p> {% endif %}
+                                                        {% if error.6 %} <p><span class="remedy">Remedy:</span> {{ error.6 }} </p> {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>

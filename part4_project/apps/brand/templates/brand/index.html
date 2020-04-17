@@ -85,10 +85,10 @@
             <div class="row">
                 {% for model in brand_models %}
                     <div class="col-lg-3 col-md-3 col-sm-4 p-3">
-                        <div class="card card-model btn">
+                        <div class="card card-model-list btn">
                             <a href="/model/{{ model.0 }}" class="brand_model_link" style="background-image:url('{% if model.4 is not None %}{% static '/image/' %}{{ model.4|cut:';' }}{% else %}{% static '/image/no-image.png' %}{% endif %}')">
                             </a>
-                            <h6 class="brand_model_title">{{ model.2 }}</h6>
+                            <a href="/model/{{ model.0 }}"><h6 class="brand_model_title">{{ model.2 }}</h6></a>
                         </div>
                     </div>
                 {% endfor %}

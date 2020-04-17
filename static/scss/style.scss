@@ -3,11 +3,12 @@ $dark-orange: #e98839;
 $dark-red: #eb5c59;
 $dark-green: #78b857;
 $dark-blue: #2e79f6;
+$dark-white: #fdfdfd;
 $dark-light: #e9e9eb;
 $dark-grey: #898989;
+$dark-darkgrey: #3f3f45;
 $dark-dark: #323235;
 $dark-black: #262629;
-$dark-darkgrey: #38383d;
 
 $light-yellow: #f2ba4b;
 $light-orange: #e98839;
@@ -169,7 +170,7 @@ $light-white: #fdfdfd;
     }
     .card {
         box-shadow: 0 0 5px 1px $light-light;
-        padding: 1em 0.5em;
+        padding: 0.1em 0.5em;
         &:hover {
             box-shadow: 0 0 5px 1px $light-grey;
         }
@@ -180,10 +181,28 @@ $light-white: #fdfdfd;
         &.card-model{
             .brand_model_title {
                 color: $dark-dark;
-                height: 2.4em;
+                height: 3.6em;
                 overflow: hidden;
             }
         }
+
+        #parts {
+            .part-name {
+                color: $dark-orange;
+            }
+            .module-name {
+                cursor: pointer;
+                &:hover{
+                    border: none;
+                    color: $dark-yellow;
+                }
+                &.active {
+                    color: $dark-orange;
+                    line-height: 2em;
+                }
+            }
+        }
+
     }
 }
 
@@ -220,8 +239,11 @@ $light-white: #fdfdfd;
         }
         a {
             color: $dark-light;
-            &:hover, &.active {
+            &.active {
                 color: $dark-orange;
+            }
+            &:hover, &:focus {
+                color: $dark-yellow;
             }
         }
         .auth-block {
@@ -260,11 +282,11 @@ $light-white: #fdfdfd;
                     line-height: 2em;
                     z-index: 2;
                     &:hover, &:focus {
-                        color: $dark-orange;
+                        color: $dark-yellow;
                     }
                 }
                 &.active {
-                    color: $dark-yellow;
+                    color: $dark-orange;
                     line-height: 2em;
                 }
             }
@@ -330,7 +352,7 @@ $light-white: #fdfdfd;
         }
     }
     .card {
-        background-color: $dark-darkgrey;
+        background-color: $dark-white;
         color: $dark-light;
         box-shadow: 0 0 5px 1px $dark-grey;
         padding: 1em 0.5em;
@@ -340,14 +362,39 @@ $light-white: #fdfdfd;
             background-color: $light-white;
             box-shadow: 0 0 5px 1px $dark-grey;
         }
+        &.card-model-list{
+            padding: 0.1em 0.5em;
+            .brand_model_title {
+                color: $dark-dark;
+                height: 3.6em;
+                overflow: hidden;
+            }
+            a {
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
         &.card-model{
+            background-color: $dark-darkgrey;
             .brand_model_title {
                 color: $dark-dark;
                 height: 2.4em;
                 overflow: hidden;
             }
         }
+
+        &.card-detail{
+            background-color: $dark-darkgrey;
+            .brand_model_title {
+                color: $dark-light;
+                height: 2.4em;
+                overflow: hidden;
+            }
+        }
+
         .nav-tabs {
+            border-color: $dark-black;
             .nav-link {
                 color: $dark-light;
                 border: none;
@@ -364,13 +411,77 @@ $light-white: #fdfdfd;
         }
         .table {
             color: $dark-light;
-            .thead-light {
+            border-color: $dark-black;
+            thead {
                 th {
+                    border-color: $dark-black;
                     color: $dark-orange;
                     background-color: $dark-dark;
                 }
             }
+            td {
+                    border-color: $dark-black;
+                }
         }
+        #parts {
+            .part-name {
+                color: $dark-green;
+            }
+            .part-name {
+                color: $dark-green;
+            }
+            .module-name {
+                cursor: pointer;
+                &:hover{
+                    border: none;
+                    color: $dark-yellow;
+                }
+                &.active {
+                    color: $dark-orange;
+                    line-height: 2em;
+                }
+            }
+        }
+    }
+
+    #accordion {
+        width: 100%;
+    }
+    .error-list {
+        background-color: $dark-darkgrey;
+        width: 100%;
+        padding: 0;
+        .card-header {
+            padding: 0;
+            .btn {
+                width: 100%;
+                text-align: left;
+                &:hover, &:focus {
+                    text-decoration: none;
+                }
+            }
+        }
+        .display {
+            color: $dark-red;
+        }
+        .description {
+            color: $dark-yellow;
+        }
+        .causes {
+            color: $dark-blue;
+        }
+        .remedy {
+            color: $dark-green;
+        }
+    }
+
+    .module-title {
+        &:hover {
+            color: $dark-yellow;
+        }
+    }
+    .selected-module {
+        color: $dark-orange;
     }
 }
 
