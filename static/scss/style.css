@@ -107,7 +107,7 @@
       box-shadow: 0 0 5px 1px #e98839; }
 .light-theme .card {
   box-shadow: 0 0 5px 1px #e9e9eb;
-  padding: 1em 0.5em; }
+  padding: 0.1em 0.5em; }
   .light-theme .card:hover {
     box-shadow: 0 0 5px 1px #898989; }
   .light-theme .card .card_image {
@@ -115,8 +115,18 @@
     width: 200px; }
   .light-theme .card.card-model .brand_model_title {
     color: #323235;
-    height: 2.4em;
+    height: 3.6em;
     overflow: hidden; }
+  .light-theme .card #parts .part-name {
+    color: #e98839; }
+  .light-theme .card #parts .module-name {
+    cursor: pointer; }
+    .light-theme .card #parts .module-name:hover {
+      border: none;
+      color: #f2ba4b; }
+    .light-theme .card #parts .module-name.active {
+      color: #e98839;
+      line-height: 2em; }
 
 .dark-theme {
   background-color: #323235; }
@@ -142,8 +152,10 @@
       color: #323235; }
     .dark-theme .navbar a {
       color: #e9e9eb; }
-      .dark-theme .navbar a:hover, .dark-theme .navbar a.active {
+      .dark-theme .navbar a.active {
         color: #e98839; }
+      .dark-theme .navbar a:hover, .dark-theme .navbar a:focus {
+        color: #f2ba4b; }
     .dark-theme .navbar .auth-block {
       padding-right: 80px; }
   .dark-theme .nav-breadcrumb {
@@ -176,9 +188,9 @@
           line-height: 2em;
           z-index: 2; }
           .dark-theme .nav-breadcrumb ul li a:hover, .dark-theme .nav-breadcrumb ul li a:focus {
-            color: #e98839; }
+            color: #f2ba4b; }
         .dark-theme .nav-breadcrumb ul li.active {
-          color: #f2ba4b;
+          color: #e98839;
           line-height: 2em; }
   .dark-theme .filter {
     color: #e9e9eb; }
@@ -186,8 +198,8 @@
       color: #e9e9eb; }
     .dark-theme .filter .filter_settings {
       padding: 2px;
-      background-color: #38383d;
-      box-shadow: 0 0 5px 1px #38383d;
+      background-color: #3f3f45;
+      box-shadow: 0 0 5px 1px #3f3f45;
       max-height: 100vh;
       overflow-y: scroll;
       padding-right: 1em; }
@@ -222,7 +234,7 @@
       .dark-theme .filter .filter_settings .btn-filter:hover {
         box-shadow: 0 0 5px 1px #e98839; }
   .dark-theme .card {
-    background-color: #38383d;
+    background-color: #fdfdfd;
     color: #e9e9eb;
     box-shadow: 0 0 5px 1px #898989;
     padding: 1em 0.5em; }
@@ -231,25 +243,84 @@
       width: 200px;
       background-color: #fdfdfd;
       box-shadow: 0 0 5px 1px #898989; }
-    .dark-theme .card.card-model .brand_model_title {
-      color: #323235;
-      height: 2.4em;
-      overflow: hidden; }
-    .dark-theme .card .nav-tabs .nav-link {
-      color: #e9e9eb;
-      border: none; }
-      .dark-theme .card .nav-tabs .nav-link:hover {
-        border: none;
-        color: #f2ba4b; }
-      .dark-theme .card .nav-tabs .nav-link.active {
-        border: none;
+    .dark-theme .card.card-model-list {
+      padding: 0.1em 0.5em; }
+      .dark-theme .card.card-model-list .brand_model_title {
+        color: #323235;
+        height: 3.6em;
+        overflow: hidden; }
+      .dark-theme .card.card-model-list a:hover {
+        text-decoration: none; }
+    .dark-theme .card.card-model {
+      background-color: #3f3f45; }
+      .dark-theme .card.card-model .brand_model_title {
+        color: #323235;
+        height: 2.4em;
+        overflow: hidden; }
+    .dark-theme .card.card-detail {
+      background-color: #3f3f45; }
+      .dark-theme .card.card-detail .brand_model_title {
         color: #e9e9eb;
-        background-color: #2e79f6; }
+        height: 2.4em;
+        overflow: hidden; }
+    .dark-theme .card .nav-tabs {
+      border-color: #262629; }
+      .dark-theme .card .nav-tabs .nav-link {
+        color: #e9e9eb;
+        border: none; }
+        .dark-theme .card .nav-tabs .nav-link:hover {
+          border: none;
+          color: #f2ba4b; }
+        .dark-theme .card .nav-tabs .nav-link.active {
+          border: none;
+          color: #e9e9eb;
+          background-color: #2e79f6; }
     .dark-theme .card .table {
-      color: #e9e9eb; }
-      .dark-theme .card .table .thead-light th {
+      color: #e9e9eb;
+      border-color: #262629; }
+      .dark-theme .card .table thead th {
+        border-color: #262629;
         color: #e98839;
         background-color: #323235; }
+      .dark-theme .card .table td {
+        border-color: #262629; }
+    .dark-theme .card #parts .part-name {
+      color: #78b857; }
+    .dark-theme .card #parts .part-name {
+      color: #78b857; }
+    .dark-theme .card #parts .module-name {
+      cursor: pointer; }
+      .dark-theme .card #parts .module-name:hover {
+        border: none;
+        color: #f2ba4b; }
+      .dark-theme .card #parts .module-name.active {
+        color: #e98839;
+        line-height: 2em; }
+  .dark-theme #accordion {
+    width: 100%; }
+  .dark-theme .error-list {
+    background-color: #3f3f45;
+    width: 100%;
+    padding: 0; }
+    .dark-theme .error-list .card-header {
+      padding: 0; }
+      .dark-theme .error-list .card-header .btn {
+        width: 100%;
+        text-align: left; }
+        .dark-theme .error-list .card-header .btn:hover, .dark-theme .error-list .card-header .btn:focus {
+          text-decoration: none; }
+    .dark-theme .error-list .display {
+      color: #eb5c59; }
+    .dark-theme .error-list .description {
+      color: #f2ba4b; }
+    .dark-theme .error-list .causes {
+      color: #2e79f6; }
+    .dark-theme .error-list .remedy {
+      color: #78b857; }
+  .dark-theme .module-title:hover {
+    color: #f2ba4b; }
+  .dark-theme .selected-module {
+    color: #e98839; }
 
 .form-control:focus {
   color: #495057;
