@@ -55,7 +55,9 @@ def index(request, detail_id):
                f"LEFT JOIN spr_error_code secd ON secd.id = ec.description_id "
                f"LEFT JOIN spr_error_code secc ON secc.id = ec.causes_id "
                f"LEFT JOIN spr_error_code secr ON secr.id = ec.remedy_id WHERE m.id = {detail_id}")
-
+    if len(verrors) > 0:
+        if verrors[0][2] is None and verrors[0][3] is None and verrors[0][4] is None and verrors[0][5] is None:
+            verrors = None
     # Получение id парткодов, моделей, модулей, названий детали для модулей и парткаталога
     try:
         try:

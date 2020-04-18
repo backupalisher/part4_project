@@ -94,11 +94,13 @@
                                data-toggle="tab" href="#parts" role="tab"
                                aria-controls="parts" aria-selected="false">Парткаталог</a>
                         </li>
+                    {% if verrors is not None %}
                         <li class="nav-item">
                             <a class="nav-link {% if cur_module is not None %} active {% endif %}" id="errors-tab"
                                data-toggle="tab" href="#errors" role="tab"
                                aria-controls="errors" aria-selected="false">Коды ошибок</a>
                         </li>
+                    {% endif %}
                         <!--li class="nav-item">
                             <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
                                aria-controls="description" aria-selected="false">Описание</a>
@@ -161,6 +163,7 @@
                                         {% endfor %}
                                     </div>
                                     <div class="col">
+                                        <div class="scrollbar-macosx">
                                         {% for module in modules %}
                                             <div class="model-opts pl-3"
                                                  id="opts{{ forloop.counter }}"
@@ -182,6 +185,7 @@
                                                 {% endfor %}
                                             </div>
                                         {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -190,6 +194,7 @@
                              aria-labelledby="errors-tab">
                             <div class="container">
                                 <div class="row">
+                                {% if verrors is not None %}
                                     <div id="accordion">
                                         {% for error in verrors %}
                                             <div class="card error-list">
@@ -212,6 +217,7 @@
                                             </div>
                                         {% endfor %}
                                     </div>
+                                {% endif %}
                                 </div>
                             </div>
                         </div>

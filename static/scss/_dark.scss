@@ -1,0 +1,181 @@
+@import "colors";
+.dark-theme {
+    background-color: $dark-dark;
+    #toggle-theme {
+        color: $dark-dark;
+        background-color: $light-light;
+        border: 1px solid $dark-orange;
+    }
+    .btn {
+        color: $dark-light;
+        &:hover, &:focus {
+            box-shadow: 0 0 5px 1px $dark-orange;
+            color: $dark-light !important;
+        }
+    }
+    .form-control {
+        &:hover, &:focus {
+            box-shadow: 0 0 5px 1px $dark-orange;
+        }
+    }
+    footer {
+        color: $dark-light;
+    }
+
+    .navbar {
+        background-color: $dark-black;
+        color: $dark-light;
+        .navbar-brand {
+            background-image: url("/static/image/dark_logo_part4.png");
+            color: $light-dark;
+        }
+        a {
+            color: $dark-light;
+            &.active {
+                color: $dark-orange;
+            }
+            &:hover, &:focus {
+                color: $dark-yellow;
+            }
+        }
+    }
+    .nav-breadcrumb {
+        background: $dark-dark;
+        ul {
+            li {
+                &:after {
+                    border-color: $dark-blue;
+                }
+                a {
+                    color: $dark-light;
+                    background: $dark-dark;
+                    &:hover, &:focus {
+                        color: $dark-yellow;
+                    }
+                }
+                &.active {
+                    color: $dark-orange;
+                }
+            }
+        }
+    }
+    .filter {
+        color: $dark-light;
+        .title {
+            color: $dark-light;
+        }
+        .filter_settings {
+            background-color: $dark-darkgrey;
+            box-shadow: 0 0 5px 1px $dark-darkgrey;
+            .form-check {
+                &.checkbox{
+                    input {
+                        &:before {
+                            border-color: #898989;
+                        }
+                        &:checked:before {
+                            background-color: #e98839;
+                        }
+                    }
+                }
+            }
+            .btn-filter {
+                &:hover {
+                    box-shadow: 0 0 5px 1px $dark-orange;
+                }
+            }
+        }
+    }
+    .card {
+        background-color: $dark-white;
+        color: $dark-light;
+        box-shadow: 0 0 5px 1px $dark-grey;
+        .card_image {
+            background-color: $light-white;
+            box-shadow: 0 0 5px 1px $dark-grey;
+        }
+        &.card-model-list{
+            .brand_model_title {
+                color: $dark-dark;
+            }
+        }
+        &.card-model{
+            background-color: $dark-darkgrey;
+            .brand_model_title {
+                color: $dark-dark;
+            }
+        }
+        &.card-detail{
+            background-color: $dark-darkgrey;
+            .brand_model_title {
+                color: $dark-light;
+            }
+        }
+        .nav-tabs {
+            border-color: $dark-black;
+            .nav-link {
+                color: $dark-light;
+                &:hover{
+                    color: $dark-yellow;
+                }
+                &.active {
+                    color: $dark-light;
+                    background-color: $dark-blue;
+                }
+            }
+        }
+        .table {
+            color: $dark-light;
+            border-color: $dark-black;
+            thead {
+                th {
+                    border-color: $dark-black;
+                    color: $dark-orange;
+                    background-color: $dark-dark;
+                }
+            }
+            td {
+                    border-color: $dark-black;
+                }
+        }
+        #parts {
+            .part-name {
+                color: $dark-green;
+            }
+            .part-name {
+                color: $dark-green;
+            }
+            .module-name {
+                &:hover{
+                    color: $dark-yellow;
+                }
+                &.active {
+                    color: $dark-orange;
+                }
+            }
+        }
+    }
+    .error-list {
+        background-color: $dark-darkgrey;
+        .display {
+            color: $dark-red;
+        }
+        .description {
+            color: $dark-yellow;
+        }
+        .causes {
+            color: $dark-blue;
+        }
+        .remedy {
+            color: $dark-green;
+        }
+    }
+    .module-title {
+        &:hover {
+            color: $dark-yellow;
+        }
+    }
+    .selected-module {
+        color: $dark-orange;
+    }
+}

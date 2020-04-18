@@ -1,516 +1,204 @@
-$dark-yellow: #f2ba4b;
-$dark-orange: #e98839;
-$dark-red: #eb5c59;
-$dark-green: #78b857;
-$dark-blue: #2e79f6;
-$dark-white: #fdfdfd;
-$dark-light: #e9e9eb;
-$dark-grey: #898989;
-$dark-darkgrey: #3f3f45;
-$dark-dark: #323235;
-$dark-black: #262629;
-
-$light-yellow: #f2ba4b;
-$light-orange: #e98839;
-$light-red: #eb5c59;
-$light-green: #78b857;
-$light-blue: #2e79f6;
-$light-light: #e9e9eb;
-$light-grey: #898989;
-$light-dark: #323235;
-$light-white: #fdfdfd;
-
+@import "dark";
+@import "light";
 #toggle-theme {
     position: absolute;
     right: 10px;
     top: 10px;
-    background-color: $dark-dark;
-    color: $dark-light;
     padding: 0.4em;
-    border: 1px solid $dark-orange;
     border-radius: 50%;
+    cursor: pointer;
 }
-
-.light-theme {
-    .btn {
-    &:hover, &:focus {
-        box-shadow: 0 0 5px 1px $light-grey;
+.navbar {
+    margin-bottom: 1em;
+    .navbar-brand {
+        width: 4em;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: top left;
     }
+    .auth-block {
+        padding-right: 80px;
     }
-    .form-control {
-        &:hover, &:focus {
-            box-shadow: 0 0 5px 1px $light-grey;
-        }
-    }
-    footer {
-        color: $light-dark;
-    }
-
-    .navbar {
-        background-color: $light-light;
-        color: $light-dark;
-        margin-bottom: 1em;
-        .navbar-brand {
-            width: 4em;
-            background-image: url("/static/image/logo_part4.png");
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: top left;
-            color: $light-dark;
-        }
-        a {
-            color: $light-grey;
-        }
-        a.active {
-            color: $light-dark;
-        }
-        .auth-block {
-            padding-right: 80px;
-            a {
-                color: $light-dark;
+}
+.nav-breadcrumb {
+    ul {
+        list-style: none;
+        padding: 0 15px;
+        li {
+            float: left;
+            position: relative;
+            padding: 0 0.2em 0 0;
+            &:after {
+                content: '';
+                position: absolute;
+                transform: rotate(45deg);
+                width: 1.2em;
+                height: 1.2em;
+                top: 0.4em;
+                right: 0.8em;
+                border: 1px solid;
             }
-        }
-    }
-    .nav-breadcrumb {
-        background: #fff;
-        ul {
-            list-style: none;
-            padding: 0 15px;
-            li {
+            &:last-child:after {
+                display: none;
+            }
+            a {
                 float: left;
                 position: relative;
-                padding: 0 0.2em 0 0;
-                &:after {
-                    content: '';
-                    position: absolute;
-                    transform: rotate(45deg);
-                    width: 1.2em;
-                    height: 1.2em;
-                    top: 0.4em;
-                    right: 0.8em;
-                    border: 1px solid #2e79f6;
-                }
-                &:last-child:after {
-                    display: none;
-                }
-                a {
-                    color: $light-dark;
-                    float: left;
-                    position: relative;
-                    padding: 0 0.4em 0 0;
-                    margin-right: 0.8em;
-                    background: #fff;
-                    line-height: 2em;
-                    z-index: 2;
-                }
-                &.active {
-                    line-height: 2em;
-                }
+                padding: 0 0.4em 0 0;
+                margin-right: 0.8em;
+                line-height: 2em;
+                z-index: 2;
             }
-        }
-    }
-    .filter {
-        color: $light-dark;
-        .title {
-            color: $light-dark;
-        }
-        .filter_settings {
-            padding: 2px;
-            background-color: $light-white;
-            box-shadow: 0 0 5px 1px $light-light;
-            max-height: 100vh;
-            overflow-y: scroll;
-            padding-right: 1em;
-            .form-group {
-                margin-bottom: 0;
-            }
-            .form-check {
-                .radio {
-                    width: 48%;
-                    margin-right: 2%;
-                    float: left;
-                }
-                &.checkbox{
-                    label {
-                        cursor: pointer;
-                        position: relative;
-                        padding-left: 1.2em;
-                    }
-                    input {
-                        position: relative;
-                        width: 0;
-                        &:before {
-                            content: '';
-                            border: 1px solid #898989;
-                            width: 1em;
-                            height: 1em;
-                            position: absolute;
-                            left: 0;
-                            top: 0;
-                        }
-                        &:checked:before {
-                            background-color: #e98839;
-                        }
-                    }
-                }
-            }
-            .input_num {
-                width: 90px;
-                input {
-                    text-align: center;
-                    padding: .375rem;
-                }
-            }
-            .btn-filter {
-                &:hover {
-                    box-shadow: 0 0 5px 1px #e98839
-                }
-            }
-        }
-    }
-    .card {
-        box-shadow: 0 0 5px 1px $light-light;
-        padding: 0.1em 0.5em;
-        &:hover {
-            box-shadow: 0 0 5px 1px $light-grey;
-        }
-        .card_image {
-            height: 200px;
-            width: 200px;
-        }
-        &.card-model{
-            .brand_model_title {
-                color: $dark-dark;
-                height: 3.6em;
-                overflow: hidden;
-            }
-        }
-
-        #parts {
-            .part-name {
-                color: $dark-orange;
-            }
-            .module-name {
-                cursor: pointer;
-                &:hover{
-                    border: none;
-                    color: $dark-yellow;
-                }
-                &.active {
-                    color: $dark-orange;
-                    line-height: 2em;
-                }
-            }
-        }
-
-    }
-}
-
-
-.dark-theme {
-    background-color: $dark-dark;
-    .btn {
-    color: $dark-light;
-    &:hover, &:focus {
-        box-shadow: 0 0 5px 1px $dark-orange;
-        color: $dark-light !important;
-    }
-    }
-    .form-control {
-        &:hover, &:focus {
-            box-shadow: 0 0 5px 1px $dark-orange;
-        }
-    }
-    footer {
-        color: $dark-light;
-    }
-
-    .navbar {
-        background-color: $dark-black;
-        color: $dark-light;
-        margin-bottom: 1em;
-        .navbar-brand {
-            width: 4em;
-            background-image: url("/static/image/dark_logo_part4.png");
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: top left;
-            color: $light-dark;
-        }
-        a {
-            color: $dark-light;
             &.active {
-                color: $dark-orange;
-            }
-            &:hover, &:focus {
-                color: $dark-yellow;
+                line-height: 2em;
             }
         }
-        .auth-block {
-            padding-right: 80px;
-        }
-    }
-    .nav-breadcrumb {
-        background: $dark-dark;
-        ul {
-            list-style: none;
-            padding: 0 15px;
-            li {
-                float: left;
-                position: relative;
-                padding: 0 0.2em 0 0;
-                &:after {
-                    content: '';
-                    position: absolute;
-                    transform: rotate(45deg);
-                    width: 1.2em;
-                    height: 1.2em;
-                    top: 0.4em;
-                    right: 0.8em;
-                    border: 1px solid #2e79f6;
-                }
-                &:last-child:after {
-                    display: none;
-                }
-                a {
-                    color: $dark-light;
-                    float: left;
-                    position: relative;
-                    padding: 0 0.4em 0 0;
-                    margin-right: 0.8em;
-                    background: $dark-dark;
-                    line-height: 2em;
-                    z-index: 2;
-                    &:hover, &:focus {
-                        color: $dark-yellow;
-                    }
-                }
-                &.active {
-                    color: $dark-orange;
-                    line-height: 2em;
-                }
-            }
-        }
-    }
-    .filter {
-        color: $dark-light;
-        .title {
-            color: $dark-light;
-        }
-        .filter_settings {
-            padding: 2px;
-            background-color: $dark-darkgrey;
-            box-shadow: 0 0 5px 1px $dark-darkgrey;
-            max-height: 100vh;
-            overflow-y: scroll;
-            padding-right: 1em;
-            .form-group {
-                margin-bottom: 0;
-            }
-            .form-check {
-                .radio {
-                    width: 48%;
-                    margin-right: 2%;
-                    float: left;
-                }
-                &.checkbox{
-                    label {
-                        cursor: pointer;
-                        position: relative;
-                        padding-left: 1.2em;
-                    }
-                    input {
-                        position: relative;
-                        width: 0;
-                        &:before {
-                            content: '';
-                            border: 1px solid #898989;
-                            width: 1em;
-                            height: 1em;
-                            position: absolute;
-                            left: 0;
-                            top: 0;
-                        }
-                        &:checked:before {
-                            background-color: #e98839;
-                        }
-                    }
-                }
-            }
-            .input_num {
-                width: 90px;
-                input {
-                    text-align: center;
-                    padding: .375rem;
-                }
-            }
-            .btn-filter {
-                &:hover {
-                    box-shadow: 0 0 5px 1px #e98839
-                }
-            }
-        }
-    }
-    .card {
-        background-color: $dark-white;
-        color: $dark-light;
-        box-shadow: 0 0 5px 1px $dark-grey;
-        padding: 1em 0.5em;
-        .card_image {
-            height: 200px;
-            width: 200px;
-            background-color: $light-white;
-            box-shadow: 0 0 5px 1px $dark-grey;
-        }
-        &.card-model-list{
-            padding: 0.1em 0.5em;
-            .brand_model_title {
-                color: $dark-dark;
-                height: 3.6em;
-                overflow: hidden;
-            }
-            a {
-                &:hover {
-                    text-decoration: none;
-                }
-            }
-        }
-        &.card-model{
-            background-color: $dark-darkgrey;
-            .brand_model_title {
-                color: $dark-dark;
-                height: 2.4em;
-                overflow: hidden;
-            }
-        }
-
-        &.card-detail{
-            background-color: $dark-darkgrey;
-            .brand_model_title {
-                color: $dark-light;
-                height: 2.4em;
-                overflow: hidden;
-            }
-        }
-
-        .nav-tabs {
-            border-color: $dark-black;
-            .nav-link {
-                color: $dark-light;
-                border: none;
-                &:hover{
-                    border: none;
-                    color: $dark-yellow;
-                }
-                &.active {
-                    border: none;
-                    color: $dark-light;
-                    background-color: $dark-blue;
-                }
-            }
-        }
-        .table {
-            color: $dark-light;
-            border-color: $dark-black;
-            thead {
-                th {
-                    border-color: $dark-black;
-                    color: $dark-orange;
-                    background-color: $dark-dark;
-                }
-            }
-            td {
-                    border-color: $dark-black;
-                }
-        }
-        #parts {
-            .part-name {
-                color: $dark-green;
-            }
-            .part-name {
-                color: $dark-green;
-            }
-            .module-name {
-                cursor: pointer;
-                &:hover{
-                    border: none;
-                    color: $dark-yellow;
-                }
-                &.active {
-                    color: $dark-orange;
-                    line-height: 2em;
-                }
-            }
-        }
-    }
-
-    #accordion {
-        width: 100%;
-    }
-    .error-list {
-        background-color: $dark-darkgrey;
-        width: 100%;
-        padding: 0;
-        .card-header {
-            padding: 0;
-            .btn {
-                width: 100%;
-                text-align: left;
-                &:hover, &:focus {
-                    text-decoration: none;
-                }
-            }
-        }
-        .display {
-            color: $dark-red;
-        }
-        .description {
-            color: $dark-yellow;
-        }
-        .causes {
-            color: $dark-blue;
-        }
-        .remedy {
-            color: $dark-green;
-        }
-    }
-
-    .module-title {
-        &:hover {
-            color: $dark-yellow;
-        }
-    }
-    .selected-module {
-        color: $dark-orange;
     }
 }
-
-
+.filter {
+    .filter_settings {
+        padding: 2px;
+        max-height: 100vh;
+        overflow-y: scroll;
+        padding-right: 1em;
+        .form-group {
+            margin-bottom: 0;
+        }
+        .form-check {
+            .radio {
+                width: 48%;
+                margin-right: 2%;
+                float: left;
+            }
+            &.checkbox{
+                label {
+                    cursor: pointer;
+                    position: relative;
+                    padding-left: 1.2em;
+                }
+                input {
+                    position: relative;
+                    width: 0;
+                    &:before {
+                        content: '';
+                        border: 1px solid $dark-grey;
+                        width: 1em;
+                        height: 1em;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                    }
+                }
+            }
+        }
+        .input_num {
+            width: 90px;
+            input {
+                text-align: center;
+                padding: .375rem;
+            }
+        }
+        .btn-filter {
+            &:hover {
+                box-shadow: 0 0 5px 1px $dark-orange;
+            }
+        }
+    }
+}
+.card {
+    padding: 1em 0.5em;
+    .card_image {
+        height: 200px;
+        width: 200px;
+    }
+    &.card-model-list{
+        padding: 0.1em 0.5em;
+        .brand_model_title {
+            height: 3.6em;
+            overflow: hidden;
+        }
+        a {
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+    &.card-model{
+        .brand_model_title {
+            height: 2.4em;
+            overflow: hidden;
+        }
+    }
+    &.card-detail{
+        .brand_model_title {
+            height: 2.4em;
+            overflow: hidden;
+        }
+    }
+    .nav-tabs {
+        .nav-link {
+            border: none;
+            &:hover{
+                border: none;
+            }
+            &.active {
+                border: none;
+            }
+        }
+    }
+    #parts {
+        .module-name {
+            cursor: pointer;
+            &:hover{
+                border: none;
+            }
+            &.active {
+                line-height: 2em;
+            }
+        }
+    }
+}
+#accordion {
+    width: 100%;
+}
+.error-list {
+    width: 100%;
+    padding: 0;
+    .card-header {
+        padding: 0;
+        .btn {
+            width: 100%;
+            text-align: left;
+            &:hover, &:focus {
+                text-decoration: none;
+            }
+        }
+    }
+}
 
 .form-control:focus {
-    color: #495057;
-    background-color: #fff;
+    color: $dark-grey;
+    background-color: $light-white;
     border: none;
     outline: 0;
 }
 h1 {
-    color: #bbccdd;
+    color: $light-white;
     text-align: center;
     font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
 }
 
-.model-opts {
-    overflow-y: scroll;
+.model-opts, .scrollbar-macosx {
     min-height: 360px;
 }
 .brand_model_card {
-    box-shadow: 0px 0px 3px 0px #5b80b290;
+    box-shadow: 0px 0px 3px 0px $dark-blue;
     padding: 0.2em 0.4em;
     height: 266px;
     overflow: hidden;
-}
-.brand_model_card:hover {
-    box-shadow: 0px 0px 4px 0px #5b80b2;
+    &:hover {
+        box-shadow: 0px 0px 4px 0px $dark-blue;
+    }
 }
 .brand_model_link {
     display: block;
@@ -524,10 +212,10 @@ h1 {
 }
 
 .search_result_model {
-    color: #447e9b;
+    color: $dark-blue;
 }
 .search_result_partcode {
-    color: #003366;
+    color: $dark-blue;
     font-style: oblique;
 }
 .module-title {
@@ -535,20 +223,22 @@ h1 {
 }
 .carousel-indicators {
     margin-bottom: -7%;
+    li {
+        border-top: 5px solid $dark-blue;
+        background-color: transparent;
+    }
 }
-.carousel-indicators li {
-    border-top: 5px solid #00a8ff;
-    background-color: transparent;
-}
-.breadcrumb-item+.breadcrumb-item {
-    padding-left: 1rem;
-}
-.breadcrumb-item a {
-    font-size: 1em;
-    line-height: 1.5em;
-}
-.breadcrumb-item a:hover {
-    text-decoration: none;
+.breadcrumb-item {
+    &+.breadcrumb-item {
+        padding-left: 1rem;
+    }
+    a {
+        font-size: 1em;
+        line-height: 1.5em;
+    }
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 

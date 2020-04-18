@@ -35,15 +35,15 @@ def index(request, detail_id):
             model = '-'
         try:
             module_id = models.Details.objects.filter(id=detail_id).values('module_id')[0]['module_id']
-            module = models.Modules.objects.filter(id=module_id).values('name')[0]['name']
+            module = models.SprModules.objects.filter(id=module_id).values('name')[0]['name']
         except:
             module = '-'
         try:
             spr_detail_id = models.Details.objects.filter(id=detail_id).values('spr_detail_id')[0]['spr_detail_id']
-            if models.Spr_details.objects.filter(id=spr_detail_id).values('name_ru')[0]['name_ru'] != None:
-                detail_name = models.Spr_details.objects.filter(id=spr_detail_id).values('name_ru')[0]['name_ru']
+            if models.SprDetails.objects.filter(id=spr_detail_id).values('name_ru')[0]['name_ru'] != None:
+                detail_name = models.SprDetails.objects.filter(id=spr_detail_id).values('name_ru')[0]['name_ru']
             else:
-                detail_name = models.Spr_details.objects.filter(id=spr_detail_id).values('name')[0]['name']
+                detail_name = models.SprDetails.objects.filter(id=spr_detail_id).values('name')[0]['name']
         except:
             detail_name = '-'
         try:
@@ -78,7 +78,6 @@ def index(request, detail_id):
         partcatalog = _query(q_code_module)
     except:
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
-
 
     return render(request, 'detail/index.html',
                   {'partcode': partcode, 'detail_id': detail_id, 'model': model, 'model_id': model_id,

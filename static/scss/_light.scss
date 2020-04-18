@@ -1,0 +1,129 @@
+@import "colors";
+.light-theme {
+    #toggle-theme {
+        color: $dark-light;
+        background-color: $light-dark;
+        border: 1px solid $dark-orange;
+    }
+    .btn {
+        &:hover, &:focus {
+            box-shadow: 0 0 5px 1px $light-grey;
+        }
+    }
+    .form-control {
+        &:hover, &:focus {
+            box-shadow: 0 0 5px 1px $light-grey;
+        }
+    }
+    footer {
+        color: $light-dark;
+    }
+    .navbar {
+        background-color: $light-light;
+        color: $light-dark;
+        .navbar-brand {
+            background-image: url("/static/image/logo_part4.png");
+            color: $light-dark;
+        }
+        a {
+            color: $light-grey;
+        }
+        a.active {
+            color: $light-dark;
+        }
+        .auth-block {
+            a {
+                color: $light-dark;
+            }
+        }
+    }
+    .nav-breadcrumb {
+        background: #fff;
+        ul {
+            li {
+                &:after {
+                    border: 1px solid #2e79f6;
+                }
+                a {
+                    color: $light-dark;
+                    background: $light-white;
+                }
+            }
+        }
+    }
+    .filter {
+        color: $light-dark;
+        .title {
+            color: $light-dark;
+        }
+        .filter_settings {
+            background-color: $light-white;
+            box-shadow: 0 0 5px 1px $light-light;
+            .form-check {
+                &.checkbox{
+                    input {
+                        &:before {
+                            border: 1px solid $light-grey;
+                        }
+                        &:checked:before {
+                            background-color: $light-orange;
+                        }
+                    }
+                }
+            }
+            .btn-filter {
+                &:hover {
+                    box-shadow: 0 0 5px 1px $light-orange;
+                }
+            }
+        }
+    }
+    .card {
+        box-shadow: 0 0 5px 1px $light-light;
+        &:hover {
+            box-shadow: 0 0 5px 1px $light-grey;
+        }
+        &.card-model{
+            .brand_model_title {
+                color: $dark-dark;
+            }
+        }
+        #parts {
+            .part-name {
+                color: $dark-orange;
+            }
+            .module-name {
+                &:hover{
+                    color: $dark-yellow;
+                }
+                &.active {
+                    color: $dark-orange;
+                }
+            }
+        }
+
+    }
+    .error-list {
+        background-color: $dark-darkgrey;
+        .display {
+            color: $dark-red;
+        }
+        .description {
+            color: $dark-yellow;
+        }
+        .causes {
+            color: $dark-blue;
+        }
+        .remedy {
+            color: $dark-green;
+        }
+    }
+    .module-title {
+        &:hover {
+            color: $dark-yellow;
+        }
+    }
+    .selected-module {
+        color: $dark-orange;
+    }
+}
