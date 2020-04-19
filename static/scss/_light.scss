@@ -5,6 +5,22 @@
         background-color: $dark;
         border: 1px solid $orange;
     }
+    #search_main {
+        #button-search {
+            background-color: $blue;
+            color: $light;
+        }
+    }
+    .filter_search {
+        position: relative;
+        #filter_search {
+            border: 1px solid $light;
+            background-color: $white;
+        }
+        #filter_search_clear {
+            background-color: $white;
+        }
+    }
     .btn {
         &:hover, &:focus {
             box-shadow: 0 0 5px 1px $grey;

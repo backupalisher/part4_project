@@ -8,6 +8,37 @@
     border-radius: 50%;
     cursor: pointer;
 }
+#search_main {
+    position: relative;
+    input {
+        border-radius: 6px;
+    }
+    #button-search {
+        position: absolute;
+        right: 0;
+        top: 0;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+    }
+}
+.filter_search {
+    position: relative;
+    #filter_search {
+        background-color: $white;
+        border: none;
+        border-radius: 6px;
+    }
+    #filter_search_clear {
+        padding: .3rem .7rem;
+        position: absolute;
+        top: 0.2em;
+        right: 0.2em;
+        cursor: pointer;
+        background-color: $white;
+        border: none;
+        z-index: 999;
+    }
+}
 .navbar {
     margin-bottom: 1em;
     .navbar-brand {

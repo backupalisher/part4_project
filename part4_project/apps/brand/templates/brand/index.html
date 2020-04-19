@@ -73,11 +73,9 @@
             {% if pages|length == 0 %}
                 <div class="row">
                     <div class="col-12">
-                        <div class="input-group w-100">
-                          <!--div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"> > </span>
-                          </div-->
-                          <input type="text" id="filter_search" name="filter_search" class="form-control filter_search" placeholder="Поиск по модели">
+                        <div class="input-group w-100 filter_search">
+                            <input type="text" id="filter_search" name="filter_search" aria-label="Close" class="form-control filter_search" placeholder="Поиск по модели">
+                            <span class="input-group-text" aria-hidden="true" id="filter_search_clear"> &times; </span>
                         </div>
                     </div>
                 </div>

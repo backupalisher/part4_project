@@ -6,6 +6,18 @@
         background-color: $light;
         border: 1px solid $orange;
     }
+    #search_main {
+        #button-search {
+            background-color: $blue;
+            color: $light;
+        }
+    }
+    .filter_search {
+        position: relative;
+        #filter_search, #filter_search_clear {
+            background-color: $white;
+        }
+    }
     .btn {
         color: $light;
         &:hover, &:focus {

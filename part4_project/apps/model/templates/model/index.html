@@ -54,25 +54,7 @@
                 <h3><span class="model-title"> {{ model }} </span></h3>
                 {% for caption in captions.0.3 %}
                     {% if 'Status' in caption %}
-                        <h5> <span class="partcode"> {{ caption }} </span></h5>
-                        {% for subcaption in subcaptions %}
-                            {% if subcaption.2 == caption %}
-                                {% for subcap in subcaption.3 %}
-                                    <div class="pl-3"><span>{% if 'SubCaption' not in subcap %}
-                                        {{ subcap }}{% endif %}</span>
-                                        {% for value in values %}
-                                            {% if value.0 == subcaption.1 %}
-                                                <div class="pl-3">{{ value.2 }}
-                                                    {% for val in value.3 %}
-                                                        <br><span class="pl-2">{{ val }}</span>
-                                                    {% endfor %}
-                                                </div>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        {% endfor %}
+                        <h5><span class="partcode"> {{ caption|cut:'Status: ' }} </span></h5>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -94,9 +76,9 @@
                                data-toggle="tab" href="#parts" role="tab"
                                aria-controls="parts" aria-selected="false">Парткаталог</a>
                         </li>
-                    {% if verrors is not None %}
+                    {% if verrors is not None and verrors|length > 0 %}
                         <li class="nav-item">
-                            <a class="nav-link {% if cur_module is not None %} active {% endif %}" id="errors-tab"
+                            <a class="nav-link" id="errors-tab"
                                data-toggle="tab" href="#errors" role="tab"
                                aria-controls="errors" aria-selected="false">Коды ошибок</a>
                         </li>

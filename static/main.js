@@ -69,6 +69,10 @@ $(document).ready(function(){
             filter_search('')
         }
     })
+    $('#filter_search_clear').click(function () {
+        $('#filter_search').val('')
+        filter_search('')
+    })
 
     //Toggle themes
     $('#toggle-theme').click(function () {

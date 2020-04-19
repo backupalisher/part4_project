@@ -62,10 +62,11 @@ def index(request, brand_id):
 
     # Base sql part of query for get model by filter
     f_sql = (
-        f'SELECT * FROM (SELECT d.id did, m.id mid, m.name model, array_agg(ldo.detail_option_id) ids '
+        f'SELECT * FROM (SELECT d.id did, m.id mid, m.name model, array_agg(ldo.detail_option_id) ids, m.main_image, m.image '
         f'FROM models m LEFT JOIN details d ON d.model_id = m.id '
         f'LEFT JOIN link_details_options ldo ON ldo.detail_id = d.id '
         f'WHERE d.module_id is null and m.brand_id = {brand_id} GROUP BY did, mid, model ORDER BY mid) mopt WHERE ')
+    print(f_sql)
     filterDict = dict(request.POST.lists())
     ops = 0
     for req in filterDict:
