@@ -1,129 +1,157 @@
 @import "colors";
 .light-theme {
     #toggle-theme {
-        color: $dark-light;
-        background-color: $light-dark;
-        border: 1px solid $dark-orange;
+        color: $light;
+        background-color: $dark;
+        border: 1px solid $orange;
     }
     .btn {
         &:hover, &:focus {
-            box-shadow: 0 0 5px 1px $light-grey;
+            box-shadow: 0 0 5px 1px $grey;
         }
     }
     .form-control {
         &:hover, &:focus {
-            box-shadow: 0 0 5px 1px $light-grey;
+            box-shadow: 0 0 5px 1px $grey;
         }
     }
     footer {
-        color: $light-dark;
+        color: $dark;
     }
     .navbar {
-        background-color: $light-light;
-        color: $light-dark;
+        background-color: $light;
+        color: $dark;
         .navbar-brand {
             background-image: url("/static/image/logo_part4.png");
-            color: $light-dark;
         }
         a {
-            color: $light-grey;
-        }
-        a.active {
-            color: $light-dark;
+            color: $grey;
+            &:active {
+                color: $black;
+            }
+            &:hover, &:focus {
+                color: $dark;
+            }
         }
         .auth-block {
             a {
-                color: $light-dark;
+                color: $dark;
             }
         }
     }
     .nav-breadcrumb {
-        background: #fff;
         ul {
             li {
                 &:after {
                     border: 1px solid #2e79f6;
                 }
                 a {
-                    color: $light-dark;
-                    background: $light-white;
+                    color: $grey;
+                    background-color: #ffffff;
+                }
+                &.active {
+                    color: $dark;
                 }
             }
         }
     }
     .filter {
-        color: $light-dark;
+        color: $dark;
         .title {
-            color: $light-dark;
+            color: $dark;
         }
         .filter_settings {
-            background-color: $light-white;
-            box-shadow: 0 0 5px 1px $light-light;
+            background-color: $white;
+            box-shadow: 0 0 5px 1px $light;
             .form-check {
                 &.checkbox{
                     input {
                         &:before {
-                            border: 1px solid $light-grey;
+                            border: 1px solid $grey;
                         }
                         &:checked:before {
-                            background-color: $light-orange;
+                            background-color: $orange;
                         }
                     }
                 }
             }
             .btn-filter {
                 &:hover {
-                    box-shadow: 0 0 5px 1px $light-orange;
+                    box-shadow: 0 0 5px 1px $orange;
                 }
             }
         }
     }
     .card {
-        box-shadow: 0 0 5px 1px $light-light;
+        box-shadow: 0 0 5px 1px $light;
         &:hover {
-            box-shadow: 0 0 5px 1px $light-grey;
+            box-shadow: 0 0 5px 1px $grey;
         }
         &.card-model{
-            .brand_model_title {
-                color: $dark-dark;
+            .model-title {
+                color: $dark;
+            }
+            .partcode {
+                color: $darkgrey;
             }
         }
         #parts {
             .part-name {
-                color: $dark-orange;
+                color: $green;
             }
             .module-name {
                 &:hover{
-                    color: $dark-yellow;
+                    color: $yellow;
                 }
                 &.active {
-                    color: $dark-orange;
+                    color: $orange;
+                }
+            }
+        }
+        .nav-tabs {
+            border-color: $light;
+            .nav-link {
+                color: $dark;
+                &:hover{
+                    color: $blue;
+                }
+                &.active {
+                    color: $light;
+                    background-color: $blue;
                 }
             }
         }
 
     }
     .error-list {
-        background-color: $dark-darkgrey;
+        .errorcode {
+           font-weight: bold;
+            color: $red;
+        }
         .display {
-            color: $dark-red;
+            font-weight: bold;
+            color: $orange;
         }
         .description {
-            color: $dark-yellow;
+            font-weight: bold;
+            color: $yellow;
         }
         .causes {
-            color: $dark-blue;
+            font-weight: bold;
+            color: $blue;
         }
         .remedy {
-            color: $dark-green;
+            font-weight: bold;
+            color: $green;
         }
     }
     .module-title {
         &:hover {
-            color: $dark-yellow;
+            color: $blue;
         }
     }
     .selected-module {
-        color: $dark-orange;
+        color: $black;
+        font-weight: bold;
     }
 }

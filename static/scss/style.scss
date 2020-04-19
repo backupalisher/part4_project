@@ -48,6 +48,9 @@
                 margin-right: 0.8em;
                 line-height: 2em;
                 z-index: 2;
+                &:hover {
+                    text-decoration: none;
+                }
             }
             &.active {
                 line-height: 2em;
@@ -81,7 +84,7 @@
                     width: 0;
                     &:before {
                         content: '';
-                        border: 1px solid $dark-grey;
+                        border: 1px solid $grey;
                         width: 1em;
                         height: 1em;
                         position: absolute;
@@ -100,7 +103,7 @@
         }
         .btn-filter {
             &:hover {
-                box-shadow: 0 0 5px 1px $dark-orange;
+                box-shadow: 0 0 5px 1px $orange;
             }
         }
     }
@@ -127,6 +130,14 @@
         .brand_model_title {
             height: 2.4em;
             overflow: hidden;
+        }
+        a {
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        .name {
+            color: $green;
         }
     }
     &.card-detail{
@@ -177,13 +188,13 @@
 }
 
 .form-control:focus {
-    color: $dark-grey;
-    background-color: $light-white;
+    color: $grey;
+    background-color: $white;
     border: none;
     outline: 0;
 }
 h1 {
-    color: $light-white;
+    color: $white;
     text-align: center;
     font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
 }
@@ -192,12 +203,12 @@ h1 {
     min-height: 360px;
 }
 .brand_model_card {
-    box-shadow: 0px 0px 3px 0px $dark-blue;
+    box-shadow: 0px 0px 3px 0px $blue;
     padding: 0.2em 0.4em;
     height: 266px;
     overflow: hidden;
     &:hover {
-        box-shadow: 0px 0px 4px 0px $dark-blue;
+        box-shadow: 0px 0px 4px 0px $blue;
     }
 }
 .brand_model_link {
@@ -212,10 +223,10 @@ h1 {
 }
 
 .search_result_model {
-    color: $dark-blue;
+    color: $blue;
 }
 .search_result_partcode {
-    color: $dark-blue;
+    color: $blue;
     font-style: oblique;
 }
 .module-title {
@@ -224,7 +235,7 @@ h1 {
 .carousel-indicators {
     margin-bottom: -7%;
     li {
-        border-top: 5px solid $dark-blue;
+        border-top: 5px solid $blue;
         background-color: transparent;
     }
 }

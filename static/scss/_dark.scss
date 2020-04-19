@@ -1,72 +1,71 @@
 @import "colors";
 .dark-theme {
-    background-color: $dark-dark;
+    background-color: $dark;
     #toggle-theme {
-        color: $dark-dark;
-        background-color: $light-light;
-        border: 1px solid $dark-orange;
+        color: $dark;
+        background-color: $light;
+        border: 1px solid $orange;
     }
     .btn {
-        color: $dark-light;
+        color: $light;
         &:hover, &:focus {
-            box-shadow: 0 0 5px 1px $dark-orange;
-            color: $dark-light !important;
+            box-shadow: 0 0 5px 1px $orange;
+            color: $light !important;
         }
     }
     .form-control {
         &:hover, &:focus {
-            box-shadow: 0 0 5px 1px $dark-orange;
+            box-shadow: 0 0 5px 1px $orange;
         }
     }
     footer {
-        color: $dark-light;
+        color: $light;
     }
 
     .navbar {
-        background-color: $dark-black;
-        color: $dark-light;
+        background-color: $black;
+        color: $light;
         .navbar-brand {
             background-image: url("/static/image/dark_logo_part4.png");
-            color: $light-dark;
         }
         a {
-            color: $dark-light;
+            color: $light;
             &.active {
-                color: $dark-orange;
+                color: $orange;
             }
             &:hover, &:focus {
-                color: $dark-yellow;
+                color: $yellow;
             }
         }
     }
     .nav-breadcrumb {
-        background: $dark-dark;
+        background: $dark;
         ul {
             li {
                 &:after {
-                    border-color: $dark-blue;
+                    border-color: $blue;
                 }
                 a {
-                    color: $dark-light;
-                    background: $dark-dark;
+                    color: $light;
+                    background: $dark;
                     &:hover, &:focus {
-                        color: $dark-yellow;
+                        color: $yellow;
                     }
                 }
                 &.active {
-                    color: $dark-orange;
+                    color: $orange;
                 }
             }
         }
     }
     .filter {
-        color: $dark-light;
+        color: $light;
         .title {
-            color: $dark-light;
+            color: $light;
         }
         .filter_settings {
-            background-color: $dark-darkgrey;
-            box-shadow: 0 0 5px 1px $dark-darkgrey;
+            background-color: $darkgrey;
+            box-shadow: 0 0 5px 1px $darkgrey;
             .form-check {
                 &.checkbox{
                     input {
@@ -81,101 +80,113 @@
             }
             .btn-filter {
                 &:hover {
-                    box-shadow: 0 0 5px 1px $dark-orange;
+                    box-shadow: 0 0 5px 1px $orange;
                 }
             }
         }
     }
     .card {
-        background-color: $dark-white;
-        color: $dark-light;
-        box-shadow: 0 0 5px 1px $dark-grey;
+        background-color: $white;
+        color: $light;
+        box-shadow: 0 0 5px 1px $grey;
         .card_image {
-            background-color: $light-white;
-            box-shadow: 0 0 5px 1px $dark-grey;
+            background-color: $white;
+            box-shadow: 0 0 5px 1px $grey;
         }
         &.card-model-list{
             .brand_model_title {
-                color: $dark-dark;
+                color: $dark;
             }
         }
         &.card-model{
-            background-color: $dark-darkgrey;
-            .brand_model_title {
-                color: $dark-dark;
+            background-color: $darkgrey;
+            .model-title {
+                color: $light;
+            }
+            .partcode {
+                color: $yellow;
             }
         }
         &.card-detail{
-            background-color: $dark-darkgrey;
+            background-color: $darkgrey;
             .brand_model_title {
-                color: $dark-light;
+                color: $light;
             }
         }
         .nav-tabs {
-            border-color: $dark-black;
+            border-color: $black;
             .nav-link {
-                color: $dark-light;
+                color: $light;
                 &:hover{
-                    color: $dark-yellow;
+                    color: $yellow;
                 }
                 &.active {
-                    color: $dark-light;
-                    background-color: $dark-blue;
+                    color: $light;
+                    background-color: $blue;
                 }
             }
         }
         .table {
-            color: $dark-light;
-            border-color: $dark-black;
+            color: $light;
+            border-color: $black;
             thead {
                 th {
-                    border-color: $dark-black;
-                    color: $dark-orange;
-                    background-color: $dark-dark;
+                    border-color: $black;
+                    color: $orange;
+                    background-color: $dark;
                 }
             }
             td {
-                    border-color: $dark-black;
+                    border-color: $black;
                 }
         }
         #parts {
             .part-name {
-                color: $dark-green;
+                color: $green;
             }
             .part-name {
-                color: $dark-green;
+                color: $green;
             }
             .module-name {
                 &:hover{
-                    color: $dark-yellow;
+                    color: $yellow;
                 }
                 &.active {
-                    color: $dark-orange;
+                    color: $orange;
                 }
             }
         }
     }
     .error-list {
-        background-color: $dark-darkgrey;
+        background-color: $darkgrey;
+        .errorcode {
+           font-weight: bold;
+            color: $red;
+        }
         .display {
-            color: $dark-red;
+            font-weight: bold;
+            color: $orange;
         }
         .description {
-            color: $dark-yellow;
+            font-weight: bold;
+            color: $yellow;
         }
         .causes {
-            color: $dark-blue;
+            font-weight: bold;
+            color: $blue;
         }
         .remedy {
-            color: $dark-green;
+            font-weight: bold;
+            color: $green;
         }
     }
     .module-title {
         &:hover {
-            color: $dark-yellow;
+            color: $yellow;
         }
     }
     .selected-module {
-        color: $dark-orange;
+        font-weight: bold;
+        color: $orange;
     }
 }

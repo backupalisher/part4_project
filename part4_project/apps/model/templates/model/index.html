@@ -51,10 +51,10 @@
                 </div>
             </div>
             <div class="col">
-                <h3>Модель: {{ model }}</h3>
+                <h3><span class="model-title"> {{ model }} </span></h3>
                 {% for caption in captions.0.3 %}
                     {% if 'Status' in caption %}
-                        <h5>{{ caption }}</h5>
+                        <h5> <span class="partcode"> {{ caption }} </span></h5>
                         {% for subcaption in subcaptions %}
                             {% if subcaption.2 == caption %}
                                 {% for subcap in subcaption.3 %}
@@ -159,7 +159,8 @@
                                                          $(this).addClass('selected-module')
                                                          $( '.model-opts' ).css('display', 'none'),
                                                          $( '#opts{{ forloop.counter }}' ).toggle();">
-                                                <span class="module_name">{{ module }}</span></div>
+                                                {{ module }}
+                                            </div>
                                         {% endfor %}
                                     </div>
                                     <div class="col">
@@ -201,7 +202,7 @@
                                                 <div class="card-header" id="headingOne">
                                                     <h5 class="mb-0">
                                                         <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseOne">
-                                                            {{ error.2 }}
+                                                            <span class="errorcode"> {{ error.2 }} </span>
                                                         </button>
                                                     </h5>
                                                 </div>
