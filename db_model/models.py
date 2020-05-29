@@ -125,6 +125,7 @@ class SprDetails(models.Model):
 class SprModules(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
+    name_ru = models.CharField(max_length=255)
     description = models.CharField(max_length=1500)
     scheme_picture = models.CharField(max_length=255)
 

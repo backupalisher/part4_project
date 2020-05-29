@@ -96,8 +96,8 @@ def index(request, brand_id):
         page = int(request.GET.get('page'))
     except:
         page = 0
-    limit = 24
-    offset = 24 * page
+    limit = 2400
+    offset = 2400 * page
     if ops > 0:
         brand_models = _query(f_sql)
         model_count = len(brand_models)

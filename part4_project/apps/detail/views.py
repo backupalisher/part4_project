@@ -25,7 +25,7 @@ def index(request, detail_id):
     try:
         try:
             partcode_id = models.Details.objects.filter(id=detail_id).values('partcode_id')[0]['partcode_id']
-            partcode = models.Partcodes.objects.filter(id=partcode_id).values('code')[0]['code']
+            partcode = list(models.Partcodes.objects.filter(id=partcode_id).values())[0] #.values('code')[0]['code']
         except:
             partcode = '-'
         try:
@@ -35,7 +35,8 @@ def index(request, detail_id):
             model = '-'
         try:
             module_id = models.Details.objects.filter(id=detail_id).values('module_id')[0]['module_id']
-            module = models.SprModules.objects.filter(id=module_id).values('name')[0]['name']
+            module = list(models.SprModules.objects.filter(id=module_id).values())[0]
+            print(module)
         except:
             module = '-'
         try:

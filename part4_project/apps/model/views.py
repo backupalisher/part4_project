@@ -95,12 +95,28 @@ def index(request, detail_id):
         brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
 
         # Запрос на получение парткодов и модулей
-        q_code_module = "SELECT m.name model_name, m.image model_picture, m.main_image model_scheme, mo.name module_name, mo.description module_desc, mo.scheme_picture module_picture, p.description code_desc, p.code partcode, p.images code_image, sd.name detail_name, sd.name_ru detail_name_ru, sd.desc detail_desc, sd.seo detail_seo, sd.base_img detail_img, d.id FROM details d left JOIN spr_modules mo on d.module_id = mo.id LEFT JOIN partcodes p on d.partcode_id = p.id LEFT JOIN models m on d.model_id = m.id LEFT JOIN spr_details sd on d.spr_detail_id = sd.id WHERE mo.name is not null and d.model_id = %d ORDER BY mo.name" % (model_id)
+        q_code_module = f'SELECT m.name model_name, m.image model_picture, m.main_image model_scheme, ' \
+                        f'mo.name module_name, mo.name_ru module_name_ru, mo.description module_desc, ' \
+                        f'mo.scheme_picture module_picture, p.description code_desc, p.code partcode, ' \
+                        f'p.images code_image, sd.name detail_name, sd.name_ru detail_name_ru, ' \
+                        f'sd.desc detail_desc, sd.seo detail_seo, sd.base_img detail_img, d.id ' \
+                        f'FROM details d ' \
+                        f'left JOIN spr_modules mo on d.module_id = mo.id ' \
+                        f'LEFT JOIN partcodes p on d.partcode_id = p.id ' \
+                        f'LEFT JOIN models m on d.model_id = m.id ' \
+                        f'LEFT JOIN spr_details sd on d.spr_detail_id = sd.id ' \
+                        f'WHERE d.model_id = {model_id} ORDER BY mo.name'
         partcatalog = _query(q_code_module)
+
         modules = []
         for parts in partcatalog:
-            modules.append(parts[3])
+            # print(parts)
+            if parts[4]:
+                modules.append(parts[4])
+            elif parts[3]:
+                modules.append(parts[3])
         modules = list(dict.fromkeys(modules))
+        # print(modules)
         if request.GET.get('module'):
             cur_module = request.GET.get('module')
         else:
