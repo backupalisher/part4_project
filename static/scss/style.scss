@@ -140,13 +140,17 @@
         }
     }
 }
+.card-model-list {
+    height: 1080px;
+    overflow-x: hidden;
+}
 .card {
     padding: 0.4em 0.4em;
     .card_image {
         height: 200px;
         width: 200px;
     }
-    &.card-model-list{
+    &.card-model-item{
         padding: 0.1em 0.5em;
         .brand_model_title {
             height: 3.6em;
@@ -261,6 +265,7 @@ h1 {
         max-width: 100px;
         img {
             width: auto;
+            max-width: 100%;
         }
     }
     .desc {

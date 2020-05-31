@@ -9,6 +9,7 @@ def detail_view(request):
 
 
 def _query(q):
+    data = None
     with connections['part4'].cursor() as c:
         try:
             c.execute("BEGIN")
@@ -22,6 +23,9 @@ def _query(q):
 
 def index(request, detail_id):
     # Запрос на получение опций и вывод опций
+    _query(
+        f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w WHERE id = {detail_id}")
+
     q_options = (f"SELECT sprdo.parent_id, sprdo.id, sprdet.name caption, array_agg(opts.opt_arr) "
                  f"FROM (SELECT d.spr_detail_id, dop.parent_id, concat(sdo.name,': ', spdo.name) opt_arr "
                  f"FROM link_details_options ldo INNER JOIN detail_options dop ON ldo.detail_option_id = dop.id "

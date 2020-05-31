@@ -1,9 +1,9 @@
 import math
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
-import db_model.models as models
+
 from django.db import connections
-from django import forms
+from django.shortcuts import render
+
+import db_model.models as models
 
 
 def _query(q):
@@ -41,14 +41,14 @@ def sql_get_range(cid, rmin, rmax):
     sq = ''
     for i, rid in enumerate(rids):
         if i == 0:
-            sq = (f' mopt.ids @> ARRAY[{rid[0]}]')
+            sq = (f' mopt.ids && ARRAY[{rid[0]}]')
         else:
-            sq += (f' OR mopt.ids @> ARRAY[{rid[0]}]')
+            sq += (f' OR mopt.ids && ARRAY[{rid[0]}]')
     return sq
 
 
 def sql_gen_checks(checks):
-    cq = ' mopt.ids @> ARRAY['
+    cq = ' mopt.ids && ARRAY['
     for i, check in enumerate(checks):
         if i == 0:
             cq += (f'{check}')
@@ -60,6 +60,7 @@ def sql_gen_checks(checks):
 
 
 def index(request, brand_id):
+    model_count = 0
     sfilter = models.FilterSettings.objects.all().order_by('id')
     filter_captions = ['Общие характеристики', 'Принтер', 'Копир', 'Сканер', 'Расходные материалы', 'Лотки', 'Финишер',
                        'Интерфейсы']
@@ -80,21 +81,21 @@ def index(request, brand_id):
                     f_sql += sql_get_range(req.replace('range', ''), filterDict[req][0], filterDict[req][1])
                     ops += 1
                 else:
-                    f_sql += ' OR '
+                    f_sql += ' AND '
                     f_sql += sql_get_range(req.replace('range', ''), filterDict[req][0], filterDict[req][1])
         elif 'radio' in req:
             if ops == 0:
-                f_sql += (f'mopt.ids @> ARRAY[{filterDict[req][0]}]')
+                f_sql += (f'mopt.ids && ARRAY[{filterDict[req][0]}]')
                 ops += 1
             else:
-                f_sql += ' OR '
-                f_sql += (f'mopt.ids @> ARRAY[{filterDict[req][0]}]')
+                f_sql += ' AND '
+                f_sql += (f'mopt.ids && ARRAY[{filterDict[req][0]}]')
         elif 'checkbox' in req:
             if ops == 0:
                 f_sql += sql_gen_checks(filterDict[req])
                 ops += 1
             else:
-                f_sql += ' OR '
+                f_sql += ' AND '
                 f_sql += sql_gen_checks(filterDict[req])
     try:
         page = int(request.GET.get('page'))
