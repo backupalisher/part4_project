@@ -330,17 +330,21 @@
   .filter .filter_settings .btn-filter:hover {
     box-shadow: 0 0 5px 1px #e98839; }
 
+.card-model-list {
+  height: 1080px;
+  margin: 0; }
+
 .card {
   padding: 0.4em 0.4em; }
   .card .card_image {
     height: 200px;
     width: 200px; }
-  .card.card-model-list {
+  .card.card-model-item {
     padding: 0.1em 0.5em; }
-    .card.card-model-list .brand_model_title {
+    .card.card-model-item .brand_model_title {
       height: 3.6em;
       overflow: hidden; }
-    .card.card-model-list a:hover {
+    .card.card-model-item a:hover {
       text-decoration: none; }
   .card.card-model .brand_model_title {
     height: 2.4em;
@@ -418,7 +422,8 @@ h1 {
   .error_result .image, .search_result .image {
     max-width: 100px; }
     .error_result .image img, .search_result .image img {
-      width: auto; }
+      width: auto;
+      max-width: 100%; }
   .error_result .desc, .search_result .desc {
     padding-left: 10px;
     flex-shrink: 2;

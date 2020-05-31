@@ -15,6 +15,10 @@ def search(request):
     ar = None
     er = None
     cr = None
+    if variant:
+        pass
+    else:
+        variant = 0
     with connections['part4'].cursor() as c:
         try:
             c.execute("BEGIN")
