@@ -5,7 +5,9 @@ import db_model.models as models
 from django.db import connections
 from django import forms
 
+
 def _query(q):
+    data = None
     with connections['part4'].cursor() as c:
         try:
             c.execute("BEGIN")
@@ -44,6 +46,7 @@ def sql_get_range(cid, rmin, rmax):
             sq += (f' OR mopt.ids @> ARRAY[{rid[0]}]')
     return sq
 
+
 def sql_gen_checks(checks):
     cq = ' mopt.ids @> ARRAY['
     for i, check in enumerate(checks):
@@ -55,6 +58,7 @@ def sql_gen_checks(checks):
     print(cq)
     return cq
 
+
 def index(request, brand_id):
     sfilter = models.FilterSettings.objects.all().order_by('id')
     filter_captions = ['Общие характеристики', 'Принтер', 'Копир', 'Сканер', 'Расходные материалы', 'Лотки', 'Финишер',
@@ -62,11 +66,11 @@ def index(request, brand_id):
 
     # Base sql part of query for get model by filter
     f_sql = (
-        f'SELECT * FROM (SELECT d.id did, m.id mid, m.name model, array_agg(ldo.detail_option_id) ids, m.main_image, m.image '
-        f'FROM models m LEFT JOIN details d ON d.model_id = m.id '
+        f'SELECT * FROM (SELECT d.id did, m.id mid, m.name model, array_agg(ldo.detail_option_id) ids,'
+        f' m.main_image, m.image FROM models m LEFT JOIN details d ON d.model_id = m.id '
         f'LEFT JOIN link_details_options ldo ON ldo.detail_id = d.id '
-        f'WHERE d.module_id is null and m.brand_id = {brand_id} GROUP BY did, mid, model ORDER BY mid) mopt WHERE ')
-    print(f_sql)
+        f'WHERE d.module_id is null and m.brand_id = {brand_id} GROUP BY did, mid, model, m.main_image, m.image '
+        f'ORDER BY mid) mopt WHERE ')
     filterDict = dict(request.POST.lists())
     ops = 0
     for req in filterDict:
@@ -99,16 +103,18 @@ def index(request, brand_id):
     limit = 2400
     offset = 2400 * page
     if ops > 0:
+        print(f_sql)
         brand_models = _query(f_sql)
-        model_count = len(brand_models)
+        if brand_models:
+            model_count = len(brand_models)
         pages = 0
     else:
         brand_models = _query(f'SELECT d.id, m.* FROM models m '
                               f'LEFT JOIN details d ON m.id = d.model_id AND d.partcode_id is NULL '
                               f'WHERE brand_id = {brand_id} ORDER BY m.id LIMIT {limit} OFFSET {offset};')
         model_count = _query(f'SELECT COUNT(id) from (SELECT d.id, mo.name model_name, mo.main_image, mo.image '
-                            f'FROM models mo LEFT JOIN details d ON mo.id = d.model_id '
-                            f'WHERE mo.brand_id = {brand_id} and d.module_id is NULL ORDER BY d.id) as f')
+                             f'FROM models mo LEFT JOIN details d ON mo.id = d.model_id '
+                             f'WHERE mo.brand_id = {brand_id} and d.module_id is NULL ORDER BY d.id) as f')
         pages = math.ceil(int(model_count[0][0]) / limit)
 
     brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']

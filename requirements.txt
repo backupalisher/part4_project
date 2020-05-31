@@ -1,0 +1,5 @@
+Django==3.0.6
+libsass==0.20.0
+Pillow==7.1.2
+psycopg2==2.8.5
+django-el-pagination==3.3.0

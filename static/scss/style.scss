@@ -19,6 +19,7 @@
         top: 0;
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
+        z-index: 3;
     }
 }
 .filter_search {
@@ -230,9 +231,6 @@ h1 {
     font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
 }
 
-.model-opts, .scrollbar-macosx {
-    min-height: 360px;
-}
 .brand_model_card {
     box-shadow: 0px 0px 3px 0px $blue;
     padding: 0.2em 0.4em;
@@ -252,7 +250,28 @@ h1 {
 .brand_model_title {
     text-align: center;
 }
+.error_result, .search_result {
+    padding-bottom: 15px;
+    color: white;
+}
+.error_result, .search_result {
+    display: flex;
+    flex-direction: row;
+    .image {
+        max-width: 100px;
+        img {
+            width: auto;
+        }
+    }
+    .desc {
+        padding-left: 10px;
+        flex-shrink: 2;
+        width: 100%;
+    }
+}
+.search_result {
 
+}
 .search_result_model {
     color: $blue;
 }
@@ -260,8 +279,18 @@ h1 {
     color: $blue;
     font-style: oblique;
 }
+.scroll-wrapper {
+    width: 100%;
+}
+.tab-inner-scroll {
+    max-height: 400px;
+}
 .module-title {
     cursor: pointer;
+}
+.model-opts {
+    display: flex;
+    flex-direction: column;
 }
 .carousel-indicators {
     margin-bottom: -7%;
@@ -282,5 +311,12 @@ h1 {
         text-decoration: none;
     }
 }
-
-
+.capt {
+    width: 33%;
+    display: inline-block;
+}
+.cartridge_options {
+    td:first-child{
+        width: 33%;
+    }
+}

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static mfilters %}
 {% block title %}
     {{ model }}
 {% endblock %}
@@ -99,26 +99,37 @@
                                         {% for caption in captions.0.3 %}
                                             {% if 'Status' not in caption %}
                                                 <thead class="thead-light">
-                                                <tr>
-                                                    <th colspan="2"><h5>{{ caption }}</h5></th>
-                                                </tr>
+                                                    <tr>
+                                                        {% for subcaption in subcaptions %}
+                                                            {% if subcaption.2 == caption and subcaption.3|length > 0 %}
+                                                                <th colspan="2"><h5>{{ caption }}</h5></th>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </tr>
                                                 </thead>
                                                 {% for subcaption in subcaptions %}
                                                     {% if subcaption.2 == caption %}
                                                         {% for subcap in subcaption.3 %}
                                                             <tr>
-                                                                <td colspan="2"><span>{% if 'SubCaption' not in subcap %}
-                                                                    {{ subcap }}{% endif %}</span></td>
+                                                                <td colspan="2">
+                                                                    {% if 'SubCaption' not in subcap %}
+                                                                        <h5 class="capt">{{ subcap|get_caption }}</h5>
+                                                                        <span class="val">{{ subcap|get_val }}</span>
+                                                                    {% endif %}
+                                                                </td>
                                                             </tr>
                                                             {% for value in values %}
                                                                 <tr>
                                                                     {% if value.0 == subcaption.1 %}
-                                                                        <td class="pl-3"
-                                                                            style="width: 40%;">{{ value.2 }}</td>
-                                                                        <td>
-                                                                            {% for val in value.3 %}
-                                                                                <span class="pl-2">{{ val }}</span><br>
-                                                                            {% endfor %}
+                                                                        <td class="pl-3">
+                                                                            <h5>{{ value.2 }}</h5>
+                                                                            <div>
+                                                                                {% for val in value.3 %}
+                                                                                    <span class="pl-5 capt">{{ val|get_caption }}</span>
+                                                                                    <span class="val">{{ val|get_val }}</span>
+                                                                                    <br>
+                                                                                {% endfor %}
+                                                                            </div>
                                                                         </td>
                                                                     {% endif %}
                                                                 </tr>
@@ -138,58 +149,65 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-3">
-                                        {% for module in modules %}
-                                            <div class="mb-3 module-title"
-                                                 {% if cur_module == module %}style="font-weight: 900"{% endif %}
-                                                 onclick=" $('.module-title').removeClass('selected-module'),
-                                                         $(this).addClass('selected-module')
-                                                         $( '.model-opts' ).css('display', 'none'),
-                                                         $( '#opts{{ forloop.counter }}' ).toggle();">
-                                                {{ module }}
+                                        <div class="scrollbar-macosx">
+                                            <div class="tab-inner-scroll">
+                                                {% for module in modules %}
+                                                    <div class="mb-3 module-title"
+                                                         {% if cur_module == module %}style="font-weight: 900"{% endif %}
+                                                         onclick=" $('.module-title').removeClass('selected-module'),
+                                                                 $(this).addClass('selected-module')
+                                                                 $( '.model-opts' ).css('display', 'none'),
+                                                                 $( '#opts{{ forloop.counter }}' ).toggle();">
+                                                        {{ module }}
+                                                    </div>
+                                                {% endfor %}
                                             </div>
-                                        {% endfor %}
+                                        </div>
                                     </div>
                                     <div class="col">
                                         <div class="scrollbar-macosx">
-                                            {% for module in modules %}
-                                                <div class="model-opts pl-3"
-                                                     id="opts{{ forloop.counter }}"
-                                                        {% if cur_module == module %}
-                                                     style="display: block;"
-                                                        {% else %}
-                                                     style="display: none;"
-                                                        {% endif %}
-                                                >
-                                                    {% for partc in partcatalog %}
-                                                        {% if module == partc.3 or module == partc.4 %}
-                                                            <div style="margin-bottom: 15px; float: left; width: 100%">
-                                                                <div style="float:left; width: 10%;">
-                                                                    {% if partc.9 %}
-                                                                        <img src="{% static 'image/' %}{{ partc.9 }}"
-                                                                             style="max-width: 100%; height: auto;"
-                                                                             alt="{{ partc.9 }}">
-                                                                    {% else %}
-                                                                        <img src="{% static 'image/no_image_part.png' %}"
-                                                                             style="max-width: 100%; height: auto;"
-                                                                             alt="{{ partc.9 }}">
-                                                                    {% endif %}
+                                            <div class="tab-inner-scroll">
+                                                {% for module in modules %}
+                                                    <div class="model-opts pl-3"
+                                                         id="opts{{ forloop.counter }}"
+                                                            {% if cur_module == module %}
+                                                         style="display: block;"
+                                                            {% else %}
+                                                         style="display: none;"
+                                                            {% endif %}
+                                                    >
+                                                        {% for partc in partcatalog %}
+                                                            {% if module == partc.3 or module == partc.4 %}
+                                                                <div style="margin-bottom: 15px; width: 100%">
+                                                                    <div style="float:left; width: 10%;">
+                                                                        {% if partc.9 %}
+                                                                            <img src="
+                                                                                    {% static 'image/' %}{{ partc.9 }}"
+                                                                                 style="max-width: 100%; height: auto;"
+                                                                                 alt="{{ partc.9 }}">
+                                                                        {% else %}
+                                                                            <img src="{% static 'image/no_image_part.png' %}"
+                                                                                 style="max-width: 100%; height: auto;"
+                                                                                 alt="{{ partc.9 }}">
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div style="float:right; width: 89%; padding: 0 10px">
+                                                                        <a href="/detail/{{ partc.15 }}">
+                                                                            Парткод: {{ partc.8 }}
+                                                                        </a><br>
+                                                                        <span class="part-name">Деталь: </span>&nbsp;
+                                                                        {% if partc.11 %}
+                                                                            {{ partc.11 }}
+                                                                        {% else %}
+                                                                            {{ partc.10 }}
+                                                                        {% endif %}
+                                                                    </div>
                                                                 </div>
-                                                                <div style="float:right; width: 89%; padding: 0 10px">
-                                                                    <a href="/detail/{{ partc.15 }}">
-                                                                        Парткод: {{ partc.8 }}
-                                                                    </a><br>
-                                                                    <span class="part-name">Деталь: </span>&nbsp;
-                                                                    {% if partc.11 %}
-                                                                        {{ partc.11 }}
-                                                                    {% else %}
-                                                                        {{ partc.10 }}
-                                                                    {% endif %}
-                                                                </div>
-                                                            </div>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
-                                            {% endfor %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -199,41 +217,49 @@
                              aria-labelledby="errors-tab">
                             <div class="container">
                                 <div class="row">
-                                    {% if verrors is not None %}
-                                        <div id="accordion">
-                                            {% for error in verrors %}
-                                                <div class="card error-list">
-                                                    <div class="card-header" id="headingOne">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link" data-toggle="collapse"
-                                                                    data-target="#collapse{{ forloop.counter }}"
-                                                                    aria-expanded="false" aria-controls="collapseOne">
-                                                                <span class="errorcode"> {{ error.2 }} </span>
-                                                            </button>
-                                                        </h5>
-                                                    </div>
+                                    <div class="scrollbar-macosx">
+                                        {% if verrors is not None %}
+                                            <div id="accordion">
+                                                <div class="tab-inner-scroll">
+                                                    {% for error in verrors %}
+                                                        <div class="card error-list">
+                                                            <div class="card-header" id="headingOne">
+                                                                <h5 class="mb-0">
+                                                                    <button class="btn btn-link" data-toggle="collapse"
+                                                                            data-target="#collapse{{ forloop.counter }}"
+                                                                            aria-expanded="false"
+                                                                            aria-controls="collapseOne">
+                                                                        <span class="errorcode"> {{ error.2 }} </span>
+                                                                    </button>
+                                                                </h5>
+                                                            </div>
 
-                                                    <div id="collapse{{ forloop.counter }}" class="collapse"
-                                                         aria-labelledby="headingOne" data-parent="#accordion">
-                                                        <div class="card-body">
-                                                            {% if error.3 %}
-                                                                <p><span class="display">Display:</span> {{ error.3 }}
-                                                                </p> {% endif %}
-                                                            {% if error.4 %}<p><span
-                                                                    class="description">Description:</span> {{ error.4 }}
-                                                            </p> {% endif %}
-                                                            {% if error.5 %}
-                                                                <p><span class="causes">Causes:</span> {{ error.5 }}
-                                                                </p> {% endif %}
-                                                            {% if error.6 %}
-                                                                <p><span class="remedy">Remedy:</span> {{ error.6 }}
-                                                                </p> {% endif %}
+                                                            <div id="collapse{{ forloop.counter }}" class="collapse"
+                                                                 aria-labelledby="headingOne" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    {% if error.3 %}
+                                                                        <p><span
+                                                                                class="display">Display:</span> {{ error.3 }}
+                                                                        </p> {% endif %}
+                                                                    {% if error.4 %}<p><span
+                                                                            class="description">Description:</span> {{ error.4 }}
+                                                                    </p> {% endif %}
+                                                                    {% if error.5 %}
+                                                                        <p><span
+                                                                                class="causes">Causes:</span> {{ error.5 }}
+                                                                        </p> {% endif %}
+                                                                    {% if error.6 %}
+                                                                        <p><span
+                                                                                class="remedy">Remedy:</span> {{ error.6 }}
+                                                                        </p> {% endif %}
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    {% endfor %}
                                                 </div>
-                                            {% endfor %}
-                                        </div>
-                                    {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>

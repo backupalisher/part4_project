@@ -29,24 +29,24 @@ $(document).ready(function(){
     });
 
     //Scrolling in parts tab
-    waitForEl('#parts', function () {
-        partsHeight = $('#parts').height()
-        if (partsHeight > 360) {
-            $('.model-opts').css('max-height', partsHeight)
-       } else {
-            $('.model-opts').css('max-height', 360)
-       }
-    })
-    $('#parts-tab').click(function () {
-        setTimeout(()=>{
-            partsHeight = $('#parts').height()
-            if (partsHeight > 360) {
-                $('.model-opts').css('max-height', partsHeight)
-           } else {
-                $('.model-opts').css('max-height', 360)
-           }
-        }, 10)
-    });
+    // waitForEl('#parts', function () {
+    //     partsHeight = $('#parts').height()
+    //     if (partsHeight > 360) {
+    //         $('.model-opts').css('max-height', partsHeight)
+    //    } else {
+    //         $('.model-opts').css('max-height', 360)
+    //    }
+    // })
+    // $('#parts-tab').click(function () {
+    //     setTimeout(()=>{
+    //         partsHeight = $('#parts').height()
+    //         if (partsHeight > 360) {
+    //             $('.model-opts').css('max-height', partsHeight)
+    //        } else {
+    //             $('.model-opts').css('max-height', 360)
+    //        }
+    //     }, 10)
+    // });
 
     //Filter by model name
     function filter_search(e) {

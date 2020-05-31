@@ -237,7 +237,8 @@
     right: 0;
     top: 0;
     border-bottom-left-radius: 0;
-    border-top-left-radius: 0; }
+    border-top-left-radius: 0;
+    z-index: 3; }
 
 .filter_search {
   position: relative; }
@@ -330,7 +331,7 @@
     box-shadow: 0 0 5px 1px #e98839; }
 
 .card {
-  padding: 1em 0.5em; }
+  padding: 0.4em 0.4em; }
   .card .card_image {
     height: 200px;
     width: 200px; }
@@ -389,9 +390,6 @@ h1 {
   text-align: center;
   font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace; }
 
-.model-opts, .scrollbar-macosx {
-  min-height: 360px; }
-
 .brand_model_card {
   box-shadow: 0px 0px 3px 0px #2e79f6;
   padding: 0.2em 0.4em;
@@ -410,6 +408,22 @@ h1 {
 .brand_model_title {
   text-align: center; }
 
+.error_result, .search_result {
+  padding-bottom: 15px;
+  color: white; }
+
+.error_result, .search_result {
+  display: flex;
+  flex-direction: row; }
+  .error_result .image, .search_result .image {
+    max-width: 100px; }
+    .error_result .image img, .search_result .image img {
+      width: auto; }
+  .error_result .desc, .search_result .desc {
+    padding-left: 10px;
+    flex-shrink: 2;
+    width: 100%; }
+
 .search_result_model {
   color: #2e79f6; }
 
@@ -417,8 +431,18 @@ h1 {
   color: #2e79f6;
   font-style: oblique; }
 
+.scroll-wrapper {
+  width: 100%; }
+
+.tab-inner-scroll {
+  max-height: 400px; }
+
 .module-title {
   cursor: pointer; }
+
+.model-opts {
+  display: flex;
+  flex-direction: column; }
 
 .carousel-indicators {
   margin-bottom: -7%; }
@@ -433,5 +457,12 @@ h1 {
   line-height: 1.5em; }
 .breadcrumb-item:hover {
   text-decoration: none; }
+
+.capt {
+  width: 33%;
+  display: inline-block; }
+
+.cartridge_options td:first-child {
+  width: 33%; }
 
 /*# sourceMappingURL=style.css.map */

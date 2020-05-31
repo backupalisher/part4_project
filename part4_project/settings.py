@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'compressor',
+    'el_pagination',
     'db_model',
     'search',
     'main',
@@ -74,6 +75,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
                 "context_processors.views.main_menu",
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -161,3 +163,5 @@ COMPRESS_PRECOMPILERS = (
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+EL_PAGINATION_PER_PAGE = 16

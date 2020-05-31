@@ -1,45 +1,103 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static el_pagination_tags %}
 
-{% block content %}
-    {% for index in sresult %}
-        <p class="search_result">
-            {% if index.3 == index.7 %}
-                Модель: <strong><a href="/model/{{ index.2 }}">{{ index.7 }}</a></strong>
-            {% else %}
-                Деталь: <strong><a href="/detail/{{ index.2 }}">{{ index.3 }}</a></strong>
-            {% endif %}
-            <span class="search_result_partcode">
-                {% if index.5 != None %}
-                    &nbsp; Парткод: {{ index.5 }}
-                {% endif %}
-            </span><br>
-            {% if index.3 != index.7 %}
-                <span class="search_result_model">
-                    Модель: {{ index.7 }}
-                </span>
-            {% endif %}
-        </p>
-    {% endfor %}
-    <div class="row">
-        {% for brand in brands %}
-            <div class="col-lg-2 col-md-3 col-sm-4 mb-3">
-                <div class="card btn">
-                    <a href="/brand/{{ brand.id }}">
-                        <!--h5 class="text-center">{{ brand.name }}</h5-->
-                        {% if brand.logotype is not None %}
-                            <img src="{% static '/image/brands/' %}{{ brand.logotype }}" class="img-fluid"
-                                 alt="{{ brand.name }}">
-                        {% else %}
-                            <img src="{% static '/image/no-image.png' %}" class="img-fluid" alt="{{ brand.name }}">
+{% paginate entries %}
+{% for entry in entries %}
+    {% block content %}
+        {% if all_result %}
+            {% for index in all_result %}
+                <div class="search_result">
+                    <div class="image">
+                        {% if index.11 and index.3 != index.7 %}
+                            <img src="images/{{ index.11 }}">
                         {% endif %}
-                    </a>
+                        {% if index.9 and index.3 == index.7 %}
+                            <img src="images/{{ index.11 }}">
+                        {% endif %}
+                    </div>
+                    <div class="desc">
+                        {% if index.3 == index.7 %}
+                            Модель: <strong><a href="/model/{{ index.2 }}" class="text-green">{{ index.7 }}</a></strong>
+                        {% else %}
+                            Деталь: <strong class="text-green"><a href="/detail/{{ index.2 }}" class="text-green">
+                            {% if index.4 %}{{ index.4 }}{% else %}{{ index.3 }}{% endif %}</a></strong>
+                        {% endif %}
+                        <div class="search_result_partcode">
+                            {% if index.5 != None %}
+                                <span class="text-yellow">Парткод: {{ index.5 }}</span>
+                            {% endif %}
+                        </div>
+                        {% if index.3 != index.7 %}
+                            <span class="search_result_model text-light">
+                                Модель: {{ index.7 }}
+                            </span>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
-{% endblock %}
-
+            {% endfor %}
+        {% elif error_result %}
+            {% for index in error_result %}
+                <div class="error_result">
+                    <div class="image">
+                        {% if index.7 %}
+                            <img src="{{ index.7 }}">
+                        {% endif %}
+                    </div>
+                    <div class="desc">
+                        <p>
+                            Ошибка: <strong><a href="/model/{{ index.0 }}">{{ index.2 }}</a></strong>
+                        </p>
+                        <p>
+                            Display: <strong>{{ index.3 }}</strong>
+                        </p>
+                        <p>
+                            Description: <strong>{{ index.4 }}</strong>
+                        </p>
+                        <p>Causes: <strong>{{ index.5 }}</strong></p>
+                        <p>Remedy: <strong>{{ index.6 }}</strong></p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% elif cartridge_result %}
+            {% for cartridge in cartridge_result %}
+                <div class="cartridge_result">
+                    <p>
+                        <a href="/detail/{{ cartridge.5 }}" class="text-green">
+                            <span class="text-green pr-2">{{ cartridge.2 }}</span>
+                            {% if cartridge.3 %}
+                                {{ cartridge.3 }}
+                            {% elif cartridge.4 %}
+                                {{ cartridge.4 }}
+                            {% endif %}
+                            {{ cartridge.7 }}
+                        </a>
+                    </p>
+                    <p>
+                        {{ cartridge.6 }}
+                    </p>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            {% for brand in brands %}
+                <div class="col-lg-2 col-md-3 col-sm-4 mb-3">
+                    <div class="card btn">
+                        <a href="/brand/{{ brand.id }}">
+                            <!--h5 class="text-center">{{ brand.name }}</h5-->
+                            {% if brand.logotype is not None %}
+                                <img src="{% static '/image/brands/' %}{{ brand.logotype }}" class="img-fluid"
+                                     alt="{{ brand.name }}">
+                            {% else %}
+                                <img src="{% static '/image/no-image.png' %}" class="img-fluid" alt="{{ brand.name }}">
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+{% endfor %}
+{% show_pages %}
 {% block title %}
     Part4
 {% endblock %}

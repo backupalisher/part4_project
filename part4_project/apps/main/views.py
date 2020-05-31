@@ -10,13 +10,26 @@ def index(request):
 
 
 def search(request):
+    variant = int(request.GET.__getitem__('v'))
     s_value = request.GET.__getitem__('s')
+    ar = None
+    er = None
+    cr = None
     with connections['part4'].cursor() as c:
         try:
             c.execute("BEGIN")
-            c.callproc('details_search_v2', (s_value,))
-            r = c.fetchall()
+            if variant == 0:
+                c.callproc('details_search_v1', (s_value,))
+                ar = c.fetchall()
+            elif variant == 1:
+                c.callproc('error_search', (s_value,))
+                er = c.fetchall()
+            elif variant == 2:
+                c.callproc('cartridge_search', (s_value,))
+                cr = c.fetchall()
             c.execute("COMMIT")
-            return render(request, 'main/index.html', context={'sresult': r})
         finally:
             c.close()
+            print(cr)
+            return render(request, 'main/index.html',
+                          context={'all_result': ar, 'error_result': er, 'cartridge_result': cr})

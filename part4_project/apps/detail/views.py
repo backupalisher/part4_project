@@ -7,7 +7,9 @@ from django.db import connections
 def detail_view(request):
     return render(request, 'detail/index.html')
 
+
 def _query(q):
+    data = None
     with connections['part4'].cursor() as c:
         try:
             c.execute("BEGIN")
@@ -18,14 +20,18 @@ def _query(q):
             c.close()
             return data
 
+
 def index(request, detail_id):
     options = []
     # Запрос на получение опций
-    q_options = "SELECT sprdo.parent_id, sprdo.id, sprdet.name caption, array_agg(opts.opt_arr) FROM (SELECT d.spr_detail_id, dop.parent_id, concat(sdo.name,': ', spdo.name) opt_arr FROM link_details_options ldo INNER JOIN detail_options dop ON ldo.detail_option_id = dop.id INNER JOIN spr_detail_options sdo ON dop.caption_spr_id = sdo.id INNER JOIN spr_detail_options spdo ON dop.detail_option_spr_id = spdo.id INNER JOIN details d ON d.id = ldo.detail_id WHERE ldo.detail_id = %d ORDER BY dop.id DESC) opts LEFT JOIN detail_options sprdo on opts.parent_id = sprdo.id LEFT JOIN spr_detail_options sprdet on sprdet.id = sprdo.detail_option_spr_id LEFT JOIN spr_details sd on sd.id = opts.spr_detail_id GROUP BY sprdet.name, sprdo.parent_id, sprdo.id, sd.name ORDER BY id asc;" % (detail_id)
+    _query(
+        f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w WHERE id = {detail_id}")
+    q_options = "SELECT sprdo.parent_id, sprdo.id, sprdet.name caption, array_agg(opts.opt_arr) FROM (SELECT d.spr_detail_id, dop.parent_id, concat(sdo.name,': ', spdo.name) opt_arr FROM link_details_options ldo INNER JOIN detail_options dop ON ldo.detail_option_id = dop.id INNER JOIN spr_detail_options sdo ON dop.caption_spr_id = sdo.id INNER JOIN spr_detail_options spdo ON dop.detail_option_spr_id = spdo.id INNER JOIN details d ON d.id = ldo.detail_id WHERE ldo.detail_id = %d ORDER BY dop.id DESC) opts LEFT JOIN detail_options sprdo on opts.parent_id = sprdo.id LEFT JOIN spr_detail_options sprdet on sprdet.id = sprdo.detail_option_spr_id LEFT JOIN spr_details sd on sd.id = opts.spr_detail_id GROUP BY sprdet.name, sprdo.parent_id, sprdo.id, sd.name ORDER BY id asc;" % (
+        detail_id)
     try:
         try:
             partcode_id = models.Details.objects.filter(id=detail_id).values('partcode_id')[0]['partcode_id']
-            partcode = list(models.Partcodes.objects.filter(id=partcode_id).values())[0] #.values('code')[0]['code']
+            partcode = list(models.Partcodes.objects.filter(id=partcode_id).values())[0]  # .values('code')[0]['code']
         except:
             partcode = '-'
         try:
@@ -48,14 +54,21 @@ def index(request, detail_id):
         except:
             detail_name = '-'
         try:
-            model_d_id = models.Details.objects.filter(model_id=model_id).filter(module_id__isnull=True).values('id')[0]['id']
+            model_d_id = \
+                models.Details.objects.filter(model_id=model_id).filter(module_id__isnull=True).values('id')[0]['id']
         except:
             model_d_id = 0
         brand_id = models.Models.objects.filter(id=model_id).values('brand_id')[0]['brand_id']
         brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
         # Запрос на получение парткодов и модулей
         q_code_module = "SELECT m.name model_name, m.image model_picture, m.main_image model_scheme, mo.name module_name, mo.description module_desc, mo.scheme_picture module_picture, p.description code_desc, p.code partcode, p.images code_image, sd.name detail_name, sd.name_ru detail_name_ru, sd.desc detail_desc, sd.seo detail_seo, sd.base_img detail_img FROM details d left JOIN spr_modules mo on d.module_id = mo.id LEFT JOIN partcodes p on d.partcode_id = p.id LEFT JOIN models m on d.model_id = m.id LEFT JOIN spr_details sd on d.spr_detail_id = sd.id WHERE d.model_id =%d" % (
-                model_id)
+            model_id)
+        cartridge_options = _query(f'SELECT sco."text" FROM (SELECT ca.id FROM cartridge ca ' \
+                              f'LEFT JOIN partcodes pc ON pc.code = ca.code ' \
+                              f'WHERE ca.code = \'{partcode["code"]}\') cart, link_cartridge_options lco ' \
+                              f'LEFT JOIN spr_cartridge_options sco ON lco.spr_cartridge_id = sco.id ' \
+                              f'WHERE lco.cartridge_id = cart.id')
+        print(cartridge_options)
         option_vals = _query(q_options)
         captions = []
         subcaptions = []
@@ -63,7 +76,7 @@ def index(request, detail_id):
         for opts in option_vals:
             if opts[0] is None and opts[1] is None:
                 for i in range(len(opts[3])):
-                    opts[3][i] = opts[3][i].replace('Caption: ','')
+                    opts[3][i] = opts[3][i].replace('Caption: ', '')
                 captions.append(opts)
             if opts[0] is None and opts[1] is not None:
                 for opt in opts[3]:
@@ -84,4 +97,4 @@ def index(request, detail_id):
                   {'partcode': partcode, 'detail_id': detail_id, 'model': model, 'model_id': model_id,
                    'module': module, 'model_d_id': model_d_id, 'detail_name': detail_name, 'options': options,
                    'partcatalog': partcatalog, 'captions': captions, 'subcaptions': subcaptions, 'values': values,
-                   'brand_id': brand_id, 'brand_name': brand_name})
+                   'brand_id': brand_id, 'brand_name': brand_name, 'cartridge_options': cartridge_options})
