@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 import db_model.models as models
 from django.db import connections
+import datetime
 
 
 def detail_view(request):
@@ -22,20 +23,28 @@ def _query(q):
 
 
 def index(request, detail_id):
-    # Запрос на получение опций и вывод опций
+    # print(str(datetime.datetime.now()), 'start')
+    # Запрос на добавление веса
     _query(
-        f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w WHERE id = {detail_id}")
-
+        f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w "
+        f"WHERE id = {detail_id}")
+    # print(str(datetime.datetime.now()), 'обновление веса',
+    #       f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w "
+    #       f"WHERE id = {detail_id}")
+    # Запрос на получение опций и вывод опций
     q_options = (f"SELECT sprdo.parent_id, sprdo.id, sprdet.name caption, array_agg(opts.opt_arr) "
                  f"FROM (SELECT d.spr_detail_id, dop.parent_id, concat(sdo.name,': ', spdo.name) opt_arr "
                  f"FROM link_details_options ldo INNER JOIN detail_options dop ON ldo.detail_option_id = dop.id "
                  f"INNER JOIN spr_detail_options sdo ON dop.caption_spr_id = sdo.id "
                  f"INNER JOIN spr_detail_options spdo ON dop.detail_option_spr_id = spdo.id "
-                 f"INNER JOIN details d ON d.id = ldo.detail_id WHERE ldo.detail_id = {detail_id} ORDER BY dop.id DESC) opts "
+                 f"INNER JOIN details d ON d.id = ldo.detail_id WHERE ldo.detail_id = {detail_id} "
+                 f"ORDER BY dop.id DESC) opts "
                  f"LEFT JOIN detail_options sprdo on opts.parent_id = sprdo.id "
                  f"LEFT JOIN spr_detail_options sprdet on sprdet.id = sprdo.detail_option_spr_id "
-                 f"LEFT JOIN spr_details sd on sd.id = opts.spr_detail_id GROUP BY sprdet.name, sprdo.parent_id, sprdo.id, sd.name ORDER BY id asc;")
+                 f"LEFT JOIN spr_details sd on sd.id = opts.spr_detail_id "
+                 f"GROUP BY sprdet.name, sprdo.parent_id, sprdo.id, sd.name ORDER BY id asc;")
     option_vals = _query(q_options)
+    # print(str(datetime.datetime.now()), 'получение опций', q_options)
     captions = []
     subcaptions = []
     values = []
@@ -52,16 +61,25 @@ def index(request, detail_id):
         else:
             values.append(opts)
     options = option_vals
+    # print(str(datetime.datetime.now()), 'сортировка опций')
     # Запрос на получение ошибок
-    verrors = _query(f"SELECT m.id mid, m.name, ec.code, ec.display, secd.text description, secc.text causes, secr.text remedy "
-               f"FROM models m  LEFT JOIN link_model_error_code lmec ON lmec.model_id = m.id "
-               f"LEFT JOIN error_code ec ON ec.id = lmec.error_code_id "
-               f"LEFT JOIN spr_error_code secd ON secd.id = ec.description_id "
-               f"LEFT JOIN spr_error_code secc ON secc.id = ec.causes_id "
-               f"LEFT JOIN spr_error_code secr ON secr.id = ec.remedy_id WHERE m.id = {detail_id}")
+    verrors = _query(
+        f"SELECT m.id mid, m.name, ec.code, ec.display, secd.text description, secc.text causes, secr.text remedy "
+        f"FROM models m  LEFT JOIN link_model_error_code lmec ON lmec.model_id = m.id "
+        f"LEFT JOIN error_code ec ON ec.id = lmec.error_code_id "
+        f"LEFT JOIN spr_error_code secd ON secd.id = ec.description_id "
+        f"LEFT JOIN spr_error_code secc ON secc.id = ec.causes_id "
+        f"LEFT JOIN spr_error_code secr ON secr.id = ec.remedy_id WHERE m.id = {detail_id}")
+    # print(str(datetime.datetime.now()), 'получение ошибок', f"SELECT m.id mid, m.name, ec.code, ec.display, secd.text description, secc.text causes, secr.text remedy "
+    #     f"FROM models m  LEFT JOIN link_model_error_code lmec ON lmec.model_id = m.id "
+    #     f"LEFT JOIN error_code ec ON ec.id = lmec.error_code_id "
+    #     f"LEFT JOIN spr_error_code secd ON secd.id = ec.description_id "
+    #     f"LEFT JOIN spr_error_code secc ON secc.id = ec.causes_id "
+    #     f"LEFT JOIN spr_error_code secr ON secr.id = ec.remedy_id WHERE m.id = {detail_id}")
     if len(verrors) > 0:
         if verrors[0][2] is None and verrors[0][3] is None and verrors[0][4] is None and verrors[0][5] is None:
             verrors = None
+    # print(str(datetime.datetime.now()), 'сортировка ошибок')
     # Получение id парткодов, моделей, модулей, названий детали для модулей и парткаталога
     try:
         try:
@@ -75,7 +93,7 @@ def index(request, detail_id):
         except:
             model = '-'
         try:
-            model_main_image = '/image/' + models.Models.objects.filter(id=model_id).values('main_image')[0]['main_image']
+            model_main_image = models.Models.objects.filter(id=model_id).values('main_image')[0]['main_image']
         except:
             model_main_image = False
         try:
@@ -97,7 +115,7 @@ def index(request, detail_id):
             detail_name = '-'
         brand_id = models.Models.objects.filter(id=model_id).values('brand_id')[0]['brand_id']
         brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
-
+        # print(str(datetime.datetime.now()), 'Запрос на получение парткодов и модулей')
         # Запрос на получение парткодов и модулей
         q_code_module = f'SELECT m.name model_name, m.image model_picture, m.main_image model_scheme, ' \
                         f'mo.name module_name, mo.name_ru module_name_ru, mo.description module_desc, ' \
@@ -111,7 +129,8 @@ def index(request, detail_id):
                         f'LEFT JOIN spr_details sd on d.spr_detail_id = sd.id ' \
                         f'WHERE d.model_id = {model_id} ORDER BY mo.name'
         partcatalog = _query(q_code_module)
-
+        # print(str(datetime.datetime.now()),
+        #       'Получение id парткодов, моделей, модулей, названий детали для модулей и парткаталога', q_code_module)
         modules = []
         for parts in partcatalog:
             # print(parts)
@@ -125,6 +144,7 @@ def index(request, detail_id):
             cur_module = request.GET.get('module')
         else:
             cur_module = None
+        # print(str(datetime.datetime.now()), 'Сортировка парткаталога')
     except:
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
 

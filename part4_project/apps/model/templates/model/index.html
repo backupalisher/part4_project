@@ -26,12 +26,12 @@
                             {% for image in model_images %}
                                 {% if forloop.first %}
                                     <div class="carousel-item active">
-                                        <img src="{% static 'image/' %}{{ image }}" class="d-block w-100"
+                                        <img src="{{ MEDIA_URL }}images/{{ image }}" class="d-block w-100"
                                              alt="detail_name">
                                     </div>
                                 {% else %}
                                     <div class="carousel-item">
-                                        <img src="{% static 'image/' %}{{ image }}" class="d-block w-100"
+                                        <img src="{{ MEDIA_URL }}images/{{ image }}" class="d-block w-100"
                                              alt="detail_name">
                                     </div>
                                 {% endif %}
@@ -39,10 +39,10 @@
                         {% else %}
                             <div class="carousel-item active">
                                 {% if model_main_image %}
-                                    <img src="{% static model_main_image %}" class="d-block w-100"
+                                    <img src="{{ MEDIA_URL }}images/{{ model_main_image }}" class="d-block w-100"
                                          alt="{{ detail_name }}"/>
                                 {% else %}
-                                    <img src="{% static '/image/no-image.png' %}" class="d-block w-100"
+                                    <img src="{{ MEDIA_URL }}images/no-image.png" class="d-block w-100"
                                          alt="{{ detail_name }}"/>
                                 {% endif %}
                             </div>
@@ -71,12 +71,14 @@
                                    aria-selected="true">Характеристики</a>
                             </li>
                         {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if cur_module is not None or captions|length == 0 %} active {% endif %}"
-                               id="parts-tab"
-                               data-toggle="tab" href="#parts" role="tab"
-                               aria-controls="parts" aria-selected="false">Парткаталог</a>
-                        </li>
+                        {% if modules is not None and modules|length > 0 %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if cur_module is not None or captions|length == 0 %} active {% endif %}"
+                                   id="parts-tab"
+                                   data-toggle="tab" href="#parts" role="tab"
+                                   aria-controls="parts" aria-selected="false">Парткаталог</a>
+                            </li>
+                        {% endif %}
                         {% if verrors is not None and verrors|length > 0 %}
                             <li class="nav-item">
                                 <a class="nav-link" id="errors-tab"
@@ -182,11 +184,11 @@
                                                                     <div style="float:left; width: 10%;">
                                                                         {% if partc.9 %}
                                                                             <img src="
-                                                                                    {% static 'image/' %}{{ partc.9 }}"
+                                                                                    {{ MEDIA_URL }}images/{{ partc.9 }}"
                                                                                  style="max-width: 100%; height: auto;"
                                                                                  alt="{{ partc.9 }}">
                                                                         {% else %}
-                                                                            <img src="{% static 'image/no_image_part.png' %}"
+                                                                            <img src="{{ MEDIA_URL }}images/no_image_part.png"
                                                                                  style="max-width: 100%; height: auto;"
                                                                                  alt="{{ partc.9 }}">
                                                                         {% endif %}

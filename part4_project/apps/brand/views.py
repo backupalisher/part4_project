@@ -101,8 +101,8 @@ def index(request, brand_id):
         page = int(request.GET.get('page'))
     except:
         page = 0
-    limit = 2400
-    offset = 2400 * page
+    limit = 24
+    offset = 24 * page
     if ops > 0:
         print(f_sql)
         brand_models = _query(f_sql)

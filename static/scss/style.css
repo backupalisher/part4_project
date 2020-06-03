@@ -1,3 +1,78 @@
+/*
+Colors
+*/
+.text-yellow {
+  color: #f2ba4b; }
+
+.text-orange {
+  color: #e98839; }
+
+.text-red {
+  color: #eb5c59; }
+
+.text-green {
+  color: #78b857; }
+
+.text-blue {
+  color: #2e79f6; }
+
+.text-light {
+  color: #e9e9eb; }
+
+.text-grey {
+  color: #898989; }
+
+.text-dark {
+  color: #323235; }
+
+.text-yellow:hover {
+  color: #f2ba4b !important; }
+
+.text-orange:hover {
+  color: #e98839 !important; }
+
+.text-red:hover {
+  color: #eb5c59 !important; }
+
+.text-green:hover {
+  color: #78b857 !important; }
+
+.text-blue:hover {
+  color: #2e79f6 !important; }
+
+.text-light:hover {
+  color: #e9e9eb !important; }
+
+.text-grey:hover {
+  color: #898989 !important; }
+
+.text-dark:hover {
+  color: #323235 !important; }
+
+.bg-yellow {
+  background-color: #f2ba4b !important; }
+
+.bg-orange {
+  background-color: #e98839 !important; }
+
+.bg-red {
+  background-color: #eb5c59 !important; }
+
+.bg-green {
+  background-color: #78b857 !important; }
+
+.bg-blue {
+  background-color: #2e79f6 !important; }
+
+.bg-light {
+  background-color: #e9e9eb !important; }
+
+.bg-grey {
+  background-color: #898989 !important; }
+
+.bg-dark {
+  background-color: #323235 !important; }
+
 .dark-theme {
   background-color: #323235; }
   .dark-theme #toggle-theme {
@@ -24,7 +99,7 @@
     background-color: #262629;
     color: #e9e9eb; }
     .dark-theme .navbar .navbar-brand {
-      background-image: url("/static/image/dark_logo_part4.png"); }
+      background-image: url("https://upload.part4.info/images/dark_logo_part4.png"); }
     .dark-theme .navbar a {
       color: #e9e9eb; }
       .dark-theme .navbar a.active {
@@ -123,6 +198,81 @@
     font-weight: bold;
     color: #e98839; }
 
+/*
+Colors
+*/
+.text-yellow {
+  color: #f2ba4b; }
+
+.text-orange {
+  color: #e98839; }
+
+.text-red {
+  color: #eb5c59; }
+
+.text-green {
+  color: #78b857; }
+
+.text-blue {
+  color: #2e79f6; }
+
+.text-light {
+  color: #e9e9eb; }
+
+.text-grey {
+  color: #898989; }
+
+.text-dark {
+  color: #323235; }
+
+.text-yellow:hover {
+  color: #f2ba4b !important; }
+
+.text-orange:hover {
+  color: #e98839 !important; }
+
+.text-red:hover {
+  color: #eb5c59 !important; }
+
+.text-green:hover {
+  color: #78b857 !important; }
+
+.text-blue:hover {
+  color: #2e79f6 !important; }
+
+.text-light:hover {
+  color: #e9e9eb !important; }
+
+.text-grey:hover {
+  color: #898989 !important; }
+
+.text-dark:hover {
+  color: #323235 !important; }
+
+.bg-yellow {
+  background-color: #f2ba4b !important; }
+
+.bg-orange {
+  background-color: #e98839 !important; }
+
+.bg-red {
+  background-color: #eb5c59 !important; }
+
+.bg-green {
+  background-color: #78b857 !important; }
+
+.bg-blue {
+  background-color: #2e79f6 !important; }
+
+.bg-light {
+  background-color: #e9e9eb !important; }
+
+.bg-grey {
+  background-color: #898989 !important; }
+
+.bg-dark {
+  background-color: #323235 !important; }
+
 .light-theme #toggle-theme {
   color: #e9e9eb;
   background-color: #323235;
@@ -219,6 +369,12 @@
 .light-theme .selected-module {
   color: #262629;
   font-weight: bold; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "GT Walsheim Regular", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+
+a:hover {
+  color: #2e79f6; }
 
 #toggle-theme {
   position: absolute;
@@ -464,10 +620,10 @@ h1 {
   text-decoration: none; }
 
 .capt {
-  width: 33%;
+  width: 45%;
   display: inline-block; }
 
 .cartridge_options td:first-child {
-  width: 33%; }
+  width: 45%; }
 
 /*# sourceMappingURL=style.css.map */

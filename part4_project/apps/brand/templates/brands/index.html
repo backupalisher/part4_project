@@ -12,10 +12,10 @@
                     <a href="/brand/{{ brand.id }}">
                         <!--h5 class="text-center">{{ brand.name }}</h5-->
                         {% if brand.logotype is not None %}
-                            <img src="{% static '/image/brands/' %}{{ brand.logotype }}" class="img-fluid"
+                            <img src="{{ MEDIA_URL }}images/brands/{{ brand.logotype }}" class="img-fluid"
                                  alt="{{ brand.name }}">
                         {% else %}
-                            <img src="{% static '/image/no-image.png' %}" class="img-fluid" alt="{{ brand.name }}">
+                            <img src="{{ MEDIA_URL }}images/no-image.png" class="img-fluid" alt="{{ brand.name }}">
                         {% endif %}
                     </a>
                 </div>
