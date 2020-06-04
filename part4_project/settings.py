@@ -149,7 +149,7 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'image')
-MEDIA_URL = 'https://upload.part4.info/'
+MEDIA_URL = 'https://part4images.website.yandexcloud.net/'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',

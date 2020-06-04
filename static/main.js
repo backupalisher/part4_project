@@ -104,15 +104,15 @@ $(document).ready(function () {
 
     //Save selected filter options
     if ($pathname.indexOf('brand') > 0) {
-        $("form").submit(function (event) {
-                // Stop form from submitting normally
-                event.preventDefault();
-
-                /* Serialize the submitted form control values to be sent to the web server with the request */
-                var formValues = $(this).serialize();
-                console.log(formValues)
-            }
-        )
+        // $("form").submit(function (event) {
+        //         // Stop form from submitting normally
+        //         event.preventDefault();
+        //
+        //         /* Serialize the submitted form control values to be sent to the web server with the request */
+        //         var formValues = $(this).serialize();
+        //         console.log(formValues)
+        //     }
+        // )
     }
 })
 
