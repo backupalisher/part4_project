@@ -8,6 +8,7 @@ import datetime
 import asyncio
 start_time = datetime.datetime.now()
 
+
 def _query(q):
     data = None
     with connections['part4'].cursor() as c:
@@ -24,7 +25,7 @@ def _query(q):
 # Create your views here.
 def brands(request):
     title = 'Бренды'
-    brands = models.Brands.objects.all().order_by('name')
+    brands = models.Brands.objects.all()
     return render(request, 'brands/index.html', {'title': title, 'brands': brands})
 
 
@@ -38,14 +39,14 @@ def sql_get_range(cid, rmin, rmax):
         pass
     else:
         rmax = 1000000
-    q = (f'SELECT * FROM select_id_for_range({cid}, {rmin}, {rmax})')
+    q = f'SELECT * FROM select_id_for_range({cid}, {rmin}, {rmax})'
     rids = _query(q)
     sq = ''
     for i, rid in enumerate(rids):
         if i == 0:
-            sq = (f' mopt.ids && ARRAY[{rid[0]}]')
+            sq = f' mopt.ids && ARRAY[{rid[0]}]'
         else:
-            sq += (f' OR mopt.ids && ARRAY[{rid[0]}]')
+            sq += f' OR mopt.ids && ARRAY[{rid[0]}]'
     return sq
 
 
@@ -53,9 +54,9 @@ def sql_gen_checks(checks):
     cq = ' mopt.ids && ARRAY['
     for i, check in enumerate(checks):
         if i == 0:
-            cq += (f'{check}')
+            cq += f'{check}'
         else:
-            cq += (f',{check}')
+            cq += f',{check}'
     cq += ']'
     return cq
 
@@ -71,22 +72,25 @@ def get_filters():
 @sync_to_async
 def get_all_models(brand_id, limit, offset):
     print(datetime.datetime.now() - start_time, 'получение всех моделей')
-    brand_models = _query(f'SELECT d.id, m.*, b.name FROM (SELECT name FROM brands WHERE id={brand_id}) b, models m '
-                          f'LEFT JOIN details d ON m.id = d.model_id AND d.partcode_id is NULL '
-                          f'WHERE brand_id = {brand_id} ORDER BY m.id LIMIT {limit} OFFSET {offset};')
+    # brand_models = _query(f'SELECT d.id, m.*, b.name FROM (SELECT name FROM brands WHERE id={brand_id}) b, models m '
+    #                       f'LEFT JOIN details d ON m.id = d.model_id AND d.partcode_id is NULL '
+    #                       f'WHERE brand_id = {brand_id} ORDER BY m.id LIMIT {limit} OFFSET {offset};')
+    print(f'SELECT * FROM model_for_filter mopt WHERE brand_id = {brand_id} LIMIT {limit} OFFSET {offset};')
+    brand_models = _query(f'SELECT * FROM model_for_filter mopt WHERE brand_id = {brand_id} LIMIT {limit} OFFSET {offset};')
     print(datetime.datetime.now() - start_time, 'получение всех моделей завершено')
     return brand_models
 
 
 @sync_to_async
 def get_filtered_model(brand_id, post_filter):
-    f_sql = (
-        f'SELECT * FROM (SELECT * FROM '
-        f'(SELECT d.id did, m.id mid, m.name model, array_agg(ldo.detail_option_id) ids,'
-        f' m.main_image, m.image FROM models m LEFT JOIN details d ON d.model_id = m.id '
-        f'LEFT JOIN link_details_options ldo ON ldo.detail_id = d.id '
-        f'WHERE d.module_id is null and m.brand_id = {brand_id} GROUP BY did, mid, model, m.main_image, m.image '
-        f'ORDER BY mid) mopt WHERE ')
+    # f_sql = (
+    #     f'SELECT * FROM (SELECT * FROM '
+    #     f'(SELECT d.id did, m.id mid, m.name model, array_agg(ldo.detail_option_id) ids,'
+    #     f' m.main_image, m.image FROM models m LEFT JOIN details d ON d.model_id = m.id '
+    #     f'LEFT JOIN link_details_options ldo ON ldo.detail_id = d.id '
+    #     f'WHERE d.module_id is null and m.brand_id = {brand_id} GROUP BY did, mid, model, m.main_image, m.image '
+    #     f'ORDER BY mid) mopt WHERE ')
+    f_sql = f'SELECT * FROM model_for_filter mopt WHERE '
     filterDict = dict(post_filter)
     ops = 0
     for req in filterDict:
@@ -112,7 +116,8 @@ def get_filtered_model(brand_id, post_filter):
             else:
                 f_sql += ' AND '
                 f_sql += sql_gen_checks(filterDict[req])
-    f_sql = f_sql+') d , (SELECT name FROM brands WHERE id=1) b'
+    # f_sql = f_sql+') d , (SELECT name FROM brands WHERE id=1) b'
+    print(f_sql)
     brand_models = _query(f_sql)
     return brand_models
 
@@ -140,26 +145,25 @@ def index(request, brand_id):
         page = int(request.GET.get('page'))
     except:
         page = 0
-    limit = 2400
-    offset = 2400 * page
+    limit = 24000
+    offset = 24 * page
     brand_models = []
     filter_captions = ['Общие характеристики', 'Принтер', 'Копир', 'Сканер', 'Расходные материалы', 'Лотки', 'Финишер',
                        'Интерфейсы']
     post_filter = dict(request.POST.lists())
+    brand_name = models.Brands.objects.filter(id=brand_id)
     if len(post_filter) != 0:
         print('filter apply')
         fload = loop.run_until_complete(fpreload(brand_id, post_filter))
         sfilter = fload[0]
         # Base sql part of query for get model by filter
         brand_models = fload[1]
-        brand_name = fload[1][0][6]
         if brand_models:
             model_count = len(brand_models)
     else:
         preloads = loop.run_until_complete(preload(brand_id, limit, offset))
         sfilter = preloads[0]
         brand_models = preloads[1]
-        brand_name = preloads[1][0][6]
         model_count = len(brand_models)
         print(model_count)
         pages = math.ceil(model_count / limit)

@@ -1,11 +1,14 @@
+import datetime
+
 from django.shortcuts import render
 from django.db import connections
 from django.core import serializers
 import db_model.models as models
+start_time = datetime.datetime.now()
 
 
 def index(request):
-    brands = models.Brands.objects.all().order_by('name')
+    brands = models.Brands.objects.all()
     return render(request, 'main/index.html', context={'search_block': True, 'brands': brands})
 
 
