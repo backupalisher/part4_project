@@ -1,14 +1,15 @@
 from django.shortcuts import render
 
+
 # Create your views here.
 def main_menu(request):
     path = str(request.path)
     curItem = 'Главная'
     menuList = [
-        ['/', 'Главная'],
-        ['/brand/brands/', 'Бренды и модели'],
-        ['/contacts/', 'Контакты'],
-        ['/about/', 'О нас']
+        ['/', 'Главная']
+        , ['/brand/brands/', 'Бренды и модели']
+        , ['/cartridge/', 'Картриджи']
+        # , ['/about/', 'О нас']
     ]
 
     menuAuth = [

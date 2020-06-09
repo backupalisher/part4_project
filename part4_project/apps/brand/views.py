@@ -151,7 +151,7 @@ def index(request, brand_id):
     filter_captions = ['Общие характеристики', 'Принтер', 'Копир', 'Сканер', 'Расходные материалы', 'Лотки', 'Финишер',
                        'Интерфейсы']
     post_filter = dict(request.POST.lists())
-    brand_name = models.Brands.objects.filter(id=brand_id)
+    brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
     if len(post_filter) != 0:
         print('filter apply')
         fload = loop.run_until_complete(fpreload(brand_id, post_filter))

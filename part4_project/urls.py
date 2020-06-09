@@ -20,18 +20,19 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
-    path('', include('main.urls')),
-    path('admin/', admin.site.urls),
-    path('search/', include('main.urls')),
-    path('about/', include('about.urls')),
-    path('contacts/', include('contacts.urls')),
-    path('auth/', include('user_passport.urls')),
-    path('cabinet/', include('user_passport.urls')),
-    path('model/', include('model.urls')),
-    path('detail/', include('detail.urls')),
-    path('brand/', include('brand.urls')),
-    path('filter/', include('filter.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+                  path('', include('main.urls')),
+                  path('admin/', admin.site.urls),
+                  path('search/', include('main.urls')),
+                  path('about/', include('about.urls')),
+                  path('contacts/', include('contacts.urls')),
+                  path('auth/', include('user_passport.urls')),
+                  path('cabinet/', include('user_passport.urls')),
+                  path('model/', include('model.urls')),
+                  path('detail/', include('detail.urls')),
+                  path('brand/', include('brand.urls')),
+                  path('filter/', include('filter.urls')),
+                  path('cartridge/', include('cartridge.urls')),
+                  path('accounts/', include('django.contrib.auth.urls')),
+              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-#+ static(settings.STATIC_URL, document_root=settings.STATIC_URL) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# + static(settings.STATIC_URL, document_root=settings.STATIC_URL) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

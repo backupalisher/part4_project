@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="table-responsive cartridges">
+        <table>
+            {% for cartridge in cartridges %}
+                <tr>
+                    <td>
+                        <a href="/cartridge/{{ cartridge.0 }}">{{ cartridge.1 }}</a>
+                    </td>
+                    <td>
+                        <p>{% if cartridge.2 %}{{ cartridge.2 }}{% elif cartridge.3 %}{{ cartridge.3 }}{% endif %}</p>
+                    </td>
+                    <td>
+                        {% if cartridge.4 %}
+                            {% for item in cartridge.4 %}
+                                {{ item }}<br>
+                            {% endfor %}
+                        {% endif %}
+                        {% if cartridge.8 %}
+                            {% for item in cartridge.8 %}
+                                {{ item }}<br>
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="container">
+        <div class="row">
+            <nav class="nav-breadcrumb w-100">
+                <ul>
+                    <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="breadcrumb-item active">{{ title }}</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}

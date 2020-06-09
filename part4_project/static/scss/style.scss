@@ -405,3 +405,17 @@ h1 {
     width: 45%;
   }
 }
+.cartridges {
+  tr {
+    border-bottom: 1px solid #495057;
+  }
+  td {
+    color: white;
+    border: none;
+    vertical-align: top;
+    padding: 8px 0;
+  }
+}
+.cartridge {
+  color: white;
+}

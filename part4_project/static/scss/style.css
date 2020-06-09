@@ -626,4 +626,15 @@ h1 {
 .cartridge_options td:first-child {
   width: 45%; }
 
+.cartridges tr {
+  border-bottom: 1px solid #495057; }
+.cartridges td {
+  color: white;
+  border: none;
+  vertical-align: top;
+  padding: 8px 0; }
+
+.cartridge {
+  color: white; }
+
 /*# sourceMappingURL=style.css.map */

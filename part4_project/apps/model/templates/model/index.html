@@ -22,7 +22,7 @@
                         {% endif %}
                     </ol>
                     <div class="carousel-inner card_image">
-                        {% if model_images|length > 0 %}
+                        {% if model_images|length > 0 and model_images.0 != '' %}
                             {% for image in model_images %}
                                 {% if forloop.first %}
                                     <div class="carousel-item active">
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="col">
-                <h3><span class="model-title"> {{ model }} </span></h3>
+                <h3><span class="model-title"> {{ model }}</span></h3>
                 {% for caption in captions.0.3 %}
                     {% if 'Status' in caption %}
                         <h5><span class="partcode"> {{ caption|cut:'Status: ' }} </span></h5>
@@ -84,6 +84,13 @@
                                 <a class="nav-link" id="errors-tab"
                                    data-toggle="tab" href="#errors" role="tab"
                                    aria-controls="errors" aria-selected="false">Коды ошибок</a>
+                            </li>
+                        {% endif %}
+                        {% if cartridges is not None and cartridges|length > 0 %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="cartridges-tab"
+                                   data-toggle="tab" href="#cartridges" role="tab"
+                                   aria-controls="errors" aria-selected="false">Картриджи</a>
                             </li>
                         {% endif %}
                         <!--li class="nav-item">
@@ -263,6 +270,35 @@
                                         {% endif %}
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="py-3 tab-pane fade" id="cartridges" role="tabpanel"
+                             aria-labelledby="cartridges-tab">
+                            <div class="table-responsive cartridges">
+                                <table>
+                                    {% for cartridge in cartridges %}
+                                        <tr>
+                                            <td>
+                                                <a href="/cartridge/{{ cartridge.0 }}">{{ cartridge.1 }}</a>
+                                            </td>
+                                            <td class="pl-3">
+                                                <p>{% if cartridge.2 %}{{ cartridge.2 }}{% elif cartridge.3 %}{{ cartridge.3 }}{% endif %}</p>
+                                            </td>
+{#                                            <td>#}
+{#                                                {% if cartridge.4 %}#}
+{#                                                    {% for item in cartridge.4 %}#}
+{#                                                        {{ item }}<br>#}
+{#                                                    {% endfor %}#}
+{#                                                {% endif %}#}
+{#                                                {% if cartridge.8 %}#}
+{#                                                    {% for item in cartridge.8 %}#}
+{#                                                        {{ item }}<br>#}
+{#                                                    {% endfor %}#}
+{#                                                {% endif %}#}
+{#                                            </td>#}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
                             </div>
                         </div>
                         <div class="py-3 tab-pane fade" id="description" role="tabpanel"

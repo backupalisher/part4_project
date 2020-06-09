@@ -4,6 +4,54 @@
 {% paginate entries %}
 {% for entry in entries %}
     {% block content %}
+        {% if cartridge_result %}
+            {% for cartridge in cartridge_result %}
+                <div class="cartridge_result">
+                    <p>
+                        <a href="{% if cartridge.5 %}/detail/{{ cartridge.5 }}{% endif %}" class="text-green">
+                            <span class="text-green pr-2">{{ cartridge.2 }}</span>
+                            {% if cartridge.3 %}
+                                {{ cartridge.3 }}
+                            {% elif cartridge.4 %}
+                                {{ cartridge.4 }}
+                            {% endif %}
+                            {% if cartridge.7 %}
+                                {{ cartridge.7 }}
+                            {% endif %}
+                        </a>
+                    </p>
+                    <p>
+                        {% if cartridge.6 %}
+                            {{ cartridge.6 }}
+                        {% endif %}
+                    </p>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if error_result %}
+            {% for index in error_result %}
+                <div class="error_result">
+                    <div class="image">
+                        {% if index.7 %}
+                            <img src="{{ index.7 }}">
+                        {% endif %}
+                    </div>
+                    <div class="desc">
+                        <p>
+                            Ошибка: <strong><a href="/model/{{ index.0 }}">{{ index.2 }}</a></strong>
+                        </p>
+                        <p>
+                            Display: <strong>{{ index.3 }}</strong>
+                        </p>
+                        <p>
+                            Description: <strong>{{ index.4 }}</strong>
+                        </p>
+                        <p>Causes: <strong>{{ index.5 }}</strong></p>
+                        <p>Remedy: <strong>{{ index.6 }}</strong></p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
         {% if all_result %}
             {% for index in all_result %}
                 <div class="search_result">
@@ -35,49 +83,9 @@
                     </div>
                 </div>
             {% endfor %}
-        {% elif error_result %}
-            {% for index in error_result %}
-                <div class="error_result">
-                    <div class="image">
-                        {% if index.7 %}
-                            <img src="{{ index.7 }}">
-                        {% endif %}
-                    </div>
-                    <div class="desc">
-                        <p>
-                            Ошибка: <strong><a href="/model/{{ index.0 }}">{{ index.2 }}</a></strong>
-                        </p>
-                        <p>
-                            Display: <strong>{{ index.3 }}</strong>
-                        </p>
-                        <p>
-                            Description: <strong>{{ index.4 }}</strong>
-                        </p>
-                        <p>Causes: <strong>{{ index.5 }}</strong></p>
-                        <p>Remedy: <strong>{{ index.6 }}</strong></p>
-                    </div>
-                </div>
-            {% endfor %}
-        {% elif cartridge_result %}
-            {% for cartridge in cartridge_result %}
-                <div class="cartridge_result">
-                    <p>
-                        <a href="/detail/{{ cartridge.5 }}" class="text-green">
-                            <span class="text-green pr-2">{{ cartridge.2 }}</span>
-                            {% if cartridge.3 %}
-                                {{ cartridge.3 }}
-                            {% elif cartridge.4 %}
-                                {{ cartridge.4 }}
-                            {% endif %}
-                            {{ cartridge.7 }}
-                        </a>
-                    </p>
-                    <p>
-                        {{ cartridge.6 }}
-                    </p>
-                </div>
-            {% endfor %}
         {% endif %}
+
+
         <div class="row">
             {% for brand in brands %}
                 <div class="col-lg-2 col-md-3 col-sm-4 mb-3">

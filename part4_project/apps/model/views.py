@@ -90,13 +90,14 @@ def qet_partcatalog(request, model_id):
     print(datetime.datetime.now() - start_time, 'получение парткодов и модулей завершено')
 
     print(datetime.datetime.now() - start_time, 'Сортировка парткаталога')
-    for parts in partcatalog:
-        # print(parts)
-        if parts[4]:
-            modules.append(parts[4])
-        elif parts[3]:
-            modules.append(parts[3])
-    modules = list(dict.fromkeys(modules))
+    if partcatalog and len(partcatalog) > 0:
+        for parts in partcatalog:
+            # print(parts)
+            if parts[4]:
+                modules.append(parts[4])
+            elif parts[3]:
+                modules.append(parts[3])
+        modules = list(dict.fromkeys(modules))
     if request.GET.get('module'):
         cur_module = request.GET.get('module')
     else:
@@ -111,10 +112,12 @@ def qet_partcatalog(request, model_id):
 def get_ids(detail_id):
     print(datetime.datetime.now() - start_time, 'сбор id')
     qd = _query(f'SELECT * FROM details WHERE id = {detail_id}')
-    partcode_id = qd[0][1]
-    model_id = qd[0][2]
-    module_id = qd[0][3]
-    spr_detail_id = qd[0][4]
+    try:
+        model_id = qd[0][2]
+        spr_detail_id = qd[0][4]
+    except:
+        model_id = None
+        spr_detail_id = None
     print(datetime.datetime.now() - start_time, 'сбор id завершен')
     return model_id, spr_detail_id
 
@@ -124,18 +127,56 @@ def get_ids(detail_id):
 def get_any(model_id, spr_detail_id):
     print(datetime.datetime.now() - start_time, 'сбор остального')
     mq = _query(f'SELECT brand_id, name, main_image, image FROM models WHERE id = {model_id}')
-    brand_id = mq[0][0]
-    model = mq[0][1]
-    model_main_image = mq[0][2]
-    model_images = mq[0][3]
+    try:
+        model_main_image = mq[0][2]
+    except:
+        model_main_image = None
+    try:
+        model = mq[0][1]
+    except:
+        model = None
+    try:
+        brand_id = mq[0][0]
+    except:
+        brand_id = None
+    try:
+        model_images = mq[0][3].split(';')
+    except:
+        model_images = None
     dq = _query(f'SELECT name, name_ru FROM spr_details WHERE id = {spr_detail_id}')
-    if dq[0][1]:
-        detail_name = dq[0][1]
-    else:
-        detail_name = dq[0][0]
-    brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
+    try:
+        if dq[0][1]:
+            detail_name = dq[0][1]
+        else:
+            detail_name = dq[0][0]
+    except:
+        detail_name = None
+    try:
+        brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
+    except:
+        brand_name = None
     print(datetime.datetime.now() - start_time, 'сбор остального завершен')
     return model, model_main_image, model_images, detail_name, brand_id, brand_name
+
+
+@sync_to_async
+def get_cartridge(model_id):
+    print(datetime.datetime.now() - start_time, 'получение картриджей')
+    cartridges = _query(f"SELECT * FROM all_cartridge WHERE {model_id} = ANY(model_id)")
+    for item in cartridges:
+        print(item)
+    for idx in range(len(cartridges)):
+        cartridge = list(cartridges[idx])
+        cartridge[4] = list(set(cartridge[4]))
+        cartridges[idx] = tuple(cartridge)
+        cartridge_alt = list(cartridges[idx])
+        cartridge_alt[8] = list(set(cartridge[8]))
+        cartridges[idx] = tuple(cartridge_alt)
+    print('************')
+    for item in cartridges:
+        print(item)
+    print(datetime.datetime.now() - start_time, 'получение картриджей завершено')
+    return cartridges
 
 
 async def init(detail_id):
@@ -149,7 +190,8 @@ async def past_init(request, model_id, spr_detail_id, detail_id):
         get_any(model_id, spr_detail_id),
         qet_partcatalog(request, model_id),
         get_errors(detail_id),
-        get_options(detail_id)
+        get_options(detail_id),
+        get_cartridge(model_id)
     ]
     results = await asyncio.gather(*tasks)
     return results
@@ -162,24 +204,26 @@ def index(request, detail_id):
     loop = asyncio.get_event_loop()
     loop.create_task(set_weight(detail_id))
     print(datetime.datetime.now() - start_time, 'start')
-    try:
-        model_id, spr_detail_id = loop.run_until_complete(get_ids(detail_id))
-        post_result = loop.run_until_complete(past_init(request, model_id, spr_detail_id, detail_id))
-        model = post_result[0][0]
-        model_main_image = post_result[0][1]
-        model_images = post_result[0][2]
-        detail_name = post_result[0][3]
-        brand_id = post_result[0][4]
-        brand_name = post_result[0][5]
-        modules = post_result[1][0]
-        cur_module = post_result[1][1]
-        partcatalog = post_result[1][2]
-        verrors = post_result[2]
-        options = post_result[3][0]
-        captions = post_result[3][1]
-        subcaptions = post_result[3][2]
-        values = post_result[3][3]
-    except:
+    model_id, spr_detail_id = loop.run_until_complete(get_ids(detail_id))
+    post_result = loop.run_until_complete(past_init(request, model_id, spr_detail_id, detail_id))
+    model = post_result[0][0]
+    model_main_image = post_result[0][1]
+    model_images = post_result[0][2]
+    detail_name = post_result[0][3]
+    brand_id = post_result[0][4]
+    brand_name = post_result[0][5]
+    modules = post_result[1][0]
+    cur_module = post_result[1][1]
+    partcatalog = post_result[1][2]
+    verrors = post_result[2]
+    options = post_result[3][0]
+    captions = post_result[3][1]
+    subcaptions = post_result[3][2]
+    values = post_result[3][3]
+    cartridges = post_result[4]
+    if model_id:
+        pass
+    else:
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
     loop.close()
     print(datetime.datetime.now() - start_time, 'завершение')
@@ -187,4 +231,4 @@ def index(request, detail_id):
                   {'detail_id': detail_id, 'model': model, 'model_main_image': model_main_image, 'modules': modules,
                    'verrors': verrors, 'model_images': model_images, 'detail_name': detail_name, 'options': options,
                    'partcatalog': partcatalog, 'captions': captions, 'brand_id': brand_id, 'brand_name': brand_name,
-                   'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module})
+                   'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module, 'cartridges': cartridges})
