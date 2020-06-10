@@ -8,7 +8,7 @@
             {% for cartridge in cartridge_result %}
                 <div class="cartridge_result">
                     <p>
-                        <a href="{% if cartridge.5 %}/detail/{{ cartridge.5 }}{% endif %}" class="text-green">
+                        <a href="{% if cartridge.0 %}/cartridge/{{ cartridge.0 }}{% endif %}" class="text-green">
                             <span class="text-green pr-2">{{ cartridge.2 }}</span>
                             {% if cartridge.3 %}
                                 {{ cartridge.3 }}

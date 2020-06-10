@@ -1,7 +1,12 @@
+import datetime
+import asyncio
+from asgiref.sync import sync_to_async
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 import db_model.models as models
 from django.db import connections
+
+start_time = datetime.datetime.now()
 
 
 def detail_view(request):
@@ -21,13 +26,91 @@ def _query(q):
             return data
 
 
-def index(request, detail_id):
-    options = []
-    # Запрос на получение опций
+# добавление веса
+@sync_to_async
+def set_weight(detail_id):
+    print(datetime.datetime.now() - start_time, 'обновление веса')
     _query(
-        f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w WHERE id = {detail_id}")
-    q_options = "SELECT sprdo.parent_id, sprdo.id, sprdet.name caption, array_agg(opts.opt_arr) FROM (SELECT d.spr_detail_id, dop.parent_id, concat(sdo.name,': ', spdo.name) opt_arr FROM link_details_options ldo INNER JOIN detail_options dop ON ldo.detail_option_id = dop.id INNER JOIN spr_detail_options sdo ON dop.caption_spr_id = sdo.id INNER JOIN spr_detail_options spdo ON dop.detail_option_spr_id = spdo.id INNER JOIN details d ON d.id = ldo.detail_id WHERE ldo.detail_id = %d ORDER BY dop.id DESC) opts LEFT JOIN detail_options sprdo on opts.parent_id = sprdo.id LEFT JOIN spr_detail_options sprdet on sprdet.id = sprdo.detail_option_spr_id LEFT JOIN spr_details sd on sd.id = opts.spr_detail_id GROUP BY sprdet.name, sprdo.parent_id, sprdo.id, sd.name ORDER BY id asc;" % (
-        detail_id)
+        f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w "
+        f"WHERE id = {detail_id}")
+    print(datetime.datetime.now() - start_time, 'обновление веса завершено')
+
+
+@sync_to_async
+def get_ids(detail_id):
+    pass
+
+
+@sync_to_async
+def get_options(detail_id):
+    print(datetime.datetime.now() - start_time, 'Запрос на получение опций')
+    q_options = f"SELECT * FROM all_options_for_details WHERE detail_id = {detail_id}"
+    option_vals = _query(q_options)
+    print(datetime.datetime.now() - start_time, 'Запрос на получение опций завершен')
+    print(datetime.datetime.now() - start_time, 'Сортировка опций')
+    captions = []
+    subcaptions = []
+    values = []
+    for opts in option_vals:
+        if opts[0] is None and opts[1] is None:
+            for i in range(len(opts[3])):
+                opts[3][i] = opts[3][i].replace('Caption: ', '')
+            captions.append(opts)
+        if opts[0] is None and opts[1] is not None:
+            for opt in opts[3]:
+                if 'SubCaption' in opt:
+                    opts[3].remove(opt)
+            subcaptions.append(opts)
+        else:
+            values.append(opts)
+    options = option_vals
+    print(datetime.datetime.now() - start_time, 'Сортировка опций завершена')
+    return options, captions, subcaptions, values
+
+
+@sync_to_async
+def get_cartridge_options(partcode):
+    print(datetime.datetime.now() - start_time, 'Запрос на получение картриджей')
+    cartridge_options = _query(f"SELECT * FROM all_options_for_cartridges WHERE code = '{partcode}'")
+    print(datetime.datetime.now() - start_time, 'Запрос на получение картриджей завершен')
+    return cartridge_options
+
+
+@sync_to_async
+def get_partcodes(model_id):
+    print(datetime.datetime.now() - start_time, 'Запрос на получение парткаталога')
+    partcatalog = _query(f"SELECT * FROM all_partcatalog WHERE model_id = {model_id}")
+    print(datetime.datetime.now() - start_time, 'Запрос на получение парткаталога завершен')
+    return partcatalog
+
+
+async def init(detail_id):
+    async_tasks = [get_options(detail_id), get_ids(detail_id)]
+    results = await asyncio.gather(*async_tasks)
+    return results
+
+
+async def past_init(request, model_id, partcode):
+    tasks = [
+        # get_partcodes(model_id),
+        get_cartridge_options(partcode),
+    ]
+    results = await asyncio.gather(*tasks)
+    return results
+
+
+def index(request, detail_id):
+    print(start_time, detail_id)
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop = asyncio.get_event_loop()
+    loop.create_task(set_weight(detail_id))
+    print(datetime.datetime.now() - start_time, 'start')
+    init_result = loop.run_until_complete(init(detail_id))
+    options = init_result[0][0]
+    captions = init_result[0][1]
+    subcaptions = init_result[0][2]
+    values = init_result[0][3]
     try:
         try:
             partcode_id = models.Details.objects.filter(id=detail_id).values('partcode_id')[0]['partcode_id']
@@ -42,7 +125,6 @@ def index(request, detail_id):
         try:
             module_id = models.Details.objects.filter(id=detail_id).values('module_id')[0]['module_id']
             module = list(models.SprModules.objects.filter(id=module_id).values())[0]
-            print(module)
         except:
             module = '-'
         try:
@@ -58,43 +140,17 @@ def index(request, detail_id):
                 models.Details.objects.filter(model_id=model_id).filter(module_id__isnull=True).values('id')[0]['id']
         except:
             model_d_id = 0
+        post_result = loop.run_until_complete(past_init(request, model_id, partcode))
+        # partcatalog = post_result[0]
+        cartridge_options = post_result[0]
         brand_id = models.Models.objects.filter(id=model_id).values('brand_id')[0]['brand_id']
         brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
-        # Запрос на получение парткодов и модулей
-        q_code_module = "SELECT m.name model_name, m.image model_picture, m.main_image model_scheme, mo.name module_name, mo.description module_desc, mo.scheme_picture module_picture, p.description code_desc, p.code partcode, p.images code_image, sd.name detail_name, sd.name_ru detail_name_ru, sd.desc detail_desc, sd.seo detail_seo, sd.base_img detail_img FROM details d left JOIN spr_modules mo on d.module_id = mo.id LEFT JOIN partcodes p on d.partcode_id = p.id LEFT JOIN models m on d.model_id = m.id LEFT JOIN spr_details sd on d.spr_detail_id = sd.id WHERE d.model_id =%d" % (
-            model_id)
-        cartridge_options = _query(f'SELECT sco."text" FROM (SELECT ca.id FROM cartridge ca ' \
-                              f'LEFT JOIN partcodes pc ON pc.code = ca.code ' \
-                              f'WHERE ca.code = \'{partcode["code"]}\') cart, link_cartridge_options lco ' \
-                              f'LEFT JOIN spr_cartridge_options sco ON lco.spr_cartridge_id = sco.id ' \
-                              f'WHERE lco.cartridge_id = cart.id')
-        print(cartridge_options)
-        option_vals = _query(q_options)
-        captions = []
-        subcaptions = []
-        values = []
-        for opts in option_vals:
-            if opts[0] is None and opts[1] is None:
-                for i in range(len(opts[3])):
-                    opts[3][i] = opts[3][i].replace('Caption: ', '')
-                captions.append(opts)
-            if opts[0] is None and opts[1] is not None:
-                for opt in opts[3]:
-                    if 'SubCaption' in opt:
-                        opts[3].remove(opt)
-                subcaptions.append(opts)
-            else:
-                values.append(opts)
-        # print(captions)
-        # print(subcaptions)
-        # print(values)
-        options = option_vals
-        partcatalog = _query(q_code_module)
+
     except:
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
 
     return render(request, 'detail/index.html',
                   {'partcode': partcode, 'detail_id': detail_id, 'model': model, 'model_id': model_id,
                    'module': module, 'model_d_id': model_d_id, 'detail_name': detail_name, 'options': options,
-                   'partcatalog': partcatalog, 'captions': captions, 'subcaptions': subcaptions, 'values': values,
+                   'captions': captions, 'subcaptions': subcaptions, 'values': values,
                    'brand_id': brand_id, 'brand_name': brand_name, 'cartridge_options': cartridge_options})

@@ -12,7 +12,7 @@
                     {% if partcode.images %}
                         <img src="{{ MEDIA_URL }}images/{{ partcode.images }}" class="img-fluid"/>
                     {% else %}
-                        <img src="{{ MEDIA_URL }}/no_image_part.png" class="img-fluid"/>
+                        <img src="{{ MEDIA_URL }}images/no_image_part.png" class="img-fluid"/>
                     {% endif %}
                 </div>
             </div>
@@ -35,19 +35,23 @@
             <div class="col-sm-12">
                 <div class="py-2">
                     <ul class="nav nav-tabs" id="detailTabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="options-tab" data-toggle="tab" href="#options" role="tab"
-                               aria-controls="options"
-                               aria-selected="true">Характеристики</a>
-                        </li>
+                        {% if options and options|length > 0 or cartridge_options|length > 0 %}
+                            <li class="nav-item">
+                                <a class="nav-link active" id="options-tab" data-toggle="tab" href="#options" role="tab"
+                                   aria-controls="options"
+                                   aria-selected="true">Характеристики</a>
+                            </li>
+                        {% endif %}
                         <!--li class="nav-item">
                             <a class="nav-link" id="parts-tab" data-toggle="tab" href="#parts" role="tab"
                                aria-controls="parts" aria-selected="false">Парткаталог</a>
                         </li-->
-                        <li class="nav-item">
-                            <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
-                               aria-controls="description" aria-selected="false">Описание</a>
-                        </li>
+                        {% if options and options|length > 0 %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
+                                   aria-controls="description" aria-selected="false">Описание</a>
+                            </li>
+                        {% endif %}
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="options" role="tabpanel"

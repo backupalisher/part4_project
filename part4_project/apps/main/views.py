@@ -77,5 +77,6 @@ def search(request):
     ar = result[0]
     er = result[1]
     cr = result[2]
+    print(cr)
     return render(request, 'main/index.html',
                   context={'all_result': ar, 'error_result': er, 'cartridge_result': cr})

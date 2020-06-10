@@ -39,7 +39,26 @@ def set_weight(detail_id):
 # Запрос на получение опций и вывод опций
 @sync_to_async
 def get_options(detail_id):
-    captions = []
+    captions = [
+        'Общие характеристики',
+        'Принтер',
+        'Копир',
+        'Сканер',
+        'Расходные материалы',
+        'Факс',
+        'Телефон',
+        'Шрифты и языки управления',
+        'Лотки',
+        'Финишер',
+        'Интерфейсы',
+        'Память/Процессор',
+        'Дополнительная информация',
+        'Фото',
+        'Общая информация',
+        'Габариты',
+        'Снят с производства',
+        'Актуальный',
+    ]
     subcaptions = []
     values = []
     print(datetime.datetime.now() - start_time, 'получение опций')
@@ -48,10 +67,10 @@ def get_options(detail_id):
 
     print(datetime.datetime.now() - start_time, 'сортировка опций')
     for opts in option_vals:
-        if opts[0] is None and opts[1] is None:
-            for i in range(len(opts[3])):
-                opts[3][i] = opts[3][i].replace('Caption: ', '')
-            captions.append(opts)
+        # if opts[0] is None and opts[1] is None:
+        #     for i in range(len(opts[3])):
+        #         opts[3][i] = opts[3][i].replace('Caption: ', '')
+        #     captions.append(opts)
         if opts[0] is None and opts[1] is not None:
             for opt in opts[3]:
                 if 'SubCaption' in opt:
@@ -61,7 +80,7 @@ def get_options(detail_id):
             values.append(opts)
     options = option_vals
     print(datetime.datetime.now() - start_time, 'сортировка опций завершена')
-
+    print(captions)
     return options, captions, subcaptions, values
 
 
@@ -163,8 +182,6 @@ def get_any(model_id, spr_detail_id):
 def get_cartridge(model_id):
     print(datetime.datetime.now() - start_time, 'получение картриджей')
     cartridges = _query(f"SELECT * FROM all_cartridge WHERE {model_id} = ANY(model_id)")
-    for item in cartridges:
-        print(item)
     for idx in range(len(cartridges)):
         cartridge = list(cartridges[idx])
         cartridge[4] = list(set(cartridge[4]))
@@ -172,9 +189,6 @@ def get_cartridge(model_id):
         cartridge_alt = list(cartridges[idx])
         cartridge_alt[8] = list(set(cartridge[8]))
         cartridges[idx] = tuple(cartridge_alt)
-    print('************')
-    for item in cartridges:
-        print(item)
     print(datetime.datetime.now() - start_time, 'получение картриджей завершено')
     return cartridges
 
@@ -202,10 +216,12 @@ def index(request, detail_id):
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop = asyncio.get_event_loop()
-    loop.create_task(set_weight(detail_id))
     print(datetime.datetime.now() - start_time, 'start')
-    model_id, spr_detail_id = loop.run_until_complete(get_ids(detail_id))
+    init_result = loop.run_until_complete(init(detail_id))
+    model_id = init_result[0][0]
+    spr_detail_id = init_result[0][1]
     post_result = loop.run_until_complete(past_init(request, model_id, spr_detail_id, detail_id))
+    loop.close()
     model = post_result[0][0]
     model_main_image = post_result[0][1]
     model_images = post_result[0][2]
@@ -223,9 +239,9 @@ def index(request, detail_id):
     cartridges = post_result[4]
     if model_id:
         pass
+        print(datetime.datetime.now() - start_time, 'завершение')
     else:
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
-    loop.close()
     print(datetime.datetime.now() - start_time, 'завершение')
     return render(request, 'model/index.html',
                   {'detail_id': detail_id, 'model': model, 'model_main_image': model_main_image, 'modules': modules,
