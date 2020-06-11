@@ -6,33 +6,55 @@
 
 {% block content %}
     <div class="table-responsive cartridges">
-        <table>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Код производителя</th>
+                    <th>Наименование</th>
+                    <th style="width: 30%;">Совместим с моделями</th>
+                </tr>
+            </thead>
+            <tbody>
             {% for cartridge in cartridges %}
                 <tr>
                     <td>
-                        <a href="/cartridge/{{ cartridge.0 }}">{{ cartridge.1 }}</a>
+                        <a href="/cartridge/{{ cartridge.0 }}" class="text-yellow">{{ cartridge.1 }}</a>
                     </td>
                     <td>
-                        <p>{% if cartridge.2 %}{{ cartridge.2 }}{% elif cartridge.3 %}{{ cartridge.3 }}{% endif %}</p>
+                        <span class="text-green">{% if cartridge.2 %}{{ cartridge.2 }}{% elif cartridge.3 %}{{ cartridge.3 }}{% endif %}</span>
                     </td>
-                    <td>
-                        {% if cartridge.4 %}
-                            {% for item in cartridge.4 %}
-                                {{ item }}<br>
-                            {% endfor %}
-                        {% endif %}
-                        {% if cartridge.8 %}
-                            {% for item in cartridge.8 %}
-                                {{ item }}<br>
-                            {% endfor %}
-                        {% endif %}
+                    <td style="width: 30%;">
+                        <div class="accordion">
+                            <a class="btn-collapse text-grey" data-toggle="collapse"
+                                    data-target="#collapse{{ forloop.counter0 }}" aria-expanded="false"
+                                    aria-controls="collapse{{ forloop.counter0 }}">
+                              Показать модели
+                            </a>
+                            <div class="collapse" id="collapse{{ forloop.counter0 }}">
+                                <div class="">
+                                    {% if cartridge.4 %}
+                                        {% for item in cartridge.4 %}
+                                            {{ item }}<br>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if cartridge.8 %}
+                                        {% for item in cartridge.8 %}
+                                            {{ item }}<br>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
+            </tbody>
         </table>
     </div>
 {% endblock %}
-
+<script>
+    $('.collapse').collapse()
+</script>
 {% block breadcrumbs %}
     <div class="container">
         <div class="row">

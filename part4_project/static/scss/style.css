@@ -637,4 +637,10 @@ h1 {
 .cartridge {
   color: white; }
 
+.btn-collapse {
+  cursor: pointer;
+  text-decoration: underline; }
+  .btn-collapse:hover {
+    text-decoration: none; }
+
 /*# sourceMappingURL=style.css.map */

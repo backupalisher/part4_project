@@ -54,8 +54,8 @@
                 </nav>
             {% endblock %}
             <div class="container p-2">
-                <form action="/search" method="get">
-                    <div class="input-group mb-3" id="search_main">
+                <form action="/search" method="get" class="mb-3">
+                    <div class="input-group" id="search_main">
 {#                        <div class="input-group-prepend">#}
 {#                            <select class="custom-select" name="v" required>#}
 {#                                <option value="0">Везде</option>#}
@@ -67,6 +67,9 @@
                                aria-describedby="button-search">
                         <button class="btn" type="submit" id="button-search">Найти</button>
                     </div>
+                    <small class="form-text text-muted">
+                        <span class="text-grey">Например:</span> "Canon LBP215dw Ролик захвата" или "HP M606 fuser"
+                    </small>
                 </form>
             </div>
         {% endblock %}

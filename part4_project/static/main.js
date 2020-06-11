@@ -96,7 +96,6 @@ $(document).ready(function () {
         }
         if (localStorage.getItem('variant') && localStorage.getItem('sval')) {
             $v = localStorage.getItem('variant')
-            console.log(localStorage.getItem('sval'))
             $s = localStorage.getItem('sval').replace(/\+/g, ' ')
             $('#search_main .custom-select').val($v)
             $('#search_main input').val($s)

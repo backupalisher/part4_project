@@ -7,12 +7,12 @@
 {% block content %}
     {% if cartridge %}
         <div class="cartridge">
-            <h5>Код производителя: {{ cartridge.1 }}</h5>
+            <h5>Код производителя: <span class="text-green">{{ cartridge.1 }}</span></h5>
             <p>
                 {% if cartridge.3 %}
-                   Наименование: {{ cartridge.3 }}
+                   Наименование: <span class="text-yellow">{{ cartridge.3 }}</span>
                 {% elif cartridge.2 %}
-                    Name: {{ cartridge.2 }}
+                    Name: <span class="text-yellow">{{ cartridge.2 }}</span>
                 {% endif %}
             </p>
             <h6>Совместим с моделями:</h6>
@@ -31,7 +31,7 @@
                 {% endif %}
             </p>
         {% if options and options|length > 0 %}
-            <h6>Опции:</h6>
+            <h6 class="text-red">Опции:</h6>
             <div class="table-responsive cartridges">
                 <table class="table">
                     {% for option in options %}

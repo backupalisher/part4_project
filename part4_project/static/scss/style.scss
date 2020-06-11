@@ -419,3 +419,10 @@ h1 {
 .cartridge {
   color: white;
 }
+.btn-collapse {
+  cursor: pointer;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
