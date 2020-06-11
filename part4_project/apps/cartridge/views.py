@@ -45,27 +45,19 @@ def cartridges(request, brand_id):
 
 def cartridge(request, cartridge_id):
     title = 'Каритридж'
-    options = _query(
-        f"SELECT sco.text FROM (SELECT ca.id FROM cartridge ca "
-        f"LEFT JOIN partcodes pc ON pc.code = ca.code WHERE ca.id = {cartridge_id}) cart, link_cartridge_options lco "
-        f"LEFT JOIN spr_cartridge_options sco ON lco.spr_cartridge_id = sco.id WHERE lco.cartridge_id = cart.id")
-    cartridge = _query(
-        f"SELECT cart.id, cart.code, cart.name, cart.name_ru, array_agg(m.name) AS model, array_agg(m.id) as model_id, "
-        f"array_agg(cam.model) AS alt_model FROM cartridge cart "
-        f"LEFT JOIN link_model_cartridge lmc ON lmc.cartridge_id = cart.id "
-        f"LEFT JOIN models m ON m.id = lmc.model_id "
-        f"LEFT JOIN link_cartridge_model_analog lcma ON lcma.cartridge_id = cart.id "
-        f"LEFT JOIN cartridge_analog_model cam ON cam.id = lcma.cartrindge_analog_model_id "
-        f"WHERE cart.id = {cartridge_id} GROUP BY cart.id, cart.code, cart.name, cart.name_ru")
-    carts = list(cartridge[0])
+    options = _query(f"SELECT * FROM all_options_for_cartridges WHERE id = {cartridge_id}")
+    cartridge = _query(f"SELECT * FROM all_cartridge WHERE id = {cartridge_id}")[0]
+    print(cartridge)
+    carts = list(cartridge)
     ids = list(set(carts[5]))
     models = list(set(carts[4]))
+    brand_id = carts[6]
+    brand = carts[7]
     arr = []
     for idx, v in enumerate(models):
         arr.append([ids[idx], v])
-    print(arr)
     carts[4] = arr
-    # carts[5] =
-    carts[6] = list(set(carts[6]))
-    cartridge[0] = tuple(carts)
-    return render(request, 'cartridge/cartridge.html', {'title': title, 'cartridge': cartridge[0], 'options': options})
+    cartridge = tuple(carts)
+    print(cartridge)
+    return render(request, 'cartridge/cartridge.html', {'title': title, 'cartridge': cartridge, 'options': options,
+                                                        'brand': brand, 'brand_id': brand_id})

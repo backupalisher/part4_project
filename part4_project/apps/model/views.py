@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 import db_model.models as models
-from django.db import connections
+from db_model.db_utils import _query
 from asgiref.sync import sync_to_async
 import datetime
 import asyncio
@@ -11,19 +11,6 @@ start_time = datetime.datetime.now()
 
 def detail_view(request):
     return render(request, 'model/index.html')
-
-
-def _query(q):
-    data = None
-    with connections['part4'].cursor() as c:
-        try:
-            c.execute("BEGIN")
-            c.execute(q)
-            data = c.fetchall()
-            c.execute("COMMIT")
-        finally:
-            c.close()
-            return data
 
 
 # добавление веса
@@ -79,8 +66,10 @@ def get_options(detail_id):
         else:
             values.append(opts)
     options = option_vals
+    print(subcaptions)
+    print('****************')
+    print(values)
     print(datetime.datetime.now() - start_time, 'сортировка опций завершена')
-    print(captions)
     return options, captions, subcaptions, values
 
 
@@ -239,7 +228,6 @@ def index(request, detail_id):
     cartridges = post_result[4]
     if model_id:
         pass
-        print(datetime.datetime.now() - start_time, 'завершение')
     else:
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
     print(datetime.datetime.now() - start_time, 'завершение')

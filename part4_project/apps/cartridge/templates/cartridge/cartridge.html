@@ -19,11 +19,13 @@
             <p class="pl-2">
                 {% if cartridge.4 %}
                     {% for model in cartridge.4 %}
-                        <a href="/model/{{ model.0 }}">{{ model.1 }}</a> <br>
+                        {% if model.0 and model.0 != 'None' %}
+                            <a href="/model/{{ model.0 }}">{{ model.1 }}</a> <br>
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
-                {% if cartridge.6 %}
-                    {% for model in cartridge.6 %}
+                {% if cartridge.8 %}
+                    {% for model in cartridge.8 %}
                         {{ model }} <br>
                     {% endfor %}
                 {% endif %}
@@ -56,6 +58,7 @@
             <nav class="nav-breadcrumb w-100">
                 <ul>
                     <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="nav-breadcrumb-item"><a href="/cartridges/{{ brand_id }}">{{ brand }}</a></li>
                     <li class="breadcrumb-item active">{{ title }}</li>
                 </ul>
             </nav>

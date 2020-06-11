@@ -127,22 +127,22 @@
                                                                     {% endif %}
                                                                 </td>
                                                             </tr>
-                                                            {% for value in values %}
-                                                                <tr>
-                                                                    {% if value.0 == subcaption.1 %}
-                                                                        <td class="pl-3">
-                                                                            <h5>{{ value.2 }}</h5>
-                                                                            <div>
-                                                                                {% for val in value.3 %}
-                                                                                    <span class="pl-5 capt">{{ val|get_caption }}</span>
-                                                                                    <span class="val">{{ val|get_val }}</span>
-                                                                                    <br>
-                                                                                {% endfor %}
-                                                                            </div>
-                                                                        </td>
-                                                                    {% endif %}
-                                                                </tr>
-                                                            {% endfor %}
+                                                        {% endfor %}
+                                                        {% for value in values %}
+                                                            <tr>
+                                                                {% if value.0 == subcaption.1 %}
+                                                                    <td class="pl-3">
+                                                                        <h5>{{ value.2 }}</h5>
+                                                                        <div>
+                                                                            {% for val in value.3 %}
+                                                                                <span class="pl-5 capt">{{ val|get_caption }}</span>
+                                                                                <span class="val">{{ val|get_val }}</span>
+                                                                                <br>
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    </td>
+                                                                {% endif %}
+                                                            </tr>
                                                         {% endfor %}
                                                     {% endif %}
                                                 {% endfor %}
