@@ -92,11 +92,12 @@ $(document).ready(function () {
         vals = getUrlVars($pathname)
         if (vals.length > 0) {
             localStorage.setItem('variant', vals['v'])
-            localStorage.setItem('sval', vals['s'])
+            localStorage.setItem('sval', decodeURIComponent(vals['s']))
         }
         if (localStorage.getItem('variant') && localStorage.getItem('sval')) {
             $v = localStorage.getItem('variant')
-            $s = localStorage.getItem('sval').replace('+','')
+            console.log(localStorage.getItem('sval'))
+            $s = localStorage.getItem('sval').replace(/\+/g, ' ')
             $('#search_main .custom-select').val($v)
             $('#search_main input').val($s)
         }
