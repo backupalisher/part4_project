@@ -111,31 +111,32 @@ def get_filtered_model(brand_id, checkboxs, ranges, radios):
     checkboxs = json.loads(checkboxs)
     ranges = json.loads(ranges)
     radios = json.loads(radios)
-    print(checkboxs, ranges, radios)
-    print(len(checkboxs), len(ranges), len(radios))
     f_sql = f'SELECT * FROM model_for_filter mopt WHERE ('
     ops = 0
     for key, value in ranges.items():
-        if ops == 0:
-            f_sql += sql_get_range(key.replace('range', ''), value[0], value[1])
-            ops += 1
-        else:
-            f_sql += ' AND '
-            f_sql += sql_get_range(key.replace('range', ''), value[0], value[1])
+        if len(value) > 0:
+            if ops == 0:
+                f_sql += sql_get_range(key.replace('range', ''), value[0], value[1])
+                ops += 1
+            else:
+                f_sql += ' AND '
+                f_sql += sql_get_range(key.replace('range', ''), value[0], value[1])
     for key, value in radios.items():
-        if ops == 0:
-            f_sql += (f'mopt.ids && ARRAY[{value}]')
-            ops += 1
-        else:
-            f_sql += ' AND '
-            f_sql += (f'mopt.ids && ARRAY[{value}]')
+        if len(value) > 0:
+            if ops == 0:
+                f_sql += (f'mopt.ids && ARRAY[{value}]')
+                ops += 1
+            else:
+                f_sql += ' AND '
+                f_sql += (f'mopt.ids && ARRAY[{value}]')
     for key, value in checkboxs.items():
-        if ops == 0:
-            f_sql += sql_gen_checks(value)
-            ops += 1
-        else:
-            f_sql += ' AND '
-            f_sql += sql_gen_checks(value)
+        if len(value) > 0:
+            if ops == 0:
+                f_sql += sql_gen_checks(value)
+                ops += 1
+            else:
+                f_sql += ' AND '
+                f_sql += sql_gen_checks(value)
     f_sql += f' ) AND brand_id = {brand_id};'
     brand_models = _query(f_sql)
     return brand_models
