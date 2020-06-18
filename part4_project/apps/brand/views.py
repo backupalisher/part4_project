@@ -108,9 +108,18 @@ def get_all_models(brand_id, limit, offset):
 
 @sync_to_async
 def get_filtered_model(brand_id, checkboxs, ranges, radios):
-    checkboxs = json.loads(checkboxs)
-    ranges = json.loads(ranges)
-    radios = json.loads(radios)
+    if len(checkboxs) != 0:
+        checkboxs = json.loads(checkboxs)
+    else:
+        checkboxs = {}
+    if len(ranges) != 0:
+        ranges = json.loads(ranges)
+    else:
+        ranges = {}
+    if len(radios) != 0:
+        radios = json.loads(radios)
+    else:
+        radios = {}
     f_sql = f'SELECT * FROM model_for_filter mopt WHERE ('
     ops = 0
     for key, value in ranges.items():
@@ -167,9 +176,15 @@ def index(request, brand_id):
     brand_models = []
     if request.is_ajax():
         if request.method == 'POST':
-            checkboxs = dict(request.POST.lists())['checkboxs'][0]
-            ranges = dict(request.POST.lists())['ranges'][0]
-            radios = dict(request.POST.lists())['radios'][0]
+            checkboxs = {}
+            ranges = {}
+            radios = {}
+            if dict(request.POST.lists())['checkboxs'][0]:
+                checkboxs = dict(request.POST.lists())['checkboxs'][0]
+            if dict(request.POST.lists())['ranges'][0]:
+                ranges = dict(request.POST.lists())['ranges'][0]
+            if dict(request.POST.lists())['radios'][0]:
+                radios = dict(request.POST.lists())['radios'][0]
             if len(checkboxs) != 0 or len(ranges) != 0 or len(radios) != 0:
                 print('filter apply')
                 fload = loop.run_until_complete(fpreload(brand_id, checkboxs, ranges, radios))
