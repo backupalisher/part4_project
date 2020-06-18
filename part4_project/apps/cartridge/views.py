@@ -46,7 +46,6 @@ def cartridge(request, cartridge_id):
     title = 'Каритридж'
     options = _query(f"SELECT * FROM all_options_for_cartridges WHERE id = {cartridge_id}")
     cartridge = _query(f"SELECT * FROM all_cartridge WHERE id = {cartridge_id}")[0]
-    print(cartridge)
     carts = list(cartridge)
     ids = list(set(carts[5]))
     models = list(set(carts[4]))
@@ -57,6 +56,5 @@ def cartridge(request, cartridge_id):
         arr.append([ids[idx], v])
     carts[4] = arr
     cartridge = tuple(carts)
-    print(cartridge)
     return render(request, 'cartridge/cartridge.html', {'title': title, 'cartridge': cartridge, 'options': options,
                                                         'brand': brand, 'brand_id': brand_id})

@@ -2,28 +2,28 @@
 Colors
 */
 .text-yellow {
-  color: #f2ba4b; }
+  color: #f2ba4b !important; }
 
 .text-orange {
-  color: #e98839; }
+  color: #e98839 !important; }
 
 .text-red {
-  color: #eb5c59; }
+  color: #eb5c59 !important; }
 
 .text-green {
-  color: #78b857; }
+  color: #78b857 !important; }
 
 .text-blue {
-  color: #2e79f6; }
+  color: #2e79f6 !important; }
 
 .text-light {
-  color: #e9e9eb; }
+  color: #e9e9eb !important; }
 
 .text-grey {
-  color: #898989; }
+  color: #898989 !important; }
 
 .text-dark {
-  color: #323235; }
+  color: #323235 !important; }
 
 .text-yellow:hover {
   color: #f2ba4b !important; }
@@ -202,28 +202,28 @@ Colors
 Colors
 */
 .text-yellow {
-  color: #f2ba4b; }
+  color: #f2ba4b !important; }
 
 .text-orange {
-  color: #e98839; }
+  color: #e98839 !important; }
 
 .text-red {
-  color: #eb5c59; }
+  color: #eb5c59 !important; }
 
 .text-green {
-  color: #78b857; }
+  color: #78b857 !important; }
 
 .text-blue {
-  color: #2e79f6; }
+  color: #2e79f6 !important; }
 
 .text-light {
-  color: #e9e9eb; }
+  color: #e9e9eb !important; }
 
 .text-grey {
-  color: #898989; }
+  color: #898989 !important; }
 
 .text-dark {
-  color: #323235; }
+  color: #323235 !important; }
 
 .text-yellow:hover {
   color: #f2ba4b !important; }
@@ -638,6 +638,11 @@ h1 {
 
 .cartridge {
   color: white; }
+  .cartridge .cartridge_item {
+    padding-right: 1em;
+    white-space: nowrap;
+    line-height: 1.6em;
+    display: inline-block; }
 
 .btn-collapse {
   cursor: pointer;

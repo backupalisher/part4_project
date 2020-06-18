@@ -20,13 +20,13 @@
                 {% if cartridge.4 %}
                     {% for model in cartridge.4 %}
                         {% if model.0 and model.0 != 'None' %}
-                            <a href="/model/{{ model.0 }}">{{ model.1 }}</a> <br>
+                            <span class="cartridge_item"><a href="/model/{{ model.0 }}">{{ model.1 }}</a></span>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
                 {% if cartridge.8 %}
                     {% for model in cartridge.8 %}
-                        {{ model }} <br>
+                        <span class="cartridge_item">{{ model }}</span>
                     {% endfor %}
                 {% endif %}
             </p>
