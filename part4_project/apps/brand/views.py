@@ -6,12 +6,12 @@ import math
 from asgiref.sync import sync_to_async
 from django.http import JsonResponse, QueryDict
 from django.shortcuts import render
+import concurrent.futures
 
 import db_model.models as models
 from db_model.db_utils import _query
 
 start_time = datetime.datetime.now()
-
 
 
 # Create your views here.
@@ -100,7 +100,8 @@ def get_filters():
 def get_all_models(brand_id, limit, offset):
     print(datetime.datetime.now() - start_time, 'получение всех моделей')
     print(f'SELECT * FROM model_for_filter mopt WHERE brand_id = {brand_id} LIMIT {limit} OFFSET {offset};')
-    brand_models = _query(f'SELECT * FROM model_for_filter mopt WHERE brand_id = {brand_id} LIMIT {limit} OFFSET {offset};')
+    brand_models = _query(
+        f'SELECT * FROM model_for_filter mopt WHERE brand_id = {brand_id} LIMIT {limit} OFFSET {offset};')
     print(datetime.datetime.now() - start_time, 'получение всех моделей завершено')
     return brand_models
 
@@ -151,19 +152,20 @@ async def fpreload(brand_id, checkboxs, ranges, radios):
 
 
 def index(request, brand_id):
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop = asyncio.get_event_loop()
+    loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
+    model_count = 0
+    pages = 0
+    try:
+        page = int(request.GET.get('page'))
+    except:
+        page = 0
+    limit = 24000
+    offset = 24 * page
+    brand_models = []
     if request.is_ajax():
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop = asyncio.get_event_loop()
-        model_count = 0
-        pages = 0
-        try:
-            page = int(request.GET.get('page'))
-        except:
-            page = 0
-        limit = 24
-        offset = 24 * page
-        brand_models = []
         if request.method == 'POST':
             checkboxs = dict(request.POST.lists())['checkboxs'][0]
             ranges = dict(request.POST.lists())['ranges'][0]
@@ -189,18 +191,6 @@ def index(request, brand_id):
             return JsonResponse('unsuccessful')
     else:
         print(start_time, brand_id)
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop = asyncio.get_event_loop()
-        model_count = 0
-        pages = 0
-        try:
-            page = int(request.GET.get('page'))
-        except:
-            page = 0
-        limit = 24
-        offset = 24 * page
-        brand_models = []
         filter_captions = ['Общие характеристики', 'Принтер', 'Копир', 'Сканер', 'Расходные материалы', 'Лотки',
                            'Финишер',
                            'Интерфейсы']
@@ -225,4 +215,3 @@ def index(request, brand_id):
         return render(request, 'brand/index.html', {'brand_models': brand_models, 'brand_name': brand_name,
                                                     'model_count': model_count, 'page': page, 'pages': range(pages),
                                                     'sfilter': sfilter, 'filter_captions': filter_captions})
-

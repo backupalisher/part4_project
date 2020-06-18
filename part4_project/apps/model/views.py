@@ -1,4 +1,5 @@
 import asyncio
+import concurrent.futures
 import datetime
 
 from asgiref.sync import sync_to_async
@@ -204,6 +205,7 @@ def index(request, detail_id):
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop = asyncio.get_event_loop()
+    loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     print(datetime.datetime.now() - start_time, 'start')
     init_result = loop.run_until_complete(init(detail_id))
     model_id = init_result[0][0]

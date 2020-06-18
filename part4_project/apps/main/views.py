@@ -1,10 +1,11 @@
 import asyncio
+import concurrent.futures
 import datetime
 
 from asgiref.sync import sync_to_async
-from django.shortcuts import render
 from django.db import connections
-from django.core import serializers
+from django.shortcuts import render
+
 import db_model.models as models
 
 start_time = datetime.datetime.now()
@@ -73,6 +74,7 @@ def search(request):
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop = asyncio.get_event_loop()
+    loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     result = loop.run_until_complete(init(s_value))
     ar = result[0]
     er = result[1]

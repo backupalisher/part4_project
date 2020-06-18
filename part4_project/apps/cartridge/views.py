@@ -1,22 +1,10 @@
 from django.db import connections
 from django.shortcuts import render
 import db_model.models as models
+from db_model.db_utils import _query
 
 
 # Create your views here.
-
-
-def _query(q):
-    data = None
-    with connections['part4'].cursor() as c:
-        try:
-            c.execute("BEGIN")
-            c.execute(q)
-            data = c.fetchall()
-            c.execute("COMMIT")
-        finally:
-            c.close()
-            return data
 
 
 def index(request):

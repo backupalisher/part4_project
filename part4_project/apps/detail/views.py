@@ -1,29 +1,19 @@
-import datetime
 import asyncio
+import concurrent.futures
+import datetime
+
 from asgiref.sync import sync_to_async
+from django.http import Http404
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+
 import db_model.models as models
-from django.db import connections
+from db_model.db_utils import _query
 
 start_time = datetime.datetime.now()
 
 
 def detail_view(request):
     return render(request, 'detail/index.html')
-
-
-def _query(q):
-    data = None
-    with connections['part4'].cursor() as c:
-        try:
-            c.execute("BEGIN")
-            c.execute(q)
-            data = c.fetchall()
-            c.execute("COMMIT")
-        finally:
-            c.close()
-            return data
 
 
 # добавление веса
@@ -104,6 +94,7 @@ def index(request, detail_id):
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop = asyncio.get_event_loop()
+    loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     loop.create_task(set_weight(detail_id))
     print(datetime.datetime.now() - start_time, 'start')
     init_result = loop.run_until_complete(init(detail_id))
