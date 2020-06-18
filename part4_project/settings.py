@@ -24,7 +24,7 @@ ALLOWED_HOSTS = [
     '.d.part4.info',
     'www.d.part4.info',
     'part4.info',
-    'www.part4.info'
+    'www.part4.info',
     'part4.ru',
     'www.part4.ru'
 ]
