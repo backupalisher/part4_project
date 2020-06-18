@@ -28,19 +28,18 @@ def index(request):
 def cartridges(request, brand_id):
     title = 'Каритриджи'
     cartridges = _query(f"SELECT * FROM all_cartridge WHERE brand_id = {brand_id} ORDER BY id")
-    # print(cartridges)
     for idx in range(len(cartridges)):
-        # print(cartridges)
         cartridge = list(cartridges[idx])
         cartridge[4] = list(set(cartridge[4]))
         cartridges[idx] = tuple(cartridge)
         cartridge_alt = list(cartridges[idx])
         cartridge_alt[8] = list(set(cartridge[8]))
         cartridges[idx] = tuple(cartridge_alt)
+        brand = cartridge[7]
 
     # print([list(v) for v in dict(cartridge[7]).items()])
 
-    return render(request, 'cartridge/cartridges.html', {'title': title, 'cartridges': cartridges})
+    return render(request, 'cartridge/cartridges.html', {'title': title, 'cartridges': cartridges, 'brand': brand})
 
 
 def cartridge(request, cartridge_id):
