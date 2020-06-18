@@ -108,18 +108,11 @@ def get_all_models(brand_id, limit, offset):
 
 @sync_to_async
 def get_filtered_model(brand_id, checkboxs, ranges, radios):
-    if len(checkboxs) != 0:
-        checkboxs = json.loads(checkboxs)
-    else:
-        checkboxs = {}
-    if len(ranges) != 0:
-        ranges = json.loads(ranges)
-    else:
-        ranges = {}
-    if len(radios) != 0:
-        radios = json.loads(radios)
-    else:
-        radios = {}
+    checkboxs = json.loads(checkboxs)
+    ranges = json.loads(ranges)
+    radios = json.loads(radios)
+    print(checkboxs, ranges, radios)
+    print(len(checkboxs), len(ranges), len(radios))
     f_sql = f'SELECT * FROM model_for_filter mopt WHERE ('
     ops = 0
     for key, value in ranges.items():
