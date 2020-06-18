@@ -14,7 +14,7 @@ Colors
   color: #78b857; }
 
 .text-blue {
-  color: #2e79f6; }
+  color: #438ed7; }
 
 .text-light {
   color: #e9e9eb; }
@@ -62,7 +62,7 @@ Colors
   background-color: #78b857 !important; }
 
 .bg-blue {
-  background-color: #2e79f6 !important; }
+  background-color: #438ed7 !important; }
 
 .bg-light {
   background-color: #e9e9eb !important; }
@@ -214,7 +214,7 @@ Colors
   color: #78b857; }
 
 .text-blue {
-  color: #2e79f6; }
+  color: #438ed7; }
 
 .text-light {
   color: #e9e9eb; }
@@ -262,7 +262,7 @@ Colors
   background-color: #78b857 !important; }
 
 .bg-blue {
-  background-color: #2e79f6 !important; }
+  background-color: #438ed7 !important; }
 
 .bg-light {
   background-color: #e9e9eb !important; }
@@ -625,5 +625,22 @@ h1 {
 
 .cartridge_options td:first-child {
   width: 45%; }
+
+.cartridges tr {
+  border-bottom: 1px solid #495057; }
+.cartridges td {
+  color: white;
+  border: none;
+  vertical-align: top;
+  padding: 8px 0; }
+
+.cartridge {
+  color: white; }
+
+.btn-collapse {
+  cursor: pointer;
+  text-decoration: underline; }
+  .btn-collapse:hover {
+    text-decoration: none; }
 
 /*# sourceMappingURL=style.css.map */

@@ -102,17 +102,189 @@ $(document).ready(function () {
         }
     }
 
-    //Save selected filter options
-    if ($pathname.indexOf('brand') > 0) {
-        // $("form").submit(function (event) {
-        //         // Stop form from submitting normally
-        //         event.preventDefault();
-        //
-        //         /* Serialize the submitted form control values to be sent to the web server with the request */
-        //         var formValues = $(this).serialize();
-        //         console.log(formValues)
-        //     }
-        // )
+    //Send selected filter options
+    if ($('#filter_model').length) {
+        $checkboxs = {}
+        $ranges = {}
+        $radios = {}
+        $("form input").change(function () {
+            if ($(this).attr('type') === 'checkbox') {
+                $key = $(this).attr('name')
+                $value = $(this).attr('id')
+                set_array($key, $value, $(this).attr('type'))
+            }
+            if ($(this).attr('type') === 'number') {
+                $key = $(this).attr('name')
+                $value = $(this).val()
+                set_array($key, $value, $(this).attr('type'))
+            }
+            if ($(this).attr('type') === 'radio') {
+                $key = $(this).attr('name')
+                $value = $(this).attr('id')
+                set_array($key, $value, $(this).attr('type'))
+            }
+
+            function set_array(key, value, type) {
+                // console.log(key, value, type)
+                $newelem = {[key]: value}
+                switch (type) {
+                    case 'checkbox':
+                        if (Object.getOwnPropertyNames($checkboxs).length === 0) {
+                            $.extend($checkboxs, {[key]: [value]})
+                        } else {
+                            let idx = ''
+                            let index = null
+                            $.each($checkboxs, function (k, v) {
+                                if (key === k) {
+                                    idx = k
+                                    if (Array.isArray(v)) {
+                                        $.each(v, function (i, val) {
+                                            if (val === value) {
+                                                index = i
+                                            }
+                                        })
+                                    }
+                                }
+                            })
+                            console.log(idx)
+                            if (idx !== '' && index !== null) {
+                                $checkboxs[idx].splice(index, 1);
+                            } else if (idx !== '') {
+                                $checkboxs[idx].push(value)
+                                // $.extend($checkboxs, val)
+                            } else {
+                                $.extend($checkboxs, {[key]: [value]})
+                            }
+                        }
+                        break;
+                    case 'number':
+                        let min = ''
+                        let max = ''
+                        if(key.indexOf('min') > 0) {
+                            min = key.replace('min', '')
+                        }
+                        if(key.indexOf('max') > 0) {
+                            max = key.replace('max', '')
+                        }
+                        console.log(min)
+                        console.log(max)
+                        if (Object.getOwnPropertyNames($ranges).length === 0) {
+                            if (min !== '') {
+                                $.extend($ranges, {[min]: [parseInt(value, 10)]})
+                                $ranges[min].push(0)
+                            } else if (max !== '') {
+                                $.extend($ranges, {[max]: [0]})
+                                $ranges[max].push(parseInt(value, 10))
+                            }
+                        } else {
+                            let idx = ''
+                            if (min !== '') {
+                                $.each($ranges, function (key, arr) {
+                                    if(key === min) {
+                                        idx = key
+                                    }
+                                })
+                                if(idx !== '') {
+                                    $ranges[idx][0] = parseInt(value, 10)
+                                } else {
+                                    $.extend($ranges, {[min]: [parseInt(value, 10)]})
+                                    $ranges[min].push(0)
+                                }
+                            } else if (max !== '') {
+                                $.each($ranges, function (key, arr) {
+                                    if(key === max) {
+                                        idx = key
+                                    }
+                                })
+                                if(idx !== '') {
+                                    $ranges[idx][1] = parseInt(value, 10)
+                                } else {
+                                    $.extend($ranges, {[max]: [0]})
+                                    $ranges[max].push(parseInt(value, 10))
+                                }
+                            }
+                        }
+                        console.log($ranges)
+                        break
+                    case 'radio':
+                        if (Object.getOwnPropertyNames($radios).length === 0) {
+                            $.extend($radios, $newelem)
+                        } else {
+                            let idx = ''
+                            $.each($radios, function (k, item) {
+                                if (key === k) {
+                                    idx = k
+                                }
+                            })
+                            if (idx !== '') {
+                                $radios[idx] = value;
+                            } else {
+                                $.extend($radios, $newelem)
+                            }
+                        }
+                        break
+                }
+            }
+        })
+        $("form button[type='reset']").click(function () {
+            $checkboxs = {}
+            $ranges = {}
+            $radios = {}
+            $("form").trigger("reset");
+        })
+        $("form").submit(function (event) {
+            // let formValues = $(this).serializeArray();
+            // $formValues = {}
+            // $.each(formValues,function(){
+            //     $key = this.name
+            //     $newelem = {[$key]: this.value}
+            //     // $formValues.push($newelem)
+            //     $.extend($formValues, $newelem)
+            // });
+            // console.log($formValues)
+            event.preventDefault();
+            let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            $.ajax({
+                type: 'POST',
+                url: '',
+                headers: {'X-CSRFToken': csrftoken},
+                data: {
+                    "checkboxs": JSON.stringify($checkboxs),
+                    "ranges": JSON.stringify($ranges),
+                    "radios": JSON.stringify($radios)
+                },
+                contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                success: function (data) {
+                    $("#filter_model_result").html('').append(
+                        data
+                    );
+                }
+            });
+        })
+    }
+
+
+    if ($pathname.indexOf('brands') > 0) {
+        $("form").submit(function (event) {
+                /* Serialize the submitted form control values to be sent to the web server with the request */
+                let formValues = $(this).serialize();
+                // Stop form from submitting normally
+                event.preventDefault();
+                let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                $.ajax({
+                    type: 'POST',
+                    url: '',
+                    csrfmiddlewaretoken: csrftoken,
+                    headers: {'X-CSRFToken': csrftoken},
+                    data: {formValues},
+                    success: function (data) {
+                        $("#brands").html('').append(
+                            data
+                        );
+                    }
+                });
+            }
+        )
     }
 })
 

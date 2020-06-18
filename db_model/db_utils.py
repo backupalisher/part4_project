@@ -2,6 +2,9 @@ from django.db import connections
 
 
 def _query(q):
+    print('---------------')
+    print(q)
+    print('---------------')
     data = None
     with connections['part4'].cursor() as c:
         try:

@@ -6,21 +6,17 @@
 
 {% block content %}
     <div class="row">
-        {% for brand in brands %}
-            <div class="col-lg-2 col-md-3 col-sm-4 mb-3">
-                <div class="card btn">
-                    <a href="/brand/{{ brand.id }}">
-                        <!--h5 class="text-center">{{ brand.name }}</h5-->
-                        {% if brand.logotype is not None %}
-                            <img src="{{ MEDIA_URL }}images/brands/{{ brand.logotype }}" class="img-fluid"
-                                 alt="{{ brand.name }}">
-                        {% else %}
-                            <img src="{{ MEDIA_URL }}images/no-image.png" class="img-fluid" alt="{{ brand.name }}">
-                        {% endif %}
-                    </a>
-                </div>
-            </div>
-        {% endfor %}
+        <div class="col-3">
+            <form method="post" action="">
+                {% csrf_token %}
+                <input type="text" name="brand_name">
+                <button type="submit" class="btn badge-info">Отправить</button>
+            </form>
+        </div>
+        <div class="col-9"></div>
+    </div>
+    <div id="brands">
+        {% include 'brands/ajax.html' %}
     </div>
 {% endblock %}
 

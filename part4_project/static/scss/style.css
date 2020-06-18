@@ -373,8 +373,10 @@ Colors
 body {
   font-family: -apple-system, BlinkMacSystemFont, "GT Walsheim Regular", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
 
-a:hover {
-  color: #2e79f6; }
+a {
+  color: #438ed7; }
+  a:hover {
+    color: #2e79f6; }
 
 #toggle-theme {
   position: absolute;

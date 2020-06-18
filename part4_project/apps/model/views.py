@@ -1,11 +1,13 @@
+import asyncio
+import datetime
+
+from asgiref.sync import sync_to_async
+from django.http import Http404
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+
 import db_model.models as models
 from db_model.db_utils import _query
-from asgiref.sync import sync_to_async
-import datetime
-import asyncio
-import re
+
 start_time = datetime.datetime.now()
 
 
@@ -66,9 +68,6 @@ def get_options(detail_id):
         else:
             values.append(opts)
     options = option_vals
-    print(subcaptions)
-    print('****************')
-    print(values)
     print(datetime.datetime.now() - start_time, 'сортировка опций завершена')
     return options, captions, subcaptions, values
 

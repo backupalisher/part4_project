@@ -275,14 +275,14 @@
                         <div class="py-3 tab-pane fade" id="cartridges" role="tabpanel"
                              aria-labelledby="cartridges-tab">
                             <div class="table-responsive cartridges">
-                                <table>
+                                <table class="table">
                                     {% for cartridge in cartridges %}
                                         <tr>
-                                            <td>
+                                            <td class="pl-3">
                                                 <a href="/cartridge/{{ cartridge.0 }}">{{ cartridge.1 }}</a>
                                             </td>
                                             <td class="pl-3">
-                                                <p>{% if cartridge.2 %}{{ cartridge.2 }}{% elif cartridge.3 %}{{ cartridge.3 }}{% endif %}</p>
+                                                <span class="text-green">{% if cartridge.2 %}{{ cartridge.2 }}{% elif cartridge.3 %}{{ cartridge.3 }}{% endif %}</span>
                                             </td>
 {#                                            <td>#}
 {#                                                {% if cartridge.4 %}#}

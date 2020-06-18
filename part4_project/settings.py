@@ -27,6 +27,11 @@ ALLOWED_HOSTS = [
     'www.part4.info'
 ]
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost',
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -36,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'silk',
+    'debug_toolbar',
     'compressor',
     'el_pagination',
     'db_model',
@@ -59,6 +66,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'silk.middleware.SilkyMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'part4_project.urls'

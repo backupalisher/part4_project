@@ -1,0 +1,63 @@
+<div class="filter">
+    <h4 class="pt-1 title">Фильтр:</h4>
+    <!--span>моделей {{ model_count.0.0 }}</span-->
+    <form method="post" action="">
+        {% csrf_token %}
+        <div class="scrollbar-macosx filter_settings pt-3 mb-3">
+            {% for caption in filter_captions %}
+                <h5>{{ caption }}</h5>
+                {% for filter in sfilter %}
+                    {% if filter.caption == caption %}
+                        <div class="float-left w-100 pl-2 pb-3">
+                            <h6>{{ filter.subcaption }}</h6>
+                            {% if filter.type == 'checkbox' %}
+                                {% for fval in filter.values %}
+                                    <div class="form-group form-check checkbox">
+                                        <input type="checkbox" class="form-check-input"
+                                               name="checkbox{{ filter.sub_id }}" id="{{ fval.id }}"
+                                               value="{{ fval.id }}">
+                                        <label class="form-check-label"
+                                               for="{{ fval.id }}">{{ fval.val }}</label>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if filter.type == 'radio' %}
+                                {% for fval in filter.values %}
+                                    <div class="form-group form-check radio">
+                                        <input type="radio" class="form-check-input"
+                                               name="radio{{ filter.sub_id }}" id="{{ fval.id }}"
+                                               value="{{ fval.id }}">
+                                        <label class="form-check-label" for="{{ fval.id }}">
+                                            {% if fval.val == '+' %} есть {% endif %}
+                                            {% if fval.val == '-' %} нет {% endif %}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if filter.type == 'range' %}
+                                <div class="form-row">
+                                    <div class="input_num">
+                                        <input type="number" class="form-control"
+                                               name="range{{ filter.sub_id }}min"
+                                               id="range{{ forloop.counter }}min" placeholder="{{ filter.values.0.min }}"
+                                               min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
+                                        >
+                                    </div>
+                                    <div class="input_num">
+                                        <input type="number" class="form-control"
+                                               name="range{{ filter.sub_id }}max"
+                                               id="range{{ forloop.counter }}max" placeholder="{{ filter.values.1.max }}"
+                                               min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
+                                        >
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <button type="reset" class="btn bg-red text-light float-left">Сбросить</button>
+        <button type="submit" class="btn btn-filter bg-blue text-light float-right">Применить</button>
+    </form>
+</div>

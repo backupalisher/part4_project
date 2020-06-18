@@ -8,7 +8,7 @@
             {% for cartridge in cartridge_result %}
                 <div class="cartridge_result">
                     <p>
-                        <a href="{% if cartridge.0 %}/cartridge/{{ cartridge.0 }}{% endif %}" class="text-green">
+                        <a href="{% if cartridge.0 %}/cartridge/{{ cartridge.0 }}{% endif %}" class="text-blue">
                             <span class="text-green pr-2">{{ cartridge.2 }}</span>
                             {% if cartridge.3 %}
                                 {{ cartridge.3 }}
@@ -38,7 +38,7 @@
                     </div>
                     <div class="desc">
                         <p>
-                            Ошибка: <strong><a href="/model/{{ index.0 }}">{{ index.2 }}</a></strong>
+                            Ошибка: <strong><a href="/model/{{ index.0 }}" class="text-blue">{{ index.2 }}</a></strong>
                         </p>
                         <p>
                             Display: <strong>{{ index.3 }}</strong>
@@ -65,10 +65,12 @@
                     </div>
                     <div class="desc">
                         {% if index.3 == index.7 %}
-                            Модель: <strong><a href="/model/{{ index.2 }}" class="text-green">{{ index.7 }}</a></strong>
+                            Модель: <strong><a href="/model/{{ index.2 }}" class="text-blue">{{ index.7 }}</a></strong>
                         {% else %}
-                            Деталь: <strong class="text-green"><a href="/detail/{{ index.2 }}" class="text-green">
-                            {% if index.4 %}{{ index.4 }}{% else %}{{ index.3 }}{% endif %}</a></strong>
+                            {% if index.4 or index.3 %}
+                                Деталь: <strong><a href="/detail/{{ index.2 }}" class="text-blue">
+                                {% if index.4 %}{{ index.4 }}{% elif index.3 %}{{ index.3 }}{% endif %}</a></strong>
+                            {% endif %}
                         {% endif %}
                         <div class="search_result_partcode">
                             {% if index.5 != None %}
