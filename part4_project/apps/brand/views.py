@@ -168,11 +168,11 @@ def index(request, brand_id):
     limit = 24000
     offset = 24 * page
     brand_models = []
+    checkboxs = {}
+    ranges = {}
+    radios = {}
     if request.is_ajax():
         if request.method == 'POST':
-            checkboxs = {}
-            ranges = {}
-            radios = {}
             if dict(request.POST.lists())['checkboxs'][0]:
                 checkboxs = dict(request.POST.lists())['checkboxs'][0]
             if dict(request.POST.lists())['ranges'][0]:
@@ -207,7 +207,7 @@ def index(request, brand_id):
         brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
         if len(post_filter) != 0:
             print('filter apply')
-            fload = loop.run_until_complete(fpreload(brand_id, post_filter))
+            fload = loop.run_until_complete(fpreload(brand_id, checkboxs, ranges, radios))
             sfilter = fload[0]
             # Base sql part of query for get model by filter
             brand_models = fload[1]
