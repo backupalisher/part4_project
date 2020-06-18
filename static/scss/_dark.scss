@@ -126,15 +126,15 @@
             }
         }
         .nav-tabs {
-            border-color: $black;
+            border-color: $black !important;
             .nav-link {
-                color: $light;
+                color: $light !important;
                 &:hover{
-                    color: $yellow;
+                    color: $yellow !important;
                 }
                 &.active {
-                    color: $light;
-                    background-color: $blue;
+                    color: $light !important;
+                    background-color: $blue !important;
                 }
             }
         }

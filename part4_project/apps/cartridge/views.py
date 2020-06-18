@@ -28,6 +28,7 @@ def index(request):
 def cartridges(request, brand_id):
     title = 'Каритриджи'
     cartridges = _query(f"SELECT * FROM all_cartridge WHERE brand_id = {brand_id} ORDER BY id")
+    brand = ''
     for idx in range(len(cartridges)):
         cartridge = list(cartridges[idx])
         cartridge[4] = list(set(cartridge[4]))
@@ -35,8 +36,10 @@ def cartridges(request, brand_id):
         cartridge_alt = list(cartridges[idx])
         cartridge_alt[8] = list(set(cartridge[8]))
         cartridges[idx] = tuple(cartridge_alt)
-        brand = cartridge[7]
-
+        if cartridge[7]:
+            brand = cartridge[7]
+        else:
+            brand = ''
     # print([list(v) for v in dict(cartridge[7]).items()])
 
     return render(request, 'cartridge/cartridges.html', {'title': title, 'cartridges': cartridges, 'brand': brand})
@@ -50,7 +53,10 @@ def cartridge(request, cartridge_id):
     ids = list(set(carts[5]))
     models = list(set(carts[4]))
     brand_id = carts[6]
-    brand = carts[7]
+    if carts[7]:
+        brand = carts[7]
+    else:
+        brand = ''
     arr = []
     for idx, v in enumerate(models):
         arr.append([ids[idx], v])

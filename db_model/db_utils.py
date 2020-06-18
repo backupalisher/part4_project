@@ -12,6 +12,7 @@ def _query(q):
             c.execute(q)
             data = c.fetchall()
             c.execute("COMMIT")
+            c.close()
         finally:
             c.close()
             return data

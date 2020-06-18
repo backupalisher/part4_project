@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 SECRET_KEY = '59bh9hwmjovry$@gjah!7pe5vrh*d+&_srj=udw*^w0w*y81ds'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -25,6 +25,8 @@ ALLOWED_HOSTS = [
     'www.d.part4.info',
     'part4.info',
     'www.part4.info'
+    'part4.ru',
+    'www.part4.ru'
 ]
 
 INTERNAL_IPS = [

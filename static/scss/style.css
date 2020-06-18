@@ -150,14 +150,14 @@ Colors
       .dark-theme .card.card-detail .brand_model_title {
         color: #e9e9eb; }
     .dark-theme .card .nav-tabs {
-      border-color: #262629; }
+      border-color: #262629 !important; }
       .dark-theme .card .nav-tabs .nav-link {
-        color: #e9e9eb; }
+        color: #e9e9eb !important; }
         .dark-theme .card .nav-tabs .nav-link:hover {
-          color: #f2ba4b; }
+          color: #f2ba4b !important; }
         .dark-theme .card .nav-tabs .nav-link.active {
-          color: #e9e9eb;
-          background-color: #2e79f6; }
+          color: #e9e9eb !important;
+          background-color: #2e79f6 !important; }
     .dark-theme .card .table {
       color: #e9e9eb;
       border-color: #262629; }
