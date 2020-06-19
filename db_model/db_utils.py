@@ -1,18 +1,28 @@
-from django.db import connections
+import psycopg2
+
+from part4_project.env import *
+
+con = psycopg2.connect(
+    database=PART4_NAME,
+    user=PART4_USER,
+    password=PART4_PASS,
+    host=HOST,
+    port=DEFAULT_PORT
+)
+
+cur = con.cursor()
 
 
 def _query(q):
     print('---------------')
     print(q)
     print('---------------')
-    data = None
-    with connections['part4'].cursor() as c:
-        try:
-            c.execute("BEGIN")
-            c.execute(q)
-            data = c.fetchall()
-            c.execute("COMMIT")
-            c.close()
-        finally:
-            c.close()
-            return data
+    try:
+        cur.execute(q)
+        data = cur.fetchall()
+    except psycopg2.DatabaseError as err:
+        print("Error: ", err)
+    else:
+        return data
+    finally:
+        con.commit()
