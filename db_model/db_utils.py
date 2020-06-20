@@ -10,16 +10,16 @@ con = psycopg2.connect(
     port=DEFAULT_PORT
 )
 
-cur = con.cursor()
-
 
 def _query(q):
+    cur = con.cursor()
     print('---------------')
     print(q)
     print('---------------')
     try:
         cur.execute(q)
         data = cur.fetchall()
+        print(data)
     except psycopg2.DatabaseError as err:
         print("Error: ", err)
     else:

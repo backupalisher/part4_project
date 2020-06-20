@@ -75,9 +75,9 @@ def get_options(detail_id):
 
 # Запрос на получение ошибок
 @sync_to_async
-def get_errors(detail_id):
+def get_errors(model_id):
     print(datetime.datetime.now() - start_time, 'получение ошибок')
-    verrors = _query(f"SELECT * FROM all_errors WHERE mid = {detail_id}")
+    verrors = _query(f"SELECT * FROM all_errors WHERE mid = {model_id}")
     print(datetime.datetime.now() - start_time, 'получение ошибок завершено')
 
     print(datetime.datetime.now() - start_time, 'сортировка ошибок')
@@ -117,17 +117,17 @@ def qet_partcatalog(request, model_id):
 
 # Запрос на получение id
 @sync_to_async
-def get_ids(detail_id):
+def get_ids(model_id):
     print(datetime.datetime.now() - start_time, 'сбор id')
-    qd = _query(f'SELECT * FROM details WHERE id = {detail_id}')
+    qd = _query(f'SELECT * FROM details WHERE model_id = {model_id} and partcode_id is null')
     try:
-        model_id = qd[0][2]
+        detail_id = qd[0][0]
         spr_detail_id = qd[0][4]
     except:
-        model_id = None
+        detail_id = None
         spr_detail_id = None
     print(datetime.datetime.now() - start_time, 'сбор id завершен')
-    return model_id, spr_detail_id
+    return detail_id, spr_detail_id
 
 
 # Получение id парткодов, моделей, бренда, картинок
@@ -136,17 +136,17 @@ def get_any(model_id, spr_detail_id):
     print(datetime.datetime.now() - start_time, 'сбор остального')
     mq = _query(f'SELECT brand_id, name, main_image, image FROM models WHERE id = {model_id}')
     try:
-        model_main_image = mq[0][2]
+        brand_id = mq[0][0]
     except:
-        model_main_image = None
+        brand_id = None
     try:
         model = mq[0][1]
     except:
         model = None
     try:
-        brand_id = mq[0][0]
+        model_main_image = mq[0][2]
     except:
-        brand_id = None
+        model_main_image = None
     try:
         model_images = mq[0][3].split(';')
     except:
@@ -182,8 +182,8 @@ def get_cartridge(model_id):
     return cartridges
 
 
-async def init(detail_id):
-    async_tasks = [get_ids(detail_id)]
+async def init(model_id):
+    async_tasks = [get_ids(model_id)]
     results = await asyncio.gather(*async_tasks)
     return results
 
@@ -192,7 +192,7 @@ async def past_init(request, model_id, spr_detail_id, detail_id):
     tasks = [
         get_any(model_id, spr_detail_id),
         qet_partcatalog(request, model_id),
-        get_errors(detail_id),
+        get_errors(model_id),
         get_options(detail_id),
         get_cartridge(model_id)
     ]
@@ -200,15 +200,15 @@ async def past_init(request, model_id, spr_detail_id, detail_id):
     return results
 
 
-def index(request, detail_id):
-    print(start_time, detail_id)
+def index(request, model_id):
+    print(start_time, model_id)
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop = asyncio.get_event_loop()
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     print(datetime.datetime.now() - start_time, 'start')
-    init_result = loop.run_until_complete(init(detail_id))
-    model_id = init_result[0][0]
+    init_result = loop.run_until_complete(init(model_id))
+    detail_id = init_result[0][0]
     spr_detail_id = init_result[0][1]
     post_result = loop.run_until_complete(past_init(request, model_id, spr_detail_id, detail_id))
     loop.close()
