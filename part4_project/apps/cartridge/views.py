@@ -38,8 +38,12 @@ def cartridge(request, cartridge_id):
     options = _query(f"SELECT * FROM all_options_for_cartridges WHERE id = {cartridge_id}")
     cartridge = _query(f"SELECT * FROM all_cartridge WHERE id = {cartridge_id}")[0]
     carts = list(cartridge)
-    ids = list(set(carts[5]))
-    models = list(set(carts[4]))
+    tids = set()
+    tmodels = set()
+    # ids = list(set(carts[5]))
+    ids = [x for x in carts[5] if not (x in tids or tids.add(x))]
+    # models = list(set(carts[4]))
+    models = [x for x in carts[4] if not (x in tmodels or tmodels.add(x))]
     brand_id = carts[6]
     if carts[7]:
         brand = carts[7]
