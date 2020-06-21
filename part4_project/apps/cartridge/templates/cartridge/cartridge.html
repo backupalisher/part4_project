@@ -24,9 +24,9 @@
                         {% endif %}
                     {% endfor %}
                 {% endif %}
-                {% if cartridge.8 %}
-                    {% for model in cartridge.8 %}
-                        <span class="cartridge_item">{{ model }}</span>
+                {% if amodels|length > 0 %}
+                    {% for model in amodels %}
+                        <span class="cartridge_item">{{ model }}  || </span>
                     {% endfor %}
                 {% endif %}
             </p>

@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    let brand_models = ""
+    let media_url = "{{ MEDIA_URL }}"
+    let $loading = false
+    let $page_count = 0
     $pathname = window.location.pathname;
     //Wait for element exist
     var waitForEl = function (selector, callback) {
@@ -48,61 +52,7 @@ $(document).ready(function () {
     //     }, 10)
     // });
 
-    //Filter by model name
-    function filter_search(e) {
-        elements = $('.card-model-item')
-        elements.each(function () {
-            //console.log($( this ).parent())
-            $(this).parent()[0].style.display = 'none'
-            e_str = ($(this)[0].innerHTML).toString()
-            if (e_str.toLowerCase().indexOf(e.toLowerCase()) >= 0) {
-                $(this).parent()[0].style.display = 'block'
-            }
-        })
-    }
-
-    $('#filter_search').keyup(function (e) {
-        val = $(this).val()
-        //if(e.which == 13) {
-        if (val.length > 1) {
-            filter_search(val)
-        } else {
-            filter_search('')
-        }
-    })
-    $('#filter_search_clear').click(function () {
-        $('#filter_search').val('')
-        filter_search('')
-    })
-
-    //Toggle themes
-    $('#toggle-theme').click(function () {
-        console.log('change')
-        if ($('#body').hasClass('dark-theme')) {
-            $('#body').removeClass('dark-theme')
-            $('#body').addClass('light-theme')
-        } else {
-            $('#body').removeClass('light-theme')
-            $('#body').addClass('dark-theme')
-        }
-    })
-
-    //Search position and vals save
-    if ($pathname.indexOf('search') > 0) {
-        vals = getUrlVars($pathname)
-        if (vals.length > 0) {
-            localStorage.setItem('variant', vals['v'])
-            localStorage.setItem('sval', decodeURIComponent(vals['s']))
-        }
-        if (localStorage.getItem('variant') && localStorage.getItem('sval')) {
-            $v = localStorage.getItem('variant')
-            $s = localStorage.getItem('sval').replace(/\+/g, ' ')
-            $('#search_main .custom-select').val($v)
-            $('#search_main input').val($s)
-        }
-    }
-
-    //Send selected filter options
+    // Ajax filter
     if ($('#filter_model').length) {
         $checkboxs = {}
         $ranges = {}
@@ -166,8 +116,6 @@ $(document).ready(function () {
                         if(key.indexOf('max') > 0) {
                             max = key.replace('max', '')
                         }
-                        console.log(min)
-                        console.log(max)
                         if (Object.getOwnPropertyNames($ranges).length === 0) {
                             if (min !== '') {
                                 $.extend($ranges, {[min]: [parseInt(value, 10)]})
@@ -233,15 +181,6 @@ $(document).ready(function () {
             $("form").trigger("reset");
         })
         $("form").submit(function (event) {
-            // let formValues = $(this).serializeArray();
-            // $formValues = {}
-            // $.each(formValues,function(){
-            //     $key = this.name
-            //     $newelem = {[$key]: this.value}
-            //     // $formValues.push($newelem)
-            //     $.extend($formValues, $newelem)
-            // });
-            // console.log($formValues)
             event.preventDefault();
             let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
             $.ajax({
@@ -263,6 +202,60 @@ $(document).ready(function () {
         })
     }
 
+
+    //Filter by model name
+    function filter_search(e) {
+        elements = $('.card-model-item')
+        elements.each(function () {
+            //console.log($( this ).parent())
+            $(this).parent()[0].style.display = 'none'
+            e_str = ($(this)[0].innerHTML).toString()
+            if (e_str.toLowerCase().indexOf(e.toLowerCase()) >= 0) {
+                $(this).parent()[0].style.display = 'block'
+            }
+        })
+    }
+
+    $('#filter_search').keyup(function (e) {
+        val = $(this).val()
+        //if(e.which == 13) {
+        if (val.length > 1) {
+            filter_search(val)
+        } else {
+            filter_search('')
+        }
+    })
+    $('#filter_search_clear').click(function () {
+        $('#filter_search').val('')
+        filter_search('')
+    })
+
+    //Toggle themes
+    $('#toggle-theme').click(function () {
+        console.log('change')
+        if ($('#body').hasClass('dark-theme')) {
+            $('#body').removeClass('dark-theme')
+            $('#body').addClass('light-theme')
+        } else {
+            $('#body').removeClass('light-theme')
+            $('#body').addClass('dark-theme')
+        }
+    })
+
+    //Search position and vals save
+    if ($pathname.indexOf('search') > 0) {
+        vals = getUrlVars($pathname)
+        if (vals.length > 0) {
+            localStorage.setItem('variant', vals['v'])
+            localStorage.setItem('sval', decodeURIComponent(vals['s']))
+        }
+        if (localStorage.getItem('variant') && localStorage.getItem('sval')) {
+            $v = localStorage.getItem('variant')
+            $s = localStorage.getItem('sval').replace(/\+/g, ' ')
+            $('#search_main .custom-select').val($v)
+            $('#search_main input').val($s)
+        }
+    }
 
     if ($pathname.indexOf('brands') > 0) {
         $("form").submit(function (event) {

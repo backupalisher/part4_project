@@ -40,6 +40,7 @@ def cartridge(request, cartridge_id):
     carts = list(cartridge)
     tids = set()
     tmodels = set()
+    tamodels = set()
     # ids = list(set(carts[5]))
     ids = [x for x in carts[5] if not (x in tids or tids.add(x))]
     # models = list(set(carts[4]))
@@ -53,6 +54,7 @@ def cartridge(request, cartridge_id):
     for idx, v in enumerate(models):
         arr.append([ids[idx], v])
     carts[4] = arr
+    amodels = [x for x in carts[8] if not (x in tamodels or tamodels.add(x))]
     cartridge = tuple(carts)
     return render(request, 'cartridge/cartridge.html', {'title': title, 'cartridge': cartridge, 'options': options,
-                                                        'brand': brand, 'brand_id': brand_id})
+                                                        'brand': brand, 'brand_id': brand_id, 'amodels': amodels})

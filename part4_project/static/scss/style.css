@@ -378,6 +378,9 @@ a {
   a:hover {
     color: #2e79f6 !important; }
 
+.hidden {
+  visibility: hidden; }
+
 #toggle-theme {
   position: absolute;
   right: 10px;
@@ -489,8 +492,9 @@ a {
     box-shadow: 0 0 5px 1px #e98839; }
 
 .card-model-list {
-  height: 1080px;
-  margin: 0; }
+  height: 1000px;
+  margin: 0;
+  padding: 0 15px; }
 
 .card {
   padding: 0.4em 0.4em; }
@@ -649,5 +653,9 @@ h1 {
   text-decoration: underline; }
   .btn-collapse:hover {
     text-decoration: none; }
+
+#load_more {
+  color: #fdfdfd;
+  text-align: center; }
 
 /*# sourceMappingURL=style.css.map */

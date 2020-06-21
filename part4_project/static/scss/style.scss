@@ -11,7 +11,9 @@ a {
     color: #2e79f6 !important;;
   }
 }
-
+.hidden {
+  visibility: hidden;
+}
 #toggle-theme {
   position: absolute;
   right: 10px;
@@ -179,8 +181,9 @@ a {
 }
 
 .card-model-list {
-  height: 1080px;
+  height: 1000px;
   margin: 0;
+  padding: 0 15px;
 }
 
 .card {
@@ -432,4 +435,8 @@ h1 {
   &:hover {
     text-decoration: none;
   }
+}
+#load_more {
+  color: $white;
+  text-align: center;
 }

@@ -99,7 +99,6 @@ def get_filters():
 @sync_to_async
 def get_all_models(brand_id, limit, offset):
     print(datetime.datetime.now() - start_time, 'получение всех моделей')
-    print(f'SELECT * FROM model_for_filter mopt WHERE brand_id = {brand_id} LIMIT {limit} OFFSET {offset};')
     brand_models = _query(
         f'SELECT * FROM model_for_filter mopt WHERE brand_id = {brand_id} LIMIT {limit} OFFSET {offset};')
     print(datetime.datetime.now() - start_time, 'получение всех моделей завершено')
@@ -173,6 +172,9 @@ def index(request, brand_id):
     radios = {}
     if request.is_ajax():
         if request.method == 'POST':
+            brand_models = request.session['brand_models']
+
+            model_count = len(brand_models)
             if dict(request.POST.lists())['checkboxs'][0]:
                 checkboxs = dict(request.POST.lists())['checkboxs'][0]
             if dict(request.POST.lists())['ranges'][0]:
@@ -194,7 +196,7 @@ def index(request, brand_id):
                 pages = math.ceil(model_count / limit)
             loop.close()
             return render(request, 'filter/filter_result.html', {'page': page, 'pages': range(pages),
-                                                                 'brand_models': brand_models,
+                                                                 'brand_models': str(brand_models),
                                                                  'model_count': model_count})
         else:
             return JsonResponse('unsuccessful')
@@ -203,22 +205,13 @@ def index(request, brand_id):
         filter_captions = ['Общие характеристики', 'Принтер', 'Копир', 'Сканер', 'Расходные материалы', 'Лотки',
                            'Финишер',
                            'Интерфейсы']
-        post_filter = dict(request.POST.lists())
         brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
-        if len(post_filter) != 0:
-            print('filter apply')
-            fload = loop.run_until_complete(fpreload(brand_id, checkboxs, ranges, radios))
-            sfilter = fload[0]
-            # Base sql part of query for get model by filter
-            brand_models = fload[1]
-            if brand_models:
-                model_count = len(brand_models)
-        else:
-            preloads = loop.run_until_complete(preload(brand_id, limit, offset))
-            sfilter = preloads[0]
-            brand_models = preloads[1]
-            model_count = len(brand_models)
-            pages = math.ceil(model_count / limit)
+        preloads = loop.run_until_complete(preload(brand_id, limit, offset))
+        sfilter = preloads[0]
+        brand_models = preloads[1]
+        request.session['brand_models'] = brand_models
+        model_count = len(brand_models)
+        pages = math.ceil(model_count / limit)
         loop.close()
         print(datetime.datetime.now() - start_time, 'завершение')
         return render(request, 'brand/index.html', {'brand_models': brand_models, 'brand_name': brand_name,

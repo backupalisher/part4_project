@@ -11,12 +11,22 @@
             {% include 'filter/filter.html' %}
         </div>
         <div class="col-9">
-            <div id="filter_model_result">
-                <div class="scrollbar-macosx mt-2">
+            {#Search#}
+            <div class="row">
+                <div class="col-12">
+                    <div class="input-group w-100 filter_search">
+                        <input type="text" id="filter_search" name="filter_search" aria-label="Close"
+                               class="form-control filter_search" placeholder="Поиск по модели">
+                        <span class="input-group-text" aria-hidden="true" id="filter_search_clear"> &times; </span>
+                    </div>
+                </div>
+            </div>
+            {#Search end#}
+            <div class="scrollbar-macosx mt-2">
+                <div id="filter_model_result">
                     {% include 'filter/filter_result.html' %}
                 </div>
             </div>
-
         </div>
     </div>
 {% endblock %}

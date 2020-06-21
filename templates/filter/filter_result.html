@@ -1,31 +1,19 @@
 {% load static brand_extras %}
 
-{#Paginator#}
-{% if pages|length > 0 %}
-    <div class="row">
-        <div class="col-12">
-            <div class="input-group w-100 filter_search">
-                <input type="text" id="filter_search" name="filter_search" aria-label="Close"
-                       class="form-control filter_search" placeholder="Поиск по модели">
-                <span class="input-group-text" aria-hidden="true" id="filter_search_clear"> &times; </span>
-            </div>
-        </div>
-    </div>
-{% endif %}
-{#Paginator end#}
-
 {#Model list#}
-<div class="card-model-list row">
-    {% for model in brand_models %}
-        <div class="col-lg-3 col-md-3 col-sm-4 p-2">
-            <div class="card card-model-item btn">
-                <a href="/model/{{ model.1 }}" class="brand_model_link"
-                   style="background-image:url('{% if model.4 is not None %}{{ MEDIA_URL }}images/{{ model.4|cut:';' }}{% else %}{{ MEDIA_URL }}images/no-image.png{% endif %}')">
-                </a>
-                <a href="/model/{{ model.1 }}"><h6 class="brand_model_title">{{ model.2 }}</h6></a>
-            </div>
-        </div>
-    {% endfor %}
+<div class="card-model-list">
+{#    {% for model in brand_models %}#}
+{#        <div class="col-lg-3 col-md-4 col-sm-6 p-2">#}
+{#            <div class="card card-model-item btn">#}
+{#                <a href="/model/{{ model.1 }}" class="brand_model_link"#}
+{#                   style="background-image:url('{% if model.4 is not None %}{{ MEDIA_URL }}images/{{ model.4|cut:';' }}{% else %}{{ MEDIA_URL }}images/no-image.png{% endif %}')">#}
+{#                </a>#}
+{#                <a href="/model/{{ model.1 }}"><h6 class="brand_model_title">{{ model.2 }}</h6></a>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
+    <div class="row"></div>
+    <div id="load_more">Загрузка ...</div>
 </div>
 {#Model list end#}
 
@@ -64,3 +52,23 @@
     </div>
 {% endif %}
 {#Paginator end#}
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function jqueryLoaded() {
+            brand_models = "{{ brand_models }}"
+            media_url = "{{ MEDIA_URL }}"
+            $ajax_script = "{% static 'ajax.js' %}"
+            $.getScript($ajax_script)
+        }
+        function checkJquery() {
+            if (window.jQuery) {
+                jqueryLoaded();
+            } else {
+                window.setTimeout(checkJquery, 100);
+            }
+        }
+        checkJquery();
+    </script>
+{#    <script src="{% static 'ajax.js' %}"></script>#}
+{% endblock %}
