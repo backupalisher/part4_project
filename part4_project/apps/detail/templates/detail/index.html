@@ -10,9 +10,9 @@
             <div class="col-auto">
                 <div class="card_image">
                     {% if partcode.images %}
-                        <img src="{{ MEDIA_URL }}images/{{ partcode.images }}" class="img-fluid"/>
+                        <img src="{{ MEDIA_URL }}{{ partcode.images }}" class="img-fluid"/>
                     {% else %}
-                        <img src="{{ MEDIA_URL }}images/no_image_part.png" class="img-fluid"/>
+                        <img src="{{ MEDIA_URL }}no_image_part.png" class="img-fluid"/>
                     {% endif %}
                 </div>
             </div>

@@ -26,12 +26,12 @@
                             {% for image in model_images %}
                                 {% if forloop.first %}
                                     <div class="carousel-item active">
-                                        <img src="{{ MEDIA_URL }}images/{{ image }}" class="d-block w-100"
+                                        <img src="{{ MEDIA_URL }}{{ image }}" class="d-block w-100"
                                              alt="detail_name">
                                     </div>
                                 {% elif image != '' %}
                                     <div class="carousel-item">
-                                        <img src="{{ MEDIA_URL }}images/{{ image }}" class="d-block w-100"
+                                        <img src="{{ MEDIA_URL }}{{ image }}" class="d-block w-100"
                                              alt="detail_name">
                                     </div>
                                 {% endif %}
@@ -39,10 +39,10 @@
                         {% else %}
                             <div class="carousel-item active">
                                 {% if model_main_image %}
-                                    <img src="{{ MEDIA_URL }}images/{{ model_main_image }}" class="d-block w-100"
+                                    <img src="{{ MEDIA_URL }}{{ model_main_image }}" class="d-block w-100"
                                          alt="{{ detail_name }}"/>
                                 {% else %}
-                                    <img src="{{ MEDIA_URL }}images/no-image.png" class="d-block w-100"
+                                    <img src="{{ MEDIA_URL }}no-image.png" class="d-block w-100"
                                          alt="{{ detail_name }}"/>
                                 {% endif %}
                             </div>
@@ -191,11 +191,11 @@
                                                                     <div style="float:left; width: 10%;">
                                                                         {% if partc.9 %}
                                                                             <img src="
-                                                                                    {{ MEDIA_URL }}images/{{ partc.9 }}"
+                                                                                    {{ MEDIA_URL }}{{ partc.9 }}"
                                                                                  style="max-width: 100%; height: auto;"
                                                                                  alt="{{ partc.9 }}">
                                                                         {% else %}
-                                                                            <img src="{{ MEDIA_URL }}images/no_image_part.png"
+                                                                            <img src="{{ MEDIA_URL }}no_image_part.png"
                                                                                  style="max-width: 100%; height: auto;"
                                                                                  alt="{{ partc.9 }}">
                                                                         {% endif %}
