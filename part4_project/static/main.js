@@ -57,7 +57,7 @@ $(document).ready(function () {
         $checkboxs = {}
         $ranges = {}
         $radios = {}
-        $("form input").change(function () {
+        $("#form_filter input").change(function () {
             if ($(this).attr('type') === 'checkbox') {
                 $key = $(this).attr('name')
                 $value = $(this).attr('id')
@@ -174,13 +174,13 @@ $(document).ready(function () {
                 }
             }
         })
-        $("form button[type='reset']").click(function () {
+        $("#form_filter button[type='reset']").click(function () {
             $checkboxs = {}
             $ranges = {}
             $radios = {}
             $("form").trigger("reset");
         })
-        $("form").submit(function (event) {
+        $("#form_filter").submit(function (event) {
             event.preventDefault();
             let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
             $.ajax({

@@ -1,7 +1,7 @@
 <div class="filter">
     <h4 class="pt-1 title">Фильтр:</h4>
     <!--span>моделей {{ model_count.0.0 }}</span-->
-    <form method="post" action="">
+    <form method="post" action="" id="form_filter">
         {% csrf_token %}
         <div class="scrollbar-macosx filter_settings pt-3 mb-3">
             {% for caption in filter_captions %}
