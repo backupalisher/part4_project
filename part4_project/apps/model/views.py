@@ -210,30 +210,36 @@ def index(request, model_id):
     init_result = loop.run_until_complete(init(model_id))
     detail_id = init_result[0][0]
     spr_detail_id = init_result[0][1]
-    post_result = loop.run_until_complete(past_init(request, model_id, spr_detail_id, detail_id))
-    loop.close()
-    model = post_result[0][0]
-    model_main_image = post_result[0][1]
-    model_images = post_result[0][2]
-    detail_name = post_result[0][3]
-    brand_id = post_result[0][4]
-    brand_name = post_result[0][5]
-    modules = post_result[1][0]
-    cur_module = post_result[1][1]
-    partcatalog = post_result[1][2]
-    verrors = post_result[2]
-    options = post_result[3][0]
-    captions = post_result[3][1]
-    subcaptions = post_result[3][2]
-    values = post_result[3][3]
-    cartridges = post_result[4]
-    if model_id:
-        pass
+    if detail_id:
+        post_result = loop.run_until_complete(past_init(request, model_id, spr_detail_id, detail_id))
+        loop.close()
+        model = post_result[0][0]
+        model_main_image = post_result[0][1]
+        model_images = post_result[0][2]
+        detail_name = post_result[0][3]
+        brand_id = post_result[0][4]
+        brand_name = post_result[0][5]
+        modules = post_result[1][0]
+        cur_module = post_result[1][1]
+        partcatalog = post_result[1][2]
+        verrors = post_result[2]
+        options = post_result[3][0]
+        captions = post_result[3][1]
+        subcaptions = post_result[3][2]
+        values = post_result[3][3]
+        cartridges = post_result[4]
+        if model_id:
+            pass
+        else:
+            raise Http404('Страница отсутствует, с id: ' + str(detail_id))
+        print(datetime.datetime.now() - start_time, 'завершение')
+        return render(request, 'model/index.html',
+                      {'detail_id': detail_id, 'model': model, 'model_main_image': model_main_image, 'modules': modules,
+                       'verrors': verrors, 'model_images': model_images, 'detail_name': detail_name, 'options': options,
+                       'partcatalog': partcatalog, 'captions': captions, 'brand_id': brand_id, 'brand_name': brand_name,
+                       'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module,
+                       'cartridges': cartridges})
     else:
-        raise Http404('Страница отсутствует, с id: ' + str(detail_id))
-    print(datetime.datetime.now() - start_time, 'завершение')
-    return render(request, 'model/index.html',
-                  {'detail_id': detail_id, 'model': model, 'model_main_image': model_main_image, 'modules': modules,
-                   'verrors': verrors, 'model_images': model_images, 'detail_name': detail_name, 'options': options,
-                   'partcatalog': partcatalog, 'captions': captions, 'brand_id': brand_id, 'brand_name': brand_name,
-                   'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module, 'cartridges': cartridges})
+        raise Http404('Страница отсутствует, с id: ' + str(model_id))
+
+
