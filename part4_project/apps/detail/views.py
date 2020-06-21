@@ -81,12 +81,15 @@ async def init(detail_id):
 
 
 async def past_init(request, model_id, partcode):
-    tasks = [
-        # get_partcodes(model_id),
-        get_cartridge_options(partcode),
-    ]
-    results = await asyncio.gather(*tasks)
-    return results
+    if partcode != '-':
+        tasks = [
+            # get_partcodes(model_id),
+            get_cartridge_options(partcode),
+        ]
+        results = await asyncio.gather(*tasks)
+        return results
+    else:
+        return []
 
 
 def index(request, detail_id):
@@ -105,13 +108,16 @@ def index(request, detail_id):
     try:
         try:
             partcode_id = models.Details.objects.filter(id=detail_id).values('partcode_id')[0]['partcode_id']
-            partcode = list(models.Partcodes.objects.filter(id=partcode_id).values())[0]  # .values('code')[0]['code']
+            partcode = models.Partcodes.objects.filter(id=partcode_id).values().values('code')[0]['code']
+            partcodes = list(models.Partcodes.objects.filter(id=partcode_id).values())[0]
         except:
+            partcodes = []
             partcode = '-'
         try:
             model_id = models.Details.objects.filter(id=detail_id).values('model_id')[0]['model_id']
             model = models.Models.objects.filter(id=model_id).values('name')[0]['name']
         except:
+            model_id = None
             model = '-'
         try:
             module_id = models.Details.objects.filter(id=detail_id).values('module_id')[0]['module_id']
@@ -136,7 +142,7 @@ def index(request, detail_id):
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
 
     return render(request, 'detail/index.html',
-                  {'partcode': partcode, 'detail_id': detail_id, 'model': model, 'model_id': model_id,
+                  {'partcodes': partcodes, 'detail_id': detail_id, 'model': model, 'model_id': model_id,
                    'module': module, 'detail_name': detail_name, 'options': options,
                    'captions': captions, 'subcaptions': subcaptions, 'values': values,
                    'brand_id': brand_id, 'brand_name': brand_name, 'cartridge_options': cartridge_options})

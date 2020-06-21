@@ -9,8 +9,8 @@
         <div class="row">
             <div class="col-auto">
                 <div class="card_image">
-                    {% if partcode.images %}
-                        <img src="{{ MEDIA_URL }}{{ partcode.images }}" class="img-fluid"/>
+                    {% if partcodes.images %}
+                        <img src="{{ MEDIA_URL }}{{ partcodes.images }}" class="img-fluid"/>
                     {% else %}
                         <img src="{{ MEDIA_URL }}no_image_part.png" class="img-fluid"/>
                     {% endif %}
@@ -18,7 +18,7 @@
             </div>
             <div class="col">
                 <h3>Деталь: <span class="name"> {{ detail_name }} </span></h3>
-                <h4>Парткод: <span class="partcode"> {{ partcode.code }} </span></h4>
+                <h4>Парткод: <span class="partcode"> {{ partcodes.code }} </span></h4>
                 {% if model != '-' %}
                     <h4>Модель: <a href="/model/{{ model_id }}">{{ model }}</a></h4>
                 {% endif %}
