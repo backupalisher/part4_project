@@ -232,6 +232,7 @@ def index(request, model_id):
             pass
         else:
             raise Http404('Страница отсутствует, с id: ' + str(detail_id))
+        print(model_main_image)
         print(datetime.datetime.now() - start_time, 'завершение')
         return render(request, 'model/index.html',
                       {'detail_id': detail_id, 'model': model, 'model_main_image': model_main_image, 'modules': modules,

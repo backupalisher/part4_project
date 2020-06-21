@@ -126,11 +126,6 @@ def index(request, detail_id):
                 detail_name = models.SprDetails.objects.filter(id=spr_detail_id).values('name')[0]['name']
         except:
             detail_name = '-'
-        try:
-            model_d_id = \
-                models.Details.objects.filter(model_id=model_id).filter(module_id__isnull=True).values('id')[0]['id']
-        except:
-            model_d_id = 0
         post_result = loop.run_until_complete(past_init(request, model_id, partcode))
         # partcatalog = post_result[0]
         cartridge_options = post_result[0]
@@ -142,6 +137,6 @@ def index(request, detail_id):
 
     return render(request, 'detail/index.html',
                   {'partcode': partcode, 'detail_id': detail_id, 'model': model, 'model_id': model_id,
-                   'module': module, 'model_d_id': model_d_id, 'detail_name': detail_name, 'options': options,
+                   'module': module, 'detail_name': detail_name, 'options': options,
                    'captions': captions, 'subcaptions': subcaptions, 'values': values,
                    'brand_id': brand_id, 'brand_name': brand_name, 'cartridge_options': cartridge_options})

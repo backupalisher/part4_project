@@ -20,14 +20,14 @@
                 <h3>Деталь: <span class="name"> {{ detail_name }} </span></h3>
                 <h4>Парткод: <span class="partcode"> {{ partcode.code }} </span></h4>
                 {% if model != '-' %}
-                    <h4>Модель: <a href="/model/{{ model_d_id }}">{{ model }}</a></h4>
+                    <h4>Модель: <a href="/model/{{ model_id }}">{{ model }}</a></h4>
                 {% endif %}
 
 
                     {% if module.name_ru %}
-                        <h4>Модуль: <a href="/model/{{ model_d_id }}?module={{ module.name_ru }}">{{ module.name_ru }}</a>
+                        <h4>Модуль: <a href="/model/{{ model_id }}?module={{ module.name_ru }}">{{ module.name_ru }}</a>
                     {% elif module.name %}
-                        <h4>Модуль: <a href="/model/{{ model_d_id }}?module={{ module.name }}">{{ module.name }}</a></h4>
+                        <h4>Модуль: <a href="/model/{{ model_id }}?module={{ module.name }}">{{ module.name }}</a></h4>
                     {% endif %}
             </div>
         </div>
@@ -147,7 +147,7 @@
                 <ul>
                     <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
                     <li class="nav-breadcrumb-item"><a href="/brand/{{ brand_id }}">{{ brand_name }}</a></li>
-                    <li class="nav-breadcrumb-item"><a href="/model/{{ model_d_id }}">{{ model }}</a></li>
+                    <li class="nav-breadcrumb-item"><a href="/model/{{ model_id }}">{{ model }}</a></li>
                     <li class="nav-breadcrumb-item active">{{ detail_name }}</li>
                 </ul>
             </nav>

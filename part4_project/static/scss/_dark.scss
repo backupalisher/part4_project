@@ -31,22 +31,22 @@
         }
     }
     footer {
-        color: $light;
+        color: $light !important;;
     }
 
     .navbar {
         background-color: $black;
-        color: $light;
+        color: $light !important;;
         .navbar-brand {
             background-image: url("https://upload.part4.info/images/dark_logo_part4.png");
         }
         a {
-            color: $light;
+            color: $light !important;
             &.active {
-                color: $orange;
+                color: $orange !important;;
             }
             &:hover, &:focus {
-                color: $yellow;
+                color: $yellow !important;;
             }
         }
     }
@@ -58,14 +58,14 @@
                     border-color: $blue;
                 }
                 a {
-                    color: $light;
-                    background: $dark;
+                    color: $light !important;;
+                    background: $dark !important;;
                     &:hover, &:focus {
-                        color: $yellow;
+                        color: $yellow !important;;
                     }
                 }
                 &.active {
-                    color: $orange;
+                    color: $orange !important;;
                 }
             }
         }

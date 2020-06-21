@@ -94,29 +94,29 @@ Colors
   .dark-theme .form-control:hover, .dark-theme .form-control:focus {
     box-shadow: 0 0 5px 1px #e98839; }
   .dark-theme footer {
-    color: #e9e9eb; }
+    color: #e9e9eb !important; }
   .dark-theme .navbar {
     background-color: #262629;
-    color: #e9e9eb; }
+    color: #e9e9eb !important; }
     .dark-theme .navbar .navbar-brand {
       background-image: url("https://upload.part4.info/images/dark_logo_part4.png"); }
     .dark-theme .navbar a {
-      color: #e9e9eb; }
+      color: #e9e9eb !important; }
       .dark-theme .navbar a.active {
-        color: #e98839; }
+        color: #e98839 !important; }
       .dark-theme .navbar a:hover, .dark-theme .navbar a:focus {
-        color: #f2ba4b; }
+        color: #f2ba4b !important; }
   .dark-theme .nav-breadcrumb {
     background: #323235; }
     .dark-theme .nav-breadcrumb ul li:after {
       border-color: #2e79f6; }
     .dark-theme .nav-breadcrumb ul li a {
-      color: #e9e9eb;
-      background: #323235; }
+      color: #e9e9eb !important;
+      background: #323235 !important; }
       .dark-theme .nav-breadcrumb ul li a:hover, .dark-theme .nav-breadcrumb ul li a:focus {
-        color: #f2ba4b; }
+        color: #f2ba4b !important; }
     .dark-theme .nav-breadcrumb ul li.active {
-      color: #e98839; }
+      color: #e98839 !important; }
   .dark-theme .filter {
     color: #e9e9eb; }
     .dark-theme .filter .title {
@@ -504,8 +504,12 @@ a {
   .card.card-model-item {
     padding: 0.1em 0.5em; }
     .card.card-model-item .brand_model_title {
-      height: 3.6em;
-      overflow: hidden; }
+      height: 3em;
+      line-height: 1.5em;
+      overflow: hidden;
+      position: absolute;
+      bottom: -3em;
+      width: 100%; }
     .card.card-model-item a:hover {
       text-decoration: none; }
   .card.card-model .brand_model_title {
@@ -565,11 +569,14 @@ h1 {
     box-shadow: 0px 0px 4px 0px #2e79f6; }
 
 .brand_model_link {
-  display: block;
+  display: flex;
+  flex-direction: column-reverse;
   height: 200px;
   background-position: center;
   background-size: contain;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;
+  position: relative;
+  margin-bottom: 3em; }
 
 .brand_model_title {
   text-align: center; }
