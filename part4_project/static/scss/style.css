@@ -504,11 +504,12 @@ a {
   .card.card-model-item {
     padding: 0.1em 0.5em; }
     .card.card-model-item .brand_model_title {
-      height: 3em;
-      line-height: 1.5em;
+      font-size: 14px;
+      height: 45px;
+      line-height: 15px;
       overflow: hidden;
       position: absolute;
-      bottom: -3em;
+      bottom: -45px;
       width: 100%; }
     .card.card-model-item a:hover {
       text-decoration: none; }
