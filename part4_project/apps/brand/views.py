@@ -29,7 +29,6 @@ def brands(request):
                     brand_name = data[1][0]
             if brand_name != '':
                 brands = list(models.Brands.objects.filter(name=brand_name).values())
-            print(brands)
             title = 'Бренды'
             return render(request, 'brands/ajax.html', {'title': title, 'brands': brands})
             # return JsonResponse({'results': brands})
@@ -90,18 +89,18 @@ def sql_gen_checks(checks):
 
 @sync_to_async
 def get_filters():
-    print(datetime.datetime.now() - start_time, 'получение фильтров')
+    # print(datetime.datetime.now() - start_time, 'получение фильтров')
     sfilter = models.FilterSettings.objects.all().order_by('id')
-    print(datetime.datetime.now() - start_time, 'получение фильтров завершено')
+    # print(datetime.datetime.now() - start_time, 'получение фильтров завершено')
     return sfilter
 
 
 @sync_to_async
 def get_all_models(brand_id, limit, offset):
-    print(datetime.datetime.now() - start_time, 'получение всех моделей')
+    # print(datetime.datetime.now() - start_time, 'получение всех моделей')
     brand_models = _query(
         f'SELECT * FROM model_for_filter mopt WHERE brand_id = {brand_id} LIMIT {limit} OFFSET {offset};')
-    print(datetime.datetime.now() - start_time, 'получение всех моделей завершено')
+    # print(datetime.datetime.now() - start_time, 'получение всех моделей завершено')
     return brand_models
 
 
@@ -182,7 +181,6 @@ def index(request, brand_id):
             if dict(request.POST.lists())['radios'][0]:
                 radios = dict(request.POST.lists())['radios'][0]
             if len(checkboxs) != 0 or len(ranges) != 0 or len(radios) != 0:
-                print('filter apply')
                 fload = loop.run_until_complete(fpreload(brand_id, checkboxs, ranges, radios))
                 # Base sql part of query for get model by filter
                 brand_models = fload[0]
@@ -201,7 +199,7 @@ def index(request, brand_id):
         else:
             return JsonResponse('unsuccessful')
     else:
-        print(start_time, brand_id)
+        # print(start_time, brand_id)
         filter_captions = ['Общие характеристики', 'Принтер', 'Копир', 'Сканер', 'Расходные материалы', 'Лотки',
                            'Финишер',
                            'Интерфейсы']
@@ -213,7 +211,7 @@ def index(request, brand_id):
         model_count = len(brand_models)
         pages = math.ceil(model_count / limit)
         loop.close()
-        print(datetime.datetime.now() - start_time, 'завершение')
+        # print(datetime.datetime.now() - start_time, 'завершение')
         return render(request, 'brand/index.html', {'brand_models': brand_models, 'brand_name': brand_name,
                                                     'model_count': model_count, 'page': page, 'pages': range(pages),
                                                     'sfilter': sfilter, 'filter_captions': filter_captions})

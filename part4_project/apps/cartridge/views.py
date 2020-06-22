@@ -1,6 +1,6 @@
-from django.db import connections
 from django.http import Http404
 from django.shortcuts import render
+
 import db_model.models as models
 from db_model.db_utils import _query
 
@@ -29,7 +29,6 @@ def cartridges(request, brand_id):
             brand = cartridge[7]
         else:
             brand = ''
-    # print([list(v) for v in dict(cartridge[7]).items()])
 
     return render(request, 'cartridge/cartridges.html', {'title': title, 'cartridges': cartridges, 'brand': brand})
 
@@ -38,7 +37,6 @@ def cartridge(request, cartridge_id):
     title = 'Каритридж'
     options = _query(f"SELECT * FROM all_options_for_cartridges WHERE id = {cartridge_id}")
     cartridge = _query(f"SELECT * FROM all_cartridge WHERE id = {cartridge_id}")
-    print(cartridge)
     if cartridge:
         carts = list(cartridge[0])
         tids = set()

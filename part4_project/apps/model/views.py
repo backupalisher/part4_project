@@ -19,11 +19,11 @@ def detail_view(request):
 # добавление веса
 @sync_to_async
 def set_weight(detail_id):
-    print(datetime.datetime.now() - start_time, 'обновление веса')
+    # print(datetime.datetime.now() - start_time, 'обновление веса')
     _query(
         f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w "
         f"WHERE id = {detail_id}")
-    print(datetime.datetime.now() - start_time, 'обновление веса завершено')
+    # print(datetime.datetime.now() - start_time, 'обновление веса завершено')
 
 
 # Запрос на получение опций и вывод опций
@@ -51,11 +51,11 @@ def get_options(detail_id):
     ]
     subcaptions = []
     values = []
-    print(datetime.datetime.now() - start_time, 'получение опций')
+    # print(datetime.datetime.now() - start_time, 'получение опций')
     option_vals = _query(f"SELECT * FROM all_options_model WHERE detail_id = {detail_id};")
-    print(datetime.datetime.now() - start_time, 'получение опций завершено')
+    # print(datetime.datetime.now() - start_time, 'получение опций завершено')
 
-    print(datetime.datetime.now() - start_time, 'сортировка опций')
+    # print(datetime.datetime.now() - start_time, 'сортировка опций')
     for opts in option_vals:
         # if opts[0] is None and opts[1] is None:
         #     for i in range(len(opts[3])):
@@ -69,22 +69,22 @@ def get_options(detail_id):
         else:
             values.append(opts)
     options = option_vals
-    print(datetime.datetime.now() - start_time, 'сортировка опций завершена')
+    # print(datetime.datetime.now() - start_time, 'сортировка опций завершена')
     return options, captions, subcaptions, values
 
 
 # Запрос на получение ошибок
 @sync_to_async
 def get_errors(model_id):
-    print(datetime.datetime.now() - start_time, 'получение ошибок')
+    # print(datetime.datetime.now() - start_time, 'получение ошибок')
     verrors = _query(f"SELECT * FROM all_errors WHERE mid = {model_id}")
-    print(datetime.datetime.now() - start_time, 'получение ошибок завершено')
+    # print(datetime.datetime.now() - start_time, 'получение ошибок завершено')
 
-    print(datetime.datetime.now() - start_time, 'сортировка ошибок')
+    # print(datetime.datetime.now() - start_time, 'сортировка ошибок')
     if len(verrors) > 0:
         if verrors[0][2] is None and verrors[0][3] is None and verrors[0][4] is None and verrors[0][5] is None:
             verrors = None
-    print(datetime.datetime.now() - start_time, 'сортировка ошибок завершена')
+    # print(datetime.datetime.now() - start_time, 'сортировка ошибок завершена')
     return verrors
 
 
@@ -93,11 +93,11 @@ def get_errors(model_id):
 def qet_partcatalog(request, model_id):
     # 'Получение id парткодов, моделей, модулей, названий детали для модулей и парткаталога', q_code_module)
     modules = []
-    print(datetime.datetime.now() - start_time, 'получение парткодов и модулей')
+    # print(datetime.datetime.now() - start_time, 'получение парткодов и модулей')
     partcatalog = _query(f'SELECT * FROM all_partcatalog WHERE model_id = {model_id}')
-    print(datetime.datetime.now() - start_time, 'получение парткодов и модулей завершено')
+    # print(datetime.datetime.now() - start_time, 'получение парткодов и модулей завершено')
 
-    print(datetime.datetime.now() - start_time, 'Сортировка парткаталога')
+    # print(datetime.datetime.now() - start_time, 'Сортировка парткаталога')
     if partcatalog and len(partcatalog) > 0:
         for parts in partcatalog:
             # print(parts)
@@ -110,7 +110,7 @@ def qet_partcatalog(request, model_id):
         cur_module = request.GET.get('module')
     else:
         cur_module = None
-    print(datetime.datetime.now() - start_time, 'Сортировка парткаталога завершена')
+    # print(datetime.datetime.now() - start_time, 'Сортировка парткаталога завершена')
 
     return modules, cur_module, partcatalog
 
@@ -118,7 +118,7 @@ def qet_partcatalog(request, model_id):
 # Запрос на получение id
 @sync_to_async
 def get_ids(model_id):
-    print(datetime.datetime.now() - start_time, 'сбор id')
+    # print(datetime.datetime.now() - start_time, 'сбор id')
     qd = _query(f'SELECT * FROM details WHERE model_id = {model_id} and partcode_id is null')
     try:
         detail_id = qd[0][0]
@@ -126,14 +126,14 @@ def get_ids(model_id):
     except:
         detail_id = None
         spr_detail_id = None
-    print(datetime.datetime.now() - start_time, 'сбор id завершен')
+    # print(datetime.datetime.now() - start_time, 'сбор id завершен')
     return detail_id, spr_detail_id
 
 
 # Получение id парткодов, моделей, бренда, картинок
 @sync_to_async
 def get_any(model_id, spr_detail_id):
-    print(datetime.datetime.now() - start_time, 'сбор остального')
+    # print(datetime.datetime.now() - start_time, 'сбор остального')
     mq = _query(f'SELECT brand_id, name, main_image, image FROM models WHERE id = {model_id}')
     try:
         brand_id = mq[0][0]
@@ -163,13 +163,13 @@ def get_any(model_id, spr_detail_id):
         brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
     except:
         brand_name = None
-    print(datetime.datetime.now() - start_time, 'сбор остального завершен')
+    # print(datetime.datetime.now() - start_time, 'сбор остального завершен')
     return model, model_main_image, model_images, detail_name, brand_id, brand_name
 
 
 @sync_to_async
 def get_cartridge(model_id):
-    print(datetime.datetime.now() - start_time, 'получение картриджей')
+    # print(datetime.datetime.now() - start_time, 'получение картриджей')
     cartridges = _query(f"SELECT * FROM all_cartridge WHERE {model_id} = ANY(model_id)")
     for idx in range(len(cartridges)):
         cartridge = list(cartridges[idx])
@@ -178,7 +178,7 @@ def get_cartridge(model_id):
         cartridge_alt = list(cartridges[idx])
         cartridge_alt[8] = list(set(cartridge[8]))
         cartridges[idx] = tuple(cartridge_alt)
-    print(datetime.datetime.now() - start_time, 'получение картриджей завершено')
+    # print(datetime.datetime.now() - start_time, 'получение картриджей завершено')
     return cartridges
 
 
@@ -201,12 +201,12 @@ async def past_init(request, model_id, spr_detail_id, detail_id):
 
 
 def index(request, model_id):
-    print(start_time, model_id)
+    # print(start_time, model_id)
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop = asyncio.get_event_loop()
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
-    print(datetime.datetime.now() - start_time, 'start')
+    # print(datetime.datetime.now() - start_time, 'start')
     init_result = loop.run_until_complete(init(model_id))
     detail_id = init_result[0][0]
     spr_detail_id = init_result[0][1]
@@ -232,8 +232,7 @@ def index(request, model_id):
             pass
         else:
             raise Http404('Страница отсутствует, с id: ' + str(detail_id))
-        print(model_main_image)
-        print(datetime.datetime.now() - start_time, 'завершение')
+        # print(datetime.datetime.now() - start_time, 'завершение')
         return render(request, 'model/index.html',
                       {'detail_id': detail_id, 'model': model, 'model_main_image': model_main_image, 'modules': modules,
                        'verrors': verrors, 'model_images': model_images, 'detail_name': detail_name, 'options': options,

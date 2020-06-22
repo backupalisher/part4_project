@@ -63,6 +63,7 @@ async def init(sval):
 
 def search(request):
     variant = 0
+    s_value = ''
     for item in request.GET:
         if 's' in item:
             s_value = request.GET.__getitem__('s')
@@ -79,6 +80,5 @@ def search(request):
     ar = result[0]
     er = result[1]
     cr = result[2]
-    print(cr)
     return render(request, 'main/index.html',
                   context={'all_result': ar, 'error_result': er, 'cartridge_result': cr})

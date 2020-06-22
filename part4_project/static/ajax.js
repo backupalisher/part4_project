@@ -8,7 +8,6 @@
         brand_models = brand_models.replace(/\)/g,']')
         brand_models = brand_models.replace(/None/g,'""')
         brand_models = JSON.parse(brand_models)
-        console.log(brand_models.length)
         $page_count = Math.round(brand_models.length/24)
         show_models(brand_models, media_url,0, 24)
 
@@ -19,7 +18,6 @@
         $(function(){
           let page = 0
           let aTop = $('#load_more').position().top;
-          console.log($page_count, page)
           if(page >= $page_count || $page_count === 1){
             $('#load_more').toggleClass('hidden')
           } else {
@@ -27,14 +25,12 @@
           }
           $('.card-model-list').parent().parent().scroll(function(){
             if($(this).scrollTop()+1080>=aTop){
-                console.log($page_count, page)
                 if(!$loading && page < $page_count) {
                     $loading = true
                     page++
                     show_models(brand_models, media_url,page, 24)
                     aTop += 1080
                 }
-                console.log($page_count, page)
                 if(page >= $page_count){
                     $('#load_more').toggleClass('hidden')
                 } else {

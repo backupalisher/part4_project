@@ -11,9 +11,6 @@ def _query(q):
         port=DEFAULT_PORT
     )
     cur = con.cursor()
-    print('---------------')
-    print(q)
-    print('---------------')
     try:
         cur.execute(q)
         data = cur.fetchall()
