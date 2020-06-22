@@ -11,11 +11,10 @@ import os
 
 import sys
 
-path='/var/www/part4_project'
+path = '/var/www/part4_project'
 
 if path not in sys.path:
-  sys.path.append(path)
-
+    sys.path.append(path)
 
 from django.core.wsgi import get_wsgi_application
 
