@@ -192,6 +192,7 @@ def index(request, brand_id):
                 brand_models = preloads[1]
                 model_count = len(brand_models)
                 pages = math.ceil(model_count / limit)
+            loop.run_until_complete(loop.shutdown_asyncgens())
             loop.close()
             return render(request, 'filter/filter_result.html', {'page': page, 'pages': range(pages),
                                                                  'brand_models': str(brand_models),
@@ -210,6 +211,7 @@ def index(request, brand_id):
         request.session['brand_models'] = brand_models
         model_count = len(brand_models)
         pages = math.ceil(model_count / limit)
+        loop.run_until_complete(loop.shutdown_asyncgens())
         loop.close()
         # print(datetime.datetime.now() - start_time, 'завершение')
         return render(request, 'brand/index.html', {'brand_models': brand_models, 'brand_name': brand_name,

@@ -137,8 +137,11 @@ def index(request, detail_id):
         cartridge_options = post_result[0]
         brand_id = models.Models.objects.filter(id=model_id).values('brand_id')[0]['brand_id']
         brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
-
+        loop.run_until_complete(loop.shutdown_asyncgens())
+        loop.close()
     except:
+        loop.run_until_complete(loop.shutdown_asyncgens())
+        loop.close()
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
 
     return render(request, 'detail/index.html',

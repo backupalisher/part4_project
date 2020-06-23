@@ -212,6 +212,7 @@ def index(request, model_id):
     spr_detail_id = init_result[0][1]
     if detail_id:
         post_result = loop.run_until_complete(past_init(request, model_id, spr_detail_id, detail_id))
+        loop.run_until_complete(loop.shutdown_asyncgens())
         loop.close()
         model = post_result[0][0]
         model_main_image = post_result[0][1]
@@ -240,6 +241,8 @@ def index(request, model_id):
                        'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module,
                        'cartridges': cartridges})
     else:
+        loop.run_until_complete(loop.shutdown_asyncgens())
+        loop.close()
         raise Http404('Страница отсутствует, с id: ' + str(model_id))
 
 

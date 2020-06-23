@@ -2,6 +2,7 @@ import psycopg2
 
 from part4_project.env import *
 
+
 def _query(q):
     con = psycopg2.connect(
         database=PART4_NAME,
