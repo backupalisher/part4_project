@@ -1,3 +1,10 @@
+a {
+  color: #438ed7 !important;
+  &:hover {
+    color: #2e79f6 !important;;
+  }
+}
+
 @import "dark";
 @import "light";
 
@@ -5,12 +12,6 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "GT Walsheim Regular", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-a {
-  color: #438ed7 !important;
-  &:hover {
-    color: #2e79f6 !important;;
-  }
-}
 .hidden {
   visibility: hidden;
 }
