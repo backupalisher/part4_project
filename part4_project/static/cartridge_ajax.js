@@ -3,6 +3,7 @@ $loading = false
 $page_count = 0
 page = 0
 count = 40
+aTop = $('#load_more').position().top;
 if ($cartridges.length > 0) {
     $cartridges = $cartridges.replace(/&#x27;/g, "'").replace(/'/g, '"').replace(/\(/g, '[').replace(/\)/g, ']').replace(/None/g, '""')
     $cartridges = JSON.parse($cartridges)
@@ -14,7 +15,6 @@ if ($cartridges.length > 0) {
 
 if ($('#cartridge_items').length) {
     $(function () {
-        let aTop = $('#load_more').position().top;
         if (page >= $page_count || $page_count === 1) {
             $('#load_more').toggleClass('hidden')
         } else {
@@ -76,12 +76,12 @@ function search_cartridges(s) {
         }
     }
     page = 0
+    aTop = $('#load_more').position().top;
     show_cartridges($cartridges_all, page, count)
 }
 
 $('#cartridge_search').keyup(function () {
     let sval = $(this).val()
-    console.log(sval)
     if(sval.length > 2) {
         $('#cartridge_items').html('')
         search_cartridges(sval)
