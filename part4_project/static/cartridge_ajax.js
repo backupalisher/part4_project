@@ -38,17 +38,6 @@ if ($('#cartridge_items').length) {
     });
 }
 
-function search_cartridges(s) {
-    $cartridges_all = []
-    for(let i=0; i < $cartridges.length; i++) {
-        if($cartridges[i][1].indexOf(s) > 0 || $cartridges[i][2].indexOf(s) > 0 || $cartridges[i][3].indexOf(s) > 0){
-            $cartridges_all.push($cartridges[i])
-        }
-    }
-    page = 0
-    show_cartridges($cartridges_all, page, count)
-}
-
 function show_cartridges(cartridges, page, count) {
     for(let i = page*count; i < (page+1)*count; i++) {
         if(cartridges[i]) {
@@ -79,8 +68,20 @@ function show_cartridges(cartridges, page, count) {
     $loading = false
 }
 
+function search_cartridges(s) {
+    $cartridges_all = []
+    for(let i=0; i < $cartridges.length; i++) {
+        if($cartridges[i][1].indexOf(s) > 0 || $cartridges[i][2].indexOf(s) > 0 || $cartridges[i][3].indexOf(s) > 0){
+            $cartridges_all.push($cartridges[i])
+        }
+    }
+    page = 0
+    show_cartridges($cartridges_all, page, count)
+}
+
 $('#cartridge_search').keyup(function () {
     let sval = $(this).val()
+    console.log(sval)
     if(sval.length > 2) {
         $('#cartridge_items').html('')
         search_cartridges(sval)

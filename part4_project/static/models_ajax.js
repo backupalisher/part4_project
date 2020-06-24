@@ -69,7 +69,6 @@ function filter_search(s) {
             $models_all.push(brand_models[i])
         }
     }
-    console.log($models_all)
     page = 0
     show_models($models_all, media_url,page, count)
 }
