@@ -3,14 +3,21 @@
 {% block title %}
     {{ title }} - {{ cartridge.1 }}
 {% endblock %}
-
+{% block description %}
+    <meta name="description"
+          content="Картридж для {{ brand }}, {{ cartridge.2 }}, Код производителя: {{ cartridge.1 }},  Наименование: {{ cartridge.3 }}">
+{% endblock %}
+{% block keyword %}
+    <meta name="keyword" content="
+            {% if cartridge.4 %}{% for model in cartridge.4 %}{% if model.0 and model.0 != 'None' %}{{ model.1 }}, {% endif %}{% endfor %}{% endif %}">
+{% endblock %}
 {% block content %}
     {% if cartridge %}
         <div class="cartridge">
             <h5>Код производителя: <span class="text-green">{{ cartridge.1 }}</span></h5>
             <p>
                 {% if cartridge.3 %}
-                   Наименование: <span class="text-yellow">{{ cartridge.3 }}</span>
+                    Наименование: <span class="text-yellow">{{ cartridge.3 }}</span>
                 {% elif cartridge.2 %}
                     Name: <span class="text-yellow">{{ cartridge.2 }}</span>
                 {% endif %}
@@ -30,24 +37,24 @@
                     {% endfor %}
                 {% endif %}
             </p>
-        {% if options and options|length > 0 %}
-            <h6 class="text-red">Опции:</h6>
-            <div class="table-responsive cartridges">
-                <table class="table">
-                    {% for option in options %}
-                        {% if forloop.counter|divisibleby:2 %}
-                            <td>{{ option.0 }}</td>
-                        {% else %}
-                            <tr>
-                            <td>{{ option.0 }}</td>
-                        {% endif %}
+            {% if options and options|length > 0 %}
+                <h6 class="text-red">Опции:</h6>
+                <div class="table-responsive cartridges">
+                    <table class="table">
+                        {% for option in options %}
+                            {% if forloop.counter|divisibleby:2 %}
+                                <td>{{ option.0 }}</td>
+                            {% else %}
+                                <tr>
+                                <td>{{ option.0 }}</td>
+                            {% endif %}
                         {% if forloop.counter|divisibleby:2 %}
                             </tr>
                         {% endif %}
-                    {% endfor %}
-                </table>
-            </div>
-        {% endif %}
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
         </div>
     {% endif %}
 {% endblock %}

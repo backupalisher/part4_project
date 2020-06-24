@@ -180,6 +180,19 @@ a {
   }
 }
 
+#cartridge_items {
+  height: 1000px;
+  margin: 0;
+  padding: 0 15px;
+}
+.cartridges {
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+
 .card-model-list {
   height: 1000px;
   margin: 0;

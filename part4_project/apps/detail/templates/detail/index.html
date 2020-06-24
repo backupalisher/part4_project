@@ -3,7 +3,12 @@
 {% block title %}
     {{ detail_name }}
 {% endblock %}
-
+{% block description %}
+    <meta name="description" content="деталь, {Плата форматтера}, парт код, {302NM94052}, модель, {Kyocera ECOSYS M3550idn}, модуль, {Электронные компоненты}">
+{% endblock %}
+{% block keyword %}
+    <meta name="keyword" content="{{ detail_name }}, {{ module.name_ru }}, {{ module.name }}, part, парт каталог, расходные материалы, ремкомплект, расходные материалы, запчасть, запчасти">
+{% endblock %}
 {% block content %}
     <div class="card card-model">
         <div class="row">
@@ -22,13 +27,11 @@
                 {% if model != '-' %}
                     <h4>Модель: <a href="/model/{{ model_id }}">{{ model }}</a></h4>
                 {% endif %}
-
-
-                    {% if module.name_ru %}
-                        <h4>Модуль: <a href="/model/{{ model_id }}?module={{ module.name_ru }}">{{ module.name_ru }}</a>
-                    {% elif module.name %}
-                        <h4>Модуль: <a href="/model/{{ model_id }}?module={{ module.name }}">{{ module.name }}</a></h4>
-                    {% endif %}
+                {% if module.name_ru %}
+                    <h4>Модуль: <a href="/model/{{ model_id }}?module={{ module.name_ru }}">{{ module.name_ru }}</a>
+                {% elif module.name %}
+                    <h4>Модуль: <a href="/model/{{ model_id }}?module={{ module.name }}">{{ module.name }}</a></h4>
+                {% endif %}
             </div>
         </div>
         <div class="row">

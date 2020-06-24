@@ -3,58 +3,30 @@
 {% block title %}
     {{ title }}
 {% endblock %}
-
+{% block description %}
+    <meta name="description" content="Каталог лазерных и струйных картриджей для {{ brand }}">
+{% endblock %}
+{% block keyword %}
+    <meta name="keyword" content="каталог лазерных и струйных картриджей {{ brand }}, картридж, картриджи, картридж для принтера">
+{% endblock %}
 {% block content %}
     <div class="table-responsive cartridges">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Код производителя</th>
-                    <th>Наименование</th>
-                    <th style="width: 30%;">Совместим с моделями</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for cartridge in cartridges %}
-                <tr>
-                    <td>
-                        <a href="/cartridge/{{ cartridge.0 }}" class="text-yellow">{{ cartridge.1 }}</a>
-                    </td>
-                    <td>
-                        <span class="text-green">{% if cartridge.2 %}{{ cartridge.2 }}{% elif cartridge.3 %}{{ cartridge.3 }}{% endif %}</span>
-                    </td>
-                    <td style="width: 30%;">
-                        <div class="accordion">
-                            <a class="btn-collapse text-grey" data-toggle="collapse"
-                                    data-target="#collapse{{ forloop.counter0 }}" aria-expanded="false"
-                                    aria-controls="collapse{{ forloop.counter0 }}">
-                              Показать модели
-                            </a>
-                            <div class="collapse" id="collapse{{ forloop.counter0 }}">
-                                <div class="">
-                                    {% if cartridge.4 %}
-                                        {% for item in cartridge.4 %}
-                                            {{ item }}<br>
-                                        {% endfor %}
-                                    {% endif %}
-                                    {% if cartridge.8 %}
-                                        {% for item in cartridge.8 %}
-                                            {{ item }}<br>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div class="row text-white">
+            <div class="col-3">Код производителя</div>
+            <div class="col-5">Наименование</div>
+            <div class="col-4">Совместим с моделями</div>
+        </div>
+        <div class="scrollbar-macosx mt-2">
+            <div id="cartridge_table">
+                <div id="cartridge_items"></div>
+                <div id="load_more"></div>
+            </div>
+{#          {% include 'cartridge/cartridge_items.html' %}#}
+
+        </div>
     </div>
 {% endblock %}
-<script>
-    $('.collapse').collapse()
-</script>
+
 {% block breadcrumbs %}
     <div class="container">
         <div class="row">
@@ -67,4 +39,24 @@
             </nav>
         </div>
     </div>
+{% endblock %}
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function jqueryLoaded() {
+            $cartridges = "{{ cartridges }}"
+            $media_url = "{{ MEDIA_URL }}"
+            $ajax_script = "{% static 'cartridge_ajax.js' %}"
+            $.getScript($ajax_script)
+        }
+        function checkJquery() {
+            if (window.jQuery) {
+                jqueryLoaded();
+            } else {
+                window.setTimeout(checkJquery, 100);
+            }
+        }
+        checkJquery();
+    </script>
+{#    <script src="{% static 'models_ajax.js' %}"></script>#}
 {% endblock %}

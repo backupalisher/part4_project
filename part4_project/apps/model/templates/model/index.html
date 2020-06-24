@@ -3,7 +3,12 @@
 {% block title %}
     {{ model }}
 {% endblock %}
-
+{% block description %}
+    <meta name="description" content="{Тип устройства}, {МФУ}, {Тип}, {лазерный/светодиодный}, {максимальный формат}, {А4}, {A4}, {цветность печати}, {черно-белая}">
+{% endblock %}
+{% block keyword %}
+    <meta name="keyword" content="{{ brand_name }}, {{ model }}, характеристики, коды ошибок, part, парт каталог, картридж, расходные материалы, ремкомплект, сервисный комплект, KIT">
+{% endblock %}
 {% block content %}
     <div class="card card-model">
         <div class="row">

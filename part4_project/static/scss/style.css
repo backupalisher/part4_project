@@ -491,6 +491,16 @@ a {
   .filter .filter_settings .btn-filter:hover {
     box-shadow: 0 0 5px 1px #e98839; }
 
+#cartridge_items {
+  height: 1000px;
+  margin: 0;
+  padding: 0 15px; }
+
+.cartridges .row {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 10px; }
+
 .card-model-list {
   height: 1000px;
   margin: 0;
