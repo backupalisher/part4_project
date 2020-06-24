@@ -1,18 +1,19 @@
-// document.addEventListener('DOMContentLoaded', function(){
 $('.collapse').collapse()
 $loading = false
 $page_count = 0
+page = 0
+count = 40
 if ($cartridges.length > 0) {
     $cartridges = $cartridges.replace(/&#x27;/g, "'").replace(/'/g, '"').replace(/\(/g, '[').replace(/\)/g, ']').replace(/None/g, '""')
     $cartridges = JSON.parse($cartridges)
-    $page_count = Math.round($cartridges.length / 40)
-    show_cartridges($cartridges, $media_url, 0, 40)
+    $page_count = Math.round($cartridges.length / count)
+    $cartridges_all = $cartridges
+    show_cartridges($cartridges_all, page, count)
 
 }
 
 if ($('#cartridge_items').length) {
     $(function () {
-        let page = 0
         let aTop = $('#load_more').position().top;
         if (page >= $page_count || $page_count === 1) {
             $('#load_more').toggleClass('hidden')
@@ -24,7 +25,7 @@ if ($('#cartridge_items').length) {
                 if (!$loading && page < $page_count) {
                     $loading = true
                     page++
-                    show_cartridges($cartridges, $media_url, page, 40)
+                    show_cartridges($cartridges_all, page, count)
                     aTop += 1080
                 }
                 if (page >= $page_count) {
@@ -37,9 +38,18 @@ if ($('#cartridge_items').length) {
     });
 }
 
-// })
+function search_cartridges(s) {
+    $cartridges_all = []
+    for(let i=0; i < $cartridges.length; i++) {
+        if($cartridges[i][1].indexOf(s) > 0 || $cartridges[i][2].indexOf(s) > 0 || $cartridges[i][3].indexOf(s) > 0){
+            $cartridges_all.push($cartridges[i])
+        }
+    }
+    page = 0
+    show_cartridges($cartridges_all, page, count)
+}
 
-function show_cartridges(cartridges, media_url, page, count) {
+function show_cartridges(cartridges, page, count) {
     for(let i = page*count; i < (page+1)*count; i++) {
         if(cartridges[i]) {
             $html = '<div class="row"><div class="col-3"><a href="/cartridge/'+cartridges[i][0]+'" class="text-yellow">'+cartridges[i][1]+'</a></div>'
@@ -69,5 +79,15 @@ function show_cartridges(cartridges, media_url, page, count) {
     $loading = false
 }
 
-
+$('#cartridge_search').keyup(function () {
+    let sval = $(this).val()
+    if(sval.length > 2) {
+        $('#cartridge_items').html('')
+        search_cartridges(sval)
+    } else {
+        $cartridges_all = $cartridges
+        $('#cartridge_items').html('')
+        show_cartridges($cartridges_all, page, count)
+    }
+})
 

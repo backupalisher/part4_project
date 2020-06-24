@@ -1,46 +1,47 @@
-// document.addEventListener('DOMContentLoaded', function(){
-    $loading = false
-    $page_count = 0
-    if (brand_models.length > 0){
-        brand_models = brand_models.replace(/&#x27;/g,"'")
-        brand_models = brand_models.replace(/'/g,'"')
-        brand_models = brand_models.replace(/\(/g,'[')
-        brand_models = brand_models.replace(/\)/g,']')
-        brand_models = brand_models.replace(/None/g,'""')
-        brand_models = JSON.parse(brand_models)
-        $page_count = Math.round(brand_models.length/24)
-        show_models(brand_models, media_url,0, 24)
+$loading = false
+$page_count = 0
+page = 0
+count = 24
+$models_all = []
+if (brand_models.length > 0){
+    brand_models = brand_models.replace(/&#x27;/g,"'")
+    brand_models = brand_models.replace(/'/g,'"')
+    brand_models = brand_models.replace(/\(/g,'[')
+    brand_models = brand_models.replace(/\)/g,']')
+    brand_models = brand_models.replace(/None/g,'""')
+    brand_models = JSON.parse(brand_models)
+    $page_count = Math.round(brand_models.length/count)
+    $models_all = brand_models
+    show_models($models_all, media_url,page, count)
 
-    }
+}
 
 
-    if($('.card-model-list').length) {
-        $(function(){
-          let page = 0
-          let aTop = $('#load_more').position().top;
-          if(page >= $page_count || $page_count === 1){
-            $('#load_more').toggleClass('hidden')
-          } else {
-            $('#load_more').toggleClass('hidden')
-          }
-          $('.card-model-list').parent().parent().scroll(function(){
-            if($(this).scrollTop()+1080>=aTop){
-                if(!$loading && page < $page_count) {
-                    $loading = true
-                    page++
-                    show_models(brand_models, media_url,page, 24)
-                    aTop += 1080
-                }
-                if(page >= $page_count){
-                    $('#load_more').toggleClass('hidden')
-                } else {
-                    $('#load_more').toggleClass('hidden')
-                }
+if($('.card-model-list').length) {
+    $(function(){
+      let aTop = $('#load_more').position().top;
+      if(page >= $page_count || $page_count === 1){
+        $('#load_more').toggleClass('hidden')
+      } else {
+        $('#load_more').toggleClass('hidden')
+      }
+      $('.card-model-list').parent().parent().scroll(function(){
+        if($(this).scrollTop()+1080>=aTop){
+            if(!$loading && page < $page_count) {
+                $loading = true
+                page++
+                show_models($models_all, media_url,page, count)
+                aTop += 1080
             }
-          });
-        });
-    }
-// })
+            if(page >= $page_count){
+                $('#load_more').toggleClass('hidden')
+            } else {
+                $('#load_more').toggleClass('hidden')
+            }
+        }
+      });
+    });
+}
 
 function show_models(models, media_url, page, count) {
     for(let i = page*count; i < (page+1)*count; i++) {
@@ -60,6 +61,46 @@ function show_models(models, media_url, page, count) {
     $loading = false
 }
 
+//Filter by model name
+function filter_search(s) {
+    $models_all = []
+    for(let i=0; i < brand_models.length; i++) {
+        if(brand_models[i][2].indexOf(s) > 0){
+            $models_all.push(brand_models[i])
+        }
+    }
+    console.log($models_all)
+    page = 0
+    show_models($models_all, media_url,page, count)
+}
 
+$('#cartridge_search').keyup(function () {
+    let sval = $(this).val()
+    if(sval.length > 2) {
+        $('.card-model-list .row').html('')
+        search_cartridges(sval)
+    } else {
+        $models_all = brand_models
+        $('.card-model-list .row').html('')
+        show_models($models_all, media_url,page, count)
+    }
+})
+
+$('#filter_search').keyup(function () {
+    let sval = $(this).val()
+    if(sval.length > 2) {
+        $('.card-model-list .row').html('')
+        filter_search(sval)
+    } else {
+        $models_all = brand_models
+        $('.card-model-list .row').html('')
+        show_models($models_all, media_url,page, count)
+    }
+})
+$('#filter_search_clear').click(function () {
+    $models_all = brand_models
+    $('.card-model-list .row').html('')
+    show_models($models_all, media_url,page, count)
+})
 
 

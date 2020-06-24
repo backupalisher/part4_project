@@ -203,33 +203,6 @@ $(document).ready(function () {
     }
 
 
-    //Filter by model name
-    function filter_search(e) {
-        elements = $('.card-model-item')
-        elements.each(function () {
-            //console.log($( this ).parent())
-            $(this).parent()[0].style.display = 'none'
-            e_str = ($(this)[0].innerHTML).toString()
-            if (e_str.toLowerCase().indexOf(e.toLowerCase()) >= 0) {
-                $(this).parent()[0].style.display = 'block'
-            }
-        })
-    }
-
-    $('#filter_search').keyup(function (e) {
-        val = $(this).val()
-        //if(e.which == 13) {
-        if (val.length > 1) {
-            filter_search(val)
-        } else {
-            filter_search('')
-        }
-    })
-    $('#filter_search_clear').click(function () {
-        $('#filter_search').val('')
-        filter_search('')
-    })
-
     //Toggle themes
     $('#toggle-theme').click(function () {
         console.log('change')
