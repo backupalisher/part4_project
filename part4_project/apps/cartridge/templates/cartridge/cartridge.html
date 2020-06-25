@@ -65,7 +65,9 @@
             <nav class="nav-breadcrumb w-100">
                 <ul>
                     <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
+                    {% if brand and brand_id %}
                     <li class="nav-breadcrumb-item"><a href="/cartridge/cartridges/{{ brand_id }}">{{ brand }}</a></li>
+                    {% endif %}
                     <li class="breadcrumb-item active">{{ title }}</li>
                 </ul>
             </nav>

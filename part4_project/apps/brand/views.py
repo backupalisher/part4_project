@@ -99,7 +99,7 @@ def get_filters():
 def get_all_models(brand_id, limit, offset):
     # print(datetime.datetime.now() - start_time, 'получение всех моделей')
     brand_models = _query(
-        f'SELECT * FROM model_for_filter mopt WHERE brand_id = {brand_id} LIMIT {limit} OFFSET {offset};')
+        f'SELECT * FROM model_for_filter mopt WHERE brand_id = {brand_id} ORDER BY main_image LIMIT {limit} OFFSET {offset};')
     # print(datetime.datetime.now() - start_time, 'получение всех моделей завершено')
     return brand_models
 
@@ -135,7 +135,7 @@ def get_filtered_model(brand_id, checkboxs, ranges, radios):
             else:
                 f_sql += ' AND '
                 f_sql += sql_gen_checks(value)
-    f_sql += f' ) AND brand_id = {brand_id};'
+    f_sql += f' ) AND brand_id = {brand_id} ORDER BY main_image;'
     brand_models = _query(f_sql)
     return brand_models
 
