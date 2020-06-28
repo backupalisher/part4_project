@@ -65,7 +65,7 @@ function show_models(models, media_url, page, count) {
 function filter_search(s) {
     $models_all = []
     for(let i=0; i < brand_models.length; i++) {
-        if(brand_models[i][2].toLowerCase().indexOf(s.toLowerCase()) > 0){
+        if(brand_models[i][2].toLowerCase().indexOf(s.toLowerCase()) > -1){
             $models_all.push(brand_models[i])
         }
     }
