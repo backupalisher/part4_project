@@ -71,7 +71,7 @@ function show_cartridges(cartridges, page, count) {
 function search_cartridges(s) {
     $cartridges_all = []
     for(let i=0; i < $cartridges.length; i++) {
-        if($cartridges[i][1].indexOf(s) > 0 || $cartridges[i][2].indexOf(s) > 0 || $cartridges[i][3].indexOf(s) > 0){
+        if($cartridges[i][1].toLowerCase().indexOf(s.toLowerCase()) > 0 || $cartridges[i][2].toLowerCase().indexOf(s.toLowerCase()) > 0 || $cartridges[i][3].toLowerCase().indexOf(s.toLowerCase()) > 0){
             $cartridges_all.push($cartridges[i])
         }
     }

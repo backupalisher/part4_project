@@ -65,25 +65,13 @@ function show_models(models, media_url, page, count) {
 function filter_search(s) {
     $models_all = []
     for(let i=0; i < brand_models.length; i++) {
-        if(brand_models[i][2].indexOf(s) > 0){
+        if(brand_models[i][2].toLowerCase().indexOf(s.toLowerCase()) > 0){
             $models_all.push(brand_models[i])
         }
     }
     page = 0
     show_models($models_all, media_url,page, count)
 }
-
-$('#cartridge_search').keyup(function () {
-    let sval = $(this).val()
-    if(sval.length > 2) {
-        $('.card-model-list .row').html('')
-        search_cartridges(sval)
-    } else {
-        $models_all = brand_models
-        $('.card-model-list .row').html('')
-        show_models($models_all, media_url,page, count)
-    }
-})
 
 $('#filter_search').keyup(function () {
     let sval = $(this).val()
