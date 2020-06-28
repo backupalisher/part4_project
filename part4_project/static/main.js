@@ -110,10 +110,10 @@ $(document).ready(function () {
                     case 'number':
                         let min = ''
                         let max = ''
-                        if(key.indexOf('min') > 0) {
+                        if (key.indexOf('min') > 0) {
                             min = key.replace('min', '')
                         }
-                        if(key.indexOf('max') > 0) {
+                        if (key.indexOf('max') > 0) {
                             max = key.replace('max', '')
                         }
                         if (Object.getOwnPropertyNames($ranges).length === 0) {
@@ -128,11 +128,11 @@ $(document).ready(function () {
                             let idx = ''
                             if (min !== '') {
                                 $.each($ranges, function (key, arr) {
-                                    if(key === min) {
+                                    if (key === min) {
                                         idx = key
                                     }
                                 })
-                                if(idx !== '') {
+                                if (idx !== '') {
                                     $ranges[idx][0] = parseInt(value, 10)
                                 } else {
                                     $.extend($ranges, {[min]: [parseInt(value, 10)]})
@@ -140,11 +140,11 @@ $(document).ready(function () {
                                 }
                             } else if (max !== '') {
                                 $.each($ranges, function (key, arr) {
-                                    if(key === max) {
+                                    if (key === max) {
                                         idx = key
                                     }
                                 })
-                                if(idx !== '') {
+                                if (idx !== '') {
                                     $ranges[idx][1] = parseInt(value, 10)
                                 } else {
                                     $.extend($ranges, {[max]: [0]})
