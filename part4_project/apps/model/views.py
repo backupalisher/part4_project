@@ -130,9 +130,22 @@ def get_ids(model_id):
     return detail_id, spr_detail_id
 
 
+@sync_to_async
+def get_from_spr_details(spr_detail_id):
+    dq = _query(f'SELECT name, name_ru FROM spr_details WHERE id = {spr_detail_id}')
+    try:
+        if dq[0][1]:
+            detail_name = dq[0][1]
+        else:
+            detail_name = dq[0][0]
+    except:
+        detail_name = None
+    return detail_name
+
+
 # Получение id парткодов, моделей, бренда, картинок
 @sync_to_async
-def get_any(model_id, spr_detail_id):
+def get_from_models(model_id):
     # print(datetime.datetime.now() - start_time, 'сбор остального')
     mq = _query(f'SELECT brand_id, name, main_image, image FROM models WHERE id = {model_id}')
     try:
@@ -151,20 +164,12 @@ def get_any(model_id, spr_detail_id):
         model_images = mq[0][3].split(';')
     except:
         model_images = None
-    dq = _query(f'SELECT name, name_ru FROM spr_details WHERE id = {spr_detail_id}')
-    try:
-        if dq[0][1]:
-            detail_name = dq[0][1]
-        else:
-            detail_name = dq[0][0]
-    except:
-        detail_name = None
     try:
         brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
     except:
         brand_name = None
     # print(datetime.datetime.now() - start_time, 'сбор остального завершен')
-    return model, model_main_image, model_images, detail_name, brand_id, brand_name
+    return model, model_main_image, model_images, brand_id, brand_name
 
 
 @sync_to_async
@@ -189,13 +194,22 @@ async def init(model_id):
 
 
 async def past_init(request, model_id, spr_detail_id, detail_id):
-    tasks = [
-        get_any(model_id, spr_detail_id),
-        qet_partcatalog(request, model_id),
-        get_errors(model_id),
-        get_options(detail_id),
-        get_cartridge(model_id)
-    ]
+    if detail_id:
+        tasks = [
+            get_from_models(model_id),
+            qet_partcatalog(request, model_id),
+            get_errors(model_id),
+            get_cartridge(model_id),
+            get_options(detail_id),
+            get_from_spr_details(spr_detail_id)
+        ]
+    else:
+        tasks = [
+            get_from_models(model_id),
+            qet_partcatalog(request, model_id),
+            get_errors(model_id),
+            get_cartridge(model_id)
+        ]
     results = await asyncio.gather(*tasks)
     return results
 
@@ -208,32 +222,37 @@ def index(request, model_id):
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     # print(datetime.datetime.now() - start_time, 'start')
     init_result = loop.run_until_complete(init(model_id))
+    print(init_result)
     detail_id = init_result[0][0]
     spr_detail_id = init_result[0][1]
     if detail_id:
         post_result = loop.run_until_complete(past_init(request, model_id, spr_detail_id, detail_id))
-        loop.run_until_complete(loop.shutdown_asyncgens())
-        loop.close()
-        model = post_result[0][0]
-        model_main_image = post_result[0][1]
-        model_images = post_result[0][2]
-        detail_name = post_result[0][3]
-        brand_id = post_result[0][4]
-        brand_name = post_result[0][5]
-        modules = post_result[1][0]
-        cur_module = post_result[1][1]
-        partcatalog = post_result[1][2]
-        verrors = post_result[2]
-        options = post_result[3][0]
-        captions = post_result[3][1]
-        subcaptions = post_result[3][2]
-        values = post_result[3][3]
-        cartridges = post_result[4]
-        if model_id:
-            pass
-        else:
-            raise Http404('Страница отсутствует, с id: ' + str(detail_id))
-        # print(datetime.datetime.now() - start_time, 'завершение')
+        options = post_result[4][0]
+        captions = post_result[4][1]
+        subcaptions = post_result[4][2]
+        values = post_result[4][3]
+        detail_name = post_result[5][0]
+    else:
+        post_result = loop.run_until_complete(past_init(request, model_id, None, None))
+        options = None
+        captions = None
+        subcaptions = None
+        values = None
+        detail_name = None
+    loop.run_until_complete(loop.shutdown_asyncgens())
+    loop.close()
+    model = post_result[0][0]
+    model_main_image = post_result[0][1]
+    model_images = post_result[0][2]
+    brand_id = post_result[0][3]
+    brand_name = post_result[0][4]
+    modules = post_result[1][0]
+    cur_module = post_result[1][1]
+    partcatalog = post_result[1][2]
+    verrors = post_result[2]
+    cartridges = post_result[3]
+    # print(datetime.datetime.now() - start_time, 'завершение')
+    if model_id:
         return render(request, 'model/index.html',
                       {'detail_id': detail_id, 'model': model, 'model_main_image': model_main_image, 'modules': modules,
                        'verrors': verrors, 'model_images': model_images, 'detail_name': detail_name, 'options': options,
@@ -241,8 +260,8 @@ def index(request, model_id):
                        'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module,
                        'cartridges': cartridges})
     else:
-        loop.run_until_complete(loop.shutdown_asyncgens())
-        loop.close()
-        raise Http404('Страница отсутствует, с id: ' + str(model_id))
+        raise Http404('Страница отсутствует, с id: ' + str(detail_id))
+
+
 
 

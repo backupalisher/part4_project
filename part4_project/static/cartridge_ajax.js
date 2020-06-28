@@ -50,7 +50,7 @@ function show_cartridges(cartridges, page, count) {
             $html +='<div class="col-4"><div class="accordion">\n' +
                 '<a class="btn-collapse text-grey" data-toggle="collapse" data-target="#collapse'+i+'" ' +
                 'aria-expanded="false" aria-controls="collapse'+i+'">Показать модели</a>\n' +
-                '<div class="collapse" id="collapse'+i+'"><div class="">\n'
+                '<div class="collapse" id="collapse'+i+'"><div class="text-light">\n'
             if(cartridges[i][4]) {
                 for(let ci = 0; ci < cartridges[i][4].length; ci++){
                     $html += cartridges[i][4][ci]+'<br>'
