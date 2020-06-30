@@ -9,13 +9,13 @@ from db_model.db_utils import _query
 
 
 def index(request):
-    title = 'Каритриджи'
+    title = 'Расходные материалы'
     brands = models.Brands.objects.all()
     return render(request, 'cartridge/index.html', {'title': title, 'brands': brands})
 
 
 def cartridges(request, brand_id):
-    title = 'Каритриджи'
+    title = 'Расходные материалы'
     cartridges = _query(f"SELECT * FROM all_cartridge WHERE brand_id = {brand_id} ORDER BY id")
     brand = ''
     for idx in range(len(cartridges)):
