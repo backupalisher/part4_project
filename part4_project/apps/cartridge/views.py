@@ -34,7 +34,7 @@ def cartridges(request, brand_id):
 
 
 def cartridge(request, cartridge_id):
-    title = 'Каритридж'
+    title = 'Расходные материалы'
     options = _query(f"SELECT * FROM all_options_for_cartridges WHERE id = {cartridge_id}")
     cartridge = _query(f"SELECT * FROM all_cartridge WHERE id = {cartridge_id}")
     if cartridge:
