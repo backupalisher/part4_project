@@ -104,7 +104,7 @@ Colors
     background-color: #262629;
     color: #e9e9eb !important; }
     .dark-theme .navbar .navbar-brand {
-      background-image: url("https://upload.part4.info/images/dark_logo_part4.png"); }
+      background-image: url("https://storage.yandexcloud.net/part4images/images/dark_logo_part4.png"); }
     .dark-theme .navbar a {
       color: #e9e9eb !important; }
       .dark-theme .navbar a.active {
@@ -302,7 +302,7 @@ Colors
   background-color: #e9e9eb;
   color: #323235; }
   .light-theme .navbar .navbar-brand {
-    background-image: url("/static/image/logo_part4.png"); }
+    background-image: url("https://storage.yandexcloud.net/part4images/images/logo_part4.png"); }
   .light-theme .navbar a {
     color: #898989; }
     .light-theme .navbar a:active {
@@ -380,6 +380,9 @@ body {
 
 .hidden {
   visibility: hidden; }
+
+.hide {
+  display: none !important; }
 
 #toggle-theme {
   position: absolute;
@@ -510,7 +513,8 @@ body {
   padding: 0.4em 0.4em; }
   .card .card_image {
     height: 200px;
-    width: 200px; }
+    width: 200px;
+    margin: 0 auto; }
   .card.card-model-item {
     padding: 0.1em 0.5em; }
     .card.card-model-item .brand_model_title {
@@ -679,11 +683,50 @@ h1 {
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
 
+#to_up {
+  display: none;
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  cursor: pointer; }
+  #to_up.visible {
+    display: block; }
+
+.tab_controls {
+  display: none; }
+  .tab_controls a {
+    color: #f2ba4b !important;
+    border: 1px solid;
+    margin: 10px 0; }
+    .tab_controls a.active {
+      font-weight: 600;
+      background-color: #f2ba4b !important;
+      color: #fdfdfd !important; }
+
 @media screen and (max-width: 600px) {
+  .cartridges {
+    margin: 0 -15px;
+    width: calc(100% + 30px);
+    word-break: break-word; }
+
+  h3 {
+    padding: 15px 0; }
+
+  .tab_controls {
+    display: block; }
+
+  #detailTabs {
+    display: none; }
+
   #filter_model {
     padding-bottom: 20px; }
 
   .filter .filter_settings {
-    max-height: 400px; } }
+    max-height: 400px; }
+
+  .card.card-model h3 {
+    text-align: center; }
+  .card.card-model .model-title {
+    text-align: center; } }
 
 /*# sourceMappingURL=style.css.map */

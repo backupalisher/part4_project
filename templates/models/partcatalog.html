@@ -1,0 +1,67 @@
+{% load static mfilters %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-12">
+            <div class="scrollbar-macosx">
+                <div class="tab-inner-scroll">
+                    {% for module in modules %}
+                        <div class="mb-3 module-title"
+                             {% if cur_module == module %}style="font-weight: 900"{% endif %}
+                             onclick=" $('.module-title').removeClass('selected-module'),
+                                     $(this).addClass('selected-module')
+                                     $( '.model-opts' ).css('display', 'none'),
+                                     $( '#opts{{ forloop.counter }}' ).toggle();">
+                            {{ module }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="scrollbar-macosx">
+                <div class="tab-inner-scroll">
+                    {% for module in modules %}
+                        <div class="model-opts pl-3"
+                             id="opts{{ forloop.counter }}"
+                                {% if cur_module == module %}
+                             style="display: block;"
+                                {% else %}
+                             style="display: none;"
+                                {% endif %}
+                        >
+                            {% for partc in partcatalog %}
+                                {% if module == partc.3 or module == partc.4 %}
+                                    <div style="margin-bottom: 15px; width: 100%">
+                                        <div style="float:left; width: 10%;">
+                                            {% if partc.9 %}
+                                                <img src="
+                                                        {{ MEDIA_URL }}{{ partc.9 }}"
+                                                     style="max-width: 100%; height: auto;"
+                                                     alt="{{ partc.9 }}">
+                                            {% else %}
+                                                <img src="{{ MEDIA_URL }}no_image_part.png"
+                                                     style="max-width: 100%; height: auto;"
+                                                     alt="{{ partc.9 }}">
+                                            {% endif %}
+                                        </div>
+                                        <div style="float:right; width: 89%; padding: 0 10px">
+                                            <a href="/detail/{{ partc.15 }}">
+                                                Парткод: {{ partc.8 }}
+                                            </a><br>
+                                            <span class="part-name">Деталь: </span>&nbsp;
+                                            {% if partc.11 %}
+                                                {{ partc.11 }}
+                                            {% else %}
+                                                {{ partc.10 }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

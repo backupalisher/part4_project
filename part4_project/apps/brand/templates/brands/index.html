@@ -5,16 +5,6 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-{#        <div class="col-3">#}
-{#            <form method="post" action="">#}
-{#                {% csrf_token %}#}
-{#                <input type="text" name="brand_name">#}
-{#                <button type="submit" class="btn badge-info">Отправить</button>#}
-{#            </form>#}
-{#        </div>#}
-{#        <div class="col-9"></div>#}
-    </div>
     <div id="brands">
         {% include 'brands/ajax.html' %}
     </div>

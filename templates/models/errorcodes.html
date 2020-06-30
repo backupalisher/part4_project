@@ -1,0 +1,50 @@
+{% load static mfilters %}
+<div class="container">
+    <div class="row">
+        <div class="scrollbar-macosx">
+            {% if verrors is not None %}
+                <div id="accordion">
+                    <div class="tab-inner-scroll">
+                        {% for error in verrors %}
+                            <div class="card error-list">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link"
+                                                data-toggle="collapse"
+                                                data-target="#collapse{{ forloop.counter }}"
+                                                aria-expanded="false"
+                                                aria-controls="collapseOne">
+                                            <span class="errorcode"> {{ error.2 }} </span>
+                                        </button>
+                                    </h5>
+                                </div>
+
+                                <div id="collapse{{ forloop.counter }}" class="collapse"
+                                     aria-labelledby="headingOne"
+                                     data-parent="#accordion">
+                                    <div class="card-body">
+                                        {% if error.3 %}
+                                            <p><span
+                                                    class="display">Display:</span> {{ error.3 }}
+                                            </p> {% endif %}
+                                        {% if error.4 %}<p><span
+                                                class="description">Description:</span> {{ error.4 }}
+                                        </p> {% endif %}
+                                        {% if error.5 %}
+                                            <p><span
+                                                    class="causes">Causes:</span> {{ error.5 }}
+                                            </p> {% endif %}
+                                        {% if error.6 %}
+                                            <p><span
+                                                    class="remedy">Remedy:</span> {{ error.6 }}
+                                            </p> {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

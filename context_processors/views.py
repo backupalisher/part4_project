@@ -1,25 +1,23 @@
-from django.shortcuts import render
-
-
-# Create your views here.
 def main_menu(request):
     path = str(request.path)
-    curItem = 'Главная'
-    menuList = [
+    menu_list = [
         ['/', 'Главная']
         , ['/brand/brands/', 'Бренды и модели']
-        , ['/cartridge/', 'Картриджи']
+        , ['/cartridge/', 'Расходные материалы']
         # , ['/about/', 'О нас']
     ]
 
-    menuAuth = [
+    menu_auth = [
         ['/', 'Вход'],
         ['/', 'Выход']
     ]
     try:
-        for menu in menuList:
-            if menu[0] == path:
-                curItem = menu[1]
+        if 'brand' in path or 'model' in path:
+            cur_item = 'Бренды и модели'
+        elif 'cartridge' in path:
+            cur_item = 'Расходные материалы'
+        else:
+            cur_item = 'Главная'
     except KeyError as e:
-        curItem = 'Главная'
-    return {'menu_list': menuList, 'menu_item_active': curItem, 'menu_auth': menuAuth}
+        cur_item = 'Главная'
+    return {'menu_list': menu_list, 'menu_item_active': cur_item, 'menu_auth': menu_auth}

@@ -17,7 +17,15 @@ $(document).ready(function () {
 
     var inProgress = false;
     var startFrom = 10;
+    $('#to_up').click(function () {
+        $('html, body').animate( { scrollTop: 0 }, 200 );
+    })
     $(window).scroll(function () {
+        if ($(window).scrollTop() >= 200 && !$('#to_up').hasClass('visible')) {
+            $('#to_up').addClass('visible')
+        } else if ($(window).scrollTop() < 200 && $('#to_up').hasClass('visible')) {
+            $('#to_up').removeClass('visible')
+        }
         if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200 && !inProgress) {
             inProgress = true;
             setTimeout(() => {
@@ -32,25 +40,7 @@ $(document).ready(function () {
         jQuery('.scrollbar-macosx').scrollbar();
     });
 
-    //Scrolling in parts tab
-    // waitForEl('#parts', function () {
-    //     partsHeight = $('#parts').height()
-    //     if (partsHeight > 360) {
-    //         $('.model-opts').css('max-height', partsHeight)
-    //    } else {
-    //         $('.model-opts').css('max-height', 360)
-    //    }
-    // })
-    // $('#parts-tab').click(function () {
-    //     setTimeout(()=>{
-    //         partsHeight = $('#parts').height()
-    //         if (partsHeight > 360) {
-    //             $('.model-opts').css('max-height', partsHeight)
-    //        } else {
-    //             $('.model-opts').css('max-height', 360)
-    //        }
-    //     }, 10)
-    // });
+
 
     // Ajax filter
     if ($('#filter_model').length) {
@@ -264,3 +254,21 @@ function getUrlVars() {
     }
     return vars;
 }
+
+// Model navs
+$('#detailTabs a').click(function () {
+    $id = $(this).attr('aria-controls')
+    $('.tab-pane').removeClass('hide')
+    $('.tab_controls a').removeClass('active')
+    $('#controls_'+$id+'-tab').addClass('active')
+})
+$('.tab_controls a').click(function () {
+    $id = $(this).attr('data-toggle')
+    $href = $(this).attr('href')
+    if ($(this).hasClass('active')) {
+        $($href).toggleClass('hide')
+        $(this).removeClass('active')
+    } else {
+        $('#'+$id).click()
+    }
+})

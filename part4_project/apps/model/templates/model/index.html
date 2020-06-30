@@ -14,7 +14,7 @@
 {% block content %}
     <div class="card card-model">
         <div class="row">
-            <div class="col-auto">
+            <div class="col-md-auto col-12">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         {% if model_main_image %}
@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-md col-12">
                 <h3><span class="model-title"> {{ model }}</span></h3>
                 {% for caption in captions %}
                     {% if 'Status' in caption %}
@@ -91,9 +91,10 @@
             <div class="col-sm-12">
                 <div class="py-2">
                     <ul class="nav nav-tabs" id="detailTabs" role="tablist">
-                        {% if captions|length > 0 %}
+                        {% if subcaptions|length > 0 %}
                             <li class="nav-item">
-                                <a class="nav-link {% if cur_module is None %} active {% endif %}" id="options-tab"
+                                <a class="nav-link {% if cur_module is None %} active {% endif %}"
+                                   id="options-tab"
                                    data-toggle="tab" href="#options" role="tab"
                                    aria-controls="options"
                                    aria-selected="true">Характеристики</a>
@@ -101,7 +102,7 @@
                         {% endif %}
                         {% if modules is not None and modules|length > 0 %}
                             <li class="nav-item">
-                                <a class="nav-link {% if cur_module is not None or captions|length == 0 %} active {% endif %}"
+                                <a class="nav-link {% if cur_module is not None or subcaptions|length == 0 %} active {% endif %}"
                                    id="parts-tab"
                                    data-toggle="tab" href="#parts" role="tab"
                                    aria-controls="parts" aria-selected="false">Парткаталог</a>
@@ -117,232 +118,64 @@
                         {% endif %}
                         {% if cartridges is not None and cartridges|length > 0 %}
                             <li class="nav-item">
-                                <a class="nav-link {% if cartridges is not None and captions|length == 0 and modules|length == 0 and verrors|length == 0 %} active {% endif %}" id="cartridges-tab"
+                                <a class="nav-link {% if cartridges is not None and captions|length == 0 and modules|length == 0 and verrors|length == 0 %} active {% endif %}"
+                                   id="cartridges-tab"
                                    data-toggle="tab" href="#cartridges" role="tab"
-                                   aria-controls="errors" aria-selected="false">Расходные материалы</a>
+                                   aria-controls="cartridges" aria-selected="false">Расходные материалы</a>
                             </li>
                         {% endif %}
-                        <!--li class="nav-item">
-                            <a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab"
-                               aria-controls="description" aria-selected="false">Описание</a>
-                        </li-->
                     </ul>
                     <div class="tab-content" id="modelsTabContent">
-                        {% if captions|length > 0 %}
+                        {% if subcaptions|length > 0 %}
+                            <div class="tab_controls">
+                                <a class="nav-link {% if cur_module is None %} active {% endif %}"
+                                   id="controls_options-tab"
+                                   data-toggle="options-tab" href="#options" role="tab"
+                                   aria-controls="options"
+                                   aria-selected="true">Характеристики</a>
+                            </div>
                             <div class="py-3 tab-pane {% if cur_module is None %} active {% endif %}" id="options"
                                  role="tabpanel" aria-labelledby="options-tab">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        {% for caption in captions %}
-                                            {% if 'Status' not in caption %}
-                                                <thead class="thead-light">
-                                                <tr>
-                                                    {% for subcaption in subcaptions %}
-                                                        {% if subcaption.2 == caption and subcaption.3|length > 0 %}
-                                                            <th colspan="2"><h5>{{ caption }}</h5></th>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </tr>
-                                                </thead>
-                                                {% for subcaption in subcaptions %}
-                                                    {% if subcaption.2 == caption %}
-                                                        {% for subcap in subcaption.3 %}
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                    {% if 'SubCaption' not in subcap %}
-                                                                        <h5 class="capt">{{ subcap|get_caption }}</h5>
-                                                                        <span class="val">{{ subcap|get_val }}</span>
-                                                                    {% endif %}
-                                                                </td>
-                                                            </tr>
-                                                        {% endfor %}
-                                                        {% for value in values %}
-                                                            <tr>
-                                                                {% if value.0 == subcaption.1 %}
-                                                                    <td class="pl-3">
-                                                                        <h5>{{ value.2 }}</h5>
-                                                                        <div>
-                                                                            {% for val in value.3 %}
-                                                                                <span class="pl-5 capt">{{ val|get_caption }}</span>
-                                                                                <span class="val">{{ val|get_val }}</span>
-                                                                                <br>
-                                                                            {% endfor %}
-                                                                        </div>
-                                                                    </td>
-                                                                {% endif %}
-                                                            </tr>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    </table>
-                                </div>
+                                {% include 'models/options.html' %}
                             </div>
                         {% endif %}
                         {% if modules|length > 0 %}
-                            <div class="py-3 tab-pane {% if cur_module is not None or captions|length == 0 %} active {% endif %}"
+                            <div class="tab_controls">
+                                <a class="nav-link"
+                                   id="controls_parts-tab"
+                                   data-toggle="parts-tab" href="#parts" role="tab"
+                                   aria-controls="parts" aria-selected="false">Парткаталог</a>
+                            </div>
+                            <div class="py-3 tab-pane {% if cur_module is not None or subcaptions|length == 0 %} active {% endif %}"
                                  id="parts" role="tabpanel" aria-labelledby="parts-tab">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <div class="scrollbar-macosx">
-                                                <div class="tab-inner-scroll">
-                                                    {% for module in modules %}
-                                                        <div class="mb-3 module-title"
-                                                             {% if cur_module == module %}style="font-weight: 900"{% endif %}
-                                                             onclick=" $('.module-title').removeClass('selected-module'),
-                                                                     $(this).addClass('selected-module')
-                                                                     $( '.model-opts' ).css('display', 'none'),
-                                                                     $( '#opts{{ forloop.counter }}' ).toggle();">
-                                                            {{ module }}
-                                                        </div>
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="scrollbar-macosx">
-                                                <div class="tab-inner-scroll">
-                                                    {% for module in modules %}
-                                                        <div class="model-opts pl-3"
-                                                             id="opts{{ forloop.counter }}"
-                                                                {% if cur_module == module %}
-                                                             style="display: block;"
-                                                                {% else %}
-                                                             style="display: none;"
-                                                                {% endif %}
-                                                        >
-                                                            {% for partc in partcatalog %}
-                                                                {% if module == partc.3 or module == partc.4 %}
-                                                                    <div style="margin-bottom: 15px; width: 100%">
-                                                                        <div style="float:left; width: 10%;">
-                                                                            {% if partc.9 %}
-                                                                                <img src="
-                                                                                        {{ MEDIA_URL }}{{ partc.9 }}"
-                                                                                     style="max-width: 100%; height: auto;"
-                                                                                     alt="{{ partc.9 }}">
-                                                                            {% else %}
-                                                                                <img src="{{ MEDIA_URL }}no_image_part.png"
-                                                                                     style="max-width: 100%; height: auto;"
-                                                                                     alt="{{ partc.9 }}">
-                                                                            {% endif %}
-                                                                        </div>
-                                                                        <div style="float:right; width: 89%; padding: 0 10px">
-                                                                            <a href="/detail/{{ partc.15 }}">
-                                                                                Парткод: {{ partc.8 }}
-                                                                            </a><br>
-                                                                            <span class="part-name">Деталь: </span>&nbsp;
-                                                                            {% if partc.11 %}
-                                                                                {{ partc.11 }}
-                                                                            {% else %}
-                                                                                {{ partc.10 }}
-                                                                            {% endif %}
-                                                                        </div>
-                                                                    </div>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </div>
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% include 'models/partcatalog.html' %}
                             </div>
                         {% endif %}
                         {% if verrors|length > 0 %}
-                            <div class="py-3 tab-pane  {% if verrors is not None and captions|length == 0 and modules|length == 0 %} active {% endif %}"
-                                 id="errors" role="tabpanel"
-                                 aria-labelledby="errors-tab">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="scrollbar-macosx">
-                                            {% if verrors is not None %}
-                                                <div id="accordion">
-                                                    <div class="tab-inner-scroll">
-                                                        {% for error in verrors %}
-                                                            <div class="card error-list">
-                                                                <div class="card-header" id="headingOne">
-                                                                    <h5 class="mb-0">
-                                                                        <button class="btn btn-link"
-                                                                                data-toggle="collapse"
-                                                                                data-target="#collapse{{ forloop.counter }}"
-                                                                                aria-expanded="false"
-                                                                                aria-controls="collapseOne">
-                                                                            <span class="errorcode"> {{ error.2 }} </span>
-                                                                        </button>
-                                                                    </h5>
-                                                                </div>
-
-                                                                <div id="collapse{{ forloop.counter }}" class="collapse"
-                                                                     aria-labelledby="headingOne"
-                                                                     data-parent="#accordion">
-                                                                    <div class="card-body">
-                                                                        {% if error.3 %}
-                                                                            <p><span
-                                                                                    class="display">Display:</span> {{ error.3 }}
-                                                                            </p> {% endif %}
-                                                                        {% if error.4 %}<p><span
-                                                                                class="description">Description:</span> {{ error.4 }}
-                                                                        </p> {% endif %}
-                                                                        {% if error.5 %}
-                                                                            <p><span
-                                                                                    class="causes">Causes:</span> {{ error.5 }}
-                                                                            </p> {% endif %}
-                                                                        {% if error.6 %}
-                                                                            <p><span
-                                                                                    class="remedy">Remedy:</span> {{ error.6 }}
-                                                                            </p> {% endif %}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        {% endfor %}
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="tab_controls">
+                                <a class="nav-link"
+                                   id="controls_errors-tab"
+                                   data-toggle="errors-tab" href="#errors" role="tab"
+                                   aria-controls="errors" aria-selected="false">Коды ошибок</a>
+                            </div>
+                            <div class="py-3 tab-pane {% if verrors is not None and captions|length == 0 and modules|length == 0 %} active {% endif %}"
+                                 id="errors" role="tabpanel" aria-labelledby="errors-tab">
+                                {% include 'models/errorcodes.html' %}
                             </div>
                         {% endif %}
                         {% if cartridges|length > 0 %}
-                            <div class="py-3 tab-pane fade {% if cartridges is not None and captions|length == 0 and modules|length == 0 and verrors|length == 0 %} active {% endif %}" id="cartridges" role="tabpanel"
+                            <div class="tab_controls">
+                                <a class="nav-link"
+                                   id="controls_cartridges-tab"
+                                   data-toggle="cartridges-tab" href="#cartridges" role="tab"
+                                   aria-controls="cartridges" aria-selected="false">Расходные материалы</a>
+                            </div>
+                            <div class="py-3 tab-pane fade {% if cartridges is not None and captions|length == 0 and modules|length == 0 and verrors|length == 0 %} active {% endif %}"
+                                 id="cartridges" role="tabpanel"
                                  aria-labelledby="cartridges-tab">
-                                <div class="table-responsive cartridges">
-                                    <table class="table">
-                                        {% for cartridge in cartridges %}
-                                            <tr>
-                                                <td class="pl-3">
-                                                    <a href="/cartridge/{{ cartridge.0 }}">{{ cartridge.1 }}</a>
-                                                </td>
-                                                <td class="pl-3">
-                                                <span class="text-green">{% if cartridge.2 %}
-                                                    {{ cartridge.2 }}{% elif cartridge.3 %}
-                                                    {{ cartridge.3 }}{% endif %}</span>
-                                                </td>
-                                                {#                                            <td>#}
-                                                {#                                                {% if cartridge.4 %}#}
-                                                {#                                                    {% for item in cartridge.4 %}#}
-                                                {#                                                        {{ item }}<br>#}
-                                                {#                                                    {% endfor %}#}
-                                                {#                                                {% endif %}#}
-                                                {#                                                {% if cartridge.8 %}#}
-                                                {#                                                    {% for item in cartridge.8 %}#}
-                                                {#                                                        {{ item }}<br>#}
-                                                {#                                                    {% endfor %}#}
-                                                {#                                                {% endif %}#}
-                                                {#                                            </td>#}
-                                            </tr>
-                                        {% endfor %}
-                                    </table>
-                                </div>
+                                {% include 'models/cartridges.html' %}
                             </div>
                         {% endif %}
-                        <div class="py-3 tab-pane fade" id="description" role="tabpanel"
-                             aria-labelledby="description-tab">
-                            <h3>Описание</h3>
-                        </div>
                     </div>
                 </div>
             </div>
