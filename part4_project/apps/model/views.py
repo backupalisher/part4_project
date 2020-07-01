@@ -57,10 +57,6 @@ def get_options(detail_id):
 
     # print(datetime.datetime.now() - start_time, 'сортировка опций')
     for opts in option_vals:
-        # if opts[0] is None and opts[1] is None:
-        #     for i in range(len(opts[3])):
-        #         opts[3][i] = opts[3][i].replace('Caption: ', '')
-        #     captions.append(opts)
         if opts[0] is None and opts[1] is not None:
             for opt in opts[3]:
                 if 'SubCaption' in opt:

@@ -48,6 +48,7 @@ $(document).ready(function () {
         $ranges = {}
         $radios = {}
         $("#form_filter input").change(function () {
+            console.log('change')
             if ($(this).attr('type') === 'checkbox') {
                 $key = $(this).attr('name')
                 $value = $(this).attr('id')
@@ -163,6 +164,15 @@ $(document).ready(function () {
                         break
                 }
             }
+            console.log($checkboxs)
+            console.log($ranges)
+            console.log($radios)
+
+            if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0) {
+                $('#filter_model button').prop("disabled", false);
+            } else {
+                $('#filter_model button').prop("disabled", true);
+            }
         })
         $("#form_filter button[type='reset']").click(function () {
             $checkboxs = {}
@@ -171,24 +181,26 @@ $(document).ready(function () {
             $("form").trigger("reset");
         })
         $("#form_filter").submit(function (event) {
-            event.preventDefault();
-            let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            $.ajax({
-                type: 'POST',
-                url: '',
-                headers: {'X-CSRFToken': csrftoken},
-                data: {
-                    "checkboxs": JSON.stringify($checkboxs),
-                    "ranges": JSON.stringify($ranges),
-                    "radios": JSON.stringify($radios)
-                },
-                contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                success: function (data) {
-                    $("#filter_model_result").html('').append(
-                        data
-                    );
-                }
-            });
+            if ($checkboxs.length > 0 || $ranges.length > 0 || $radios.length > 0) {
+                event.preventDefault();
+                let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                $.ajax({
+                    type: 'POST',
+                    url: '',
+                    headers: {'X-CSRFToken': csrftoken},
+                    data: {
+                        "checkboxs": JSON.stringify($checkboxs),
+                        "ranges": JSON.stringify($ranges),
+                        "radios": JSON.stringify($radios)
+                    },
+                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                    success: function (data) {
+                        $("#filter_model_result").html('').append(
+                            data
+                        );
+                    }
+                });
+            }
         })
     }
 
@@ -271,4 +283,9 @@ $('.tab_controls a').click(function () {
     } else {
         $('#'+$id).click()
     }
+})
+
+// Filter show/hide
+$('#filter-title').click(function () {
+    $('#filter_model').toggleClass('show')
 })

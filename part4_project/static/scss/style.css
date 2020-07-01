@@ -703,6 +703,53 @@ h1 {
       background-color: #f2ba4b !important;
       color: #fdfdfd !important; }
 
+#filter_model button:disabled, #filter_model button[disabled] {
+  cursor: auto; }
+  #filter_model button:disabled:hover, #filter_model button[disabled]:hover {
+    box-shadow: none; }
+
+@media screen and (max-width: 1000px) {
+  .main-content {
+    width: 100% !important;
+    max-width: 100% !important; } }
+@media screen and (max-width: 767px) {
+  #filter_model {
+    margin-bottom: 20px;
+    height: 2em;
+    transition: height 0.15s ease-out;
+    overflow: hidden;
+    position: relative; }
+    #filter_model:after {
+      content: '';
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #f2ba4b;
+      border-bottom: none;
+      z-index: -1; }
+    #filter_model.show {
+      transition: height 0.25s ease-in;
+      height: 800px; }
+      #filter_model.show:after {
+        content: '';
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid #f2ba4b;
+        border-top: none; }
+    #filter_model .filter .filter_settings {
+      max-height: 700px; }
+    #filter_model #filter-title {
+      cursor: pointer;
+      color: #f2ba4b; } }
 @media screen and (max-width: 600px) {
   .cartridges {
     margin: 0 -15px;

@@ -1,5 +1,5 @@
 <div class="filter">
-    <h4 class="pt-1 title">Фильтр:</h4>
+    <h4 class="pt-1 title" id="filter-title">Фильтр:</h4>
     <!--span>моделей {{ model_count.0.0 }}</span-->
     <form method="post" action="" id="form_filter">
         {% csrf_token %}
@@ -57,7 +57,7 @@
                 {% endfor %}
             {% endfor %}
         </div>
-        <button type="reset" class="btn bg-red text-light float-left">Сбросить</button>
-        <button type="submit" class="btn btn-filter bg-blue text-light float-right">Применить</button>
+        <button type="reset" class="btn bg-red text-light float-left" disabled>Сбросить</button>
+        <button type="submit" class="btn btn-filter bg-blue text-light float-right" disabled>Применить</button>
     </form>
 </div>
