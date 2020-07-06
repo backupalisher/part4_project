@@ -169,9 +169,9 @@ $(document).ready(function () {
             console.log($radios)
 
             if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0) {
-                $('#filter_model button').prop("disabled", false);
+                $('#filter_model a.btn').removeClass("disabled");
             } else {
-                $('#filter_model button').prop("disabled", true);
+                $('#filter_model a.btn').addClass("disabled");
             }
         })
         $("#form_filter #reset").click(function () {
