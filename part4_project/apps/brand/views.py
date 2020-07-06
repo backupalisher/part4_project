@@ -136,6 +136,7 @@ def get_filtered_model(brand_id, checkboxs, ranges, radios):
                 f_sql += ' AND '
                 f_sql += sql_gen_checks(value)
     f_sql += f' ) AND brand_id = {brand_id} ORDER BY main_image;'
+    print(f_sql)
     brand_models = _query(f_sql)
     return brand_models
 
@@ -181,6 +182,7 @@ def index(request, brand_id):
             if dict(request.POST.lists())['radios'][0]:
                 radios = dict(request.POST.lists())['radios'][0]
             if len(checkboxs) != 0 or len(ranges) != 0 or len(radios) != 0:
+                print('filter')
                 fload = loop.run_until_complete(fpreload(brand_id, checkboxs, ranges, radios))
                 # Base sql part of query for get model by filter
                 brand_models = fload[0]

@@ -119,6 +119,7 @@ class AuthUserUserPermissions(models.Model):
 
 
 class BrandModels(models.Model):
+
     class Meta:
         managed = False
         db_table = 'brand_models'
@@ -127,9 +128,6 @@ class BrandModels(models.Model):
 class Brands(models.Model):
     name = models.CharField(max_length=255)
     logotype = models.CharField(max_length=255, blank=True, null=True)
-
-    def __str__(self):
-        return self.name
 
     class Meta:
         managed = False
@@ -158,6 +156,7 @@ class CartridgeAnalogModel(models.Model):
 
 
 class Categories(models.Model):
+    id = models.AutoField()
     title = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
@@ -268,9 +267,9 @@ class ErrorCode(models.Model):
     code = models.CharField(max_length=255, blank=True, null=True)
     display = models.TextField(blank=True, null=True)
     image = models.ForeignKey('SprErrorCodeImage', models.DO_NOTHING, blank=True, null=True)
-    description = models.ForeignKey('SprErrorCode', models.DO_NOTHING, blank=True, null=True, related_name='+')
-    causes = models.ForeignKey('SprErrorCode', models.DO_NOTHING, blank=True, null=True, related_name='+')
-    remedy = models.ForeignKey('SprErrorCode', models.DO_NOTHING, blank=True, null=True, related_name='+')
+    description = models.ForeignKey('SprErrorCode', models.DO_NOTHING, blank=True, null=True)
+    causes = models.ForeignKey('SprErrorCode', models.DO_NOTHING, blank=True, null=True)
+    remedy = models.ForeignKey('SprErrorCode', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -278,6 +277,7 @@ class ErrorCode(models.Model):
 
 
 class Favorites(models.Model):
+    id = models.BigAutoField()
     user_id = models.IntegerField()
     detail_id = models.BigIntegerField()
     created_at = models.DateField()
@@ -303,8 +303,8 @@ class FilterSettings(models.Model):
 
 
 class LinkCartridgeAnalog(models.Model):
-    cartridge = models.ForeignKey(Cartridge, models.DO_NOTHING, blank=True, null=True, related_name='+')
-    cartridge_analog = models.ForeignKey(Cartridge, models.DO_NOTHING, blank=True, null=True, related_name='+')
+    cartridge = models.ForeignKey(Cartridge, models.DO_NOTHING, blank=True, null=True)
+    cartridge_analog = models.ForeignKey(Cartridge, models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -377,6 +377,7 @@ class LinkPartcodeModelAnalogs(models.Model):
 
 
 class Market(models.Model):
+    id = models.AutoField()
     title = models.CharField(max_length=255, blank=True, null=True)
     brand_id = models.IntegerField(blank=True, null=True)
     category_id = models.IntegerField(blank=True, null=True)
@@ -396,6 +397,7 @@ class Market(models.Model):
 
 
 class Media(models.Model):
+    id = models.BigAutoField()
     link = models.CharField(max_length=500)
     alt = models.CharField(max_length=255, blank=True, null=True)
     title = models.CharField(max_length=500, blank=True, null=True)
@@ -417,13 +419,10 @@ class Migration(models.Model):
 
 
 class Models(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=-1)
     brand_id = models.IntegerField(blank=True, null=True)
     main_image = models.TextField(blank=True, null=True)
     image = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
 
     class Meta:
         managed = False
@@ -443,6 +442,7 @@ class OrderDetails(models.Model):
 
 
 class Orders(models.Model):
+    id = models.BigAutoField()
     fio = models.CharField(max_length=255)
     address = models.CharField(max_length=1500, blank=True, null=True)
     phone = models.CharField(max_length=18, blank=True, null=True)
@@ -459,6 +459,7 @@ class Orders(models.Model):
 
 
 class PagesSeo(models.Model):
+    id = models.SmallAutoField()
     link = models.CharField(max_length=255)
     title = models.CharField(max_length=1500)
     description = models.CharField(max_length=5000, blank=True, null=True)
@@ -474,15 +475,13 @@ class Partcodes(models.Model):
     description = models.TextField(blank=True, null=True)
     images = models.CharField(max_length=255, blank=True, null=True)
 
-    def __str__(self):
-        return self.code
-
     class Meta:
         managed = False
         db_table = 'partcodes'
 
 
 class PayHistory(models.Model):
+    id = models.BigAutoField()
     user_id = models.IntegerField()
     date_pay = models.DateField()
     discription = models.CharField(max_length=500, blank=True, null=True)
@@ -531,6 +530,7 @@ class SellerHasDetails(models.Model):
 
 
 class SellerOffices(models.Model):
+    id = models.AutoField()
     saller_id = models.IntegerField()
     address = models.CharField(max_length=1500, blank=True, null=True)
     phone = models.TextField(blank=True, null=True)  # This field type is a guess.
@@ -543,6 +543,7 @@ class SellerOffices(models.Model):
 
 
 class Sellers(models.Model):
+    id = models.AutoField()
     user_id = models.IntegerField()
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=1000, blank=True, null=True)
@@ -556,6 +557,7 @@ class Sellers(models.Model):
 
 
 class Services(models.Model):
+    id = models.AutoField()
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=500, blank=True, null=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
@@ -566,6 +568,7 @@ class Services(models.Model):
 
 
 class SocialAccount(models.Model):
+    id = models.AutoField()
     user_id = models.IntegerField(blank=True, null=True)
     provider = models.CharField(max_length=255)
     client_id = models.CharField(max_length=255)
@@ -593,9 +596,6 @@ class SprDetailOptions(models.Model):
     name = models.CharField(max_length=255)
     icon = models.CharField(max_length=255, blank=True, null=True)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         managed = False
         db_table = 'spr_detail_options'
@@ -606,10 +606,7 @@ class SprDetails(models.Model):
     name_ru = models.TextField(blank=True, null=True)
     desc = models.TextField(blank=True, null=True)
     seo = models.TextField(blank=True, null=True)
-    base_img = models.CharField(max_length=500, blank=True, null=True)
-
-    def __str__(self):
-        return self.name if not None else self.name_ru
+    base_img = models.CharField(max_length=-1, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -646,9 +643,6 @@ class SprModules(models.Model):
     description = models.CharField(max_length=1500, blank=True, null=True)
     scheme_picture = models.CharField(max_length=255, blank=True, null=True)
     name_ru = models.CharField(max_length=255, blank=True, null=True)
-
-    def __str__(self):
-        return self.name if not None else self.name_ru
 
     class Meta:
         managed = False

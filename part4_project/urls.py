@@ -39,6 +39,9 @@ urlpatterns = [
                   path('filter/', include('filter.urls')),
                   path('cartridge/', include('cartridge.urls')),
                   # path('api/v1/brands/', include('brand.urls')),
+                  # path('api/v1/models/', include('model.urls')),
+                  # path('api/v1/cartridges/', include('cartridge.urls')),
+                  # path('api/v1/details/', include('detail.urls')),
                   path('accounts/', include('django.contrib.auth.urls')),
                   path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

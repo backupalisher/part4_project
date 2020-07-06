@@ -104,15 +104,15 @@ WSGI_APPLICATION = 'part4_project.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': DEFAULT_NAME,
+    #     'USER': DEFAULT_USER,
+    #     'PASSWORD': DEFAULT_PASS,
+    #     'HOST': HOST,
+    #     'PORT': DEFAULT_PORT
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DEFAULT_NAME,
-        'USER': DEFAULT_USER,
-        'PASSWORD': DEFAULT_PASS,
-        'HOST': HOST,
-        'PORT': DEFAULT_PORT
-    },
-    'part4': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': PART4_NAME,
         'USER': PART4_USER,
@@ -182,3 +182,12 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 EL_PAGINATION_PER_PAGE = 16
+
+DEFAULT_FILE_STORAGE = 'https://storage.yandexcloud.net/part4images/images/'
+AWS_ACCESS_KEY_ID = 'qYopnnQ3T-9pP42mPVBz'
+AWS_SECRET_ACCESS_KEY = 'Indwm3AaawrvDBUYwqKl8gPbQ2GKrcN2SWGslTds'
+AWS_STORAGE_BUCKET_NAME = 'part4images'
+AWS_S3_REGION_NAME = 'ru-central1'
+
+SITE_ID = 1
+

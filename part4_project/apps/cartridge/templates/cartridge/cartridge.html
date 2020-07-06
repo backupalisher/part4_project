@@ -43,10 +43,10 @@
                     <table class="table">
                         {% for option in options %}
                             {% if forloop.counter|divisibleby:2 %}
-                                <td>{{ option.0 }}</td>
+                                <td class="px-2" style="min-width: 120px;">{{ option.0 }}</td>
                             {% else %}
                                 <tr>
-                                <td>{{ option.0 }}</td>
+                                <td class="px-3">{{ option.0 }}</td>
                             {% endif %}
                         {% if forloop.counter|divisibleby:2 %}
                             </tr>

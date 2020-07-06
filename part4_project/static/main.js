@@ -174,14 +174,15 @@ $(document).ready(function () {
                 $('#filter_model button').prop("disabled", true);
             }
         })
-        $("#form_filter button[type='reset']").click(function () {
+        $("#form_filter #reset").click(function () {
             $checkboxs = {}
             $ranges = {}
             $radios = {}
             $("form").trigger("reset");
         })
-        $("#form_filter").submit(function (event) {
-            if ($checkboxs.length > 0 || $ranges.length > 0 || $radios.length > 0) {
+        $("#form_filter #submit").click(function (event) {
+            if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0) {
+                console.log('test')
                 event.preventDefault();
                 let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
                 $.ajax({

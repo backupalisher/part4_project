@@ -1,4 +1,5 @@
-from rest_framework import generics, response
+from rest_framework import generics
+
 from db_model.models import Brands
 from .serializers import BrandCreateSerialize, BrandListSerialize
 

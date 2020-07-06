@@ -18,7 +18,7 @@ def index(request):
 
 @sync_to_async
 def search_detail(sval):
-    with connections['part4'].cursor() as c:
+    with connections['default'].cursor() as c:
         try:
             c.execute("BEGIN")
             c.callproc('details_search_v1', (sval,))
@@ -31,7 +31,7 @@ def search_detail(sval):
 
 @sync_to_async
 def search_error(sval):
-    with connections['part4'].cursor() as c:
+    with connections['default'].cursor() as c:
         try:
             c.execute("BEGIN")
             c.callproc('error_search', (sval,))
@@ -44,7 +44,7 @@ def search_error(sval):
 
 @sync_to_async
 def search_cartridge(sval):
-    with connections['part4'].cursor() as c:
+    with connections['default'].cursor() as c:
         try:
             c.execute("BEGIN")
             c.callproc('cartridge_search', (sval,))
