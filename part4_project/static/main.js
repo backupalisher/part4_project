@@ -233,28 +233,28 @@ $(document).ready(function () {
         }
     }
 
-    if ($pathname.indexOf('brands') > 0) {
-        $("form").submit(function (event) {
-                /* Serialize the submitted form control values to be sent to the web server with the request */
-                let formValues = $(this).serialize();
-                // Stop form from submitting normally
-                event.preventDefault();
-                let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                $.ajax({
-                    type: 'POST',
-                    url: '',
-                    csrfmiddlewaretoken: csrftoken,
-                    headers: {'X-CSRFToken': csrftoken},
-                    data: {formValues},
-                    success: function (data) {
-                        $("#brands").html('').append(
-                            data
-                        );
-                    }
-                });
-            }
-        )
-    }
+    // if ($pathname.indexOf('brands') > 0) {
+    //     $("form").submit(function (event) {
+    //             /* Serialize the submitted form control values to be sent to the web server with the request */
+    //             let formValues = $(this).serialize();
+    //             // Stop form from submitting normally
+    //             event.preventDefault();
+    //             let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    //             $.ajax({
+    //                 type: 'POST',
+    //                 url: '',
+    //                 csrfmiddlewaretoken: csrftoken,
+    //                 headers: {'X-CSRFToken': csrftoken},
+    //                 data: {formValues},
+    //                 success: function (data) {
+    //                     $("#brands").html('').append(
+    //                         data
+    //                     );
+    //                 }
+    //             });
+    //         }
+    //     )
+    // }
 })
 
 function getUrlVars() {
