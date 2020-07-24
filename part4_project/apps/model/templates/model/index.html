@@ -5,7 +5,19 @@
 {% endblock %}
 {% block description %}
     <meta name="description"
-          content="{Тип устройства}, {МФУ}, {Тип}, {лазерный/светодиодный}, {максимальный формат}, {А4}, {A4}, {цветность печати}, {черно-белая}">
+          content="
+          {% for caption in captions %}
+              {% for subcaption in subcaptions %}
+                    {% if subcaption.2 == caption %}
+                        {% for subcap in subcaption.3 %}
+                            {% if '' != subcap|get_val and '-' not in subcap|get_val and '+' not in subcap|get_val %}
+                                {{ subcap }},
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+          ">
 {% endblock %}
 {% block keyword %}
     <meta name="keyword"

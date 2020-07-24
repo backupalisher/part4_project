@@ -36,6 +36,9 @@ def cartridges(request, brand_id):
 def cartridge(request, cartridge_id):
     title = 'Расходные материалы'
     options = _query(f"SELECT * FROM all_options_for_cartridges WHERE id = {cartridge_id}")
+    print(options)
+    prices = _query(f"SELECT v.name, cartridge_price.price FROM cartridge_price "
+                    f"LEFT JOIN vendors v ON v.id = cartridge_price.vendor_id WHERE cartridge_id = {cartridge_id}")
     cartridge = _query(f"SELECT * FROM all_cartridge WHERE id = {cartridge_id}")
     if cartridge:
         carts = list(cartridge[0])
@@ -58,6 +61,7 @@ def cartridge(request, cartridge_id):
         amodels = [x for x in carts[8] if not (x in tamodels or tamodels.add(x))]
         cartridge = tuple(carts)
         return render(request, 'cartridge/cartridge.html', {'title': title, 'cartridge': cartridge, 'options': options,
-                                                            'brand': brand, 'brand_id': brand_id, 'amodels': amodels})
+                                                            'brand': brand, 'brand_id': brand_id, 'amodels': amodels,
+                                                            'prices': prices})
     else:
         raise Http404('Страница отсутствует, с id: ' + str(cartridge_id))
