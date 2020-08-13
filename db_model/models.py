@@ -157,6 +157,16 @@ class CartridgeAnalogModel(models.Model):
         db_table = 'cartridge_analog_model'
 
 
+class CartridgePrice(models.Model):
+    cartridge = models.OneToOneField(Cartridge, models.DO_NOTHING, primary_key=True)
+    vendor = models.ForeignKey('Vendors', models.DO_NOTHING, blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'cartridge_price'
+
+
 class Categories(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)

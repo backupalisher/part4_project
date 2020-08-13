@@ -139,6 +139,7 @@ class Cartridge(models.Model):
     code = models.CharField(max_length=255, blank=True, null=True)
     name = models.CharField(max_length=255, blank=True, null=True)
     name_ru = models.CharField(max_length=255, blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -153,6 +154,16 @@ class CartridgeAnalogModel(models.Model):
     class Meta:
         managed = False
         db_table = 'cartridge_analog_model'
+
+
+class CartridgePrice(models.Model):
+    cartridge = models.OneToOneField(Cartridge, models.DO_NOTHING, primary_key=True)
+    vendor = models.ForeignKey('Vendors', models.DO_NOTHING, blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'cartridge_price'
 
 
 class Categories(models.Model):
@@ -322,7 +333,8 @@ class LinkCartridgeModelAnalog(models.Model):
 
 class LinkCartridgeOptions(models.Model):
     cartridge = models.ForeignKey(Cartridge, models.DO_NOTHING, blank=True, null=True)
-    spr_cartridge = models.ForeignKey('SprCartridgeOptions', models.DO_NOTHING, blank=True, null=True)
+    spr_cartridge_id_caption = models.ForeignKey('SprCartridgeOptions', models.DO_NOTHING, db_column='spr_cartridge_id_caption', blank=True, null=True)
+    spr_cartridge_id_option = models.ForeignKey('SprCartridgeOptions', models.DO_NOTHING, db_column='spr_cartridge_id_option', blank=True, null=True)
 
     class Meta:
         managed = False
