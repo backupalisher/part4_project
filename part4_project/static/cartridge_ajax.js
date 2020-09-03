@@ -91,4 +91,3 @@ $('#cartridge_search').keyup(function () {
         show_cartridges($cartridges_all, page, count)
     }
 })
-

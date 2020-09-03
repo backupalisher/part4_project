@@ -58,7 +58,7 @@
         function jqueryLoaded() {
             brand_models = "{{ brand_models }}"
             media_url = "{{ MEDIA_URL }}"
-            $ajax_script = "{% static 'models_ajax.js' %}"
+            $ajax_script = "{% static 'model_ajax.js' %}"
             $.getScript($ajax_script)
         }
         function checkJquery() {
@@ -70,5 +70,5 @@
         }
         checkJquery();
     </script>
-{#    <script src="{% static 'models_ajax.js' %}"></script>#}
+{#    <script src="{% static 'model_ajax.js' %}"></script>#}
 {% endblock %}

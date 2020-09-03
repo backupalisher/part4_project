@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'compressor',
     'el_pagination',
+    'sendmail',
+    'accounts',
     'db_model',
     'search',
     'main',
@@ -155,13 +157,15 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = '/account/'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-        os.path.join(PROJECT_ROOT, "static"),
-    )
+    os.path.join(PROJECT_ROOT, "static"),
+)
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -191,3 +195,13 @@ AWS_S3_REGION_NAME = 'ru-central1'
 
 SITE_ID = 1
 
+X_FRAME_OPTIONS = 'ALLOW-FROM webvisor.com'
+
+# Send Mail settings
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_USE_TLS = True
+EMAIL_HOST = EMAIL_HOST
+EMAIL_HOST_USER = EMAIL_USER
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
+EMAIL_PORT = EMAIL_PORT

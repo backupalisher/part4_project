@@ -1,5 +1,8 @@
 {% load static mfilters %}
 <div class="container">
+{#    <div class="p-3">#}
+{#        <input type="text" id="errors_search" placeholder="найти ошибку по коду" class="form-control">#}
+{#    </div>#}
     <div class="row">
         <div class="scrollbar-macosx">
             {% if verrors is not None %}
@@ -48,3 +51,21 @@
         </div>
     </div>
 </div>
+{% block ajaxjs %}
+{#    <script type="text/javascript">#}
+{#        function jqueryLoaded() {#}
+{#            $errors = "{{ verrors }}"#}
+{#            $media_url = "{{ MEDIA_URL }}"#}
+{#            $errors_script = "{% static 'model_errors.js' %}"#}
+{#            $.getScript($errors_script)#}
+{#        }#}
+{#        function checkJquery() {#}
+{#            if (window.jQuery) {#}
+{#                jqueryLoaded();#}
+{#            } else {#}
+{#                window.setTimeout(checkJquery, 100);#}
+{#            }#}
+{#        }#}
+{#        checkJquery();#}
+{#    </script>#}
+{% endblock %}

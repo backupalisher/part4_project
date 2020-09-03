@@ -73,7 +73,7 @@ def get_options(detail_id):
 @sync_to_async
 def get_errors(model_id):
     # print(datetime.datetime.now() - start_time, 'получение ошибок')
-    verrors = _query(f"SELECT * FROM all_errors WHERE mid = {model_id}")
+    verrors = _query(f"SELECT * FROM all_errors WHERE mid = {model_id}  ORDER BY code;")
     # print(datetime.datetime.now() - start_time, 'получение ошибок завершено')
 
     # print(datetime.datetime.now() - start_time, 'сортировка ошибок')

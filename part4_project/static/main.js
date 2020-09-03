@@ -218,16 +218,6 @@ $(document).ready(function () {
         }
     })
 
-    //Toggle phone and email
-    $('.phone-toggle').click(function () {
-        $('.phone-toggle').toggle()
-        $('.phone').toggle()
-    })
-    $('.email-toggle').click(function () {
-        $('.email-toggle').toggle()
-        $('.email').toggle()
-    })
-
     //Search position and vals save
     if ($pathname.indexOf('search') > 0) {
         vals = getUrlVars($pathname)
