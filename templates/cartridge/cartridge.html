@@ -40,22 +40,26 @@
                                 <a href="#" id="toggle-order" class="text-yellow">Купить</a>
                             </p>
                             <div class="order-form" style="display: none;">
-                                <form method="post">
-                                    {% csrf_token %}
-                                    <label>
-                                        <input type="text" placeholder="Имя" name="name">
-                                    </label>
-                                    <label>
-                                        <input type="email" placeholder="email" name="email">
-                                    </label>
-                                    <label>
-                                        <input type="tel" placeholder="телефон" name="phone">
-                                    </label>
-                                    <input type="hidden" name="title" value="{{ title }}">
-                                    <input type="hidden" name="product_id" value="{{ cartridge_id }}">
-                                    <input type="hidden" name="product_code" value="{{ cartridge.1 }}">
-                                    <input type="button" id="submit-order" value="Отправить">
-                                </form>
+                                <a href="tel:+79771371640" class="phone text-yellow">
+                                    <i class="fa-mobile-phone"></i> +7 977 137 16 40</a> <br>
+                                <a href="tel:info@part4.info" class="email text-yellow">
+                                    <i class="fa-envelope-o"></i> info@part4.info</a>
+{#                                <form method="post">#}
+{#                                    {% csrf_token %}#}
+{#                                    <label>#}
+{#                                        <input type="text" placeholder="Имя" name="name">#}
+{#                                    </label>#}
+{#                                    <label>#}
+{#                                        <input type="email" placeholder="email" name="email">#}
+{#                                    </label>#}
+{#                                    <label>#}
+{#                                        <input type="tel" placeholder="телефон" name="phone">#}
+{#                                    </label>#}
+{#                                    <input type="hidden" name="title" value="{{ title }}">#}
+{#                                    <input type="hidden" name="product_id" value="{{ cartridge_id }}">#}
+{#                                    <input type="hidden" name="product_code" value="{{ cartridge.1 }}">#}
+{#                                    <input type="button" id="submit-order" value="Отправить">#}
+{#                                </form>#}
                             </div>
 {#                                <a href="#" class="phone-toggle text-yellow">телефону</a>#}
 {#                                <a href="tel:+79771371640" class="phone text-yellow" style="display: none;">#}
