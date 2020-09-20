@@ -93,6 +93,8 @@ async def past_init(request, model_id, partcode):
 
 
 def index(request, detail_id):
+    lang = request.LANGUAGE_CODE
+    print(lang)
     # print(start_time, detail_id)
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
@@ -151,5 +153,5 @@ def index(request, detail_id):
                   {'partcodes': partcodes, 'detail_id': detail_id, 'model': model, 'model_id': model_id,
                    'module': module, 'detail_name': detail_name, 'detail_name_ru': detail_name_ru,
                    'detail_desc': detail_desc, 'options': options, 'captions': captions, 'subcaptions': subcaptions,
-                   'values': values, 'brand_id': brand_id, 'brand_name': brand_name,
+                   'values': values, 'brand_id': brand_id, 'brand_name': brand_name, 'lang': lang,
                    'cartridge_options': cartridge_options})

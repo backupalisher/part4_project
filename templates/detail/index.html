@@ -23,7 +23,7 @@
             </div>
             <div class="col">
                 <h3>Деталь: <span class="name">
-                    {% if detail_name_ru != '' %}
+                    {% if detail_name_ru != '' and lang == 'ru' %}
                         {{ detail_name_ru }} <br> <small class="text-grey" style="padding-left: 109px;"> {{ detail_name }} </small></span>
                     {% else %}
                         {{ detail_name }} </span>

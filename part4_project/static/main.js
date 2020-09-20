@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    let userLang = navigator.language || navigator.userAgent;
     let brand_models = ""
     let media_url = "{{ MEDIA_URL }}"
     let $loading = false
