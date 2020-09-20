@@ -23,7 +23,7 @@
             </div>
             <div class="col">
                 <h3>Деталь: <span class="name">
-                    {% if detail_name_ru != '' and lang == 'ru' %}
+                    {% if detail_name_ru != '' and detail_name_ru != None and lang == 'ru' %}
                         {{ detail_name_ru }} <br> <small class="text-grey" style="padding-left: 109px;"> {{ detail_name }} </small></span>
                     {% else %}
                         {{ detail_name }} </span>
@@ -43,7 +43,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="py-2">
-                    {% if detail_desc != '' %}
+                    {% if detail_desc != '' and detail_desc != None %}
                         <p class="p-3">{{ detail_desc }}</p>
                     {% endif %}
                     <ul class="nav nav-tabs" id="detailTabs" role="tablist">
