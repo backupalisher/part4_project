@@ -4,6 +4,7 @@ from part4_project.env import *
 
 
 def _query(q):
+    print(q)
     con = psycopg2.connect(
         database=PART4_NAME,
         user=PART4_USER,

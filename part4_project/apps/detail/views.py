@@ -126,12 +126,15 @@ def index(request, detail_id):
             module = '-'
         try:
             spr_detail_id = models.Details.objects.filter(id=detail_id).values('spr_detail_id')[0]['spr_detail_id']
-            if models.SprDetails.objects.filter(id=spr_detail_id).values('name_ru')[0]['name_ru'] != None:
-                detail_name = models.SprDetails.objects.filter(id=spr_detail_id).values('name_ru')[0]['name_ru']
-            else:
-                detail_name = models.SprDetails.objects.filter(id=spr_detail_id).values('name')[0]['name']
+            detail_spr = models.SprDetails.objects.filter(id=spr_detail_id).values()[0]
+            detail_name = detail_spr['name']
+            detail_name_ru = detail_spr['name_ru']
+            detail_desc = detail_spr['desc']
         except:
             detail_name = '-'
+            detail_name_ru = ''
+            detail_desc = ''
+        print(detail_name, detail_name_ru, detail_desc)
         post_result = loop.run_until_complete(past_init(request, model_id, partcode))
         # partcatalog = post_result[0]
         cartridge_options = post_result[0]
@@ -146,6 +149,7 @@ def index(request, detail_id):
 
     return render(request, 'detail/index.html',
                   {'partcodes': partcodes, 'detail_id': detail_id, 'model': model, 'model_id': model_id,
-                   'module': module, 'detail_name': detail_name, 'options': options,
-                   'captions': captions, 'subcaptions': subcaptions, 'values': values,
-                   'brand_id': brand_id, 'brand_name': brand_name, 'cartridge_options': cartridge_options})
+                   'module': module, 'detail_name': detail_name, 'detail_name_ru': detail_name_ru,
+                   'detail_desc': detail_desc, 'options': options, 'captions': captions, 'subcaptions': subcaptions,
+                   'values': values, 'brand_id': brand_id, 'brand_name': brand_name,
+                   'cartridge_options': cartridge_options})

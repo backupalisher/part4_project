@@ -76,9 +76,19 @@
             </div>
         {% endblock %}
         {% block breadcrumbs %}
-            <div class="breadcrumb"><a href="/">Главная</a></div>
+            <div class="container">
+                <div class="row">
+                    <nav class="nav-breadcrumb w-100">
+                        <ul>
+                            <li class="nav-breadcrumb-item active"><a href="/">Главная</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         {% endblock %}
-        {% block login %}{% endblock login %}
+        {% block login %}
+{#            {% include 'main/menu_profile.html' %}#}
+        {% endblock login %}
 
         <div class="container mt-2 main-content">
             {% block content %}

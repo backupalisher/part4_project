@@ -4,10 +4,10 @@
     {{ detail_name }}
 {% endblock %}
 {% block description %}
-    <meta name="description" content="деталь, {Плата форматтера}, парт код, {302NM94052}, модель, {Kyocera ECOSYS M3550idn}, модуль, {Электронные компоненты}">
+    <meta name="description" content="деталь, {Плата форматтера}, парт код, {302NM94052}, модель, {Kyocera ECOSYS M3550idn}, модуль, {Электронные компоненты} {{ detail_desc }}">
 {% endblock %}
 {% block keyword %}
-    <meta name="keyword" content="{{ detail_name }}, {{ module.name_ru }}, {{ module.name }}, part, парт каталог, расходные материалы, ремкомплект, расходные материалы, запчасть, запчасти">
+    <meta name="keyword" content="{{ detail_name }}, {{ detail_name_ru }}, {{ module.name_ru }}, {{ module.name }}, part, парт каталог, расходные материалы, ремкомплект, расходные материалы, запчасть, запчасти">
 {% endblock %}
 {% block content %}
     <div class="card card-model">
@@ -22,7 +22,13 @@
                 </div>
             </div>
             <div class="col">
-                <h3>Деталь: <span class="name"> {{ detail_name }} </span></h3>
+                <h3>Деталь: <span class="name">
+                    {% if detail_name_ru != '' %}
+                        {{ detail_name_ru }} <br> <small class="text-grey" style="padding-left: 109px;"> {{ detail_name }} </small></span>
+                    {% else %}
+                        {{ detail_name }} </span>
+                    {% endif %}
+                </h3>
                 <h4>Парткод: <span class="partcode"> {{ partcodes.code }} </span></h4>
                 {% if model != '-' %}
                     <h4>Модель: <a href="/model/{{ model_id }}">{{ model }}</a></h4>
@@ -37,6 +43,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="py-2">
+                    {% if detail_desc != '' %}
+                        <p class="p-3">{{ detail_desc }}</p>
+                    {% endif %}
                     <ul class="nav nav-tabs" id="detailTabs" role="tablist">
                         {% if options and options|length > 0 or cartridge_options|length > 0 %}
                             <li class="nav-item">

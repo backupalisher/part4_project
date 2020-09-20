@@ -106,6 +106,7 @@ Colors
 
 .dark-theme {
   background-color: #323235;
+  color: #ffffff;
 }
 .dark-theme #toggle-theme {
   color: #323235;
@@ -940,6 +941,12 @@ h1 {
 }
 #filter_model button:disabled:hover, #filter_model button[disabled]:hover {
   box-shadow: none;
+}
+
+.menu_profile {
+  position: fixed;
+  top: 20px;
+  right: 20px;
 }
 
 @media screen and (max-width: 1000px) {

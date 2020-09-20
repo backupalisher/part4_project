@@ -1,6 +1,7 @@
 @import "colors";
 .dark-theme {
     background-color: $dark;
+    color: $white;
     #toggle-theme {
         color: $dark;
         background-color: $light;

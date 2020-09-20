@@ -501,6 +501,13 @@ h1 {
     }
   }
 }
+
+.menu_profile {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
 @media screen and (max-width: 1000px) {
   .main-content {
     width: 100% !important;

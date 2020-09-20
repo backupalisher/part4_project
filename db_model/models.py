@@ -132,6 +132,7 @@ class Brands(models.Model):
         return self.name
 
     class Meta:
+        ordering = ['name']
         managed = False
         db_table = 'brands'
 
