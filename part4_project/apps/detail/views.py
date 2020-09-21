@@ -140,6 +140,7 @@ def index(request, detail_id):
         post_result = loop.run_until_complete(past_init(request, model_id, partcode))
         # partcatalog = post_result[0]
         cartridge_options = post_result[0]
+        print(cartridge_options)
         brand_id = models.Models.objects.filter(id=model_id).values('brand_id')[0]['brand_id']
         brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
         loop.run_until_complete(loop.shutdown_asyncgens())

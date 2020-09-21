@@ -3,30 +3,27 @@
     <table class="table">
         {% if cartridge_options|length > 0 %}
             <thead class="thead-light">
-                <tr>
-                    <th colspan="2"><h5></h5></th>
-                </tr>
-            </thead>
-            <tr class="cartridge_options">
-            {% for option in cartridge_options %}
-                <td>{{ option.0 }}</td>
-                {% if forloop.counter|divisibleby:2 %}
-                </tr>
-                <tr>
-                {% endif %}
-            {% endfor %}
+            <tr>
+                <th colspan="2"><h5>Опции</h5></th>
             </tr>
+            </thead>
+            {% for option in cartridge_options %}
+                <tr class="cartridge_options">
+                    <td>{{ option.2 }}</td>
+                    <td>{{ option.3 }}</td>
+                </tr>
+            {% endfor %}
         {% endif %}
         {% for caption in captions.0.3 %}
             {% if 'Status' not in caption %}
                 <thead class="thead-light">
-                    <tr>
-                        {% for subcaption in subcaptions %}
-                            {% if subcaption.2 == caption and subcaption.3|length > 0 %}
-                                <th colspan="2"><h5>{{ caption }}</h5></th>
-                            {% endif %}
-                        {% endfor %}
-                    </tr>
+                <tr>
+                    {% for subcaption in subcaptions %}
+                        {% if subcaption.2 == caption and subcaption.3|length > 0 %}
+                            <th colspan="2"><h5>{{ caption }}</h5></th>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
                 </thead>
                 {% for subcaption in subcaptions %}
                     {% if subcaption.2 == caption %}

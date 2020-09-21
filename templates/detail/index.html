@@ -4,7 +4,7 @@
     {{ detail_name }}
 {% endblock %}
 {% block description %}
-    <meta name="description" content="деталь, {Плата форматтера}, парт код, {302NM94052}, модель, {Kyocera ECOSYS M3550idn}, модуль, {Электронные компоненты} {{ detail_desc }}">
+    <meta name="description" content="деталь, {{ detail_name }}, {{ detail_name_ru }}, парт код, {{ partcodes.code }}, модель, {{ model }}, модуль,  {{ module.name_ru }}, {{ module.name }}, {{ detail_desc }}">
 {% endblock %}
 {% block keyword %}
     <meta name="keyword" content="{{ detail_name }}, {{ detail_name_ru }}, {{ module.name_ru }}, {{ module.name }}, part, парт каталог, расходные материалы, ремкомплект, расходные материалы, запчасть, запчасти">
