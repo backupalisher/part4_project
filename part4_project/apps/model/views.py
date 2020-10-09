@@ -13,7 +13,7 @@ start_time = datetime.datetime.now()
 
 
 def detail_view(request):
-    return render(request, 'model/index.html')
+    return render(request, 'model/../../../templates/models/index.html')
 
 
 # добавление веса
@@ -171,16 +171,16 @@ def get_from_models(model_id):
 @sync_to_async
 def get_cartridge(model_id):
     # print(datetime.datetime.now() - start_time, 'получение картриджей')
-    cartridges = _query(f"SELECT * FROM all_cartridge WHERE {model_id} = ANY(model_id)")
-    for idx in range(len(cartridges)):
-        cartridge = list(cartridges[idx])
-        cartridge[4] = list(set(cartridge[4]))
-        cartridges[idx] = tuple(cartridge)
-        cartridge_alt = list(cartridges[idx])
-        cartridge_alt[8] = list(set(cartridge[8]))
-        cartridges[idx] = tuple(cartridge_alt)
+    supplies = _query(f"SELECT * FROM all_cartridge WHERE {model_id} = ANY(model_id)")
+    for idx in range(len(supplies)):
+        supp = list(supplies[idx])
+        supp[4] = list(set(supp[4]))
+        supplies[idx] = tuple(supp)
+        supp_alt = list(supplies[idx])
+        supp_alt[8] = list(set(supp[8]))
+        supplies[idx] = tuple(supp_alt)
     # print(datetime.datetime.now() - start_time, 'получение картриджей завершено')
-    return cartridges
+    return supplies
 
 
 async def init(model_id):
@@ -211,6 +211,13 @@ async def past_init(request, model_id, spr_detail_id, detail_id):
 
 
 def index(request, model_id):
+    tabs = [
+        'options',
+        'parts',
+        'errors',
+        'supplies'
+    ]
+    tab = request.GET.get('tab')
     # print(start_time, model_id)
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
@@ -218,9 +225,9 @@ def index(request, model_id):
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     # print(datetime.datetime.now() - start_time, 'start')
     init_result = loop.run_until_complete(init(model_id))
-    print(init_result)
     detail_id = init_result[0][0]
     spr_detail_id = init_result[0][1]
+    loop.create_task(set_weight(detail_id))
     if detail_id:
         post_result = loop.run_until_complete(past_init(request, model_id, spr_detail_id, detail_id))
         options = post_result[4][0]
@@ -246,15 +253,25 @@ def index(request, model_id):
     cur_module = post_result[1][1]
     partcatalog = post_result[1][2]
     verrors = post_result[2]
-    cartridges = post_result[3]
+    supplies = post_result[3]
     # print(datetime.datetime.now() - start_time, 'завершение')
+    if tab:
+        pass
+    elif cur_module is not None or len(subcaptions) == 0 or tab == 'parts':
+        tab = 'parts'
+    elif (verrors is not None and len(captions) == 0 and len(modules) == 0) or tab == 'errors':
+        tab = 'errors'
+    elif (supplies is not None and len(captions) == 0 and len(modules) == 0 and len(verrors) == 0) or tab == 'supplies':
+        tab = 'supplies'
+    else:
+        tab = 'options'
     if model_id:
-        return render(request, 'model/index.html',
+        return render(request, 'models/index.html',
                       {'detail_id': detail_id, 'model': model, 'model_main_image': model_main_image, 'modules': modules,
                        'verrors': verrors, 'model_images': model_images, 'detail_name': detail_name, 'options': options,
                        'partcatalog': partcatalog, 'captions': captions, 'brand_id': brand_id, 'brand_name': brand_name,
                        'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module,
-                       'cartridges': cartridges})
+                       'supplies': supplies, 'tab': tab})
     else:
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
 

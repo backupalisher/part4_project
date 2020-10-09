@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import render
 
 import db_model.models as models
@@ -7,17 +7,7 @@ from db_model.db_utils import _query
 
 # Create your views here.
 
-
-def index(request):
-    title = 'Расходные материалы'
-    brands = models.Brands.objects.all()
-    return render(request, 'cartridge/index.html', {'title': title, 'brands': brands})
-
-
-def cartridges(request, brand_id):
-    title = 'Расходные материалы'
-    cartridges = _query(f"SELECT * FROM all_cartridge WHERE brand_id = {brand_id} ORDER BY id")
-    brand = ''
+def cartridge_sort(cartridges):
     for idx in range(len(cartridges)):
         cartridge = list(cartridges[idx])
         cartridge[4] = list(set(cartridge[4]))
@@ -30,10 +20,42 @@ def cartridges(request, brand_id):
         else:
             brand = ''
 
-    return render(request, 'cartridge/cartridges.html', {'title': title, 'cartridges': cartridges, 'brand': brand})
+
+def cartridge_get(brand_id):
+    f_sql = f"SELECT * FROM all_cartridge"
+    if brand_id > 0:
+        f_sql += f' WHERE brand_id = {brand_id}'
+    f_sql += f" ORDER BY id"
+    print(f_sql)
+    return _query(f_sql)
+
+
+def index(request):
+    lang = request.LANGUAGE_CODE
+    title = 'Расходные материалы'
+    brands = models.Brands.objects.all()
+    try:
+        brand = dict(request.GET.lists())['brand'][0]
+        cartridges = cartridge_get(int(brand))
+        return render(request, 'cartridge/index.html', {'title': title, 'brands': brands, 'cartridges': cartridges})
+    except:
+        cartridges = _query(f"SELECT * FROM all_cartridge ORDER BY id LIMIT 200;")
+        return render(request, 'cartridge/index.html',
+                      {'title': title, 'brands': brands, 'cartridges': cartridges, 'lang': lang})
+
+
+def cartridges(request, brand_id):
+    lang = request.LANGUAGE_CODE
+    title = 'Расходные материалы'
+    cartridges = _query(f"SELECT * FROM all_cartridge WHERE brand_id = {brand_id} ORDER BY id")
+    brand = ''
+
+    return render(request, 'cartridge/cartridges.html',
+                  {'title': title, 'cartridges': cartridges, 'brand': brand, 'lang': lang})
 
 
 def cartridge(request, cartridge_id):
+    lang = request.LANGUAGE_CODE
     title = 'Расходные материалы'
     options = _query(f"SELECT * FROM all_options_for_cartridges WHERE id = {cartridge_id}")
     prices = _query(f"SELECT v.name, cartridge_price.price FROM cartridge_price "
@@ -61,6 +83,7 @@ def cartridge(request, cartridge_id):
         cartridge = tuple(carts)
         return render(request, 'cartridge/cartridge.html', {'title': title, 'cartridge': cartridge, 'options': options,
                                                             'brand': brand, 'brand_id': brand_id, 'amodels': amodels,
-                                                            'prices': prices, 'cartridge_id': cartridge_id})
+                                                            'prices': prices, 'cartridge_id': cartridge_id,
+                                                            'lang': lang})
     else:
         raise Http404('Страница отсутствует, с id: ' + str(cartridge_id))

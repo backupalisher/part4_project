@@ -10,34 +10,27 @@
     <meta name="keyword" content="каталог картриджей, расходные материалы для оргтехники, картридж, картриджи, картриджи для принтеров, картридж для принтера">
 {% endblock %}
 {% block content %}
-    <div class="row">
-        {% for brand in brands %}
-            <div class="col-lg-2 col-md-3 col-sm-4 mb-3">
-                <div class="card btn">
-                    <a href="/cartridge/cartridges/{{ brand.id }}">
-                        <!--h5 class="text-center">{{ brand.name }}</h5-->
-                        {% if brand.logotype is not None %}
-                            <img src="{{ MEDIA_URL }}brands/{{ brand.logotype }}" class="img-fluid"
-                                 alt="{{ brand.name }}">
-                        {% else %}
-                            <img src="{{ MEDIA_URL }}no-image.png" class="img-fluid" alt="{{ brand.name }}">
-                        {% endif %}
-                    </a>
-                </div>
-            </div>
-        {% endfor %}
+    <div class="container nav_tabs">
+        <a href="/">Модели</a>
+        <a href="/cartridge/" class="active">Расходные материалы</a>
     </div>
-{% endblock %}
-
-{% block breadcrumbs %}
-    <div class="container">
-        <div class="row">
-            <nav class="nav-breadcrumb w-100">
-                <ul>
-                    <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item active">{{ title }}</li>
-                </ul>
-            </nav>
+    <div class="scrollbar-macosx">
+        <div class="brands">
+            {% csrf_token %}
+            {% for brand in brands %}
+                <div class="brand hover_btn">
+                    <label for="{{ brand.name }}" {% if brand.logotype is not None %}
+                           style="background-image: url('{{ MEDIA_URL }}brands/{{ brand.logotype }}')"
+                    {% else %}
+                           style="background-image: url('{{ MEDIA_URL }}no-image.png')">
+                    {% endif %}>
+                    <input type="checkbox" id="{{ brand.name }}" name="{{ brand.id }}" value="{{ brand.id }}">
+                    </label>
+                </div>
+            {% endfor %}
         </div>
+    </div>
+    <div class="row mt-3 supplies">
+        {% include 'cartridge/cartridges.html' %}
     </div>
 {% endblock %}

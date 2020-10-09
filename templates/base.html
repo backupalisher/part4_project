@@ -29,61 +29,43 @@
     <div class="wrap">
         {% block head %}
             {% block nav %}
-                <nav class="navbar navbar-expand-lg">
-                    <a class="navbar-brand" href="/">&nbsp;</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            {% for item in menu_list %}
-                                <li class="nav-item">
-                                    <a class="nav-link {% if item.1 == menu_item_active %}active{% endif %}"
-                                       href="{{ item.0 }}">{{ item.1 }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                <div class="header">
+                    <div class="container d-flex">
+                        <a class="logo hover_text" href="/">
+                            <span>PART4<br><small>Reference system</small></span>
+                        </a>
+                        <div class="left_side">
+                            <div id="toggle-theme" class="hover_btn"><div class="toggle"></div><div class="ico"></div></div>
+                            <a href="#" class="main_menu hover_btn">Sign in</a>
+                        </div>
                     </div>
-                    {#                    <div class="auth-block">#}
-                    {#                        <ul class="float-right navbar-nav">#}
-                    {#                            {% if user.is_authenticated %}#}
-                    {#                                <li class="nav-item"><a class="nav-link"#}
-                    {#                                                        href="{% url 'logout' %}">Выйти {{ user.username }}</a></li>#}
-                    {#                            {% else %}#}
-                    {#                                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>#}
-                    {#                                <li class="nan-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a>#}
-                    {#                                </li>#}
-                    {#                            {% endif %}#}
-                    {#                        </ul>#}
-                    {#                        <a id="toggle-theme">Тема</a>#}
-                    {#                    </div>#}
-                </nav>
+                </div>
+{#                    <div class="auth-block">#}
+{#                        <ul class="float-right navbar-nav">#}
+{#                            {% if user.is_authenticated %}#}
+{#                                <li class="nav-item"><a class="nav-link"#}
+{#                                                        href="{% url 'logout' %}">Выйти {{ user.username }}</a></li>#}
+{#                            {% else %}#}
+{#                                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>#}
+{#                                <li class="nan-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a>#}
+{#                                </li>#}
+{#                            {% endif %}#}
+{#                        </ul>#}
+{#                        <a id="toggle-theme">Тема</a>#}
+{#                    </div>#}
             {% endblock %}
             <div class="container p-2">
                 <form action="/search" method="get" class="mb-3">
 {#                    {% csrf_token %}#}
                     <div class="input-group" id="search_main">
-                        <input class="form-control" type="search" name="s" placeholder="Поиск" aria-label="Search"
+                        <input class="form-control hover_btn" type="search" name="s" placeholder="Поиск" aria-label="Search"
                                aria-describedby="button-search">
-                        <button class="btn" type="submit" id="button-search">Найти</button>
+                        <button class="btn hover_btn" type="submit" id="button-search"><img src="{{ MEDIA_URL }}search_ico.png" ></button>
                     </div>
-                    <small class="form-text text-muted">
-                        <span class="text-grey">Например:</span> "hp M603dn"
-                    </small>
+{#                    <small class="form-text text-muted">#}
+{#                        <span class="text-grey">Например:</span> "hp M603dn"#}
+{#                    </small>#}
                 </form>
-            </div>
-        {% endblock %}
-        {% block breadcrumbs %}
-            <div class="container">
-                <div class="row">
-                    <nav class="nav-breadcrumb w-100">
-                        <ul>
-                            <li class="nav-breadcrumb-item active"><a href="/">Главная</a></li>
-                        </ul>
-                    </nav>
-                </div>
             </div>
         {% endblock %}
         {% block login %}
@@ -111,6 +93,7 @@
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/js.cookie.min.js' %}"></script>
     <script src="{% static 'main.js' %}"></script>
 {% endcompress %}
 <!-- Yandex.Metrika counter -->

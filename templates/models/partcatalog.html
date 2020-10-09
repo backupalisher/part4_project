@@ -2,10 +2,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 col-12">
+            <h6>Модули</h6>
             <div class="scrollbar-macosx">
                 <div class="tab-inner-scroll">
                     {% for module in modules %}
-                        <div class="mb-3 module-title"
+                        <div class="module-title"
                              {% if cur_module == module %}style="font-weight: 900"{% endif %}
                              onclick=" $('.module-title').removeClass('selected-module'),
                                      $(this).addClass('selected-module')
@@ -18,10 +19,11 @@
             </div>
         </div>
         <div class="col">
+            <h6>Детали</h6>
             <div class="scrollbar-macosx">
                 <div class="tab-inner-scroll">
                     {% for module in modules %}
-                        <div class="model-opts pl-3"
+                        <div class="model-opts"
                              id="opts{{ forloop.counter }}"
                                 {% if cur_module == module %}
                              style="display: block;"
@@ -31,29 +33,25 @@
                         >
                             {% for partc in partcatalog %}
                                 {% if module == partc.3 or module == partc.4 %}
-                                    <div style="margin-bottom: 15px; width: 100%; flex-direction: row; display: flex;">
-                                        <div style="width: 10%;">
+                                    <div class="part-item">
+                                        <div class="part-item_img">
                                             {% if partc.9 %}
-                                                <img src="
-                                                        {{ MEDIA_URL }}{{ partc.9 }}"
-                                                     style="max-width: 100%; height: auto;"
-                                                     alt="{{ partc.9 }}">
+                                                <img src="{{ MEDIA_URL }}{{ partc.9 }}" alt="{{ partc.9 }}">
                                             {% else %}
-                                                <img src="{{ MEDIA_URL }}no_image_part.png"
-                                                     style="max-width: 100%; height: auto;"
-                                                     alt="{{ partc.9 }}">
+                                                <img src="{{ MEDIA_URL }}no_image.svg" alt="{{ partc.9 }}">
                                             {% endif %}
                                         </div>
-                                        <div style="width: 89%; padding: 0 10px">
-                                            <a href="/detail/{{ partc.15 }}">
-                                                Парткод: {{ partc.8 }}
-                                            </a><br>
-                                            <span class="part-name">Деталь: </span>&nbsp;
-                                            {% if partc.11 %}
-                                                {{ partc.11 }}
-                                            {% else %}
-                                                {{ partc.10 }}
-                                            {% endif %}
+                                        <div class="part-item_desc">
+                                            <div class="table table-responsive">
+                                                <table class="table">
+                                                    <tr><td><span class="part-name">Деталь: </span></td>
+                                                        <td>{% if partc.11 %}{{ partc.11 }}{% endif %}
+                                                            {% if partc.10 and partc.11 %}<br> {% endif %}
+                                                            {% if partc.10 %}{{ partc.10 }}{% endif %}</td></tr>
+                                                    <tr><td>Парткод:</td>
+                                                        <td><a href="/detail/{{ partc.15 }}">{{ partc.8 }}</a></td></tr>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 {% endif %}

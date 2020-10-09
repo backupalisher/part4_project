@@ -4,5 +4,6 @@ from .views import *
 
 urlpatterns = [
     path('search', search),
-    path('', index)
+    path('', index_models),
+    # path('', index)
 ]

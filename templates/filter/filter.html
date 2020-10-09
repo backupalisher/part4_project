@@ -1,9 +1,9 @@
 <div class="filter">
-    <h4 class="pt-1 title" id="filter-title">Фильтр:</h4>
+{#    <h4 class="pt-1 title" id="filter-title">Фильтр:</h4>#}
     <!--span>моделей {{ model_count.0.0 }}</span-->
     <form method="post" action="" id="form_filter">
         {% csrf_token %}
-        <div class="scrollbar-macosx filter_settings pt-3 mb-3">
+        <div class="scrollbar-macosx filter_settings mb-3">
             {% for caption in filter_captions %}
                 <h5>{{ caption }}</h5>
                 {% for filter in sfilter %}
@@ -13,21 +13,22 @@
                             {% if filter.type == 'checkbox' %}
                                 {% for fval in filter.values %}
                                     <div class="form-group form-check checkbox">
-                                        <input type="checkbox" class="form-check-input"
+                                        <label class="form-check-label"
+                                               for="{{ fval.id }}">
+                                            <input type="checkbox" class="form-check-input"
                                                name="checkbox{{ filter.sub_id }}" id="{{ fval.id }}"
                                                value="{{ fval.id }}">
-                                        <label class="form-check-label"
-                                               for="{{ fval.id }}">{{ fval.val }}</label>
+                                            {{ fval.val }}</label>
                                     </div>
                                 {% endfor %}
                             {% endif %}
                             {% if filter.type == 'radio' %}
                                 {% for fval in filter.values %}
-                                    <div class="form-group form-check radio">
-                                        <input type="radio" class="form-check-input"
+                                    <div class="form-group radio">
+                                        <label class="form-check-label" for="{{ fval.id }}">
+                                            <input type="radio" class="form-check-input"
                                                name="radio{{ filter.sub_id }}" id="{{ fval.id }}"
                                                value="{{ fval.id }}">
-                                        <label class="form-check-label" for="{{ fval.id }}">
                                             {% if fval.val == '+' %} есть {% endif %}
                                             {% if fval.val == '-' %} нет {% endif %}
                                         </label>
@@ -57,7 +58,7 @@
                 {% endfor %}
             {% endfor %}
         </div>
-        <a id="reset" class="btn bg-red text-light float-left disabled">Сбросить</a>
-        <a id="submit" class="btn btn-filter bg-blue text-light float-right disabled">Применить</a>
+        <a id="reset" class="btn bg-pink_yellowish text-white hover_btn float-left disabled">Сбросить</a>
+        <a id="submit" class="btn btn-filter bg-blue text-white hover_btn float-right disabled">Применить</a>
     </form>
 </div>

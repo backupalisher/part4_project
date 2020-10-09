@@ -1,71 +1,73 @@
 {% load static mfilters %}
 <div class="container">
-{#    <div class="p-3">#}
-{#        <input type="text" id="errors_search" placeholder="найти ошибку по коду" class="form-control">#}
-{#    </div>#}
+    {#    <div class="p-3">#}
+    {#        <input type="text" id="errors_search" placeholder="найти ошибку по коду" class="form-control">#}
+    {#    </div>#}
     <div class="row">
-        <div class="scrollbar-macosx">
-            {% if verrors is not None %}
-                <div id="accordion">
-                    <div class="tab-inner-scroll">
+        {% if verrors is not None %}
+            <div class="col-md-3 col-12">
+                <h6>Коды ошибок</h6>
+                <input type="text" placeholder="Поиск по кодам ошибок" id="errors_search" class="errors_search">
+                <div class="scrollbar-macosx">
+                    <div class="error-list">
                         {% for error in verrors %}
-                            <div class="card error-list">
-                                <div class="card-header" id="headingOne">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link"
-                                                data-toggle="collapse"
-                                                data-target="#collapse{{ forloop.counter }}"
-                                                aria-expanded="false"
-                                                aria-controls="collapseOne">
-                                            <span class="errorcode"> {{ error.2 }} </span>
-                                        </button>
-                                    </h5>
-                                </div>
-
-                                <div id="collapse{{ forloop.counter }}" class="collapse"
-                                     aria-labelledby="headingOne"
-                                     data-parent="#accordion">
-                                    <div class="card-body">
+                            <div class="error-title" data-target="#error{{ forloop.counter }}"
+                                 onclick="$('.error-title').removeClass('active');
+                                         $(this).addClass('active');
+                                         $( '.error-item' ).css('display', 'none');
+                                         $( '#error{{ forloop.counter }}' ).toggle();">
+                                <span class="errorcode"> {{ error.2 }} </span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h6>Описание</h6>
+                <div class="scrollbar-macosx">
+                    <div class="error-body">
+                        {% for error in verrors %}
+                            <div class="error-item" id="error{{ forloop.counter }}" style="display: none;">
+                                <div class="table-responsive">
+                                    <table>
+                                        <tr><td><span>Error code:</span></td><td><span>{{ error.2 }}</span></td></tr>
                                         {% if error.3 %}
-                                            <p><span
-                                                    class="display">Display:</span> {{ error.3 }}
-                                            </p> {% endif %}
-                                        {% if error.4 %}<p><span
-                                                class="description">Description:</span> {{ error.4 }}
-                                        </p> {% endif %}
+                                        <tr><td>Display:</td><td>{{ error.3 }}</td></tr>
+                                        {% endif %}
+                                        {% if error.4 %}
+                                        <tr><td>Description:</td><td>{{ error.4 }}</td></tr>
+                                        {% endif %}
                                         {% if error.5 %}
-                                            <p><span
-                                                    class="causes">Causes:</span> {{ error.5 }}
-                                            </p> {% endif %}
+                                        <tr><td>Causes:</td><td>{{ error.5 }}</td></tr>
+                                        {% endif %}
                                         {% if error.6 %}
-                                            <p><span
-                                                    class="remedy">Remedy:</span> {{ error.6 }}
-                                            </p> {% endif %}
-                                    </div>
+                                        <tr><td>Remedy:</td><td>{{ error.6 }}</td></tr>
+                                        {% endif %}
+                                    </table>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% block ajaxjs %}
-{#    <script type="text/javascript">#}
-{#        function jqueryLoaded() {#}
-{#            $errors = "{{ verrors }}"#}
-{#            $media_url = "{{ MEDIA_URL }}"#}
-{#            $errors_script = "{% static 'model_errors.js' %}"#}
-{#            $.getScript($errors_script)#}
-{#        }#}
-{#        function checkJquery() {#}
-{#            if (window.jQuery) {#}
-{#                jqueryLoaded();#}
-{#            } else {#}
-{#                window.setTimeout(checkJquery, 100);#}
-{#            }#}
-{#        }#}
-{#        checkJquery();#}
-{#    </script>#}
+        <script type="text/javascript">
+            function jqueryLoaded() {
+                $errors = "{{ verrors }}"
+                $media_url = "{{ MEDIA_URL }}"
+                $errors_script = "{% static 'model_errors.js' %}"
+                $.getScript($errors_script)
+            }
+            function checkJquery() {
+                if (window.jQuery) {
+                    jqueryLoaded();
+                } else {
+                    window.setTimeout(checkJquery, 100);
+                }
+            }
+            checkJquery();
+        </script>
 {% endblock %}

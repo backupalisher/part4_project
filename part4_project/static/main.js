@@ -1,10 +1,6 @@
 $(document).ready(function () {
-    let userLang = navigator.language || navigator.userAgent;
-    let brand_models = ""
-    let media_url = "{{ MEDIA_URL }}"
-    let $loading = false
-    let $page_count = 0
     $pathname = window.location.pathname;
+
     //Wait for element exist
     var waitForEl = function (selector, callback) {
         if (jQuery(selector).length) {
@@ -19,7 +15,7 @@ $(document).ready(function () {
     var inProgress = false;
     var startFrom = 10;
     $('#to_up').click(function () {
-        $('html, body').animate( { scrollTop: 0 }, 200 );
+        $('html, body').animate({scrollTop: 0}, 200);
     })
     $(window).scroll(function () {
         if ($(window).scrollTop() >= 200 && !$('#to_up').hasClass('visible')) {
@@ -36,186 +32,28 @@ $(document).ready(function () {
         }
     });
 
-    //Scrollbar
+    // Scrollbar
     jQuery(document).ready(function () {
         jQuery('.scrollbar-macosx').scrollbar();
     });
 
 
-
-    // Ajax filter
-    if ($('#filter_model').length) {
-        $checkboxs = {}
-        $ranges = {}
-        $radios = {}
-        $("#form_filter input").change(function () {
-            console.log('change')
-            if ($(this).attr('type') === 'checkbox') {
-                $key = $(this).attr('name')
-                $value = $(this).attr('id')
-                set_array($key, $value, $(this).attr('type'))
-            }
-            if ($(this).attr('type') === 'number') {
-                $key = $(this).attr('name')
-                $value = $(this).val()
-                set_array($key, $value, $(this).attr('type'))
-            }
-            if ($(this).attr('type') === 'radio') {
-                $key = $(this).attr('name')
-                $value = $(this).attr('id')
-                set_array($key, $value, $(this).attr('type'))
-            }
-
-            function set_array(key, value, type) {
-                // console.log(key, value, type)
-                $newelem = {[key]: value}
-                switch (type) {
-                    case 'checkbox':
-                        if (Object.getOwnPropertyNames($checkboxs).length === 0) {
-                            $.extend($checkboxs, {[key]: [value]})
-                        } else {
-                            let idx = ''
-                            let index = null
-                            $.each($checkboxs, function (k, v) {
-                                if (key === k) {
-                                    idx = k
-                                    if (Array.isArray(v)) {
-                                        $.each(v, function (i, val) {
-                                            if (val === value) {
-                                                index = i
-                                            }
-                                        })
-                                    }
-                                }
-                            })
-                            console.log(idx)
-                            if (idx !== '' && index !== null) {
-                                $checkboxs[idx].splice(index, 1);
-                            } else if (idx !== '') {
-                                $checkboxs[idx].push(value)
-                                // $.extend($checkboxs, val)
-                            } else {
-                                $.extend($checkboxs, {[key]: [value]})
-                            }
-                        }
-                        break;
-                    case 'number':
-                        let min = ''
-                        let max = ''
-                        if (key.indexOf('min') > 0) {
-                            min = key.replace('min', '')
-                        }
-                        if (key.indexOf('max') > 0) {
-                            max = key.replace('max', '')
-                        }
-                        if (Object.getOwnPropertyNames($ranges).length === 0) {
-                            if (min !== '') {
-                                $.extend($ranges, {[min]: [parseInt(value, 10)]})
-                                $ranges[min].push(0)
-                            } else if (max !== '') {
-                                $.extend($ranges, {[max]: [0]})
-                                $ranges[max].push(parseInt(value, 10))
-                            }
-                        } else {
-                            let idx = ''
-                            if (min !== '') {
-                                $.each($ranges, function (key, arr) {
-                                    if (key === min) {
-                                        idx = key
-                                    }
-                                })
-                                if (idx !== '') {
-                                    $ranges[idx][0] = parseInt(value, 10)
-                                } else {
-                                    $.extend($ranges, {[min]: [parseInt(value, 10)]})
-                                    $ranges[min].push(0)
-                                }
-                            } else if (max !== '') {
-                                $.each($ranges, function (key, arr) {
-                                    if (key === max) {
-                                        idx = key
-                                    }
-                                })
-                                if (idx !== '') {
-                                    $ranges[idx][1] = parseInt(value, 10)
-                                } else {
-                                    $.extend($ranges, {[max]: [0]})
-                                    $ranges[max].push(parseInt(value, 10))
-                                }
-                            }
-                        }
-                        console.log($ranges)
-                        break
-                    case 'radio':
-                        if (Object.getOwnPropertyNames($radios).length === 0) {
-                            $.extend($radios, $newelem)
-                        } else {
-                            let idx = ''
-                            $.each($radios, function (k, item) {
-                                if (key === k) {
-                                    idx = k
-                                }
-                            })
-                            if (idx !== '') {
-                                $radios[idx] = value;
-                            } else {
-                                $.extend($radios, $newelem)
-                            }
-                        }
-                        break
-                }
-            }
-            console.log($checkboxs)
-            console.log($ranges)
-            console.log($radios)
-
-            if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0) {
-                $('#filter_model a.btn').removeClass("disabled");
-            } else {
-                $('#filter_model a.btn').addClass("disabled");
-            }
-        })
-        $("#form_filter #reset").click(function () {
-            $checkboxs = {}
-            $ranges = {}
-            $radios = {}
-            $("form").trigger("reset");
-        })
-        $("#form_filter #submit").click(function (event) {
-            if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0) {
-                console.log('test')
-                event.preventDefault();
-                let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                $.ajax({
-                    type: 'POST',
-                    url: '',
-                    headers: {'X-CSRFToken': csrftoken},
-                    data: {
-                        "checkboxs": JSON.stringify($checkboxs),
-                        "ranges": JSON.stringify($ranges),
-                        "radios": JSON.stringify($radios)
-                    },
-                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                    success: function (data) {
-                        $("#filter_model_result").html('').append(
-                            data
-                        );
-                    }
-                });
-            }
-        })
-    }
-
-
     //Toggle themes
+    if (Cookies.get('theme')) {
+        if (Cookies.get('theme') === 'light-theme') {
+            $('#body').removeClass('dark-theme')
+            $('#body').addClass('light-theme')
+        }
+    }
     $('#toggle-theme').click(function () {
-        console.log('change')
         if ($('#body').hasClass('dark-theme')) {
             $('#body').removeClass('dark-theme')
             $('#body').addClass('light-theme')
+            Cookies.set('theme', 'light-theme', { expires: 365 })
         } else {
             $('#body').removeClass('light-theme')
             $('#body').addClass('dark-theme')
+            Cookies.set('theme', 'dark-theme', { expires: 365 })
         }
     })
 
@@ -234,28 +72,10 @@ $(document).ready(function () {
         }
     }
 
-    // if ($pathname.indexOf('brands') > 0) {
-    //     $("form").submit(function (event) {
-    //             /* Serialize the submitted form control values to be sent to the web server with the request */
-    //             let formValues = $(this).serialize();
-    //             // Stop form from submitting normally
-    //             event.preventDefault();
-    //             let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    //             $.ajax({
-    //                 type: 'POST',
-    //                 url: '',
-    //                 csrfmiddlewaretoken: csrftoken,
-    //                 headers: {'X-CSRFToken': csrftoken},
-    //                 data: {formValues},
-    //                 success: function (data) {
-    //                     $("#brands").html('').append(
-    //                         data
-    //                     );
-    //                 }
-    //             });
-    //         }
-    //     )
-    // }
+    // Brands
+    brands$ = $('.brands .brand').length
+    $('.brands').css('width', brands$ * 134)
+
 })
 
 function getUrlVars() {
@@ -291,3 +111,8 @@ $('.tab_controls a').click(function () {
 $('#filter-title').click(function () {
     $('#filter_model').toggleClass('show')
 })
+
+// Change url
+$('.nav-tabs a').click(function () {
+    window.history.pushState('', '', $pathname + '?tab=' + $(this).attr('aria-controls'))
+});

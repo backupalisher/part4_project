@@ -1,48 +1,21 @@
-{% extends 'base.html' %}
 {% load static %}
-{% block title %}
-    {{ title }}
-{% endblock %}
-{% block description %}
-    <meta name="description" content="Каталог лазерных и струйных картриджей для {{ brand }}">
-{% endblock %}
-{% block keyword %}
-    <meta name="keyword" content="каталог лазерных и струйных картриджей {{ brand }}, картридж, картриджи, картридж для принтера">
-{% endblock %}
-{% block content %}
-    <div class="p-3">
-        <input type="text" id="cartridge_search" placeholder="найти картридж" class="form-control">
+<div class="p-3 w-100">
+    <input type="text" id="cartridge_search" placeholder="найти картридж" class="form-control">
+</div>
+<div class="table-responsive cartridges">
+    <div class="row text-grey">
+        <div class="col-3">Код производителя</div>
+        <div class="col-5">Наименование</div>
+        <div class="col-4">Совместим с моделями</div>
     </div>
-    <div class="table-responsive cartridges">
-        <div class="row text-white">
-            <div class="col-3">Код производителя</div>
-            <div class="col-5">Наименование</div>
-            <div class="col-4">Совместим с моделями</div>
+    <div class="scrollbar-macosx mt-2">
+        <div id="cartridge_table">
+            <div id="cartridge_items"></div>
+            <div id="load_more"></div>
         </div>
-        <div class="scrollbar-macosx mt-2">
-            <div id="cartridge_table">
-                <div id="cartridge_items"></div>
-                <div id="load_more"></div>
-            </div>
-{#          {% include 'cartridge/cartridge_items.html' %}#}
+    </div>
+</div>
 
-        </div>
-    </div>
-{% endblock %}
-
-{% block breadcrumbs %}
-    <div class="container">
-        <div class="row">
-            <nav class="nav-breadcrumb w-100">
-                <ul>
-                    <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="nav-breadcrumb-item"><a href="/cartridge/">{{ title }}</a></li>
-                    <li class="breadcrumb-item active">{{ brand }}</li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-{% endblock %}
 
 {% block ajaxjs %}
     <script type="text/javascript">
@@ -52,6 +25,7 @@
             $ajax_script = "{% static 'cartridge_ajax.js' %}"
             $.getScript($ajax_script)
         }
+
         function checkJquery() {
             if (window.jQuery) {
                 jqueryLoaded();
@@ -59,7 +33,8 @@
                 window.setTimeout(checkJquery, 100);
             }
         }
+
         checkJquery();
     </script>
-{#    <script src="{% static 'model_ajax.js' %}"></script>#}
+    {#    <script src="{% static 'model_ajax.js' %}"></script>#}
 {% endblock %}

@@ -19,6 +19,7 @@ def detail_view(request):
 # добавление веса
 @sync_to_async
 def set_weight(detail_id):
+    print('set weight', detail_id)
     # print(datetime.datetime.now() - start_time, 'обновление веса')
     _query(
         f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w "
@@ -66,24 +67,16 @@ def get_cartridge_options(partcode):
     return cartridge_options
 
 
-@sync_to_async
-def get_partcodes(model_id):
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение парткаталога')
-    partcatalog = _query(f"SELECT * FROM all_partcatalog WHERE model_id = {model_id}")
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение парткаталога завершен')
-    return partcatalog
-
-
 async def init(detail_id):
     async_tasks = [get_options(detail_id), get_ids(detail_id)]
     results = await asyncio.gather(*async_tasks)
     return results
 
 
-async def past_init(request, model_id, partcode):
+async def past_init(request, partcode):
+    print('test 2 ' + partcode)
     if partcode != '-':
         tasks = [
-            # get_partcodes(model_id),
             get_cartridge_options(partcode),
         ]
         results = await asyncio.gather(*tasks)
@@ -111,9 +104,7 @@ def index(request, detail_id):
         try:
             partcode_id = models.Details.objects.filter(id=detail_id).values('partcode_id')[0]['partcode_id']
             partcode = models.Partcodes.objects.filter(id=partcode_id).values().values('code')[0]['code']
-            partcodes = list(models.Partcodes.objects.filter(id=partcode_id).values())[0]
         except:
-            partcodes = []
             partcode = '-'
         try:
             model_id = models.Details.objects.filter(id=detail_id).values('model_id')[0]['model_id']
@@ -136,11 +127,11 @@ def index(request, detail_id):
             detail_name = '-'
             detail_name_ru = ''
             detail_desc = ''
-        print(detail_name, detail_name_ru, detail_desc)
-        post_result = loop.run_until_complete(past_init(request, model_id, partcode))
-        # partcatalog = post_result[0]
-        cartridge_options = post_result[0]
-        print(cartridge_options)
+        try:
+            post_result = loop.run_until_complete(past_init(request, partcode))
+            cartridge_options = post_result[0]
+        except:
+            cartridge_options = None
         brand_id = models.Models.objects.filter(id=model_id).values('brand_id')[0]['brand_id']
         brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
         loop.run_until_complete(loop.shutdown_asyncgens())
@@ -151,7 +142,7 @@ def index(request, detail_id):
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
 
     return render(request, 'detail/index.html',
-                  {'partcodes': partcodes, 'detail_id': detail_id, 'model': model, 'model_id': model_id,
+                  {'detail_id': detail_id, 'model': model, 'model_id': model_id,
                    'module': module, 'detail_name': detail_name, 'detail_name_ru': detail_name_ru,
                    'detail_desc': detail_desc, 'options': options, 'captions': captions, 'subcaptions': subcaptions,
                    'values': values, 'brand_id': brand_id, 'brand_name': brand_name, 'lang': lang,

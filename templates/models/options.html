@@ -7,7 +7,7 @@
                 <tr>
                     {% for subcaption in subcaptions %}
                         {% if subcaption.2 == caption and subcaption.3|length > 0 %}
-                            <th colspan="2"><h5>{{ caption }}</h5></th>
+                            <th colspan="2"><h5 class="text-blue">{{ caption }}</h5></th>
                         {% endif %}
                     {% endfor %}
                 </tr>
@@ -18,8 +18,16 @@
                             <tr>
                                 <td colspan="2">
                                     {% if 'SubCaption' not in subcap %}
-                                        <h5 class="capt">{{ subcap|get_caption }}</h5>
-                                        <span class="val">{{ subcap|get_val }}</span>
+                                        <h5 class="capt text-blue_gray">{{ subcap|get_caption }}</h5>
+                                        <span class="val text-blue_gray">
+                                        {% if '-' in subcap|get_val %}
+                                            <img src="{{ MEDIA_URL }}icons/no.svg" alt="no">
+                                        {% elif '+' in subcap|get_val %}
+                                            <img src="{{ MEDIA_URL }}icons/check_active.png" alt="yes">
+                                        {% else %}
+                                            {{ subcap|get_val }}
+                                        {% endif %}
+                                        </span>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -28,11 +36,19 @@
                             <tr>
                                 {% if value.0 == subcaption.1 %}
                                     <td class="pl-3">
-                                        <h5>{{ value.2 }}</h5>
+                                        <h5 class="text-blue_gray">{{ value.2 }}</h5>
                                         <div>
                                             {% for val in value.3 %}
-                                                <span class="pl-5 capt">{{ val|get_caption }}</span>
-                                                <span class="val">{{ val|get_val }}</span>
+                                                <span class="pl-5 capt text-blue_gray">{{ val|get_caption }}</span>
+                                                <span class="val text-blue_gray">
+                                                {% if '-' in val|get_val %}
+                                                    <img src="{{ MEDIA_URL }}icons/no.svg" alt="no">
+                                                {% elif '+' in val|get_val %}
+                                                    <img src="{{ MEDIA_URL }}icons/check_active.png" alt="yes">
+                                                {% else %}
+                                                    {{ val|get_val }}
+                                                {% endif %}
+                                                </span>
                                                 <br>
                                             {% endfor %}
                                         </div>

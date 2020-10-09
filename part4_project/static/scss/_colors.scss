@@ -1,3 +1,66 @@
+//Colors
+$white: #FFFFFF;
+$blue: #5AA6FE;
+$cornflower: #5386FC;
+$lime: #56CE39;
+$pink_rich: #FF8077;
+$purple: #BD2AF4;
+$magenta: #E93BAE;
+$blue_gray: #799AB9;
+$white_smoky: #F4F5F9;
+$grey: #D7D7D7;
+$blue_dark: #021746;
+$sapphire: #202136;
+$anthracite: #282840;
+$pink_yellowish: #F45C45;
+
+.text-blue {color: $blue !important;}
+.text-cornflower {color: $cornflower !important;}
+.text-lime {color: $lime !important;}
+.text-pink_rich {color: $pink_rich !important;}
+.text-purple {color: $purple !important;}
+.text-magenta {color: $magenta !important;}
+.text-blue_gray {color: $blue_gray !important;}
+.text-white_smoky {color: $white_smoky !important;}
+.text-grey {color: $grey !important;}
+.text-blue_dark {color: $blue_dark !important;}
+.text-sapphire {color: $sapphire !important;}
+.text-anthracite {color: $anthracite !important;}
+.text-pink_yellowish {color: $pink_yellowish !important;}
+
+.text-blue:hover {color: $blue !important;}
+.text-cornflower:hover {color: $cornflower !important;}
+.text-lime:hover {color: $lime !important;}
+.text-pink_rich:hover {color: $pink_rich !important;}
+.text-purple:hover {color: $purple !important;}
+.text-magenta:hover {color: $magenta !important;}
+.text-blue_gray:hover {color: $blue_gray !important;}
+.text-white_smoky:hover {color: $white_smoky !important;}
+.text-grey:hover {color: $grey !important;}
+.text-blue_dark:hover {color: $blue_dark !important;}
+.text-sapphire:hover {color: $sapphire !important;}
+.text-anthracite:hover {color: $anthracite !important;}
+.text-pink_yellowish:hover {color: $pink_yellowish !important;}
+
+.bg-blue {background-color: $blue !important;}
+.bg-cornflower {background-color: $cornflower !important;}
+.bg-lime {background-color: $lime !important;}
+.bg-pink_rich {background-color: $pink_rich !important;}
+.bg-purple {background-color: $purple !important;}
+.bg-magenta {background-color: $magenta !important;}
+.bg-blue_gray {background-color: $blue_gray !important;}
+.bg-white_smoky {background-color: $white_smoky !important;}
+.bg-grey {background-color: $grey !important;}
+.bg-blue_dark {background-color: $blue_dark !important;}
+.bg-sapphire {background-color: $sapphire !important;}
+.bg-anthracite {background-color: $anthracite !important;}
+.bg-pink_yellowish {background-color: $pink_yellowish !important;}
+
+.hover_text:hover {text-shadow: $magenta 0 0 1px !important;}
+.hover_btn:hover {box-shadow: $magenta 0 0 6px !important;}
+.hover_bg:hover {background: rgba(233, 59, 174, 0.1) !important;}
+
+/*
 $yellow: #f2ba4b;
 $orange: #e98839;
 $red: #eb5c59;
@@ -10,9 +73,7 @@ $grey: #898989;
 $darkgrey: #3f3f45;
 $dark: #323235;
 $black: #262629;
-/*
-Colors
-*/
+
 .text-yellow {color: #f2ba4b !important;}
 .text-orange {color: #e98839 !important;}
 .text-red {color: #eb5c59 !important;}
@@ -39,3 +100,4 @@ Colors
 .bg-light {background-color: #e9e9eb !important;}
 .bg-grey {background-color: #898989 !important;}
 .bg-dark {background-color: #323235 !important;}
+*/

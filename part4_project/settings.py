@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'rest_framework',
     # 'silk',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'compressor',
     'el_pagination',
     'sendmail',
@@ -75,7 +75,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'silk.middleware.SilkyMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'part4_project.urls'

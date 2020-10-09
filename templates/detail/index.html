@@ -4,91 +4,89 @@
     {{ detail_name }}
 {% endblock %}
 {% block description %}
-    <meta name="description" content="деталь, {{ detail_name }}, {{ detail_name_ru }}, парт код, {{ partcodes.code }}, модель, {{ model }}, модуль,  {{ module.name_ru }}, {{ module.name }}, {{ detail_desc }}">
+    <meta name="description"
+          content="деталь, {{ detail_name }}, {{ detail_name_ru }}, парт код, {{ partcodes.code }}, модель, {{ model }}, модуль,  {{ module.name_ru }}, {{ module.name }}, {{ detail_desc }}">
 {% endblock %}
 {% block keyword %}
-    <meta name="keyword" content="{{ detail_name }}, {{ detail_name_ru }}, {{ module.name_ru }}, {{ module.name }}, part, парт каталог, расходные материалы, ремкомплект, расходные материалы, запчасть, запчасти">
+    <meta name="keyword"
+          content="{{ detail_name }}, {{ detail_name_ru }}, {{ module.name_ru }}, {{ module.name }}, part, парт каталог, расходные материалы, ремкомплект, расходные материалы, запчасть, запчасти">
 {% endblock %}
 {% block content %}
-    <div class="card card-model">
-        <div class="row">
-            <div class="col-auto">
-                <div class="card_image">
-                    {% if partcodes.images %}
-                        <img src="{{ MEDIA_URL }}{{ partcodes.images }}" class="img-fluid"/>
-                    {% else %}
-                        <img src="{{ MEDIA_URL }}no_image_part.png" class="img-fluid"/>
-                    {% endif %}
+    <div class="card-model detail">
+        <div class="card-head">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="card-image">
+                        {% if partcodes.images %}
+                            <img src="{{ MEDIA_URL }}{{ partcodes.images }}"/>
+                        {% else %}
+                            <img src="{{ MEDIA_URL }}no_image_part.png"/>
+                        {% endif %}
+                    </div>
+                    <div class="price">{% if lang == 'ru' %}Ориентировочная цена
+                                {% else %}Estimated price{% endif %}: <span>$319.15</span></div>
                 </div>
-            </div>
-            <div class="col">
-                <h3>Деталь: <span class="name">
-                    {% if detail_name_ru != '' and detail_name_ru != None and lang == 'ru' %}
-                        {{ detail_name_ru }} <br> <small class="text-grey" style="padding-left: 109px;"> {{ detail_name }} </small></span>
-                    {% else %}
-                        {{ detail_name }} </span>
-                    {% endif %}
-                </h3>
-                <h4>Парткод: <span class="partcode"> {{ partcodes.code }} </span></h4>
-                {% if model != '-' %}
-                    <h4>Модель: <a href="/model/{{ model_id }}">{{ model }}</a></h4>
-                {% endif %}
-                {% if module.name_ru %}
-                    <h4>Модуль: <a href="/model/{{ model_id }}?module={{ module.name_ru }}">{{ module.name_ru }}</a></h4>
-                {% elif module.name %}
-                    <h4>Модуль: <a href="/model/{{ model_id }}?module={{ module.name }}">{{ module.name }}</a></h4>
-                {% endif %}
+                <div class="col">
+                    <h3 class="title">
+                        {% if detail_name_ru != '' and detail_name_ru != None and lang == 'ru' %}
+                            {{ detail_name_ru }} <br> <small>{{ detail_name }}</small>
+                        {% else %}
+                            {{ detail_name }}
+                        {% endif %}
+                    </h3>
+                    <div class="table-responsive">
+                        <table>
+                            {% if partcodes.code and partcodes.code != '-' %}
+                                <tr>
+                                    <td class="first">{% if lang == 'ru' %}Парткод{% else %} Part code {% endif %}</td>
+                                    <td>{{ partcodes.code }}</td>
+                                </tr>
+                            {% endif %}
+                            {% if model != '-' %}
+                                <tr>
+                                    <td>{% if lang == 'ru' %}Модель{% else %} Model {% endif %}</td>
+                                    <td><a href="/model/{{ model_id }}">{{ model }}</a></td>
+                                </tr>
+                            {% endif %}
+                            {% if module.name %}
+                                <tr>
+                                    <td>{% if lang == 'ru' %}Модуль{% else %} Module {% endif %}</td>
+                                    <td><a href="/model/{{ model_id }}?module={{ module.name }}">{{ module.name }}</a>
+                                    </td>
+                                </tr>
+                            {% elif module.name_ru %}
+                                <tr>
+                                    <td>{% if lang == 'ru' %}Модуль{% else %} Module {% endif %}</td>
+                                    <td>
+                                        <a href="/model/{{ model_id }}?module={{ module.name_ru }}">{{ module.name_ru }}</a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+
+                            {% if detail_desc != '' and detail_desc != None %}
+                                <tr>
+                                    <td>{% if lang == 'ru' %}Описание{% else %} Description {% endif %}</td>
+                                    <td>{{ detail_desc }}</td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="py-2">
-                    {% if detail_desc != '' and detail_desc != None %}
-                        <p class="p-3">{{ detail_desc }}</p>
+                    {% if options and options|length > 0 or cartridge_options|length > 0 %}
+                        <div class="nav-item">
+                            <a class="nav-link active" href="#options">
+                                {% if lang == 'ru' %}Характеристики{% else %}Technical Specifications{% endif %}</a>
+                        </div>
                     {% endif %}
-                    <ul class="nav nav-tabs" id="detailTabs" role="tablist">
-                        {% if options and options|length > 0 or cartridge_options|length > 0 %}
-                            <li class="nav-item">
-                                <a class="nav-link active"
-                                   id="options-tab" data-toggle="tab" href="#options" role="tab"
-                                   aria-controls="options"
-                                   aria-selected="true">Характеристики</a>
-                            </li>
-                        {% endif %}
-                        {% if options and options|length > 0 %}
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                   id="parts-tab" data-toggle="tab" href="#parts" role="tab"
-                                   aria-controls="parts" aria-selected="false">Парткаталог</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
+                    <div class="tab-content">
                         {% if cartridge_options|length > 0 or subcaptions|length > 0 %}
-                            <div class="tab_controls">
-                                <a class="nav-link {% if cur_module is None %} active {% endif %}"
-                                   id="controls_options-tab"
-                                   data-toggle="options-tab" href="#options" role="tab"
-                                   aria-controls="options"
-                                   aria-selected="true">Характеристики</a>
-                            </div>
-                            <div class="tab-pane fade show active" id="options" role="tabpanel"
-                                 aria-labelledby="options-tab">
-                                {% include 'details/options.html' %}
-                            </div>
-                        {% endif %}
-                        {% if partcatalog|length > 0 %}
-                            <div class="tab_controls">
-                                <a class="nav-link"
-                                   id="controls_parts-tab"
-                                   data-toggle="parts-tab" href="#parts" role="tab"
-                                   aria-controls="parts" aria-selected="false">Парткаталог</a>
-                            </div>
-                            <div class="tab-pane fade" id="parts" role="tabpanel" aria-labelledby="parts-tab">
-                                <h3>Парткаталог</h3>
-                                {% for partc in partcatalog %}
-                                    <p>{{ partc }}</p>
-                                {% endfor %}
+                            <div class="tab-pane fade show active" id="options">
+                                {% include 'detail/options.html' %}
                             </div>
                         {% endif %}
                     </div>
@@ -103,7 +101,7 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-     <div class="container">
+    <div class="container">
         <div class="row">
             <nav class="nav-breadcrumb w-100">
                 <ul>

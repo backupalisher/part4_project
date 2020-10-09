@@ -39,29 +39,35 @@ if ($('#cartridge_items').length) {
 }
 
 function show_cartridges(cartridges, page, count) {
-    for(let i = page*count; i < (page+1)*count; i++) {
-        if(cartridges[i]) {
-            $html = '<div class="row"><div class="col-3"><a href="/cartridge/'+cartridges[i][0]+'" class="text-yellow">'+cartridges[i][1]+'</a></div>'
-            if(cartridges[i][2]) {
-                $html += '<div class="col-5"><span class="text-green">'+cartridges[i][2]+'</span></div>\n'
-            } else if(cartridges[i][3]) {
-                $html += '<div class="col-5"><span class="text-green">'+cartridges[i][3]+'</span></div>\n'
+    for (let i = page * count; i < (page + 1) * count; i++) {
+        if (cartridges[i]) {
+            $html = '<div class="row"><div class="col-3"><a href="/cartridge/' + cartridges[i][0] + '" class="text-yellow">' + cartridges[i][1] + '</a></div>'
+            if (cartridges[i][2]) {
+                $html += '<div class="col-5"><span class="text-green">' + cartridges[i][2] + '</span></div>\n'
+            } else if (cartridges[i][3]) {
+                $html += '<div class="col-5"><span class="text-green">' + cartridges[i][3] + '</span></div>\n'
             }
-            $html +='<div class="col-4"><div class="accordion">\n' +
-                '<a class="btn-collapse text-grey" data-toggle="collapse" data-target="#collapse'+i+'" ' +
-                'aria-expanded="false" aria-controls="collapse'+i+'">Показать модели</a>\n' +
-                '<div class="collapse" id="collapse'+i+'"><div class="text-light">\n'
-            if(cartridges[i][4]) {
-                for(let ci = 0; ci < cartridges[i][4].length; ci++){
-                    $html += cartridges[i][4][ci]+'<br>'
+            $html += '<div class="col-4">\n' +
+                '<a class="btn_info" aria-controls="suppl' + i + '">i</a>\n' +
+                '<div class="supplies-item" id="suppl' + i + '"><div class="supp-title">' + cartridges[i][1] + ' - '
+            if (cartridges[i][2]) {$html += cartridges[i][2]}
+            else if (cartridges[i][3]) {$html += cartridges[i][3]}
+            $html += '</div> <h6>Analogs of models</h6> <div class="supplies-analogs">'
+            if (cartridges[i][4]) {
+                for (let ci = 0; ci < cartridges[i][4].length; ci++) {
+                    if (cartridges[i][4][ci]) {
+                        $html += cartridges[i][4][ci] + '<br>'
+                    }
                 }
             }
-            if(cartridges[i][8]) {
-                for(let cai = 0; cai < cartridges[i][8].length; cai++){
-                    $html += cartridges[i][8][cai]+'<br>'
+            if (cartridges[i][8]) {
+                for (let cai = 0; cai < cartridges[i][8].length; cai++) {
+                    if (cartridges[i][8][cai]) {
+                        $html += cartridges[i][8][cai] + '<br>'
+                    }
                 }
             }
-            $html +='</div></div></div></div></div>'
+            $html += '</div><button type="button" aria-controls="suppl' + i + '">Close</button></div></div>'
             $('#cartridge_items').append($html)
         }
     }
@@ -70,8 +76,8 @@ function show_cartridges(cartridges, page, count) {
 
 function search_cartridges(s) {
     $cartridges_all = []
-    for(let i=0; i < $cartridges.length; i++) {
-        if($cartridges[i][1].toLowerCase().indexOf(s.toLowerCase()) > -1 || $cartridges[i][2].toLowerCase().indexOf(s.toLowerCase()) > -1 || $cartridges[i][3].toLowerCase().indexOf(s.toLowerCase()) > -1){
+    for (let i = 0; i < $cartridges.length; i++) {
+        if ($cartridges[i][1].toLowerCase().indexOf(s.toLowerCase()) > -1 || $cartridges[i][2].toLowerCase().indexOf(s.toLowerCase()) > -1 || $cartridges[i][3].toLowerCase().indexOf(s.toLowerCase()) > -1) {
             $cartridges_all.push($cartridges[i])
         }
     }
@@ -82,7 +88,7 @@ function search_cartridges(s) {
 
 $('#cartridge_search').keyup(function () {
     let sval = $(this).val()
-    if(sval.length > 2) {
+    if (sval.length > 2) {
         $('#cartridge_items').html('')
         search_cartridges(sval)
     } else {
@@ -90,4 +96,46 @@ $('#cartridge_search').keyup(function () {
         $('#cartridge_items').html('')
         show_cartridges($cartridges_all, page, count)
     }
+})
+
+// Change brand checks
+$('.brand label input').click(function () {
+    $brand_id = $(this).val()
+    if ($(this).parent().hasClass('checked')) {
+        $(this).parent().toggleClass('checked');
+        $brand_id = 0;
+    } else {
+        $('.brand label').removeClass('checked')
+        $(this).parent().addClass('checked');
+    }
+    window.location.href = '/cartridge/?brand='+$brand_id
+})
+
+// Add brand check status on load page
+var $brand_id = getUrlVars()['brand']
+$('.brand label input[name="'+ $brand_id +'"]').parent().addClass('checked')
+
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+// Open supplies popup
+$('#cartridge_items .btn_info').click(function () {
+    $('.supplies-item').removeClass('active')
+    $('#'+$(this).attr('aria-controls')).addClass('active')
+});
+
+// Close supplies popup
+$('#cartridge_items button').click(function () {
+    $('.supplies-item').removeClass('active')
+    $('#'+$(this).attr('aria-controls')).removeClass('active')
 })

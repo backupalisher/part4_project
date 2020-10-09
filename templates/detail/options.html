@@ -2,11 +2,6 @@
 <div class="table-responsive">
     <table class="table">
         {% if cartridge_options|length > 0 %}
-            <thead class="thead-light">
-            <tr>
-                <th colspan="2"><h5>Опции</h5></th>
-            </tr>
-            </thead>
             {% for option in cartridge_options %}
                 <tr class="cartridge_options">
                     <td>{{ option.2 }}</td>
@@ -16,7 +11,7 @@
         {% endif %}
         {% for caption in captions.0.3 %}
             {% if 'Status' not in caption %}
-                <thead class="thead-light">
+                <thead>
                 <tr>
                     {% for subcaption in subcaptions %}
                         {% if subcaption.2 == caption and subcaption.3|length > 0 %}

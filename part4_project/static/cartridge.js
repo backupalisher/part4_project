@@ -1,5 +1,5 @@
 $(document).ready(function () {
-//Toggle phone and email
+    //Toggle phone and email
     $('#toggle-order').click(function () {
         $('.order-form').toggle()
     })

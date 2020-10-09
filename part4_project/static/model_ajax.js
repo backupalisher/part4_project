@@ -85,6 +85,7 @@ $('#filter_search').keyup(function () {
     }
 })
 $('#filter_search_clear').click(function () {
+    $('#filter_search').val('')
     $models_all = brand_models
     $('.card-model-list .row').html('')
     show_models($models_all, media_url, page, count)

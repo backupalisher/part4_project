@@ -1,10 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static mfilters %}
+{% block title %}
+    {{ model }}
+{% endblock %}
+{% block description %}
+    <meta name="description"
+          content="
+          {% for caption in captions %}
+              {% for subcaption in subcaptions %}
+                    {% if subcaption.2 == caption %}
+                        {% for subcap in subcaption.3 %}
+                            {% if '' != subcap|get_val and '-' not in subcap|get_val and '+' not in subcap|get_val %}
+                                {{ subcap }},
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+          ">
+{% endblock %}
+{% block keyword %}
+    <meta name="keyword"
+          content="{{ brand_name }}, {{ model }}, характеристики, коды ошибок, part, парт каталог, картридж, расходные материалы, ремкомплект, сервисный комплект, KIT">
+{% endblock %}
+{% block content %}
+    <div class="card-model">
+        <div class="card-head">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="card-image">
+                        {% if model_main_image %}
+                            <img src="{{ MEDIA_URL }}{{ model_main_image }}" alt="{{ detail_name }}"/>
+                        {% elif model_images|length > 0 and model_images.0 != '' %}
+                            <img src="{{ MEDIA_URL }}{{ model_images.0 }}" alt="{{ detail_name }}">
+                        {% else %}
+                            <img src="{{ MEDIA_URL }}no-image.png" alt="{{ detail_name }}"/>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col">
+                    <h3><span class="model-title"> {{ model }}</span></h3>
+                    <div class="rating">Рейтинг <span>Discontinued</span></div>
+                    {% for caption in captions %}
+                        {% if 'Status' in caption %}
+                            <h5><span class="partcode"> {{ caption|cut:'Status: ' }} </span></h5>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-sm-12">
+                <div class="py-2">
+                    <ul class="nav nav-tabs" id="detailTabs" role="tablist">
+                        {% if subcaptions|length > 0 %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if tab == 'options' %} active {% endif %}"
+                                   id="options-tab"
+                                   data-toggle="tab" role="tab"
+                                   href="#options"
+                                   aria-controls="options"
+                                   aria-selected="{% if cur_module is None and tab == 'options' %} true {% endif %}">
+                                    <img src="{{ MEDIA_URL }}icons/options_ico.png"> Характеристики
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if modules is not None and modules|length > 0 %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if tab == 'parts' %} active {% endif %}"
+                                   id="parts-tab"
+                                   data-toggle="tab" href="#parts" role="tab"
+                                   aria-controls="parts" aria-selected="false"><img
+                                        src="{{ MEDIA_URL }}icons/parts_ico.png"> Парткаталог</a>
+                            </li>
+                        {% endif %}
+                        {% if verrors is not None and verrors|length > 0 %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if tab == 'errors' %} active {% endif %}"
+                                   id="errors-tab"
+                                   data-toggle="tab" href="#errors" role="tab"
+                                   aria-controls="errors" aria-selected="false"><img
+                                        src="{{ MEDIA_URL }}icons/errors_ico.png"> Коды ошибок</a>
+                            </li>
+                        {% endif %}
+                        {% if cartridges is not None and cartridges|length > 0 %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if tab == 'supplies' %} active {% endif %}"
+                                   id="cartridges-tab"
+                                   data-toggle="tab" href="#supplies" role="tab"
+                                   aria-controls="supplies" aria-selected="false"><img
+                                        src="{{ MEDIA_URL }}icons/supplies_ico.png"> Расходные материалы</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <div class="tab-content" id="modelsTabContent">
+                        {% if subcaptions|length > 0 %}
+                            <div class="py-3 tab-pane {% if tab == 'options' %} fade active show {% endif %}"
+                                 id="options"
+                                 role="tabpanel" aria-labelledby="options-tab">
+                                {% include 'models/options.html' %}
+                            </div>
+                        {% endif %}
+                        {% if modules|length > 0 %}
+                            <div class="py-3 tab-pane {% if tab == 'parts' %} fade active show {% endif %}"
+                                 id="parts" role="tabpanel" aria-labelledby="parts-tab">
+                                {% include 'models/partcatalog.html' %}
+                            </div>
+                        {% endif %}
+                        {% if verrors|length > 0 %}
+                            <div class="py-3 tab-pane {% if tab == 'errors' %} fade active show {% endif %}"
+                                 id="errors" role="tabpanel" aria-labelledby="errors-tab">
+                                {% include 'models/errorcodes.html' %}
+                            </div>
+                        {% endif %}
+                        {% if cartridges|length > 0 %}
+                            <div class="py-3 tab-pane fade {% if tab == 'supplies' %} fade active show {% endif %}"
+                                 id="supplies" role="tabpanel"
+                                 aria-labelledby="cartridges-tab">
+                                {% include 'models/supplies.html' %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-</body>
-</html>
+{% endblock %}
+
+{% block search %}
+{% endblock %}
