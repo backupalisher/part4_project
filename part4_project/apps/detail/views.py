@@ -28,8 +28,8 @@ def set_weight(detail_id):
 
 
 @sync_to_async
-def get_ids(detail_id):
-    pass
+def get_detail(detail_id):
+    return _query(f"SELECT * FROM all_details WHERE id = {detail_id}")
 
 
 @sync_to_async
@@ -68,7 +68,7 @@ def get_cartridge_options(partcode):
 
 
 async def init(detail_id):
-    async_tasks = [get_options(detail_id), get_ids(detail_id)]
+    async_tasks = [get_options(detail_id), get_detail(detail_id)]
     results = await asyncio.gather(*async_tasks)
     return results
 
@@ -96,44 +96,34 @@ def index(request, detail_id):
     loop.create_task(set_weight(detail_id))
     # print(datetime.datetime.now() - start_time, 'start')
     init_result = loop.run_until_complete(init(detail_id))
-    options = init_result[0][0]
-    captions = init_result[0][1]
-    subcaptions = init_result[0][2]
-    values = init_result[0][3]
     try:
         try:
-            partcode_id = models.Details.objects.filter(id=detail_id).values('partcode_id')[0]['partcode_id']
-            partcode = models.Partcodes.objects.filter(id=partcode_id).values().values('code')[0]['code']
+            options = init_result[0][0]
+            captions = init_result[0][1]
+            subcaptions = init_result[0][2]
+            values = init_result[0][3]
         except:
-            partcode = '-'
+            options = None
+            captions = None
+            subcaptions = None
+            values = None
+        detail_name = init_result[1][0][1]
+        detail_name_ru = init_result[1][0][2]
+        model_id = init_result[1][0][3]
+        model_name = init_result[1][0][4]
+        module_id = init_result[1][0][5]
+        module_name = init_result[1][0][6]
+        module_name_ru = init_result[1][0][7]
+        partcode = init_result[1][0][8]
+        part_desc = init_result[1][0][9]
+        images = init_result[1][0][10]
+        brand_id = init_result[1][0][11]
+        brand_name = init_result[1][0][12]
         try:
-            model_id = models.Details.objects.filter(id=detail_id).values('model_id')[0]['model_id']
-            model = models.Models.objects.filter(id=model_id).values('name')[0]['name']
-        except:
-            model_id = None
-            model = '-'
-        try:
-            module_id = models.Details.objects.filter(id=detail_id).values('module_id')[0]['module_id']
-            module = list(models.SprModules.objects.filter(id=module_id).values())[0]
-        except:
-            module = '-'
-        try:
-            spr_detail_id = models.Details.objects.filter(id=detail_id).values('spr_detail_id')[0]['spr_detail_id']
-            detail_spr = models.SprDetails.objects.filter(id=spr_detail_id).values()[0]
-            detail_name = detail_spr['name']
-            detail_name_ru = detail_spr['name_ru']
-            detail_desc = detail_spr['desc']
-        except:
-            detail_name = '-'
-            detail_name_ru = ''
-            detail_desc = ''
-        try:
-            post_result = loop.run_until_complete(past_init(request, partcode))
-            cartridge_options = post_result[0]
+            cartridge_options = loop.run_until_complete(get_cartridge_options(partcode))[0]
+            print(cartridge_options)
         except:
             cartridge_options = None
-        brand_id = models.Models.objects.filter(id=model_id).values('brand_id')[0]['brand_id']
-        brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
         loop.run_until_complete(loop.shutdown_asyncgens())
         loop.close()
     except:
@@ -142,8 +132,9 @@ def index(request, detail_id):
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
 
     return render(request, 'detail/index.html',
-                  {'detail_id': detail_id, 'model': model, 'model_id': model_id,
-                   'module': module, 'detail_name': detail_name, 'detail_name_ru': detail_name_ru,
-                   'detail_desc': detail_desc, 'options': options, 'captions': captions, 'subcaptions': subcaptions,
+                  {'detail_id': detail_id, 'model_name': model_name, 'model_id': model_id, 'module_id': module_id,
+                   'module_name': module_name, 'module_name_ru': module_name_ru, 'detail_name': detail_name,
+                   'detail_name_ru': detail_name_ru, 'images': images, 'partcode': partcode,
+                   'detail_desc': part_desc, 'options': options, 'captions': captions, 'subcaptions': subcaptions,
                    'values': values, 'brand_id': brand_id, 'brand_name': brand_name, 'lang': lang,
                    'cartridge_options': cartridge_options})

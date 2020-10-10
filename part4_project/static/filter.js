@@ -1,3 +1,4 @@
+let $brands = []
 $(document).ready(function () {
     let userLang = navigator.language || navigator.userAgent;
     let brand_models = ""
@@ -6,7 +7,7 @@ $(document).ready(function () {
     let $page_count = 0
 
     // Brands checkbox
-    let $brands = []
+
     $('.brand label input').click(function () {
         if ($brands.length > 0) {
             idx = $brands.indexOf(parseInt($(this).val()))
@@ -19,13 +20,7 @@ $(document).ready(function () {
             $brands.push(parseInt($(this).val()))
         }
         $(this).parent().toggleClass('checked');
-        if ($('#filter_model a.btn').length > 0) {
-            if ($brands.length > 0) {
-                $('#filter_model a.btn').removeClass("disabled");
-            } else {
-                $('#filter_model a.btn').addClass("disabled");
-            }
-        }
+        checkDisable();
     });
 
     // Filter
@@ -77,7 +72,6 @@ $(document).ready(function () {
             }
 
             function set_array(key, value, type) {
-                // console.log(key, value, type)
                 $newelem = {[key]: value}
                 switch (type) {
                     case 'checkbox':
@@ -107,6 +101,12 @@ $(document).ready(function () {
                                 $.extend($checkboxs, {[key]: [value]})
                             }
                         }
+                        $.each($checkboxs, function (k, v) {
+                            if (v.length < 1) {
+                                console.log($checkboxs[k])
+                                delete $checkboxs[k]
+                            }
+                        });
                         break;
                     case 'number':
                         let min = ''
@@ -174,12 +174,7 @@ $(document).ready(function () {
                 }
             }
 
-
-            if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0 || $brands.length > 0) {
-                $('#filter_model a.btn').removeClass("disabled");
-            } else {
-                $('#filter_model a.btn').addClass("disabled");
-            }
+            checkDisable();
         })
         $("#form_filter #reset").click(function () {
             $checkboxs = {}
@@ -189,13 +184,29 @@ $(document).ready(function () {
             $('.brand label').removeClass('checked');
             $('.filter_settings label').removeClass('checked');
             $("form").trigger("reset");
+            let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            $.ajax({
+                type: 'POST',
+                url: '',
+                headers: {'X-CSRFToken': csrftoken},
+                data: {
+                    "reset": JSON.stringify(true),
+                },
+                contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                success: function (data) {
+                    $("#filter_model_result").html('').append(
+                        data
+                    );
+                    $('.filter_search').addClass('is_filtered')
+                }
+            });
+            checkDisable();
         })
         $("#form_filter #submit").click(function (event) {
             if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0 || $brands.length > 0) {
                 event.preventDefault();
                 let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
                 if ($brands.length < 1) {
-                    console.log('$brands.length < 1')
                     $fbrands = null
                 } else {
                     $fbrands = $brands
@@ -205,6 +216,7 @@ $(document).ready(function () {
                     url: '',
                     headers: {'X-CSRFToken': csrftoken},
                     data: {
+                        "reset": JSON.stringify(false),
                         "checkboxs": JSON.stringify($checkboxs),
                         "ranges": JSON.stringify($ranges),
                         "radios": JSON.stringify($radios),
@@ -222,3 +234,11 @@ $(document).ready(function () {
         })
     }
 })
+
+function checkDisable() {
+    if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0 || $brands.length > 0) {
+        $('#filter_model a.btn').removeClass("disabled");
+    } else {
+        $('#filter_model a.btn').addClass("disabled");
+    }
+}

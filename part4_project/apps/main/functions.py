@@ -111,35 +111,39 @@ def get_filtered_model(brands, checkboxs, ranges, radios):
     checkboxs = json.loads(str(checkboxs))
     ranges = json.loads(str(ranges))
     radios = json.loads(str(radios))
-    f_sql = f'SELECT * FROM model_for_filter mopt WHERE ('
+    f_sql = f'SELECT * FROM model_for_filter mopt WHERE '
     ops = 0
-    for key, value in ranges.items():
-        if len(value) > 0:
-            if ops == 0:
-                f_sql += sql_get_range(key.replace('range', ''), value[0], value[1])
-                ops += 1
-            else:
-                f_sql += ' AND '
-                f_sql += sql_get_range(key.replace('range', ''), value[0], value[1])
-    for key, value in radios.items():
-        if len(value) > 0:
-            if ops == 0:
-                f_sql += (f'mopt.ids && ARRAY[{value}]')
-                ops += 1
-            else:
-                f_sql += ' AND '
-                f_sql += (f'mopt.ids && ARRAY[{value}]')
-    for key, value in checkboxs.items():
-        if len(value) > 0:
-            if ops == 0:
-                f_sql += sql_gen_checks(value)
-                ops += 1
-            else:
-                f_sql += ' AND '
-                f_sql += sql_gen_checks(value)
-    f_sql += f' ) '
+    if len(checkboxs) > 0 or len(ranges) > 0 or len(radios) > 0:
+        f_sql += f'('
+        for key, value in ranges.items():
+            if len(value) > 0:
+                if ops == 0:
+                    f_sql += sql_get_range(key.replace('range', ''), value[0], value[1])
+                    ops += 1
+                else:
+                    f_sql += ' AND '
+                    f_sql += sql_get_range(key.replace('range', ''), value[0], value[1])
+        for key, value in radios.items():
+            if len(value) > 0:
+                if ops == 0:
+                    f_sql += (f'mopt.ids && ARRAY[{value}]')
+                    ops += 1
+                else:
+                    f_sql += ' AND '
+                    f_sql += (f'mopt.ids && ARRAY[{value}]')
+        for key, value in checkboxs.items():
+            if len(value) > 0:
+                if ops == 0:
+                    f_sql += sql_gen_checks(value)
+                    ops += 1
+                else:
+                    f_sql += ' AND '
+                    f_sql += sql_gen_checks(value)
+        f_sql += f' ) '
+        if len(brands) > 0:
+            f_sql += f' AND'
     if len(brands) > 0:
-        f_sql += f'AND ('
+        f_sql += f' ('
         for i, bid in enumerate(brands):
             if i+1 != len(brands):
                 f_sql += f'brand_id = {int(bid)} OR '

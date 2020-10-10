@@ -129,13 +129,13 @@ function getUrlVars()
 }
 
 // Open supplies popup
-$('#cartridge_items .btn_info').click(function () {
+$(document).on('click','#cartridge_items .btn_info', function() {
     $('.supplies-item').removeClass('active')
     $('#'+$(this).attr('aria-controls')).addClass('active')
-});
+})
 
 // Close supplies popup
-$('#cartridge_items button').click(function () {
+$(document).on('click','#cartridge_items button', function() {
     $('.supplies-item').removeClass('active')
     $('#'+$(this).attr('aria-controls')).removeClass('active')
 })

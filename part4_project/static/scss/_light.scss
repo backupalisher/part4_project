@@ -12,6 +12,12 @@
     color: $cornflower;
   }
 
+  table {
+    a {
+      color: $blue;
+    }
+  }
+
   .header {
     .main_menu {
       color: $white_smoky;
@@ -64,6 +70,7 @@
       }
     }
   }
+
 
   .filter {
     .filter_settings {
@@ -120,7 +127,7 @@
   }
 
   .card {
-    filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.25));
+    box-shadow: 0 0 5px $grey;
   }
 
   .nav_tabs {
@@ -162,11 +169,15 @@
   .card-model {
     color: $blue_gray;
     background-color: $white;
+    box-shadow: 0 0 5px #D7D7D7;
+    .nav-tabs {
+      border-bottom: 1px solid $grey !important;
+    }
 
     .card-head {
       .card-image {
         background-color: $white;
-        box-shadow: 0 0 5px $white_smoky;
+        box-shadow: 0 0 5px $grey;
       }
 
       .rating {
@@ -185,6 +196,69 @@
         &.active {
           background-color: #5386FC;
           color: #FFFFFF;
+        }
+      }
+    }
+  }
+
+  .detail, .cartridge {
+    h3 {
+      color: $blue;
+
+      small {
+        color: $blue_gray;
+      }
+    }
+    &.desc {
+      td:first-child span {
+        z-index: 2;
+        background-color: $white !important;
+      }
+    }
+    table {
+      td {
+        color: $blue_gray;
+
+        &:first-child {
+          color: $grey;
+        }
+      }
+    }
+
+    .price {
+      color: $grey;
+
+      span {
+        color: $magenta;
+      }
+    }
+  }
+
+  #options, .detail {
+
+    table {
+      td {
+        color: $blue_gray;
+
+        &:first-child {
+          position: relative;
+          z-index: 1;
+
+          &:after {
+            content: '';
+            position: absolute;
+            border-bottom: 1px dashed $grey;
+            width: 100%;
+            bottom: .6em;
+            right: -10px;
+            z-index: -1;
+          }
+
+          .capt {
+            color: $blue_gray;
+            z-index: 2;
+            background-color: $white !important;
+          }
         }
       }
     }
@@ -211,29 +285,37 @@
       background-color: $white_smoky;
       color: $blue_gray;
     }
+
     .error-list {
 
     }
+
     .error-title {
       cursor: pointer;
+
       &:hover {
         background-color: rgba(233, 59, 174, 0.1);
       }
+
       &.active {
         color: $blue;
       }
     }
+
     .error-item {
       table {
         td:first-child {
           width: 1%;
           color: $grey;
+
           span {
             color: $blue_gray;
           }
         }
+
         td:last-child {
           padding: 0 0 5px 10px;
+
           span {
             color: $blue_dark;
           }

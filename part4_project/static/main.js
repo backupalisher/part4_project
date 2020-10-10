@@ -1,4 +1,25 @@
 $(document).ready(function () {
+    //Toggle themes
+    if (Cookies.get('theme')) {
+        if (Cookies.get('theme') === 'light-theme') {
+            $('#body').removeClass('dark-theme')
+            $('#body').addClass('light-theme')
+        } else {
+            $('#body').removeClass('light-theme')
+            $('#body').addClass('dark-theme')
+        }
+    }
+    $('#toggle-theme').click(function () {
+        if ($('#body').hasClass('dark-theme')) {
+            $('#body').removeClass('dark-theme')
+            $('#body').addClass('light-theme')
+            Cookies.set('theme', 'light-theme', { expires: 365 })
+        } else {
+            $('#body').removeClass('light-theme')
+            $('#body').addClass('dark-theme')
+            Cookies.set('theme', 'dark-theme', { expires: 365 })
+        }
+    })
     $pathname = window.location.pathname;
 
     //Wait for element exist
@@ -38,25 +59,6 @@ $(document).ready(function () {
     });
 
 
-    //Toggle themes
-    if (Cookies.get('theme')) {
-        if (Cookies.get('theme') === 'light-theme') {
-            $('#body').removeClass('dark-theme')
-            $('#body').addClass('light-theme')
-        }
-    }
-    $('#toggle-theme').click(function () {
-        if ($('#body').hasClass('dark-theme')) {
-            $('#body').removeClass('dark-theme')
-            $('#body').addClass('light-theme')
-            Cookies.set('theme', 'light-theme', { expires: 365 })
-        } else {
-            $('#body').removeClass('light-theme')
-            $('#body').addClass('dark-theme')
-            Cookies.set('theme', 'dark-theme', { expires: 365 })
-        }
-    })
-
     //Search position and vals save
     if ($pathname.indexOf('search') > 0) {
         vals = getUrlVars($pathname)
@@ -74,7 +76,7 @@ $(document).ready(function () {
 
     // Brands
     brands$ = $('.brands .brand').length
-    $('.brands').css('width', brands$ * 134)
+    $('.brands').css('width', (brands$ - 1) * 134.5)
 
 })
 
@@ -115,4 +117,13 @@ $('#filter-title').click(function () {
 // Change url
 $('.nav-tabs a').click(function () {
     window.history.pushState('', '', $pathname + '?tab=' + $(this).attr('aria-controls'))
+});
+
+// Scroll horizontal
+$(document).ready(function () {
+    $('.brands').on('.brands', function (e, delta) {
+        console.log(e, delta)
+        this.scrollLeft -= (delta * 40);
+        e.preventDefault();
+    });
 });

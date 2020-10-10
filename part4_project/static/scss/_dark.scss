@@ -12,6 +12,12 @@
     color: $blue_gray;
   }
 
+  table {
+    a {
+      color: $blue;
+    }
+  }
+
   .header {
     .main_menu {
       color: $white_smoky;
@@ -66,7 +72,6 @@
   }
 
   .filter {
-
 
     .filter_settings {
       color: $blue_gray;
@@ -163,6 +168,11 @@
   .card-model {
     color: $blue_gray;
     background-color: $anthracite;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+
+    .nav-tabs {
+      border-bottom: 1px solid $blue_purple !important;
+    }
 
     .card-head {
       .card-image {
@@ -201,37 +211,18 @@
         color: $blue_gray;
       }
     }
-
+    &.desc {
+      td:first-child span {
+        z-index: 2;
+        background-color: $anthracite !important;
+      }
+    }
     table {
       td {
         color: $blue_gray;
 
         &:first-child {
           color: $grey;
-        }
-      }
-
-      tr:first-child {
-        td {
-          &.first {
-            color: $blue;
-          }
-
-          &:nth-child(2) {
-            color: $cornflower;
-          }
-
-          &:nth-child(3) {
-            color: $blue_gray;
-          }
-        }
-      }
-    }
-
-    #options {
-      table {
-        td {
-          color: $blue_gray;
         }
       }
     }
@@ -241,6 +232,37 @@
 
       span {
         color: $magenta;
+      }
+    }
+  }
+
+  #options, .detail {
+    color: $blue_gray;
+
+    table {
+      td {
+        color: $blue_gray;
+
+        &:first-child {
+          position: relative;
+          z-index: 1;
+
+          &:after {
+            content: '';
+            position: absolute;
+            border-bottom: 1px dashed $blackberry;
+            width: 100%;
+            bottom: .6em;
+            right: -10px;
+            z-index: -1;
+          }
+
+          .capt {
+            color: $blue_gray;
+            z-index: 2;
+            background-color: $anthracite !important;
+          }
+        }
       }
     }
   }
@@ -321,10 +343,6 @@
         &:not(:first-child):hover {
           background-color: rgba(233, 59, 174, 0.1);
         }
-      }
-
-      td, a {
-        color: $blue;
       }
     }
 

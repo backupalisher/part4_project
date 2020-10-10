@@ -13,7 +13,7 @@ start_time = datetime.datetime.now()
 
 
 def detail_view(request):
-    return render(request, 'model/../../../templates/models/index.html')
+    return render(request, '/models/index.html')
 
 
 # добавление веса
@@ -111,63 +111,13 @@ def qet_partcatalog(request, model_id):
     return modules, cur_module, partcatalog
 
 
-# Запрос на получение id
+# Получение данных для модели
 @sync_to_async
-def get_ids(model_id):
-    # print(datetime.datetime.now() - start_time, 'сбор id')
-    qd = _query(f'SELECT * FROM details WHERE model_id = {model_id} and partcode_id is null')
-    try:
-        detail_id = qd[0][0]
-        spr_detail_id = qd[0][4]
-    except:
-        detail_id = None
-        spr_detail_id = None
-    # print(datetime.datetime.now() - start_time, 'сбор id завершен')
-    return detail_id, spr_detail_id
+def get_model(model_id):
+    return _query(f'SELECT * FROM all_models WHERE model_id = {model_id}')
 
 
-@sync_to_async
-def get_from_spr_details(spr_detail_id):
-    dq = _query(f'SELECT name, name_ru FROM spr_details WHERE id = {spr_detail_id}')
-    try:
-        if dq[0][1]:
-            detail_name = dq[0][1]
-        else:
-            detail_name = dq[0][0]
-    except:
-        detail_name = None
-    return detail_name
-
-
-# Получение id парткодов, моделей, бренда, картинок
-@sync_to_async
-def get_from_models(model_id):
-    # print(datetime.datetime.now() - start_time, 'сбор остального')
-    mq = _query(f'SELECT brand_id, name, main_image, image FROM models WHERE id = {model_id}')
-    try:
-        brand_id = mq[0][0]
-    except:
-        brand_id = None
-    try:
-        model = mq[0][1]
-    except:
-        model = None
-    try:
-        model_main_image = mq[0][2]
-    except:
-        model_main_image = None
-    try:
-        model_images = mq[0][3].split(';')
-    except:
-        model_images = None
-    try:
-        brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
-    except:
-        brand_name = None
-    # print(datetime.datetime.now() - start_time, 'сбор остального завершен')
-    return model, model_main_image, model_images, brand_id, brand_name
-
-
+# Получение данных картриджей
 @sync_to_async
 def get_cartridge(model_id):
     # print(datetime.datetime.now() - start_time, 'получение картриджей')
@@ -184,24 +134,21 @@ def get_cartridge(model_id):
 
 
 async def init(model_id):
-    async_tasks = [get_ids(model_id)]
+    async_tasks = [get_model(model_id)]
     results = await asyncio.gather(*async_tasks)
     return results
 
 
-async def past_init(request, model_id, spr_detail_id, detail_id):
+async def past_init(request, model_id, detail_id):
     if detail_id:
         tasks = [
-            get_from_models(model_id),
             qet_partcatalog(request, model_id),
             get_errors(model_id),
             get_cartridge(model_id),
             get_options(detail_id),
-            get_from_spr_details(spr_detail_id)
         ]
     else:
         tasks = [
-            get_from_models(model_id),
             qet_partcatalog(request, model_id),
             get_errors(model_id),
             get_cartridge(model_id)
@@ -224,36 +171,40 @@ def index(request, model_id):
     loop = asyncio.get_event_loop()
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     # print(datetime.datetime.now() - start_time, 'start')
-    init_result = loop.run_until_complete(init(model_id))
+    init_result = loop.run_until_complete(init(model_id))[0]
     detail_id = init_result[0][0]
-    spr_detail_id = init_result[0][1]
+    model_id = init_result[0][1]
+    model_name = init_result[0][2]
+    model_main_image = init_result[0][3]
+    model_images = init_result[0][4]
+    brand_id = init_result[0][5]
+    brand_name = init_result[0][6]
+    type_of_device = [init_result[0][7], init_result[0][8]]
+    technology = [init_result[0][9], init_result[0][10]]
+    max_format = [init_result[0][11], init_result[0][12]]
+    pages_per_month = [init_result[0][13], init_result[0][14]]
+    speed = [init_result[0][15], init_result[0][16]]
+    output_type = [init_result[0][17], init_result[0][18]]
     loop.create_task(set_weight(detail_id))
     if detail_id:
-        post_result = loop.run_until_complete(past_init(request, model_id, spr_detail_id, detail_id))
-        options = post_result[4][0]
-        captions = post_result[4][1]
-        subcaptions = post_result[4][2]
-        values = post_result[4][3]
-        detail_name = post_result[5][0]
+        post_result = loop.run_until_complete(past_init(request, model_id, detail_id))
+        options = post_result[3][0]
+        captions = post_result[3][1]
+        subcaptions = post_result[3][2]
+        values = post_result[3][3]
     else:
-        post_result = loop.run_until_complete(past_init(request, model_id, None, None))
+        post_result = loop.run_until_complete(past_init(request, model_id, None))
         options = None
         captions = None
         subcaptions = None
         values = None
-        detail_name = None
     loop.run_until_complete(loop.shutdown_asyncgens())
     loop.close()
-    model = post_result[0][0]
-    model_main_image = post_result[0][1]
-    model_images = post_result[0][2]
-    brand_id = post_result[0][3]
-    brand_name = post_result[0][4]
-    modules = post_result[1][0]
-    cur_module = post_result[1][1]
-    partcatalog = post_result[1][2]
-    verrors = post_result[2]
-    supplies = post_result[3]
+    modules = post_result[0][0]
+    cur_module = post_result[0][1]
+    partcatalog = post_result[0][2]
+    verrors = post_result[1]
+    supplies = post_result[2]
     # print(datetime.datetime.now() - start_time, 'завершение')
     if tab:
         pass
@@ -267,14 +218,11 @@ def index(request, model_id):
         tab = 'options'
     if model_id:
         return render(request, 'models/index.html',
-                      {'detail_id': detail_id, 'model': model, 'model_main_image': model_main_image, 'modules': modules,
-                       'verrors': verrors, 'model_images': model_images, 'detail_name': detail_name, 'options': options,
+                      {'detail_id': detail_id, 'model_name': model_name, 'model_main_image': model_main_image,
+                       'modules': modules, 'verrors': verrors, 'model_images': model_images, 'options': options,
                        'partcatalog': partcatalog, 'captions': captions, 'brand_id': brand_id, 'brand_name': brand_name,
-                       'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module,
-                       'supplies': supplies, 'tab': tab})
+                       'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module, 'supplies': supplies,
+                       'tab': tab, 'type_of_device': type_of_device, 'technology': technology, 'max_format': max_format,
+                       'pages_per_month': pages_per_month, 'speed': speed, 'output_type': output_type})
     else:
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
-
-
-
-

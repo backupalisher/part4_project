@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static mfilters %}
 {% block title %}
-    {{ model }}
+    {{ model_name }}
 {% endblock %}
 {% block description %}
     <meta name="description"
@@ -21,7 +21,7 @@
 {% endblock %}
 {% block keyword %}
     <meta name="keyword"
-          content="{{ brand_name }}, {{ model }}, характеристики, коды ошибок, part, парт каталог, картридж, расходные материалы, ремкомплект, сервисный комплект, KIT">
+          content="{{ brand_name }}, {{ model_name }}, характеристики, коды ошибок, part, парт каталог, картридж, расходные материалы, ремкомплект, сервисный комплект, KIT">
 {% endblock %}
 {% block content %}
     <div class="card-model">
@@ -30,22 +30,44 @@
                 <div class="col-auto">
                     <div class="card-image">
                         {% if model_main_image %}
-                            <img src="{{ MEDIA_URL }}{{ model_main_image }}" alt="{{ detail_name }}"/>
+                            <img src="{{ MEDIA_URL }}{{ model_main_image }}" alt="{{ model_name }}"/>
                         {% elif model_images|length > 0 and model_images.0 != '' %}
-                            <img src="{{ MEDIA_URL }}{{ model_images.0 }}" alt="{{ detail_name }}">
+                            <img src="{{ MEDIA_URL }}{{ model_images.0 }}" alt="{{ model_name }}">
                         {% else %}
-                            <img src="{{ MEDIA_URL }}no-image.png" alt="{{ detail_name }}"/>
+                            <img src="{{ MEDIA_URL }}no-image.png" alt="{{ model_name }}"/>
                         {% endif %}
                     </div>
                 </div>
                 <div class="col">
-                    <h3><span class="model-title"> {{ model }}</span></h3>
+                    <h3><span class="model-title"> {{ model_name }}</span></h3>
                     <div class="rating">Рейтинг <span>Discontinued</span></div>
                     {% for caption in captions %}
                         {% if 'Status' in caption %}
                             <h5><span class="partcode"> {{ caption|cut:'Status: ' }} </span></h5>
                         {% endif %}
                     {% endfor %}
+                    <div class="table-responsive detail desc">
+                        <table>
+                            {% if type_of_device %}
+                                <tr><td><span>{{ type_of_device.0 }}</span></td><td>{{ type_of_device.1 }}</td></tr>
+                            {% endif %}
+                            {% if technology %}
+                                <tr><td><span>{{ technology.0 }}</span></td><td>{{ technology.1 }}</td></tr>
+                            {% endif %}
+                            {% if max_format %}
+                                <tr><td><span>{{ max_format.0 }}</span></td><td>{{ max_format.1 }}</td></tr>
+                            {% endif %}
+                            {% if pages_per_month %}
+                                <tr><td><span>{{ pages_per_month.0 }}</span></td><td>{{ pages_per_month.1 }}</td></tr>
+                            {% endif %}
+                            {% if speed %}
+                                <tr><td><span>{{ speed.0 }}</span></td><td>{{ speed.1 }}</td></tr>
+                            {% endif %}
+                            {% if output_type %}
+                                <tr><td><span>{{ output_type.0 }}</span></td><td>{{ output_type.1 }}</td></tr>
+                            {% endif %}
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

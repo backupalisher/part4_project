@@ -1,5 +1,5 @@
-@import "dark";
 @import "light";
+@import "dark";
 
 ::-webkit-input-placeholder, ::-moz-placeholder, ::-moz-placeholder, ::-ms-input-placeholder, ::placeholder {
   font-weight: 400 !important;
@@ -169,7 +169,7 @@ body {
 
 .filter_search {
   position: relative;
-  height: 0;
+  //height: 0;
   overflow: hidden;
   border-radius: 6px;
 
@@ -501,7 +501,9 @@ body {
   }
 
   .nav-tabs {
-    border: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
   }
 
   .nav-item {
@@ -526,11 +528,16 @@ body {
       }
 
       td {
+        &:first-child {
+          padding: 0;
+        }
         padding: 0 0 0 15px;
       }
 
       .capt {
         font-size: 1.2em;
+        margin: 0;
+        line-height: 1.8em;
       }
 
       .val {
@@ -859,7 +866,7 @@ h1 {
 }
 
 .capt {
-  width: 45%;
+  padding: 0 5px 0 15px;
   display: inline-block;
 }
 

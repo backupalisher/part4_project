@@ -7,7 +7,6 @@
                 <div class="tab-inner-scroll">
                     {% for module in modules %}
                         <div class="module-title"
-                             {% if cur_module == module %}style="font-weight: 900"{% endif %}
                              onclick=" $('.module-title').removeClass('selected-module'),
                                      $(this).addClass('selected-module')
                                      $( '.model-opts' ).css('display', 'none'),

@@ -17,14 +17,14 @@
             <div class="row">
                 <div class="col-auto">
                     <div class="card-image">
-                        {% if partcodes.images %}
-                            <img src="{{ MEDIA_URL }}{{ partcodes.images }}"/>
+                        {% if images %}
+                            <img src="{{ MEDIA_URL }}{{ images }}"/>
                         {% else %}
                             <img src="{{ MEDIA_URL }}no_image_part.png"/>
                         {% endif %}
                     </div>
-                    <div class="price">{% if lang == 'ru' %}Ориентировочная цена
-                                {% else %}Estimated price{% endif %}: <span>$319.15</span></div>
+{#                    <div class="price">{% if lang == 'ru' %}Ориентировочная цена#}
+{#                                {% else %}Estimated price{% endif %}: <span>$319.15</span></div>#}
                 </div>
                 <div class="col">
                     <h3 class="title">
@@ -36,37 +36,37 @@
                     </h3>
                     <div class="table-responsive">
                         <table>
-                            {% if partcodes.code and partcodes.code != '-' %}
+                            {% if partcode and partcode != '-' %}
                                 <tr>
                                     <td class="first">{% if lang == 'ru' %}Парткод{% else %} Part code {% endif %}</td>
-                                    <td>{{ partcodes.code }}</td>
+                                    <td>{{ partcode }}</td>
                                 </tr>
                             {% endif %}
-                            {% if model != '-' %}
+                            {% if model_name != '-' %}
                                 <tr>
                                     <td>{% if lang == 'ru' %}Модель{% else %} Model {% endif %}</td>
-                                    <td><a href="/model/{{ model_id }}">{{ model }}</a></td>
+                                    <td><a href="/model/{{ model_id }}">{{ model_name }}</a></td>
                                 </tr>
                             {% endif %}
-                            {% if module.name %}
+                            {% if module_name %}
                                 <tr>
                                     <td>{% if lang == 'ru' %}Модуль{% else %} Module {% endif %}</td>
-                                    <td><a href="/model/{{ model_id }}?module={{ module.name }}">{{ module.name }}</a>
+                                    <td><a href="/model/{{ model_id }}?module={{ module_name }}">{{ module_name }}</a>
                                     </td>
                                 </tr>
-                            {% elif module.name_ru %}
+                            {% elif module_name_ru %}
                                 <tr>
                                     <td>{% if lang == 'ru' %}Модуль{% else %} Module {% endif %}</td>
                                     <td>
-                                        <a href="/model/{{ model_id }}?module={{ module.name_ru }}">{{ module.name_ru }}</a>
+                                        <a href="/model/{{ model_id }}?module={{ module_name_ru }}">{{ module_name_ru }}</a>
                                     </td>
                                 </tr>
                             {% endif %}
 
-                            {% if detail_desc != '' and detail_desc != None %}
+                            {% if part_desc != '' and part_desc != None %}
                                 <tr>
                                     <td>{% if lang == 'ru' %}Описание{% else %} Description {% endif %}</td>
-                                    <td>{{ detail_desc }}</td>
+                                    <td>{{ part_desc }}</td>
                                 </tr>
                             {% endif %}
                         </table>
