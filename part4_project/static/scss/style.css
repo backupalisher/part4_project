@@ -773,26 +773,26 @@ $black: #262629;
   background-color: #5386FC;
   color: #FFFFFF;
 }
-.dark-theme .detail h3, .dark-theme .cartridge h3 {
+.dark-theme .detail h3, .dark-theme .cartridge h3, .dark-theme #supplies h3 {
   color: #5AA6FE;
 }
-.dark-theme .detail h3 small, .dark-theme .cartridge h3 small {
+.dark-theme .detail h3 small, .dark-theme .cartridge h3 small, .dark-theme #supplies h3 small {
   color: #799AB9;
 }
-.dark-theme .detail.desc td:first-child span, .dark-theme .cartridge.desc td:first-child span {
+.dark-theme .detail.desc td:first-child span, .dark-theme .cartridge.desc td:first-child span, .dark-theme #supplies.desc td:first-child span {
   z-index: 2;
   background-color: #282840 !important;
 }
-.dark-theme .detail table td, .dark-theme .cartridge table td {
+.dark-theme .detail table td, .dark-theme .cartridge table td, .dark-theme #supplies table td {
   color: #799AB9;
 }
-.dark-theme .detail table td:first-child, .dark-theme .cartridge table td:first-child {
+.dark-theme .detail table td:first-child, .dark-theme .cartridge table td:first-child, .dark-theme #supplies table td:first-child {
   color: #D7D7D7;
 }
-.dark-theme .detail .price, .dark-theme .cartridge .price {
+.dark-theme .detail .price, .dark-theme .cartridge .price, .dark-theme #supplies .price {
   color: #D7D7D7;
 }
-.dark-theme .detail .price span, .dark-theme .cartridge .price span {
+.dark-theme .detail .price span, .dark-theme .cartridge .price span, .dark-theme #supplies .price span {
   color: #E93BAE;
 }
 .dark-theme #options, .dark-theme .detail {

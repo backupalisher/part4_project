@@ -105,7 +105,7 @@
                                         src="{{ MEDIA_URL }}icons/errors_ico.png"> Коды ошибок</a>
                             </li>
                         {% endif %}
-                        {% if cartridges is not None and cartridges|length > 0 %}
+                        {% if supplies is not None and supplies|length > 0 %}
                             <li class="nav-item">
                                 <a class="nav-link {% if tab == 'supplies' %} active {% endif %}"
                                    id="cartridges-tab"
@@ -135,7 +135,7 @@
                                 {% include 'models/errorcodes.html' %}
                             </div>
                         {% endif %}
-                        {% if cartridges|length > 0 %}
+                        {% if supplies|length > 0 %}
                             <div class="py-3 tab-pane fade {% if tab == 'supplies' %} fade active show {% endif %}"
                                  id="supplies" role="tabpanel"
                                  aria-labelledby="cartridges-tab">
