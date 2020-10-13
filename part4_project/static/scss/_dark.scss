@@ -9,12 +9,12 @@
   }
 
   a {
-    color: $blue_gray;
+    color: $cornflower;
   }
 
   table {
     a {
-      color: $blue;
+      color: $cornflower;
     }
   }
 
@@ -160,6 +160,7 @@
     }
 
     .btn_info {
+      font-family: Gabriela, sans-serif;
       background-color: $blue_gray;
       color: $white;
     }
@@ -236,30 +237,18 @@
     }
   }
 
-  #options, .detail {
+  #options, .detail, .cartridge {
     color: $blue_gray;
 
     table {
       td {
         color: $blue_gray;
-
         &:first-child {
-          position: relative;
-          z-index: 1;
-
           &:after {
-            content: '';
-            position: absolute;
             border-bottom: 1px dashed $blackberry;
-            width: 100%;
-            bottom: .6em;
-            right: -10px;
-            z-index: -1;
           }
-
           .capt {
             color: $blue_gray;
-            z-index: 2;
             background-color: $anthracite !important;
           }
         }

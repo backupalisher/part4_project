@@ -34,7 +34,7 @@
                         {% elif model_images|length > 0 and model_images.0 != '' %}
                             <img src="{{ MEDIA_URL }}{{ model_images.0 }}" alt="{{ model_name }}">
                         {% else %}
-                            <img src="{{ MEDIA_URL }}no-image.png" alt="{{ model_name }}"/>
+                            <img src="{{ MEDIA_URL }}no_image.svg" alt="{{ model_name }}"/>
                         {% endif %}
                     </div>
                 </div>

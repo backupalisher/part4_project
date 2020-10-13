@@ -49,7 +49,7 @@ function show_models(models, media_url, page, count) {
             if (models[i][4] !== "") {
                 $mstyle = 'style="background-image:url(\'' + media_url + models[i][4] + '\')"'
             } else {
-                $mstyle = 'style="background-image:url(\'' + media_url + 'no-image.png\')"'
+                $mstyle = 'style="background-image:url(\'' + media_url + 'no_image.svg\')"'
             }
             $html = '<div class="col-lg-3 col-md-4 col-sm-6 p-2"> <div class="card card-model-item btn">' +
                 '<a href="/model/' + models[i][1] + '" class="brand_model_link" ' + $mstyle + '>' +

@@ -23,7 +23,7 @@
                             {% if partcodes.images %}
                                 <img src="{{ MEDIA_URL }}{{ partcodes.images }}"/>
                             {% else %}
-                                <img src="{{ MEDIA_URL }}no_image_part.png"/>
+                                <img src="{{ MEDIA_URL }}no_image.svg"/>
                             {% endif %}
                         </div>
                         {% if prices %}
@@ -44,36 +44,29 @@
                             <table>
                                 {% if partcodes.code and partcodes.code != '-' %}
                                     <tr>
-                                        <td class="first">{% if lang == 'ru' %}Код производителя{% else %} Part
-                                            code {% endif %}</td>
+                                        <td class="first"><span class="capt">{% if lang == 'ru' %}Код производителя{% else %} Part
+                                            code {% endif %}</span></td>
                                         <td>{{ cartridge.1 }}</td>
                                     </tr>
                                 {% endif %}
                                 {% if cartridge.4 and cartridge.4.0.0 %}
                                     <tr>
                                         <td>
-                                            {% if lang == 'ru' %}Совместимые модели {% else %} Compatible models{% endif %}
+                                            <span class="capt">{% if lang == 'ru' %}Совместимые модели {% else %} Compatible models{% endif %}</span>
                                         </td>
                                         <td>
                                             {% for model in cartridge.4 %}
                                                 {% if model.0 and model.0 != 'None' %}
-                                                    <a href="/model/{{ model.0 }}">{{ model.1 }}</a>
+                                                    <a href="/model/{{ model.0 }}">{{ model.1 }}</a><br>
                                                 {% endif %}
                                             {% endfor %}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if amodels|length > 0 %}
-                                    <tr>
-                                        <td>
-                                            {% if lang == 'ru' %}Аналогичные модели {% else %} Similar model{% endif %}
-                                        </td>
-                                        <td>
-                                            {% for model in amodels %}
-                                                {% if model.0 and model.0 != 'None' %}
-                                                    {{ model }} <br>
-                                                {% endif %}
-                                            {% endfor %}
+                                            {% if amodels|length > 0 %}
+                                                {% for model in amodels %}
+                                                    {% if model.0 and model.0 != 'None' %}
+                                                        {{ model }} <br>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endif %}
@@ -97,7 +90,7 @@
                                     <table class="table">
                                         {% for option in options %}
                                             <tr>
-                                                <td class="px-2" style="min-width: 120px;">{{ option.2 }}</td>
+                                                <td class="px-2"><span class="capt">{{ option.2 }}</span></td>
                                                 <td class="px-3">{{ option.3 }}</td>
                                             </tr>
                                         {% endfor %}

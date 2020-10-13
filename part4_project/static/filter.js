@@ -236,9 +236,10 @@ $(document).ready(function () {
 })
 
 function checkDisable() {
-    if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0 || $brands.length > 0) {
-        $('#filter_model a.btn').removeClass("disabled");
-    } else {
-        $('#filter_model a.btn').addClass("disabled");
-    }
+    $('#filter_model a.btn').removeClass("disabled");
+    // if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0 || $brands.length > 0) {
+    //     $('#filter_model a.btn').removeClass("disabled");
+    // } else {
+    //     $('#filter_model a.btn').addClass("disabled");
+    // }
 }

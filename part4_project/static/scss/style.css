@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Gabriela&display=swap");
 .text-blue {
   color: #5AA6FE !important;
 }
@@ -218,7 +219,7 @@ $black: #262629;
   color: #5386FC;
 }
 .light-theme table a {
-  color: #5AA6FE;
+  color: #5386FC;
 }
 .light-theme .header .main_menu {
   color: #F4F5F9;
@@ -304,6 +305,7 @@ $black: #262629;
   background: rgba(233, 59, 174, 0.1);
 }
 .light-theme .supplies .btn_info {
+  font-family: Gabriela, sans-serif;
   background-color: #799AB9;
   color: #FFFFFF;
 }
@@ -354,25 +356,14 @@ $black: #262629;
 .light-theme .detail .price span, .light-theme .cartridge .price span {
   color: #E93BAE;
 }
-.light-theme #options table td, .light-theme .detail table td {
+.light-theme #options table td, .light-theme .detail table td, .light-theme .cartridge table td {
   color: #799AB9;
 }
-.light-theme #options table td:first-child, .light-theme .detail table td:first-child {
-  position: relative;
-  z-index: 1;
-}
-.light-theme #options table td:first-child:after, .light-theme .detail table td:first-child:after {
-  content: "";
-  position: absolute;
+.light-theme #options table td:first-child:after, .light-theme .detail table td:first-child:after, .light-theme .cartridge table td:first-child:after {
   border-bottom: 1px dashed #D7D7D7;
-  width: 100%;
-  bottom: 0.6em;
-  right: -10px;
-  z-index: -1;
 }
-.light-theme #options table td:first-child .capt, .light-theme .detail table td:first-child .capt {
+.light-theme #options table td:first-child .capt, .light-theme .detail table td:first-child .capt, .light-theme .cartridge table td:first-child .capt {
   color: #799AB9;
-  z-index: 2;
   background-color: #FFFFFF !important;
 }
 .light-theme #parts h6 {
@@ -655,10 +646,10 @@ $black: #262629;
   color: #021746;
 }
 .dark-theme a {
-  color: #799AB9;
+  color: #5386FC;
 }
 .dark-theme table a {
-  color: #5AA6FE;
+  color: #5386FC;
 }
 .dark-theme .header .main_menu {
   color: #F4F5F9;
@@ -744,6 +735,7 @@ $black: #262629;
   background: rgba(233, 59, 174, 0.1);
 }
 .dark-theme .supplies .btn_info {
+  font-family: Gabriela, sans-serif;
   background-color: #799AB9;
   color: #FFFFFF;
 }
@@ -795,28 +787,17 @@ $black: #262629;
 .dark-theme .detail .price span, .dark-theme .cartridge .price span, .dark-theme #supplies .price span {
   color: #E93BAE;
 }
-.dark-theme #options, .dark-theme .detail {
+.dark-theme #options, .dark-theme .detail, .dark-theme .cartridge {
   color: #799AB9;
 }
-.dark-theme #options table td, .dark-theme .detail table td {
+.dark-theme #options table td, .dark-theme .detail table td, .dark-theme .cartridge table td {
   color: #799AB9;
 }
-.dark-theme #options table td:first-child, .dark-theme .detail table td:first-child {
-  position: relative;
-  z-index: 1;
-}
-.dark-theme #options table td:first-child:after, .dark-theme .detail table td:first-child:after {
-  content: "";
-  position: absolute;
+.dark-theme #options table td:first-child:after, .dark-theme .detail table td:first-child:after, .dark-theme .cartridge table td:first-child:after {
   border-bottom: 1px dashed #68687B;
-  width: 100%;
-  bottom: 0.6em;
-  right: -10px;
-  z-index: -1;
 }
-.dark-theme #options table td:first-child .capt, .dark-theme .detail table td:first-child .capt {
+.dark-theme #options table td:first-child .capt, .dark-theme .detail table td:first-child .capt, .dark-theme .cartridge table td:first-child .capt {
   color: #799AB9;
-  z-index: 2;
   background-color: #282840 !important;
 }
 .dark-theme #parts h6 {
@@ -1208,11 +1189,11 @@ body {
 .supplies .btn_info {
   cursor: pointer;
   border-radius: 50%;
-  padding: 0 0 0 10px;
+  padding: 0 0 0 10.4px;
+  margin: 0 1em;
   width: 25px;
   height: 25px;
   display: inline-block;
-  font-weight: 600;
 }
 .supplies .supp-title {
   border-radius: 10px 10px 0 0;
@@ -1333,7 +1314,7 @@ body {
 .card-model .tab-content .table .capt {
   font-size: 1.2em;
   margin: 0;
-  line-height: 1.8em;
+  line-height: 1.2em;
 }
 .card-model .tab-content .table .val {
   font-size: 1.2em;
@@ -1361,7 +1342,35 @@ body {
   vertical-align: baseline;
 }
 .detail table td:last-child, .cartridge table td:last-child {
-  padding: 0 0 5px 15px;
+  padding: 0 0 5px 35px;
+}
+
+#options .tab-content table td:first-child, #options.tab-pane table td:first-child, .detail .tab-content table td:first-child, .detail.tab-pane table td:first-child, .cartridge .tab-content table td:first-child, .cartridge.tab-pane table td:first-child {
+  position: relative;
+  z-index: 1;
+}
+#options .tab-content table td:first-child:after, #options.tab-pane table td:first-child:after, .detail .tab-content table td:first-child:after, .detail.tab-pane table td:first-child:after, .cartridge .tab-content table td:first-child:after, .cartridge.tab-pane table td:first-child:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  top: 1.2em;
+  right: -10px;
+  z-index: -1;
+}
+#options table td:first-child, .detail table td:first-child, .cartridge table td:first-child {
+  position: relative;
+  z-index: 1;
+}
+#options table td:first-child:after, .detail table td:first-child:after, .cartridge table td:first-child:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  top: 1.2em;
+  right: -30px;
+  z-index: -1;
+}
+#options table td:first-child .capt, .detail table td:first-child .capt, .cartridge table td:first-child .capt {
+  z-index: 2;
 }
 
 .card-model-list {

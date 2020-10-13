@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Gabriela&display=swap');
 @import "light";
 @import "dark";
 
@@ -391,11 +392,11 @@ body {
   .btn_info {
     cursor: pointer;
     border-radius: 50%;
-    padding: 0 0 0 10px;
+    padding: 0 0 0 10.4px;
+    margin: 0 1em;
     width: 25px;
     height: 25px;
     display: inline-block;
-    font-weight: 600;
   }
 
   .supp-title {
@@ -431,12 +432,14 @@ body {
         z-index: -1;
       }
     }
+
     .supplies-analogs {
       height: 90%;
       min-height: 3em;
       overflow-y: scroll;
       width: calc(100% + 40px);
     }
+
     button {
       position: absolute;
       right: 15px;
@@ -479,6 +482,7 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
+
       img {
         max-width: 100%;
       }
@@ -531,13 +535,14 @@ body {
         &:first-child {
           padding: 0;
         }
+
         padding: 0 0 0 15px;
       }
 
       .capt {
         font-size: 1.2em;
         margin: 0;
-        line-height: 1.8em;
+        line-height: 1.2em;
       }
 
       .val {
@@ -550,6 +555,7 @@ body {
     }
   }
 }
+
 .detail, .cartridge {
   h3 {
     small {
@@ -558,25 +564,76 @@ body {
       display: inline-block;
     }
   }
+
   .price {
     padding: 20px 0;
     text-align: center;
     font-size: 1.1em;
+
     span {
       font-size: 1.5em;
       padding: 0 0 0 10px;
     }
   }
+
   table {
     td {
       font-size: 1.5em;
       vertical-align: baseline;
+
       &:last-child {
-        padding: 0 0 5px 15px;
+        padding: 0 0 5px 35px;
       }
     }
   }
 }
+
+#options, .detail, .cartridge {
+  .tab-content, &.tab-pane {
+    table {
+      td {
+
+        &:first-child {
+          position: relative;
+          z-index: 1;
+
+          &:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            top: 1.2em;
+            right: -10px;
+            z-index: -1;
+          }
+        }
+      }
+    }
+  }
+
+  table {
+    td {
+
+      &:first-child {
+        position: relative;
+        z-index: 1;
+
+        &:after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          top: 1.2em;
+          right: -30px;
+          z-index: -1;
+        }
+
+        .capt {
+          z-index: 2;
+        }
+      }
+    }
+  }
+}
+
 .card-model-list {
   height: 1000px;
   margin: 0;

@@ -149,7 +149,7 @@ def get_filtered_model(brands, checkboxs, ranges, radios):
                 f_sql += f'brand_id = {int(bid)} OR '
             else:
                 f_sql += f'brand_id = {int(bid)} )'
-    f_sql += f' ORDER BY main_image;'
+    f_sql += f' ORDER BY weight DESC, main_image;'
     print(f_sql)
     brand_models = _query(f_sql)
     return brand_models

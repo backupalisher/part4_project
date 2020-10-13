@@ -20,7 +20,7 @@
                         {% if images %}
                             <img src="{{ MEDIA_URL }}{{ images }}"/>
                         {% else %}
-                            <img src="{{ MEDIA_URL }}no_image_part.png"/>
+                            <img src="{{ MEDIA_URL }}no_image.svg"/>
                         {% endif %}
                     </div>
 {#                    <div class="price">{% if lang == 'ru' %}Ориентировочная цена#}
@@ -38,25 +38,25 @@
                         <table>
                             {% if partcode and partcode != '-' %}
                                 <tr>
-                                    <td class="first">{% if lang == 'ru' %}Парткод{% else %} Part code {% endif %}</td>
+                                    <td class="first"><span class="capt"> {% if lang == 'ru' %}Парткод{% else %} Part code {% endif %} </span></td>
                                     <td>{{ partcode }}</td>
                                 </tr>
                             {% endif %}
                             {% if model_name != '-' %}
                                 <tr>
-                                    <td>{% if lang == 'ru' %}Модель{% else %} Model {% endif %}</td>
+                                    <td><span class="capt">{% if lang == 'ru' %}Модель{% else %} Model {% endif %}</span></td>
                                     <td><a href="/model/{{ model_id }}">{{ model_name }}</a></td>
                                 </tr>
                             {% endif %}
                             {% if module_name %}
                                 <tr>
-                                    <td>{% if lang == 'ru' %}Модуль{% else %} Module {% endif %}</td>
+                                    <td><span class="capt">{% if lang == 'ru' %}Модуль{% else %} Module {% endif %}</span></td>
                                     <td><a href="/model/{{ model_id }}?module={{ module_name }}">{{ module_name }}</a>
                                     </td>
                                 </tr>
                             {% elif module_name_ru %}
                                 <tr>
-                                    <td>{% if lang == 'ru' %}Модуль{% else %} Module {% endif %}</td>
+                                    <td><span class="capt">{% if lang == 'ru' %}Модуль{% else %} Module {% endif %}</span></td>
                                     <td>
                                         <a href="/model/{{ model_id }}?module={{ module_name_ru }}">{{ module_name_ru }}</a>
                                     </td>
@@ -65,7 +65,7 @@
 
                             {% if part_desc != '' and part_desc != None %}
                                 <tr>
-                                    <td>{% if lang == 'ru' %}Описание{% else %} Description {% endif %}</td>
+                                    <td><span class="capt">{% if lang == 'ru' %}Описание{% else %} Description {% endif %}</span></td>
                                     <td>{{ part_desc }}</td>
                                 </tr>
                             {% endif %}
