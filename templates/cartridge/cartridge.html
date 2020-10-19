@@ -79,9 +79,11 @@
                 <div class="col-sm-12">
                     <div class="py-2">
                         {% if options and options|length > 0 or cartridge_options|length > 0 %}
-                            <div class="nav-item">
-                                <a class="nav-link active" href="#">
-                                    {% if lang == 'ru' %}Характеристики{% else %}Technical Specifications{% endif %}</a>
+                            <div class="nav nav-tabs">
+                                <div class="nav-item">
+                                    <a class="nav-link active" href="#">
+                                        {% if lang == 'ru' %}Характеристики{% else %}Technical Specifications{% endif %}</a>
+                                </div>
                             </div>
                         {% endif %}
                         <div class="tab-content">

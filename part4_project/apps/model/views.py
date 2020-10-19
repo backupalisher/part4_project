@@ -172,6 +172,7 @@ def index(request, model_id):
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     # print(datetime.datetime.now() - start_time, 'start')
     init_result = loop.run_until_complete(init(model_id))[0]
+    print(init_result[0])
     detail_id = init_result[0][0]
     model_id = init_result[0][1]
     model_name = init_result[0][2]
@@ -185,6 +186,7 @@ def index(request, model_id):
     pages_per_month = [init_result[0][13], init_result[0][14]]
     speed = [init_result[0][15], init_result[0][16]]
     output_type = [init_result[0][17], init_result[0][18]]
+    model_status = [init_result[0][19], init_result[0][20]]
     loop.create_task(set_weight(detail_id))
     if detail_id:
         post_result = loop.run_until_complete(past_init(request, model_id, detail_id))
@@ -208,11 +210,15 @@ def index(request, model_id):
     # print(datetime.datetime.now() - start_time, 'завершение')
     if tab:
         pass
-    elif cur_module is not None or len(subcaptions) == 0 or tab == 'parts':
+    elif cur_module is not None:
         tab = 'parts'
-    elif (verrors is not None and len(captions) == 0 and len(modules) == 0) or tab == 'errors':
+    elif len(subcaptions) > 0:
+        tab = 'options'
+    elif len(supplies) > 0:
+        tab = 'supplies'
+    elif len(verrors) > 0:
         tab = 'errors'
-    elif (supplies is not None and len(captions) == 0 and len(modules) == 0 and len(verrors) == 0) or tab == 'supplies':
+    elif len(supplies) > 0:
         tab = 'supplies'
     else:
         tab = 'options'
@@ -223,6 +229,7 @@ def index(request, model_id):
                        'partcatalog': partcatalog, 'captions': captions, 'brand_id': brand_id, 'brand_name': brand_name,
                        'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module, 'supplies': supplies,
                        'tab': tab, 'type_of_device': type_of_device, 'technology': technology, 'max_format': max_format,
-                       'pages_per_month': pages_per_month, 'speed': speed, 'output_type': output_type})
+                       'pages_per_month': pages_per_month, 'speed': speed, 'output_type': output_type,
+                       'model_status': model_status})
     else:
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))

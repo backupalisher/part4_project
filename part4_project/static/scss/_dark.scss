@@ -176,6 +176,9 @@
     }
 
     .card-head {
+      h3 {
+        color: $blue;
+      }
       .card-image {
         background-color: $white;
         box-shadow: 0 0 5px $white_smoky;
@@ -183,9 +186,11 @@
 
       .rating {
         color: $blue;
+        border-bottom: 1px solid $blue_purple;
 
         span {
           color: $pink_yellowish;
+          border-left: 1px solid $blue_purple;
         }
       }
     }
@@ -258,7 +263,7 @@
 
   #parts {
     h6 {
-      color: $blue_dark
+      color: $blackberry
     }
 
     .module-title, .model-opts > div {
@@ -272,6 +277,7 @@
     }
 
     .part-item {
+      border-bottom: 1px solid $blue_purple;
       .part-item_img {
         background-color: $white;
       }
@@ -279,6 +285,9 @@
   }
 
   #errors {
+    h6 {
+      color: $blackberry;
+    }
     .errors_search {
       background-color: $sapphire;
       color: $white_smoky;
@@ -326,7 +335,7 @@
     table {
       tr {
         &:first-child td {
-          color: $blue_dark;
+          color: $blackberry;
         }
 
         &:not(:first-child):hover {
@@ -345,7 +354,7 @@
       color: $blue;
 
       h6 {
-        color: $blue_dark;
+        color: $blackberry;
       }
 
       &.active {

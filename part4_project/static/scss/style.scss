@@ -383,6 +383,7 @@ body {
 
 .supplies {
   border-radius: 10px;
+  padding: 0 15px;
 
   #cartridge_search {
     border: none;
@@ -473,7 +474,9 @@ body {
   .card-head {
     width: 100%;
     padding: 15px;
-
+    h3 {
+      font-weight: 600;
+    }
     .card-image {
       padding: 10px;
       border-radius: 10px;
@@ -485,11 +488,24 @@ body {
 
       img {
         max-width: 100%;
+        width: 100%;
       }
     }
 
     .rating {
       font-size: 0.9em;
+      .stars {
+        display: inline-flex;
+        padding: 0 5px;
+        img {
+          display: inline-block;
+        }
+      }
+      span {
+        display: inline-block;
+        padding-left: 7px;
+        margin-left: 7px;
+      }
     }
   }
 
@@ -589,6 +605,9 @@ body {
 }
 
 #options, .detail, .cartridge {
+  &.desc {
+    padding: 15px 0 0 0;
+  }
   .tab-content, &.tab-pane {
     table {
       td {
@@ -604,6 +623,13 @@ body {
             top: 1.2em;
             right: -10px;
             z-index: -1;
+          }
+        }
+        &.no_line {
+          &:first-child {
+            &:after {
+              display: none;
+            }
           }
         }
       }
@@ -760,10 +786,6 @@ body {
 }
 
 #errors {
-  h6 {
-    color: $blue_dark;
-  }
-
   .errors_search {
     border-radius: 5px;
     border: none;
@@ -793,7 +815,7 @@ body {
 #supplies {
   table {
     td {
-      padding: 5px;
+      padding: 0 5px 5px 5px;
       font-size: 1.1em;
 
       :first-child {

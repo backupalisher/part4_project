@@ -120,8 +120,7 @@ def index(request, detail_id):
         brand_id = init_result[1][0][11]
         brand_name = init_result[1][0][12]
         try:
-            cartridge_options = loop.run_until_complete(get_cartridge_options(partcode))[0]
-            print(cartridge_options)
+            cartridge_options = loop.run_until_complete(get_cartridge_options(partcode))
         except:
             cartridge_options = None
         loop.run_until_complete(loop.shutdown_asyncgens())
@@ -130,7 +129,6 @@ def index(request, detail_id):
         loop.run_until_complete(loop.shutdown_asyncgens())
         loop.close()
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))
-
     return render(request, 'detail/index.html',
                   {'detail_id': detail_id, 'model_name': model_name, 'model_id': model_id, 'module_id': module_id,
                    'module_name': module_name, 'module_name_ru': module_name_ru, 'detail_name': detail_name,

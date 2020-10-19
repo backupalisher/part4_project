@@ -4,7 +4,7 @@
         {% if cartridge_options|length > 0 %}
             {% for option in cartridge_options %}
                 <tr class="cartridge_options">
-                    <td>{{ option.2 }}</td>
+                    <td><span class="capt">{{ option.2 }}</span></td>
                     <td>{{ option.3 }}</td>
                 </tr>
             {% endfor %}

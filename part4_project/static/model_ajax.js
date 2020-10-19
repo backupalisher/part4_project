@@ -3,6 +3,7 @@ $page_count = 0
 page = 0
 count = 24
 $models_all = []
+aTop = 0
 if (brand_models.length > 0) {
     brand_models = brand_models.replace(/&#x27;/g, "'")
     brand_models = brand_models.replace(/'/g, '"')
@@ -19,7 +20,7 @@ if (brand_models.length > 0) {
 
 if ($('.card-model-list').length) {
     $(function () {
-        let aTop = $('#load_more').position().top;
+        aTop = $('#load_more').position().top;
         if (page >= $page_count || $page_count === 1) {
             $('#load_more').toggleClass('hidden')
         } else {
@@ -47,9 +48,9 @@ function show_models(models, media_url, page, count) {
     for (let i = page * count; i < (page + 1) * count; i++) {
         if (models[i]) {
             if (models[i][4] !== "") {
-                $mstyle = 'style="background-image:url(\'' + media_url + models[i][4] + '\')"'
+                $mstyle = 'style="background-image:url(\'' + media_url + models[i][4] + '\');"'
             } else {
-                $mstyle = 'style="background-image:url(\'' + media_url + 'no_image.svg\')"'
+                $mstyle = 'style="background-image:url(\'' + media_url + 'no_image.svg\'); background-size: 80%;"'
             }
             $html = '<div class="col-lg-3 col-md-4 col-sm-6 p-2"> <div class="card card-model-item btn">' +
                 '<a href="/model/' + models[i][1] + '" class="brand_model_link" ' + $mstyle + '>' +
@@ -81,14 +82,16 @@ $('#filter_search').keyup(function () {
     } else {
         $models_all = brand_models
         $('.card-model-list .row').html('')
-        show_models($models_all, media_url, page, count)
+        aTop = $('#load_more').position().top;
+        show_models($models_all, media_url, 0, count)
     }
 })
 $('#filter_search_clear').click(function () {
-    $('#filter_search').val('')
     $models_all = brand_models
     $('.card-model-list .row').html('')
-    show_models($models_all, media_url, page, count)
+    aTop = $('#load_more').position().top;
+    show_models($models_all, media_url, 0, count)
+    $('#filter_search').val('')
 })
 
 

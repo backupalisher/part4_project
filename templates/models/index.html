@@ -40,7 +40,18 @@
                 </div>
                 <div class="col">
                     <h3><span class="model-title"> {{ model_name }}</span></h3>
-                    <div class="rating">Рейтинг <span>Discontinued</span></div>
+                    <div class="rating">
+                        Рейтинг <div class="stars">
+                                    <img src="{{ MEDIA_URL }}icons/star.svg">
+                                    <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                    <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                    <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                    <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                </div>
+                        {% if model_status.1 %}
+                            <span>{{ model_status.1 }}</span>
+                        {% endif %}
+                    </div>
                     {% for caption in captions %}
                         {% if 'Status' in caption %}
                             <h5><span class="partcode"> {{ caption|cut:'Status: ' }} </span></h5>
@@ -48,22 +59,22 @@
                     {% endfor %}
                     <div class="table-responsive detail desc">
                         <table>
-                            {% if type_of_device %}
+                            {% if type_of_device.0 %}
                                 <tr><td><span>{{ type_of_device.0 }}</span></td><td>{{ type_of_device.1 }}</td></tr>
                             {% endif %}
-                            {% if technology %}
+                            {% if technology.0 %}
                                 <tr><td><span>{{ technology.0 }}</span></td><td>{{ technology.1 }}</td></tr>
                             {% endif %}
-                            {% if max_format %}
+                            {% if max_format.0 %}
                                 <tr><td><span>{{ max_format.0 }}</span></td><td>{{ max_format.1 }}</td></tr>
                             {% endif %}
-                            {% if pages_per_month %}
+                            {% if pages_per_month.0 %}
                                 <tr><td><span>{{ pages_per_month.0 }}</span></td><td>{{ pages_per_month.1 }}</td></tr>
                             {% endif %}
-                            {% if speed %}
+                            {% if speed.0 %}
                                 <tr><td><span>{{ speed.0 }}</span></td><td>{{ speed.1 }}</td></tr>
                             {% endif %}
-                            {% if output_type %}
+                            {% if output_type.0 %}
                                 <tr><td><span>{{ output_type.0 }}</span></td><td>{{ output_type.1 }}</td></tr>
                             {% endif %}
                         </table>
