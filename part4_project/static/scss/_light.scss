@@ -122,7 +122,8 @@
     }
 
     #filter_search {
-
+      color: $blue_gray;
+      background-color: $white_smoky;
     }
   }
 
@@ -143,6 +144,11 @@
     }
   }
 
+  .cartridges {
+    .title {
+      color: $grey;
+    }
+  }
   .supplies {
     color: $blue_gray;
     background-color: $white;
@@ -274,6 +280,8 @@
       border-bottom: 1px solid $white_smoky;
       .part-item_img {
         background-color: $white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
       }
     }
 
@@ -284,7 +292,9 @@
       background-color: $white_smoky;
       color: $blue_gray;
     }
-
+    h6 {
+      color: $grey;
+    }
     .error-list {
 
     }
@@ -317,6 +327,7 @@
 
           span {
             color: $blue_dark;
+            font-weight: 600;
           }
         }
       }
@@ -341,13 +352,16 @@
     }
 
     .supp-title {
-      background-color: $sapphire;
-      color: $blue_gray;
+      background-color: $grey;
+      color: $blue_dark;
     }
-
+    .suppl_bg {
+      background: rgba(215, 215, 215, 0.75);
+    }
     .supplies-item {
-      background-color: $anthracite;
+      background-color: $white;
       color: $blue;
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 
       h6 {
         color: $grey;

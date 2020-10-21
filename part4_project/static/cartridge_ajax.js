@@ -41,15 +41,15 @@ if ($('#cartridge_items').length) {
 function show_cartridges(cartridges, page, count) {
     for (let i = page * count; i < (page + 1) * count; i++) {
         if (cartridges[i]) {
-            $html = '<div class="row"><div class="col-3"><a href="/cartridge/' + cartridges[i][0] + '" class="text-yellow">' + cartridges[i][1] + '</a></div>'
+            $html = '<div class="row"><div class="col-3"><a href="/cartridge/' + cartridges[i][0] + '" class="">' + cartridges[i][1] + '</a></div>'
             if (cartridges[i][2]) {
-                $html += '<div class="col-5"><span class="text-green">' + cartridges[i][2] + '</span></div>\n'
+                $html += '<div class="col-5"><span class="">' + cartridges[i][2] + '</span></div>\n'
             } else if (cartridges[i][3]) {
-                $html += '<div class="col-5"><span class="text-green">' + cartridges[i][3] + '</span></div>\n'
+                $html += '<div class="col-5"><span class="">' + cartridges[i][3] + '</span></div>\n'
             }
             $html += '<div class="col-4">\n' +
                 '<a class="btn_info" aria-controls="suppl' + i + '">i</a>\n' +
-                '<div class="supplies-item" id="suppl' + i + '"><div class="supp-title">' + cartridges[i][1] + ' - '
+                '<div class="suppl_bg suppl' + i + '"></div><div class="supplies-item" id="suppl' + i + '"><div class="supp-title">' + cartridges[i][1] + ' - '
             if (cartridges[i][2]) {$html += cartridges[i][2]}
             else if (cartridges[i][3]) {$html += cartridges[i][3]}
             $html += '</div> <h6>Analogs of models</h6> <div class="supplies-analogs">'
@@ -132,10 +132,12 @@ function getUrlVars()
 $(document).on('click','#cartridge_items .btn_info', function() {
     $('.supplies-item').removeClass('active')
     $('#'+$(this).attr('aria-controls')).addClass('active')
+    $('.'+$(this).attr('aria-controls')).addClass('active')
 })
 
 // Close supplies popup
 $(document).on('click','#cartridge_items button', function() {
     $('.supplies-item').removeClass('active')
     $('#'+$(this).attr('aria-controls')).removeClass('active')
+    $('.'+$(this).attr('aria-controls')).removeClass('active')
 })

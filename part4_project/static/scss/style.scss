@@ -72,7 +72,7 @@ body {
 }
 
 .logo {
-  width: 160px;
+  width: 166px;
   height: 40px;
   display: flex;
   justify-content: flex-end;
@@ -81,12 +81,14 @@ body {
   background-position: left top;
   background-size: contain;
   vertical-align: bottom;
-  font-size: 1.2em;
+  font-size: 1.3em;
   line-height: 1em;
   font-weight: 700;
+  font-family: Ubuntu, Roboto, sans-serif;
 
   small {
-
+    font-size: 0.77em;
+    font-weight: 700;
   }
 
   &:hover {
@@ -268,7 +270,24 @@ body {
 }
 
 .filter {
-
+  position: relative;
+  #float {
+    position: absolute;
+    left: 240px;
+    z-index: 99;
+    display: none;
+    &.active {
+      display: block;
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 5px;
+      border: 12px solid transparent;
+      border-right: 12px solid #5AA6FE;
+    }
+  }
   .filter_settings {
     max-height: 100vh;
     overflow-y: scroll;
@@ -404,9 +423,22 @@ body {
     border-radius: 10px 10px 0 0;
     padding: 10px 15px;
     text-align: center;
-    margin: 0 -15px;
+    margin: 0 -15px 15px;
   }
 
+  .suppl_bg {
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
   .supplies-item {
     position: fixed;
     top: 15%;
@@ -422,16 +454,6 @@ body {
 
     &.active {
       display: block;
-
-      &:before {
-        content: '';
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: -1;
-      }
     }
 
     .supplies-analogs {
@@ -488,7 +510,8 @@ body {
 
       img {
         max-width: 100%;
-        width: 100%;
+        width: auto;
+        max-height: 100%;
       }
     }
 

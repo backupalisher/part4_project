@@ -121,7 +121,8 @@
     }
 
     #filter_search {
-
+      color: $blue_gray;
+      background-color: $blue_purple;
     }
   }
 
@@ -142,6 +143,11 @@
     }
   }
 
+  .cartridges {
+    .title {
+      color: $blackberry;
+    }
+  }
   .supplies {
     color: $blue_gray;
     background-color: $anthracite;
@@ -280,6 +286,8 @@
       border-bottom: 1px solid $blue_purple;
       .part-item_img {
         background-color: $white;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.25);
+        border-radius: 5px;
       }
     }
   }
@@ -348,10 +356,13 @@
       background-color: $sapphire;
       color: $white_smoky;
     }
-
+    .suppl_bg {
+      background: rgba(32, 33, 54, 0.75);
+    }
     .supplies-item {
       background-color: $anthracite;
       color: $blue;
+      box-shadow: 0 0 6px $blue_purple;
 
       h6 {
         color: $blackberry;
@@ -359,9 +370,6 @@
 
       &.active {
 
-        &:before {
-          background: rgba(32, 33, 54, 0.75);
-        }
       }
     }
 

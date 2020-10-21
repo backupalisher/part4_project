@@ -20,7 +20,7 @@ $(document).ready(function () {
             $brands.push(parseInt($(this).val()))
         }
         $(this).parent().toggleClass('checked');
-        checkDisable();
+        checkDisable($('.filter_settings').offset().top+75);
     });
 
     // Filter
@@ -174,7 +174,7 @@ $(document).ready(function () {
                 }
             }
 
-            checkDisable();
+            checkDisable($(this).offset().top);
         })
         $("#form_filter #reset").click(function () {
             $checkboxs = {}
@@ -200,9 +200,9 @@ $(document).ready(function () {
                     $('.filter_search').addClass('is_filtered')
                 }
             });
-            checkDisable();
+            checkDisable(0);
         })
-        $("#form_filter #submit").click(function (event) {
+        $("#form_filter #submit, #form_filter #float").click(function (event) {
             if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0 || $brands.length > 0) {
                 event.preventDefault();
                 let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -235,7 +235,12 @@ $(document).ready(function () {
     }
 })
 
-function checkDisable() {
+function checkDisable(pos) {
+    if (pos === 0) {
+        $('#float').css('top', pos-15-$('.filter_settings').offset().top).css('display', 'none');
+    } else {
+        $('#float').css('top', pos-15-$('.filter_settings').offset().top).css('display', 'block');
+    }
     $('#filter_model a.btn').removeClass("disabled");
     // if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0 || $brands.length > 0) {
     //     $('#filter_model a.btn').removeClass("disabled");

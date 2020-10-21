@@ -23,7 +23,7 @@
                             {% if partcodes.images %}
                                 <img src="{{ MEDIA_URL }}{{ partcodes.images }}"/>
                             {% else %}
-                                <img src="{{ MEDIA_URL }}no_image.svg"/>
+                                <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;"/>
                             {% endif %}
                         </div>
                         {% if prices %}
