@@ -269,6 +269,21 @@ body {
   }
 }
 
+.loading {
+  display: none;
+  text-align: center;
+  &.active {
+    display: block;
+  }
+}
+.not-found {
+  display: none;
+  text-align: center;
+  &.active {
+    display: block;
+  }
+}
+
 .filter {
   position: relative;
   #float {
@@ -381,6 +396,23 @@ body {
   padding: 10px;
 }
 
+#filter_badge {
+  display: none;
+  padding: 0 15px;
+  flex-wrap: wrap;
+  
+  &.active {
+    display: flex;
+  }
+
+  .fbadge {
+    cursor: pointer;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+  }
+}
+
 .nav_tabs {
   margin: 0 -15px 15px;
 
@@ -412,11 +444,12 @@ body {
   .btn_info {
     cursor: pointer;
     border-radius: 50%;
-    padding: 0 0 0 10.4px;
+    padding: 0 0 0 10px;
     margin: 0 1em;
     width: 25px;
     height: 25px;
     display: inline-block;
+    font-weight: 600;
   }
 
   .supp-title {

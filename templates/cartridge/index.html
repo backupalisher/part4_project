@@ -22,7 +22,7 @@
                     <label for="{{ brand.name }}" {% if brand.logotype is not None %}
                            style="background-image: url('{{ MEDIA_URL }}brands/{{ brand.logotype }}')"
                     {% else %}
-                           style="background-image: url('{{ MEDIA_URL }}no-image.png')">
+                           style="background-image: url('{{ MEDIA_URL }}no-image.png')" style="width: 100%;">
                     {% endif %}>
                     <input type="checkbox" id="{{ brand.name }}" name="{{ brand.id }}" value="{{ brand.id }}">
                     </label>

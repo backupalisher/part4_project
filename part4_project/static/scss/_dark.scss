@@ -109,20 +109,26 @@
       }
     }
   }
-
+  #filter_badge {
+    .fbadge {
+      border: 1px solid $pink_rich;
+      background-color: $pink_rich;
+      color: $white_smoky;
+    }
+  }
   .filter-result {
     color: $blue_gray;
     background-color: $anthracite;
   }
 
   .filter_search {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25);
     &.is_filtered {
       box-shadow: 0 0 1px 2px $sapphire;
     }
 
     #filter_search {
       color: $blue_gray;
-      background-color: $blue_purple;
     }
   }
 
@@ -144,6 +150,9 @@
   }
 
   .cartridges {
+    .line {
+      border-bottom: 1px solid $blue_purple;
+    }
     .title {
       color: $blackberry;
     }
