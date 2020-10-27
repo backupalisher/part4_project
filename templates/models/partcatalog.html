@@ -1,12 +1,15 @@
 {% load static mfilters %}
 <div class="container">
     <div class="row">
+        <div class="col-12">
+            <input type="text" placeholder="Поиск по парткодам" id="parts_search" class="parts_search">
+        </div>
         <div class="col-md-3 col-12">
             <h6>Модули</h6>
             <div class="scrollbar-macosx">
                 <div class="tab-inner-scroll">
                     {% for module in modules %}
-                        <div class="module-title"
+                        <div class="module-title opts{{ forloop.counter }}"
                              onclick=" $('.module-title').removeClass('selected-module'),
                                      $(this).addClass('selected-module')
                                      $( '.model-opts' ).css('display', 'none'),
@@ -62,3 +65,19 @@
         </div>
     </div>
 </div>
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function jqueryIsLoaded() {
+            $parts_script = "{% static 'model_parts.js' %}"
+            $.getScript($parts_script)
+        }
+        function checkIsJquery() {
+            if (window.jQuery) {
+                jqueryIsLoaded();
+            } else {
+                window.setTimeout(checkIsJquery, 100);
+            }
+        }
+        checkIsJquery();
+    </script>
+{% endblock %}

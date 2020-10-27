@@ -93,7 +93,9 @@
                                         {% for option in options %}
                                             <tr>
                                                 <td class="px-2"><span class="capt">{{ option.2 }}</span></td>
-                                                <td class="px-3">{{ option.3 }}</td>
+                                                <td class="px-3">{% if 'http' in option.3 %}
+                                                    <a href="{{ option.3 }}">{{ option.3 }}</a>
+                                                {% else %}{{ option.3 }}{% endif %}</td>
                                             </tr>
                                         {% endfor %}
                                     </table>

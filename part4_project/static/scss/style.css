@@ -388,6 +388,10 @@ $black: #262629;
 .light-theme #parts h6 {
   color: #D7D7D7;
 }
+.light-theme #parts .parts_search {
+  background-color: #F4F5F9;
+  color: #799AB9;
+}
 .light-theme #parts .module-title:hover, .light-theme #parts .model-opts > div:hover {
   background-color: rgba(233, 59, 174, 0.1);
 }
@@ -859,6 +863,10 @@ $black: #262629;
 }
 .dark-theme #parts h6 {
   color: #68687B;
+}
+.dark-theme #parts .parts_search {
+  background-color: #202136;
+  color: #F4F5F9;
 }
 .dark-theme #parts .module-title:hover, .dark-theme #parts .model-opts > div:hover {
   background-color: rgba(233, 59, 174, 0.1);
@@ -1573,6 +1581,13 @@ body {
   padding: 15px;
 }
 
+#parts .parts_search {
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  padding: 2px 8px;
+  margin: 5px 0 15px;
+}
 #parts .module-name {
   cursor: pointer;
 }

@@ -780,6 +780,13 @@ body {
 }
 
 #parts {
+  .parts_search {
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    padding: 2px 8px;
+    margin: 5px 0 15px;
+  }
   .module-name {
     cursor: pointer;
 
