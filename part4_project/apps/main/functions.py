@@ -69,12 +69,12 @@ def sql_get_range(cid, rmin, rmax):
         rmax = 1000000
     q = f'SELECT * FROM select_id_for_range({cid}, {rmin}, {rmax})'
     rids = _query(q)
-    sq = ''
     for i, rid in enumerate(rids):
         if i == 0:
-            sq = f' mopt.ids && ARRAY[{rid[0]}]'
+            sq = f'( mopt.ids && ARRAY[{rid[0]}]'
         else:
             sq += f' OR mopt.ids && ARRAY[{rid[0]}]'
+    sq += ')'
     return sq
 
 

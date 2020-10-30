@@ -56,11 +56,12 @@ function show_cartridges(cartridges, page, count) {
             if (cartridges[i][4]) {
                 for (let ci = 0; ci < cartridges[i][4].length; ci++) {
                     if (cartridges[i][4][ci]) {
-                        $html += cartridges[i][4][ci] + '<br>'
+                        $html +='<a href="/model/' + cartridges[i][5][ci] + '" >' + cartridges[i][4][ci] + '</a><br>'
                     }
                 }
             }
             if (cartridges[i][8]) {
+                $html += '<hr>'
                 for (let cai = 0; cai < cartridges[i][8].length; cai++) {
                     if (cartridges[i][8][cai]) {
                         $html += cartridges[i][8][cai] + '<br>'
