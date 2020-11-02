@@ -39,6 +39,7 @@ def search(request):
 
 
 def index_models(request):
+    lang = request.LANGUAGE_CODE
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop = asyncio.get_event_loop()
@@ -97,7 +98,7 @@ def index_models(request):
             return render(request, 'filter/filter_result.html', {'search_block': True, 'brands': brands,
                                                                  'page': page, 'pages': range(pages),
                                                                  'brand_models': str(brand_models),
-                                                                 'model_count': model_count})
+                                                                 'model_count': model_count, 'lang': lang})
         else:
             return JsonResponse('unsuccessful')
     else:
@@ -112,6 +113,6 @@ def index_models(request):
         loop.close()
         # print(datetime.datetime.now() - start_time, 'завершение')
         return render(request, 'main/models.html', {'search_block': True, 'brands': brands,
-                                                    'brand_models': brand_models,
+                                                    'brand_models': brand_models, 'lang': lang,
                                                     'model_count': model_count, 'page': page, 'pages': range(pages),
                                                     'sfilter': sfilter, 'filter_captions': filter_captions})

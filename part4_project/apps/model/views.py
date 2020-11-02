@@ -158,6 +158,7 @@ async def past_init(request, model_id, detail_id):
 
 
 def index(request, model_id):
+    lang = request.LANGUAGE_CODE
     tabs = [
         'options',
         'parts',
@@ -229,7 +230,7 @@ def index(request, model_id):
                        'partcatalog': partcatalog, 'captions': captions, 'brand_id': brand_id, 'brand_name': brand_name,
                        'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module, 'supplies': supplies,
                        'tab': tab, 'type_of_device': type_of_device, 'technology': technology, 'max_format': max_format,
-                       'pages_per_month': pages_per_month, 'speed': speed, 'output_type': output_type,
+                       'pages_per_month': pages_per_month, 'speed': speed, 'output_type': output_type, 'lang': lang,
                        'model_status': model_status})
     else:
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))

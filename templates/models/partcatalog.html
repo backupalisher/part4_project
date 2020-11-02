@@ -1,18 +1,16 @@
 {% load static mfilters %}
 <div class="container">
     <div class="row">
-        <div class="col-12">
-            <input type="text" placeholder="Поиск по парткодам" id="parts_search" class="parts_search">
-        </div>
         <div class="col-md-3 col-12">
             <h6>Модули</h6>
+            <input type="text" placeholder="Поиск по парткодам" id="parts_search" class="parts_search">
             <div class="scrollbar-macosx">
                 <div class="tab-inner-scroll">
                     {% for module in modules %}
                         <div class="module-title opts{{ forloop.counter }}"
-                             onclick=" $('.module-title').removeClass('selected-module'),
-                                     $(this).addClass('selected-module')
-                                     $( '.model-opts' ).css('display', 'none'),
+                             onclick=" $('.module-title').removeClass('selected-module');
+                                     $(this).addClass('selected-module');
+                                     $( '.model-opts' ).css('display', 'none');
                                      $( '#opts{{ forloop.counter }}' ).toggle();">
                             {{ module }}
                         </div>

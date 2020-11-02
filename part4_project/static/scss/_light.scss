@@ -71,6 +71,16 @@
     }
   }
 
+  .search_results {
+
+  }
+  .error_result, .search_result, .cartridge_result {
+    border-bottom: 1px solid $grey;
+    .image {
+      background-color: $white;
+      box-shadow: 0 0 5px $grey;
+    }
+  }
 
   .filter {
     .filter_settings {

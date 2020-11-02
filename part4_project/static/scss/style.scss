@@ -6,6 +6,8 @@
   font-weight: 400 !important;
 }
 
+* {outline: none;}
+
 body {
   font-family: -apple-system, Roboto, BlinkMacSystemFont, "GT Walsheim Regular", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 14px;
@@ -507,6 +509,21 @@ body {
   }
 }
 
+.rating {
+  font-size: 0.9em;
+  .stars {
+    display: inline-flex;
+    padding: 0 5px;
+    img {
+      display: inline-block;
+    }
+  }
+  span {
+    display: inline-block;
+    padding-left: 7px;
+    margin-left: 7px;
+  }
+}
 
 #cartridge_items {
   height: 1000px;
@@ -545,22 +562,6 @@ body {
         max-width: 100%;
         width: auto;
         max-height: 100%;
-      }
-    }
-
-    .rating {
-      font-size: 0.9em;
-      .stars {
-        display: inline-flex;
-        padding: 0 5px;
-        img {
-          display: inline-block;
-        }
-      }
-      span {
-        display: inline-block;
-        padding-left: 7px;
-        margin-left: 7px;
       }
     }
   }
@@ -868,8 +869,7 @@ body {
   .error-title {
     cursor: pointer;
     padding: 5px;
-
-    &:hover {
+    &:hover, &.active {
       font-weight: 600;
     }
   }
@@ -937,9 +937,22 @@ h1 {
 .brand_model_title {
   text-align: center;
 }
-
-.error_result, .search_result {
-  padding-bottom: 15px;
+.search_results {
+  padding: 15px;
+}
+.error_result, .search_result, .cartridge_result {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  .image {
+    padding: 10px;
+    border-radius: 10px;
+    min-width: 140px;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .error_result, .search_result {
@@ -956,9 +969,20 @@ h1 {
   }
 
   .desc {
-    padding-left: 10px;
+    padding-left: 20px;
     flex-shrink: 2;
     width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    display: flex;
+    .desc-inner {
+      font-size: 16px;
+      h2 {
+        font-weight: 600;
+        font-size: 24px;
+      }
+    }
   }
 }
 
@@ -977,6 +1001,7 @@ h1 {
 .module-title {
   cursor: pointer;
   padding: 3px 5px;
+  font-weight: 600;
 }
 
 .model-opts {
