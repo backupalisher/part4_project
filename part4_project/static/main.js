@@ -8,6 +8,8 @@ $(document).ready(function () {
             $('#body').removeClass('light-theme')
             $('#body').addClass('dark-theme')
         }
+    } else {
+        $('#body').addClass('light-theme')
     }
     $('#toggle-theme').click(function () {
         if ($('#body').hasClass('dark-theme')) {
