@@ -95,7 +95,8 @@ $('#cartridge_search').keyup(function () {
     } else {
         $cartridges_all = $cartridges
         $('#cartridge_items').html('')
-        show_cartridges($cartridges_all, page, count)
+        aTop = $('#load_more').position().top;
+        show_cartridges($cartridges_all, 0, 40)
     }
 })
 
