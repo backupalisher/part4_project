@@ -1,6 +1,7 @@
 import asyncio
 import json
 import math
+import re
 
 from asgiref.sync import sync_to_async
 from django.db import connections
@@ -11,10 +12,15 @@ from db_model.db_utils import _query
 # search in details
 @sync_to_async
 def search_detail(sval):
+    aval = sval.split(' ')
+    sval = ''
+    for val in aval:
+        sval += val + ':* & '
+    sval = re.sub(r'\s[&]\s$', '', sval)
     with connections['default'].cursor() as c:
         try:
             c.execute("BEGIN")
-            c.callproc('details_search_v1', (sval,))
+            c.callproc('details_search_v2', (sval,))
             ar = c.fetchall()
             c.execute("COMMIT")
         finally:
