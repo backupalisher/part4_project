@@ -74,7 +74,6 @@ async def init(detail_id):
 
 
 async def past_init(request, partcode):
-    print('test 2 ' + partcode)
     if partcode != '-':
         tasks = [
             get_cartridge_options(partcode),

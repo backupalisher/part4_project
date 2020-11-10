@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'contacts',
     'brand',
     'filter',
-    'cartridge'
+    'supplies'
 ]
 
 MIDDLEWARE = [

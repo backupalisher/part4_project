@@ -21,7 +21,7 @@ class Cartridge(models.Model):
     brand_id = models.ForeignKey('Brands', on_delete=models.DO_NOTHING)
 
     class Meta:
-        db_table = 'cartridge'
+        db_table = 'supplies'
 
 
 class Details(models.Model):

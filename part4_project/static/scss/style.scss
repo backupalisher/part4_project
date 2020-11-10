@@ -231,11 +231,13 @@ body {
         content: '';
         position: absolute;
         transform: rotate(45deg);
-        width: 1.2em;
-        height: 1.2em;
-        top: 0.4em;
-        right: 0.8em;
+        width: 0.6em;
+        height: 0.6em;
+        top: 0.7em;
+        right: 0.6em;
         border: 1px solid;
+        border-bottom: none;
+        border-left: none;
       }
 
       &:last-child:after {
@@ -437,8 +439,9 @@ body {
 .supplies {
   border-radius: 10px;
   padding: 0 15px;
+  overflow-x: hidden;
 
-  #cartridge_search {
+  #supplie_search {
     border: none;
     background-color: transparent;
   }
@@ -525,13 +528,13 @@ body {
   }
 }
 
-#cartridge_items {
+#supplie_items {
   height: 1000px;
   margin: 0;
   padding: 0 15px;
 }
 
-.cartridges {
+.supplies {
   .row {
     margin-left: 0;
     margin-right: 0;
@@ -629,7 +632,7 @@ body {
   }
 }
 
-.detail, .cartridge {
+.detail, .supplie {
   h3 {
     small {
       font-size: 0.7em;
@@ -661,7 +664,7 @@ body {
   }
 }
 
-#options, .detail, .cartridge {
+#options, .detail, .supplie {
   &.desc {
     padding: 15px 0 0 0;
   }
@@ -940,7 +943,7 @@ h1 {
 .search_results {
   padding: 15px;
 }
-.error_result, .search_result, .cartridge_result {
+.error_result, .search_result, .supplie_result {
   padding-bottom: 10px;
   margin-bottom: 10px;
   .image {
@@ -978,6 +981,9 @@ h1 {
     display: flex;
     .desc-inner {
       font-size: 16px;
+      .models {
+        a {padding: 0 10px 0 0;}
+      }
       h2 {
         font-weight: 600;
         font-size: 24px;
@@ -1001,7 +1007,9 @@ h1 {
 .module-title {
   cursor: pointer;
   padding: 3px 5px;
-  font-weight: 600;
+  &.selected-module {
+    font-weight: 600;
+  }
 }
 
 .model-opts {
@@ -1037,14 +1045,14 @@ h1 {
   display: inline-block;
 }
 
-.cartridge_options {
+.supplie_options {
   td:first-child {
     width: 45%;
   }
 }
 
-.cartridge {
-  .cartridge_item {
+.supplie {
+  .supplie_item {
     padding-right: 1em;
     white-space: nowrap;
     line-height: 1.6em;
@@ -1166,7 +1174,7 @@ h1 {
 }
 
 @media screen and (max-width: 600px) {
-  .cartridges {
+  .supplies {
     margin: 0 -15px;
     width: calc(100% + 30px);
     word-break: break-word;

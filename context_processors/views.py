@@ -3,7 +3,7 @@ def main_menu(request):
     menu_list = [
         ['/', 'Главная']
         , ['/brand/brands/', 'Бренды и модели']
-        , ['/cartridge/', 'Расходные материалы']
+        , ['/supplies/', 'Расходные материалы']
         # , ['/about/', 'О нас']
     ]
 
@@ -14,7 +14,7 @@ def main_menu(request):
     try:
         if 'brand' in path or 'model' in path:
             cur_item = 'Бренды и модели'
-        elif 'cartridge' in path:
+        elif 'supplies' in path:
             cur_item = 'Расходные материалы'
         else:
             cur_item = 'Главная'

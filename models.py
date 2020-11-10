@@ -143,7 +143,7 @@ class Cartridge(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'cartridge'
+        db_table = 'supplies'
 
 
 class CartridgeAnalogModel(models.Model):

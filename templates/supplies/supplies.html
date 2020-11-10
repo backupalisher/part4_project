@@ -1,16 +1,16 @@
 {% load static %}
 <div class="p-3 w-100">
-    <input type="text" id="cartridge_search" placeholder="найти картридж" class="form-control hover_btn">
+    <input type="text" id="supplie_search" placeholder="найти картридж" class="form-control hover_btn">
 </div>
-<div class="table-responsive cartridges">
+<div class="table-responsive supplies">
     <div class="row line">
         <div class="col-3"><span class="title">Код производителя</span></div>
         <div class="col-5"><span class="title">Наименование</span></div>
         <div class="col-4"><span class="title">Совместим с моделями</span></div>
     </div>
     <div class="scrollbar-macosx">
-        <div id="cartridge_table">
-            <div id="cartridge_items"></div>
+        <div id="supplie_table">
+            <div id="supplie_items"></div>
             <div id="load_more"></div>
         </div>
     </div>
@@ -20,9 +20,9 @@
 {% block ajaxjs %}
     <script type="text/javascript">
         function jqueryLoaded() {
-            $cartridges = "{{ cartridges }}"
+            $supplies = "{{ supplies }}"
             $media_url = "{{ MEDIA_URL }}"
-            $ajax_script = "{% static 'cartridge_ajax.js' %}"
+            $ajax_script = "{% static 'supplie_ajax.js' %}"
             $.getScript($ajax_script)
         }
 

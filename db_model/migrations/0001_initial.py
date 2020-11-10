@@ -172,7 +172,7 @@ class Migration(migrations.Migration):
                 ('name_ru', models.CharField(blank=True, max_length=255, null=True)),
             ],
             options={
-                'db_table': 'cartridge',
+                'db_table': 'supplies',
                 'managed': False,
             },
         ),

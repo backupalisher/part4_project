@@ -73,7 +73,7 @@
   .search_results {
 
   }
-  .error_result, .search_result, .cartridge_result {
+  .error_result, .search_result, .supplie_result {
     border-bottom: 1px solid $blue_purple;
     .image {
       background-color: $white;
@@ -159,7 +159,7 @@
     }
   }
 
-  .cartridges {
+  .supplies {
     .line {
       border-bottom: 1px solid $blue_purple;
     }
@@ -171,12 +171,12 @@
     color: $blue_gray;
     background-color: $anthracite;
 
-    #cartridge_search {
+    #supplie_search {
       color: $blue_gray;
       box-shadow: 0 0 1px 2px $sapphire;
     }
 
-    #cartridge_items {
+    #supplie_items {
       .row {
         &:hover {
           background: rgba(233, 59, 174, 0.1);
@@ -234,7 +234,7 @@
     }
   }
 
-  .detail, .cartridge, #supplies {
+  .detail, .supplie, #supplies {
     h3 {
       color: $blue;
 
@@ -267,7 +267,7 @@
     }
   }
 
-  #options, .detail, .cartridge {
+  #options, .detail, .supplie {
     color: $blue_gray;
 
     table {

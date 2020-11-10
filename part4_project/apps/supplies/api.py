@@ -4,15 +4,15 @@ from db_model.models import Cartridge
 from .serializers import CartridgeCreateSerialize, CartridgeListSerialize
 
 
-class CartridgeCreateView(generics.CreateAPIView):
+class SupplieCreateView(generics.CreateAPIView):
     serializer_class = CartridgeCreateSerialize
 
 
-class CartridgeListView(generics.ListAPIView):
+class SupplieListView(generics.ListAPIView):
     serializer_class = CartridgeListSerialize
     queryset = Cartridge.objects.all()
 
 
-class CartridgeEditView(generics.RetrieveUpdateDestroyAPIView):
+class SupplieEditView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CartridgeCreateSerialize
     queryset = Cartridge.objects.all()

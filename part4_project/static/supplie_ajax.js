@@ -4,28 +4,28 @@ $page_count = 0
 page = 0
 count = 40
 aTop = $('#load_more').position().top;
-if ($cartridges.length > 0) {
-    $cartridges = $cartridges.replace(/&#x27;/g, "'").replace(/'/g, '"').replace(/\(/g, '[').replace(/\)/g, ']').replace(/None/g, '""')
-    $cartridges = JSON.parse($cartridges)
-    $page_count = Math.round($cartridges.length / count)
-    $cartridges_all = $cartridges
-    show_cartridges($cartridges_all, page, count)
+if ($supplies.length > 0) {
+    $supplies = $supplies.replace(/&#x27;/g, "'").replace(/'/g, '"').replace(/\(/g, '[').replace(/\)/g, ']').replace(/None/g, '""')
+    $supplies = JSON.parse($supplies)
+    $page_count = Math.round($supplies.length / count)
+    $supplies_all = $supplies
+    show_supplies($supplies_all, page, count)
 
 }
 
-if ($('#cartridge_items').length) {
+if ($('#supplie_items').length) {
     $(function () {
         if (page >= $page_count || $page_count === 1) {
             $('#load_more').toggleClass('hidden')
         } else {
             $('#load_more').toggleClass('hidden')
         }
-        $('#cartridge_items').parent().parent().scroll(function () {
+        $('#supplie_items').parent().parent().scroll(function () {
             if ($(this).scrollTop() + 1080 >= aTop) {
                 if (!$loading && page < $page_count) {
                     $loading = true
                     page++
-                    show_cartridges($cartridges_all, page, count)
+                    show_supplies($supplies_all, page, count)
                     aTop += 1080
                 }
                 if (page >= $page_count) {
@@ -38,65 +38,65 @@ if ($('#cartridge_items').length) {
     });
 }
 
-function show_cartridges(cartridges, page, count) {
+function show_supplies(supplies, page, count) {
     for (let i = page * count; i < (page + 1) * count; i++) {
-        if (cartridges[i]) {
-            $html = '<div class="row"><div class="col-3"><a href="/cartridge/' + cartridges[i][0] + '" class="">' + cartridges[i][1] + '</a></div>'
-            if (cartridges[i][2]) {
-                $html += '<div class="col-5"><span class="">' + cartridges[i][2] + '</span></div>\n'
-            } else if (cartridges[i][3]) {
-                $html += '<div class="col-5"><span class="">' + cartridges[i][3] + '</span></div>\n'
+        if (supplies[i]) {
+            $html = '<div class="row"><div class="col-3"><a href="/supplies/' + supplies[i][0] + '" class="">' + supplies[i][1] + '</a></div>'
+            if (supplies[i][2]) {
+                $html += '<div class="col-5"><span class="">' + supplies[i][2] + '</span></div>\n'
+            } else if (supplies[i][3]) {
+                $html += '<div class="col-5"><span class="">' + supplies[i][3] + '</span></div>\n'
             }
             $html += '<div class="col-4">\n' +
                 '<a class="btn_info" aria-controls="suppl' + i + '">i</a>\n' +
-                '<div class="suppl_bg suppl' + i + '"></div><div class="supplies-item" id="suppl' + i + '"><div class="supp-title">' + cartridges[i][1] + ' - '
-            if (cartridges[i][2]) {$html += cartridges[i][2]}
-            else if (cartridges[i][3]) {$html += cartridges[i][3]}
+                '<div class="suppl_bg suppl' + i + '"></div><div class="supplies-item" id="suppl' + i + '"><div class="supp-title">' + supplies[i][1] + ' - '
+            if (supplies[i][2]) {$html += supplies[i][2]}
+            else if (supplies[i][3]) {$html += supplies[i][3]}
             $html += '</div> <h6>Analogs of models</h6> <div class="supplies-analogs">'
-            if (cartridges[i][4]) {
-                for (let ci = 0; ci < cartridges[i][4].length; ci++) {
-                    if (cartridges[i][4][ci]) {
-                        $html +='<a href="/model/' + cartridges[i][5][ci] + '" >' + cartridges[i][4][ci] + '</a><br>'
+            if (supplies[i][4]) {
+                for (let ci = 0; ci < supplies[i][4].length; ci++) {
+                    if (supplies[i][4][ci]) {
+                        $html +='<a href="/model/' + supplies[i][5][ci] + '" >' + supplies[i][4][ci] + '</a><br>'
                     }
                 }
             }
-            if (cartridges[i][8]) {
+            if (supplies[i][8]) {
                 $html += '<hr>'
-                for (let cai = 0; cai < cartridges[i][8].length; cai++) {
-                    if (cartridges[i][8][cai]) {
-                        $html += cartridges[i][8][cai] + '<br>'
+                for (let cai = 0; cai < supplies[i][8].length; cai++) {
+                    if (supplies[i][8][cai]) {
+                        $html += supplies[i][8][cai] + '<br>'
                     }
                 }
             }
             $html += '</div><button type="button" aria-controls="suppl' + i + '">Close</button></div></div>'
-            $('#cartridge_items').append($html)
+            $('#supplie_items').append($html)
         }
     }
     $loading = false
 }
 
-function search_cartridges(s) {
-    $cartridges_all = []
-    for (let i = 0; i < $cartridges.length; i++) {
-        if ($cartridges[i][1].toLowerCase().indexOf(s.toLowerCase()) > -1 || $cartridges[i][2].toLowerCase().indexOf(s.toLowerCase()) > -1 || $cartridges[i][3].toLowerCase().indexOf(s.toLowerCase()) > -1) {
-            $cartridges_all.push($cartridges[i])
+function search_supplies(s) {
+    $supplies_all = []
+    for (let i = 0; i < $supplies.length; i++) {
+        if ($supplies[i][1].toLowerCase().indexOf(s.toLowerCase()) > -1 || $supplies[i][2].toLowerCase().indexOf(s.toLowerCase()) > -1 || $supplies[i][3].toLowerCase().indexOf(s.toLowerCase()) > -1) {
+            $supplies_all.push($supplies[i])
         }
     }
     page = 0
     aTop = $('#load_more').position().top;
-    show_cartridges($cartridges_all, page, count)
+    show_supplies($supplies_all, page, count)
 }
 
-$('#cartridge_search').keyup(function () {
+$('#supplie_search').keyup(function () {
     let sval = $(this).val()
     if (sval.length > 2) {
-        $('#cartridge_items').html('')
-        search_cartridges(sval)
+        $('#supplie_items').html('')
+        search_supplies(sval)
     } else {
-        $cartridges_all = $cartridges
-        $('#cartridge_items').html('')
+        $supplies_all = $supplies
+        $('#supplie_items').html('')
         aTop = $('#load_more').position().top;
-        show_cartridges($cartridges_all, 0, 40)
+        show_supplies($supplies_all, 0, 40)
     }
 })
 
@@ -110,7 +110,7 @@ $('.brand label input').click(function () {
         $('.brand label').removeClass('checked')
         $(this).parent().addClass('checked');
     }
-    window.location.href = '/cartridge/?brand='+$brand_id
+    window.location.href = '/supplies/?brand='+$brand_id
 })
 
 // Add brand check status on load page
@@ -131,14 +131,14 @@ function getUrlVars()
 }
 
 // Open supplies popup
-$(document).on('click','#cartridge_items .btn_info', function() {
+$(document).on('click','#supplie_items .btn_info', function() {
     $('.supplies-item').removeClass('active')
     $('#'+$(this).attr('aria-controls')).addClass('active')
     $('.'+$(this).attr('aria-controls')).addClass('active')
 })
 
 // Close supplies popup
-$(document).on('click','#cartridge_items button', function() {
+$(document).on('click','#supplie_items button', function() {
     $('.supplies-item').removeClass('active')
     $('#'+$(this).attr('aria-controls')).removeClass('active')
     $('.'+$(this).attr('aria-controls')).removeClass('active')

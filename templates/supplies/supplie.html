@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    {{ title }} - {{ cartridge.1 }}
+    {{ title }} - {{ supplie.1 }}
 {% endblock %}
 {% block description %}
     <meta name="description"
-          content="Картридж для {{ brand }}, {{ cartridge.2 }}, Код производителя: {{ cartridge.1 }},  Наименование: {{ cartridge.3 }}">
+          content="Картридж для {{ brand }}, {{ supplie.2 }}, Код производителя: {{ supplie.1 }},  Наименование: {{ supplie.3 }}">
 {% endblock %}
 {% block keyword %}
     <meta name="keyword" content="
-
-
-            {% if cartridge.4 %}{% for model in cartridge.4 %}{% if model.0 and model.0 != 'None' %}{{ model.1 }}, {% endif %}{% endfor %}{% endif %}">
+            {% if supplie.4 %}{% for model in supplie.4 %}{% if model.0 and model.0 != 'None' %}{{ model.1 }}, {% endif %}{% endfor %}{% endif %}">
 {% endblock %}
 {% block content %}
-    {% if cartridge %}
-        <div class="card-model cartridge">
+    {% if supplie %}
+        <div class="card-model supplie">
             <div class="card-head">
                 <div class="row">
                     <div class="col-auto">
@@ -36,8 +34,8 @@
                     </div>
                     <div class="col">
                         <h3 class="title">
-                            {% if cartridge.2 %}{{ cartridge.2 }}
-                                {% elif cartridge.3 %}{{ cartridge.3 }}
+                            {% if supplie.2 %}{{ supplie.2 }}
+                                {% elif supplie.3 %}{{ supplie.3 }}
                             {% endif %}
                         </h3>
                         <div class="table-responsive">
@@ -46,16 +44,16 @@
                                     <tr>
                                         <td class="first"><span class="capt">{% if lang == 'ru' %}Код производителя{% else %} Part
                                             code {% endif %}</span></td>
-                                        <td>{{ cartridge.1 }}</td>
+                                        <td>{{ supplie.1 }}</td>
                                     </tr>
                                 {% endif %}
-                                {% if cartridge.4 and cartridge.4.0.0 %}
+                                {% if supplie.4 and supplie.4.0.0 %}
                                     <tr>
                                         <td>
                                             <span class="capt">{% if lang == 'ru' %}Совместимые модели {% else %} Compatible models{% endif %}</span>
                                         </td>
                                         <td>
-                                            {% for model in cartridge.4 %}
+                                            {% for model in supplie.4 %}
                                                 {% if model.0 and model.0 != 'None' %}
                                                     <a href="/model/{{ model.0 }}">{{ model.1 }}</a><br>
                                                 {% endif %}
@@ -78,7 +76,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="py-2">
-                        {% if options and options|length > 0 or cartridge_options|length > 0 %}
+                        {% if options and options|length > 0 or supplie_options|length > 0 %}
                             <div class="nav nav-tabs">
                                 <div class="nav-item">
                                     <a class="nav-link active" href="#">
@@ -88,14 +86,18 @@
                         {% endif %}
                         <div class="tab-content">
                             {% if options and options|length > 0 %}
-                                <div class="table-responsive cartridges">
+                                <div class="table-responsive supplies">
                                     <table class="table">
                                         {% for option in options %}
                                             <tr>
                                                 <td class="px-2"><span class="capt">{{ option.2 }}</span></td>
-                                                <td class="px-3">{% if 'http' in option.3 %}
-                                                    <a href="{{ option.3 }}">{{ option.3 }}</a>
-                                                {% else %}{{ option.3 }}{% endif %}</td>
+                                                <td class="px-3">
+                                                    {% if 'http' in option.3 %}
+                                                        <a href="{{ option.3 }}">{{ option.3 }}</a>
+                                                    {% elif 'www' in option.3 %}
+                                                        <a href="http://{{ option.3 }}">{{ option.3 }}</a>
+                                                    {% else %}{{ option.3 }}{% endif %}
+                                                </td>
                                             </tr>
                                         {% endfor %}
                                     </table>
@@ -116,13 +118,11 @@
             <nav class="nav-breadcrumb w-100">
                 <ul>
                     <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="nav-breadcrumb-item"><a href="/cartridge/">{{ title }}</a></li>
-                    {% if brand and brand_id %}
-                        <li class="nav-breadcrumb-item"><a href="/cartridge/cartridges/{{ brand_id }}">{{ brand }}</a>
-                        </li>
-                    {% endif %}
-                    {% if cartridge %}
-                        <li class="breadcrumb-item active">{{ cartridge.1 }}</li>
+                    <li class="nav-breadcrumb-item"><a href="/supplies/">{{ title }}</a></li>
+                    {% if supplie %}
+                        <li class="breadcrumb-item active">{% if supplie.2 %}{{ supplie.2 }}
+                                {% elif supplie.3 %}{{ supplie.3 }}
+                            {% endif %} ({{ supplie.1 }})</li>
                     {% endif %}
                 </ul>
             </nav>
@@ -133,7 +133,7 @@
 {% block ajaxjs %}
     <script type="text/javascript">
         function jqueryLoaded() {
-            $ajax_script = "{% static 'cartridge.js' %}"
+            $ajax_script = "{% static 'supplies.js' %}"
             $.getScript($ajax_script)
         }
 
