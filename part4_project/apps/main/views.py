@@ -34,9 +34,6 @@ def search(request):
     ar = result[0]
     er = result[1]
     cr = result[2]
-    print(len(er))
-    print(type(er[0][8]), er[0][8])
-    print(type(er[0][9]), er[0][9])
     return render(request, 'main/search.html',
                   context={'all_result': ar, 'error_result': er, 'cartridge_result': cr})
 

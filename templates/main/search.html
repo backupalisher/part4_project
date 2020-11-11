@@ -5,6 +5,13 @@
 {% for entry in entries %}
     {% block content %}
         <div class="search_results card-model">
+            {% if cartridge_result or error_result or all_result %}
+            {% else %}
+                 <div class="not_found">
+                    <img src="{{ MEDIA_URL }}icons/not_found.svg" alt="not found">
+                    <h3>Not found...</h3>
+                </div>
+            {% endif %}
             {% if cartridge_result %}
                 {% for cartridge in cartridge_result %}
                     <div class="cartridge_result">

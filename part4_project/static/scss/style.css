@@ -24,7 +24,7 @@
 }
 
 .text-blue_gray {
-  color: #799AB9 !important;
+  color: #78A9D8 !important;
 }
 
 .text-white_smoky {
@@ -76,7 +76,7 @@
 }
 
 .text-blue_gray:hover {
-  color: #799AB9 !important;
+  color: #78A9D8 !important;
 }
 
 .text-white_smoky:hover {
@@ -128,7 +128,7 @@
 }
 
 .bg-blue_gray {
-  background-color: #799AB9 !important;
+  background-color: #78A9D8 !important;
 }
 
 .bg-white_smoky {
@@ -210,7 +210,7 @@ $black: #262629;
 */
 .light-theme {
   background-color: #F4F5F9;
-  color: #799AB9;
+  color: #78A9D8;
 }
 .light-theme ::-webkit-input-placeholder, .light-theme ::-moz-placeholder, .light-theme ::-moz-placeholder, .light-theme ::-ms-input-placeholder, .light-theme ::placeholder {
   color: #D7D7D7;
@@ -230,7 +230,7 @@ $black: #262629;
   background-image: url("https://storage.yandexcloud.net/part4images/images/logo_4v2.svg");
 }
 .light-theme .logo small {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .light-theme #toggle-theme {
   background-color: #021746;
@@ -245,7 +245,7 @@ $black: #262629;
 }
 .light-theme #search_main input {
   background-color: #FFFFFF;
-  color: #799AB9;
+  color: #78A9D8;
 }
 .light-theme #search_main #button-search {
   color: #F4F5F9;
@@ -262,7 +262,7 @@ $black: #262629;
   box-shadow: 0 0 5px #D7D7D7;
 }
 .light-theme .filter .filter_settings {
-  color: #799AB9;
+  color: #78A9D8;
   background-color: #FFFFFF;
 }
 .light-theme .filter .filter_settings input[type=number] {
@@ -275,7 +275,7 @@ $black: #262629;
   background-image: url("https://storage.yandexcloud.net/part4images/images/checkbox_ok_white.png");
 }
 .light-theme .filter .filter_settings .radio label:before {
-  border: #799AB9 1px solid;
+  border: #78A9D8 1px solid;
   border-radius: 50%;
 }
 .light-theme .filter .filter_settings .radio label:hover:before, .light-theme .filter .filter_settings .radio label.checked:before {
@@ -287,7 +287,7 @@ $black: #262629;
   color: #F4F5F9;
 }
 .light-theme .filter-result {
-  color: #799AB9;
+  color: #78A9D8;
   background-color: #FFFFFF;
 }
 .light-theme .filter_search {
@@ -297,14 +297,14 @@ $black: #262629;
   box-shadow: 0 0 1px 2px #D7D7D7;
 }
 .light-theme .filter_search #filter_search {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .light-theme .card {
   box-shadow: 0 0 5px #D7D7D7;
 }
 .light-theme .nav_tabs a {
   background-color: #FFFFFF;
-  color: #799AB9;
+  color: #78A9D8;
   border: 1px solid #D7D7D7;
 }
 .light-theme .nav_tabs a.active, .light-theme .nav_tabs a:hover {
@@ -318,11 +318,11 @@ $black: #262629;
   color: #D7D7D7;
 }
 .light-theme .supplies {
-  color: #799AB9;
+  color: #78A9D8;
   background-color: #FFFFFF;
 }
 .light-theme .supplies #supplie_search {
-  color: #799AB9;
+  color: #78A9D8;
   box-shadow: 0 0 1px 2px #D7D7D7;
 }
 .light-theme .supplies #supplie_items .row:hover {
@@ -330,11 +330,11 @@ $black: #262629;
 }
 .light-theme .supplies .btn_info {
   font-family: Gabriela, sans-serif;
-  background-color: #799AB9;
+  background-color: #78A9D8;
   color: #FFFFFF;
 }
 .light-theme .card-model {
-  color: #799AB9;
+  color: #78A9D8;
   background-color: #FFFFFF;
   box-shadow: 0 0 5px #D7D7D7;
 }
@@ -367,14 +367,14 @@ $black: #262629;
   color: #5AA6FE;
 }
 .light-theme .detail h3 small, .light-theme .supplie h3 small {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .light-theme .detail.desc td:first-child span, .light-theme .supplie.desc td:first-child span {
   z-index: 2;
   background-color: #FFFFFF !important;
 }
 .light-theme .detail table td, .light-theme .supplie table td {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .light-theme .detail .price, .light-theme .supplie .price {
   color: #D7D7D7;
@@ -383,13 +383,13 @@ $black: #262629;
   color: #E93BAE;
 }
 .light-theme #options table td, .light-theme .detail table td, .light-theme .supplie table td {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .light-theme #options table td:first-child:after, .light-theme .detail table td:first-child:after, .light-theme .supplie table td:first-child:after {
   border-bottom: 1px dashed #D7D7D7;
 }
 .light-theme #options table td:first-child .capt, .light-theme .detail table td:first-child .capt, .light-theme .supplie table td:first-child .capt {
-  color: #799AB9;
+  color: #78A9D8;
   background-color: #FFFFFF !important;
 }
 .light-theme #parts h6 {
@@ -397,7 +397,7 @@ $black: #262629;
 }
 .light-theme #parts .parts_search {
   background-color: #F4F5F9;
-  color: #799AB9;
+  color: #78A9D8;
 }
 .light-theme #parts .module-title:hover, .light-theme #parts .model-opts > div:hover {
   background-color: rgba(233, 59, 174, 0.1);
@@ -415,7 +415,7 @@ $black: #262629;
 }
 .light-theme #errors .errors_search {
   background-color: #F4F5F9;
-  color: #799AB9;
+  color: #78A9D8;
 }
 .light-theme #errors h6 {
   color: #D7D7D7;
@@ -434,7 +434,7 @@ $black: #262629;
   color: #D7D7D7;
 }
 .light-theme #errors .error-item table td:first-child span {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .light-theme #errors .error-item table td:last-child {
   padding: 0 0 5px 10px;
@@ -474,6 +474,9 @@ $black: #262629;
   color: #F4F5F9;
   background-color: #F45C45;
 }
+.light-theme .not_found h3 {
+  color: #68687B;
+}
 
 .text-blue {
   color: #5AA6FE !important;
@@ -500,7 +503,7 @@ $black: #262629;
 }
 
 .text-blue_gray {
-  color: #799AB9 !important;
+  color: #78A9D8 !important;
 }
 
 .text-white_smoky {
@@ -552,7 +555,7 @@ $black: #262629;
 }
 
 .text-blue_gray:hover {
-  color: #799AB9 !important;
+  color: #78A9D8 !important;
 }
 
 .text-white_smoky:hover {
@@ -604,7 +607,7 @@ $black: #262629;
 }
 
 .bg-blue_gray {
-  background-color: #799AB9 !important;
+  background-color: #78A9D8 !important;
 }
 
 .bg-white_smoky {
@@ -706,7 +709,7 @@ $black: #262629;
   background-image: url("https://storage.yandexcloud.net/part4images/images/logo_4v2.svg");
 }
 .dark-theme .logo small {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .dark-theme #toggle-theme {
   background-color: #F4F5F9;
@@ -721,7 +724,7 @@ $black: #262629;
 }
 .dark-theme #search_main input {
   background-color: #282840;
-  color: #799AB9;
+  color: #78A9D8;
 }
 .dark-theme #search_main #button-search {
   color: #F4F5F9;
@@ -738,7 +741,7 @@ $black: #262629;
   box-shadow: 0 0 5px #F4F5F9;
 }
 .dark-theme .filter .filter_settings {
-  color: #799AB9;
+  color: #78A9D8;
   background-color: #282840;
 }
 .dark-theme .filter .filter_settings input[type=number] {
@@ -751,7 +754,7 @@ $black: #262629;
   background-image: url("https://storage.yandexcloud.net/part4images/images/check_ok.png");
 }
 .dark-theme .filter .filter_settings .radio label:before {
-  border: #799AB9 1px solid;
+  border: #78A9D8 1px solid;
   border-radius: 50%;
 }
 .dark-theme .filter .filter_settings .radio label:hover:before, .dark-theme .filter .filter_settings .radio label.checked:before {
@@ -763,7 +766,7 @@ $black: #262629;
   color: #F4F5F9;
 }
 .dark-theme .filter-result {
-  color: #799AB9;
+  color: #78A9D8;
   background-color: #282840;
 }
 .dark-theme .filter_search {
@@ -773,7 +776,7 @@ $black: #262629;
   box-shadow: 0 0 1px 2px #202136;
 }
 .dark-theme .filter_search #filter_search {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .dark-theme .card {
   filter: drop-shadow(0px 1px 3px rgba(255, 255, 255, 0.75));
@@ -794,11 +797,11 @@ $black: #262629;
   color: #68687B;
 }
 .dark-theme .supplies {
-  color: #799AB9;
+  color: #78A9D8;
   background-color: #282840;
 }
 .dark-theme .supplies #supplie_search {
-  color: #799AB9;
+  color: #78A9D8;
   box-shadow: 0 0 1px 2px #202136;
 }
 .dark-theme .supplies #supplie_items .row:hover {
@@ -806,11 +809,11 @@ $black: #262629;
 }
 .dark-theme .supplies .btn_info {
   font-family: Gabriela, sans-serif;
-  background-color: #799AB9;
+  background-color: #78A9D8;
   color: #FFFFFF;
 }
 .dark-theme .card-model {
-  color: #799AB9;
+  color: #78A9D8;
   background-color: #282840;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
@@ -844,14 +847,14 @@ $black: #262629;
   color: #5AA6FE;
 }
 .dark-theme .detail h3 small, .dark-theme .supplie h3 small, .dark-theme #supplies h3 small {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .dark-theme .detail.desc td:first-child span, .dark-theme .supplie.desc td:first-child span, .dark-theme #supplies.desc td:first-child span {
   z-index: 2;
   background-color: #282840 !important;
 }
 .dark-theme .detail table td, .dark-theme .supplie table td, .dark-theme #supplies table td {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .dark-theme .detail table td:first-child, .dark-theme .supplie table td:first-child, .dark-theme #supplies table td:first-child {
   color: #D7D7D7;
@@ -863,16 +866,16 @@ $black: #262629;
   color: #E93BAE;
 }
 .dark-theme #options, .dark-theme .detail, .dark-theme .supplie {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .dark-theme #options table td, .dark-theme .detail table td, .dark-theme .supplie table td {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .dark-theme #options table td:first-child:after, .dark-theme .detail table td:first-child:after, .dark-theme .supplie table td:first-child:after {
   border-bottom: 1px dashed #68687B;
 }
 .dark-theme #options table td:first-child .capt, .dark-theme .detail table td:first-child .capt, .dark-theme .supplie table td:first-child .capt {
-  color: #799AB9;
+  color: #78A9D8;
   background-color: #282840 !important;
 }
 .dark-theme #parts h6 {
@@ -917,7 +920,7 @@ $black: #262629;
   color: #D7D7D7;
 }
 .dark-theme #errors .error-item table td:first-child span {
-  color: #799AB9;
+  color: #78A9D8;
 }
 .dark-theme #errors .error-item table td:last-child {
   padding: 0 0 5px 10px;
@@ -949,6 +952,9 @@ $black: #262629;
 .dark-theme #supplies button, .dark-theme .supplies button {
   color: #F4F5F9;
   background-color: #F45C45;
+}
+.dark-theme .not_found h3 {
+  color: #D7D7D7;
 }
 
 ::-webkit-input-placeholder, ::-moz-placeholder, ::-moz-placeholder, ::-ms-input-placeholder, ::placeholder {
@@ -1643,7 +1649,7 @@ body {
   padding: 0 0 0 1%;
 }
 #parts .part-item .part-item_desc .table {
-  color: #799AB9;
+  color: #78A9D8;
   margin: 0;
 }
 #parts .part-item .part-item_desc .table tr:first-child td:last-child {
@@ -1733,6 +1739,7 @@ h1 {
 
 .search_results {
   padding: 15px;
+  min-height: calc(100vh - 300px);
 }
 
 .error_result, .search_result, .supplie_result {
@@ -1889,6 +1896,23 @@ h1 {
   position: fixed;
   top: 20px;
   right: 20px;
+}
+
+.not_found {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.not_found h3 {
+  font-size: 48px;
+  font-weight: 600;
+  padding: 0 10px;
+  margin: 0;
+}
+
+.loading_gear {
+  max-height: 50px;
+  max-width: 50px;
 }
 
 @media screen and (max-width: 1000px) {

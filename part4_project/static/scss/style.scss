@@ -942,6 +942,7 @@ h1 {
 }
 .search_results {
   padding: 15px;
+  min-height: calc(100vh - 300px);
 }
 .error_result, .search_result, .supplie_result {
   padding-bottom: 10px;
@@ -1116,6 +1117,23 @@ h1 {
   position: fixed;
   top: 20px;
   right: 20px;
+}
+
+.not_found {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  h3 {
+    font-size: 48px;
+    font-weight: 600;
+    padding: 0 10px;
+    margin: 0;
+  }
+}
+
+.loading_gear {
+  max-height: 50px;
+  max-width: 50px;
 }
 
 @media screen and (max-width: 1000px) {
