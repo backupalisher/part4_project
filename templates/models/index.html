@@ -162,6 +162,15 @@
     </div>
 
 {% endblock %}
-
+{% block breadcrumbs %}
+    <div class="row">
+        <nav class="nav-breadcrumb w-100">
+            <ul>
+                <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
+                <li class="nav-breadcrumb-item active">{{ model_name }}</li>
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
 {% block search %}
 {% endblock %}
