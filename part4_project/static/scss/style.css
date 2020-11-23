@@ -408,6 +408,9 @@ $black: #262629;
 .light-theme #parts .part-item {
   border-bottom: 1px solid #F4F5F9;
 }
+.light-theme #parts .part-item.active {
+  background-color: rgba(233, 59, 174, 0.1);
+}
 .light-theme #parts .part-item .part-item_img {
   background-color: #FFFFFF;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
@@ -893,6 +896,9 @@ $black: #262629;
 }
 .dark-theme #parts .part-item {
   border-bottom: 1px solid #3E3E56;
+}
+.dark-theme #parts .part-item.active {
+  background-color: rgba(233, 59, 174, 0.1);
 }
 .dark-theme #parts .part-item .part-item_img {
   background-color: #FFFFFF;
