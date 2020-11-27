@@ -362,10 +362,6 @@
   #supplies, .supplies {
     table {
       tr {
-        &:first-child td {
-          color: $grey;
-        }
-
         &:not(:first-child):hover {
           background-color: rgba(233, 59, 174, 0.1);
         }

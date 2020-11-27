@@ -446,9 +446,6 @@ $black: #262629;
   color: #021746;
   font-weight: 600;
 }
-.light-theme #supplies table tr:first-child td, .light-theme .supplies table tr:first-child td {
-  color: #D7D7D7;
-}
 .light-theme #supplies table tr:not(:first-child):hover, .light-theme .supplies table tr:not(:first-child):hover {
   background-color: rgba(233, 59, 174, 0.1);
 }
@@ -933,9 +930,6 @@ $black: #262629;
 }
 .dark-theme #errors .error-item table td:last-child span {
   color: #F4F5F9;
-}
-.dark-theme #supplies table tr:first-child td, .dark-theme .supplies table tr:first-child td {
-  color: #68687B;
 }
 .dark-theme #supplies table tr:not(:first-child):hover, .dark-theme .supplies table tr:not(:first-child):hover {
   background-color: rgba(233, 59, 174, 0.1);
