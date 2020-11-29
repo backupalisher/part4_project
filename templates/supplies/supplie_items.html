@@ -2,7 +2,7 @@
 {% for cartridge in cartridges %}
     <tr>
         <td>
-            <a href="/cartridge/{{ cartridge.0 }}" class="text-yellow">{{ cartridge.1 }}</a>
+            <a href="/supplies/{{ cartridge.0 }}" class="text-yellow">{{ cartridge.1 }}</a>
         </td>
         <td>
             <span class="text-green">{% if cartridge.2 %}{{ cartridge.2 }}{% elif cartridge.3 %}{{ cartridge.3 }}{% endif %}</span>

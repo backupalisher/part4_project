@@ -1493,12 +1493,12 @@ body {
   padding: 0;
 }
 .card-model .tab-content .table .capt {
-  font-size: 1.2em;
+  font-size: 1.3em;
   margin: 0;
-  line-height: 1.2em;
+  line-height: 1.3em;
 }
 .card-model .tab-content .table .val {
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 .card-model .tab-content .table .val img {
   height: 1em;
@@ -1519,7 +1519,7 @@ body {
   padding: 0 0 0 10px;
 }
 .detail table td, .supplie table td {
-  font-size: 1.5em;
+  font-size: 1.3em;
   vertical-align: baseline;
 }
 .detail table td:last-child, .supplie table td:last-child {
