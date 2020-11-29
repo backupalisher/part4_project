@@ -446,6 +446,9 @@ $black: #262629;
   color: #021746;
   font-weight: 600;
 }
+.light-theme #supplies h6, .light-theme .supplies h6 {
+  color: #D7D7D7;
+}
 .light-theme #supplies table tr:hover td:nth-child(2), .light-theme .supplies table tr:hover td:nth-child(2) {
   background-color: rgba(233, 59, 174, 0.1);
 }
@@ -930,6 +933,9 @@ $black: #262629;
 }
 .dark-theme #errors .error-item table td:last-child span {
   color: #F4F5F9;
+}
+.dark-theme #supplies h6, .dark-theme .supplies h6 {
+  color: #D7D7D7;
 }
 .dark-theme #supplies table tr:hover td:nth-child(2), .dark-theme .supplies table tr:hover td:nth-child(2) {
   background-color: rgba(233, 59, 174, 0.1);
@@ -1481,6 +1487,9 @@ body {
 .card-model .tab-content {
   padding: 5px 0;
 }
+.card-model .tab-content .supplies .table .capt {
+  font-size: 1em;
+}
 .card-model .tab-content .table th, .card-model .tab-content .table td {
   padding: 0;
   background-color: transparent;
@@ -1495,6 +1504,7 @@ body {
 .card-model .tab-content .table .capt {
   margin: 0;
   line-height: 1.3em;
+  font-size: 1.3em;
 }
 .card-model .tab-content .table .val {
   font-size: 1.3em;

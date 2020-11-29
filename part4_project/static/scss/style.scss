@@ -440,7 +440,6 @@ body {
   border-radius: 10px;
   padding: 0 15px;
   overflow-x: hidden;
-
   #supplie_search {
     border: none;
     background-color: transparent;
@@ -599,7 +598,9 @@ body {
 
   .tab-content {
     padding: 5px 0;
-
+    .supplies .table .capt {
+      font-size: 1em;
+    }
     .table {
       th, td {
         padding: 0;
@@ -618,6 +619,7 @@ body {
       .capt {
         margin: 0;
         line-height: 1.3em;
+        font-size: 1.3em;
       }
 
       .val {

@@ -360,6 +360,9 @@
   }
 
   #supplies, .supplies {
+    h6 {
+      color: $grey;
+    }
     table {
       tr {
         &:hover td:nth-child(2) {

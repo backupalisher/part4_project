@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="col">
-            <h6>Детали {{ cur_module }}</h6>
+            <h6>Детали {% if cur_module %}{{ cur_module }}{% endif %}</h6>
             <div class="scrollbar-macosx">
                 <div class="tab-inner-scroll">
                     {% for module in modules %}
