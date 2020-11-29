@@ -446,7 +446,7 @@ $black: #262629;
   color: #021746;
   font-weight: 600;
 }
-.light-theme #supplies table tr:not(:first-child):hover, .light-theme .supplies table tr:not(:first-child):hover {
+.light-theme #supplies table tr:hover td:nth-child(2), .light-theme .supplies table tr:hover td:nth-child(2) {
   background-color: rgba(233, 59, 174, 0.1);
 }
 .light-theme #supplies table td, .light-theme #supplies table a, .light-theme .supplies table td, .light-theme .supplies table a {
@@ -931,7 +931,7 @@ $black: #262629;
 .dark-theme #errors .error-item table td:last-child span {
   color: #F4F5F9;
 }
-.dark-theme #supplies table tr:not(:first-child):hover, .dark-theme .supplies table tr:not(:first-child):hover {
+.dark-theme #supplies table tr:hover td:nth-child(2), .dark-theme .supplies table tr:hover td:nth-child(2) {
   background-color: rgba(233, 59, 174, 0.1);
 }
 .dark-theme #supplies .supp-title, .dark-theme .supplies .supp-title {
@@ -1493,7 +1493,6 @@ body {
   padding: 0;
 }
 .card-model .tab-content .table .capt {
-  font-size: 1.3em;
   margin: 0;
   line-height: 1.3em;
 }

@@ -367,9 +367,12 @@
   #supplies, .supplies {
     table {
       tr {
-        &:not(:first-child):hover {
+        &:hover td:nth-child(2) {
           background-color: rgba(233, 59, 174, 0.1);
         }
+        //&:not(:first-child):hover {
+        //  background-color: rgba(233, 59, 174, 0.1);
+        //}
       }
     }
 
