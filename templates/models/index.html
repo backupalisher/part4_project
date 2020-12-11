@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static mfilters %}
+{% load static mfilters main_extras %}
 {% block title %}
     {{ model_name }}
 {% endblock %}
@@ -69,12 +69,12 @@
                                 <tr><td><span>{{ max_format.0 }}</span></td><td>{{ max_format.1 }}</td></tr>
                             {% endif %}
                             {% if pages_per_month.0 %}
-                                <tr><td><span>{{ pages_per_month.0 }}</span></td><td>{{ pages_per_month.1 }}</td></tr>
+                                <tr><td><span>{{ pages_per_month.0 }}</span></td><td>{{ pages_per_month.1|d_mask }}</td></tr>
                             {% endif %}
                             {% if speed.0 %}
                                 <tr><td><span>{% if lang == 'ru' %}Скорость печати {% endif %}
                                     {{ speed.0 }} {% if lang != 'ru' %} print speed{% endif %}</span></td>
-                                    <td>{{ speed.1 }}</td></tr>
+                                    <td>{{ speed.1|d_mask }}</td></tr>
                             {% endif %}
                             {% if output_type.0 %}
                                 <tr><td><span>{{ output_type.0 }}</span></td><td>{{ output_type.1 }}</td></tr>
@@ -83,6 +83,24 @@
                     </div>
                 </div>
             </div>
+
+            {% if price.0 %}
+                <div class="row">
+                    <div class="col-auto">
+                        <div class="price">
+                            {% if lang == 'ru' %}Ориентировочная цена
+                            {% else %}Estimated price{% endif %}: <span>{{ price.0|d_mask }} &#x20bd;</span>
+                            <!--small>({{ price.1 }})</small-->
+                        </div>
+                    </div>
+                    <div class="col pt-2">
+                        <button class="btn hover_btn" id="btn-buy">
+                            {% if lang == 'ru' %}Купить{% else %}Buy{% endif %}
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
+
         </div>
         <div class="row pt-3">
             <div class="col-sm-12">
@@ -160,7 +178,7 @@
             </div>
         </div>
     </div>
-
+{% include 'modals/contact.html' %}
 {% endblock %}
 {% block breadcrumbs %}
     <div class="row">

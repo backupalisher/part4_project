@@ -135,3 +135,40 @@ $('#error_result_models_show').click(function () {
     console.log($(this).attr('aria-label'))
     $('#'+$(this).attr('aria-label')).toggle()
 });
+
+$('#btn-buy').click(function () {
+    $('.main_overlay').toggleClass('active')
+    $('.modal.contact').toggleClass('active')
+    $('.c_form').css('display', 'block')
+});
+$('#send_contact').click(function (event) {
+    if ($('.c_name').val().length > 3 && ($('.c_phone').val().length > 8 || $('.c_email').val().length > 4)) {
+        console.log(event)
+        event.stopPropagation();
+        event.preventDefault();
+        let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        $.ajax({
+            type: 'POST',
+            url: '/sendmail/contact',
+            headers: {'X-CSRFToken': csrftoken},
+            data: {
+                "name": JSON.stringify($('.c_name').val()),
+                "phone": JSON.stringify($('.c_phone').val()),
+                "email": JSON.stringify($('.c_email').val()),
+                'message': JSON.stringify($('.c_message').val()),
+                'url': JSON.stringify(location.pathname),
+            },
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            success: function (data) {
+                $(".c_successful").toggleClass('active')
+                $('.c_form').css('display', 'none')
+            }
+        });
+    } else {
+        console.log('invalid')
+    }
+})
+$('.contact_close').click(function () {
+    $('.main_overlay').toggleClass('active')
+    $('.modal.contact').toggleClass('active')
+});

@@ -1,4 +1,4 @@
-{% load static mfilters %}
+{% load static mfilters main_extras %}
 <div class="table-responsive">
     <table class="table">
         {% for caption in captions %}
@@ -27,7 +27,7 @@
                                         {% elif '+' in subcap|get_val %}
                                             <img src="{{ MEDIA_URL }}icons/check_active.png" alt="yes">
                                         {% else %}
-                                            {{ subcap|get_val }}
+                                            {{ subcap|get_val|d_mask }}
                                         {% endif %}
                                         </span>
                                     </td>
@@ -51,7 +51,7 @@
                                             {% elif '+' in val|get_val %}
                                                 <img src="{{ MEDIA_URL }}icons/check_active.png" alt="yes">
                                             {% else %}
-                                                {{ val|get_val }}
+                                                {{ val|get_val|d_mask }}
                                             {% endif %}
                                             </span>
                                         </td>

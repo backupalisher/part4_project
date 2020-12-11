@@ -251,6 +251,10 @@ $black: #262629;
   color: #F4F5F9;
   background-color: #5AA6FE;
 }
+.light-theme #btn-buy {
+  color: #F4F5F9;
+  background-color: #5AA6FE;
+}
 .light-theme .brands .brand {
   background-color: #FFFFFF;
 }
@@ -267,6 +271,7 @@ $black: #262629;
 }
 .light-theme .filter .filter_settings input[type=number] {
   color: #5AA6FE;
+  border-color: #799ab9;
 }
 .light-theme .filter .filter_settings .form-check.checkbox label:before {
   background-image: url("https://storage.yandexcloud.net/part4images/images/checkbox_white.png");
@@ -363,6 +368,12 @@ $black: #262629;
   background-color: #5386FC;
   color: #FFFFFF;
 }
+.light-theme .card-model .price {
+  color: #D7D7D7;
+}
+.light-theme .card-model .price span {
+  color: #E93BAE;
+}
 .light-theme .detail h3, .light-theme .supplie h3 {
   color: #5AA6FE;
 }
@@ -446,6 +457,31 @@ $black: #262629;
   color: #021746;
   font-weight: 600;
 }
+.light-theme .main_overlay {
+  background: rgba(32, 33, 54, 0.75);
+  color: #021746;
+}
+.light-theme .modal {
+  background-color: #FFFFFF;
+  color: #5AA6FE;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.light-theme .modal.contact #form_contact input {
+  border: 1px solid #D7D7D7;
+  color: #282840;
+  background-color: #F4F5F9;
+}
+.light-theme .modal.contact #form_contact textarea {
+  border: 1px solid #D7D7D7;
+  color: #282840;
+  background-color: #F4F5F9;
+}
+.light-theme .modal.contact h4 {
+  color: #68687B;
+}
+.light-theme .modal.contact a {
+  color: #5AA6FE;
+}
 .light-theme #supplies h6, .light-theme .supplies h6 {
   color: #D7D7D7;
 }
@@ -458,9 +494,6 @@ $black: #262629;
 .light-theme #supplies .supp-title, .light-theme .supplies .supp-title {
   background-color: #D7D7D7;
   color: #021746;
-}
-.light-theme #supplies .suppl_bg, .light-theme .supplies .suppl_bg {
-  background: rgba(215, 215, 215, 0.75);
 }
 .light-theme #supplies .supplies-item, .light-theme .supplies .supplies-item {
   background-color: #FFFFFF;
@@ -733,6 +766,10 @@ $black: #262629;
   color: #F4F5F9;
   background-color: #5AA6FE;
 }
+.dark-theme #btn-buy {
+  color: #F4F5F9;
+  background-color: #5AA6FE;
+}
 .dark-theme .brands .brand {
   background-color: #FFFFFF;
 }
@@ -749,6 +786,7 @@ $black: #262629;
 }
 .dark-theme .filter .filter_settings input[type=number] {
   color: #5AA6FE;
+  border-color: #799ab9;
 }
 .dark-theme .filter .filter_settings .form-check.checkbox label:before {
   background-image: url("https://storage.yandexcloud.net/part4images/images/checkbox.png");
@@ -846,6 +884,12 @@ $black: #262629;
   background-color: #5386FC;
   color: #FFFFFF;
 }
+.dark-theme .card-model .price {
+  color: #D7D7D7;
+}
+.dark-theme .card-model .price span {
+  color: #E93BAE;
+}
 .dark-theme .detail h3, .dark-theme .supplie h3, .dark-theme #supplies h3 {
   color: #5AA6FE;
 }
@@ -934,6 +978,30 @@ $black: #262629;
 .dark-theme #errors .error-item table td:last-child span {
   color: #F4F5F9;
 }
+.dark-theme .main_overlay {
+  background: rgba(32, 33, 54, 0.75);
+}
+.dark-theme .modal {
+  background-color: #282840;
+  color: #5AA6FE;
+  box-shadow: 0 0 6px #3E3E56;
+}
+.dark-theme .modal.contact #form_contact input {
+  border: 1px solid #202136;
+  color: #F4F5F9;
+  background-color: #3E3E56;
+}
+.dark-theme .modal.contact #form_contact textarea {
+  border: 1px solid #202136;
+  color: #F4F5F9;
+  background-color: #3E3E56;
+}
+.dark-theme .modal.contact h4 {
+  color: #F4F5F9;
+}
+.dark-theme .modal.contact a {
+  color: #5AA6FE;
+}
 .dark-theme #supplies h6, .dark-theme .supplies h6 {
   color: #D7D7D7;
 }
@@ -943,9 +1011,6 @@ $black: #262629;
 .dark-theme #supplies .supp-title, .dark-theme .supplies .supp-title {
   background-color: #202136;
   color: #F4F5F9;
-}
-.dark-theme #supplies .suppl_bg, .dark-theme .supplies .suppl_bg {
-  background: rgba(32, 33, 54, 0.75);
 }
 .dark-theme #supplies .supplies-item, .dark-theme .supplies .supplies-item {
   background-color: #282840;
@@ -1071,6 +1136,11 @@ body {
   border-top-left-radius: 0;
   z-index: 3;
   padding: 10px 20px;
+}
+
+#btn-buy {
+  font-size: 28px;
+  padding: 4px 28px;
 }
 
 .brands {
@@ -1213,6 +1283,80 @@ body {
 }
 .not-found.active {
   display: block;
+}
+
+.main_overlay {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  display: none;
+}
+.main_overlay.active {
+  display: block;
+}
+
+.modal {
+  position: fixed;
+  top: 15%;
+  bottom: 15%;
+  left: 20%;
+  right: 20%;
+  display: none;
+  z-index: 999;
+  height: 70%;
+  border-radius: 10px;
+  padding: 0 15px 55px;
+  overflow: hidden;
+  width: auto;
+}
+.modal.active {
+  display: block;
+}
+.modal.contact {
+  padding: 40px 0;
+}
+.modal.contact .c_successful {
+  display: none;
+}
+.modal.contact .c_successful.active {
+  display: block;
+}
+.modal.contact .contact_close, .modal.contact #send_contact {
+  font-size: 20px;
+}
+.modal.contact #contact_close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 20px;
+  line-height: 30px;
+  cursor: pointer;
+}
+.modal.contact #form_contact input {
+  width: 100%;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 1.1em;
+  -moz-appearance: textfield;
+}
+.modal.contact #form_contact input::-webkit-inner-spin-button {
+  display: none;
+}
+.modal.contact #form_contact textarea {
+  width: 100%;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 1.1em;
+}
+.modal.contact a {
+  font-size: 28px;
+  font-weight: 600;
 }
 
 .filter {
@@ -1366,19 +1510,6 @@ body {
   text-align: center;
   margin: 0 -15px 15px;
 }
-.supplies .suppl_bg {
-  content: "";
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 9;
-  display: none;
-}
-.supplies .suppl_bg.active {
-  display: block;
-}
 .supplies .supplies-item {
   position: fixed;
   top: 15%;
@@ -1511,6 +1642,16 @@ body {
 }
 .card-model .tab-content .table .val img {
   height: 1em;
+}
+
+.card-model .price {
+  padding: 20px 0;
+  text-align: center;
+  font-size: 1.1em;
+}
+.card-model .price span {
+  font-size: 1.3em;
+  padding: 0 0 0 10px;
 }
 
 .detail h3 small, .supplie h3 small {

@@ -60,7 +60,10 @@
       background-color: $blue;
     }
   }
-
+  #btn-buy {
+    color: $white_smoky;
+    background-color: $blue;
+  }
   .brands {
     .brand {
       background-color: $white;
@@ -89,6 +92,7 @@
 
       input[type='number'] {
         color: $blue;
+        border-color: #799ab9;
       }
 
       .form-check {
@@ -231,7 +235,15 @@
       }
     }
   }
+  .card-model {
+    .price {
+      color: $grey;
 
+      span {
+        color: $magenta;
+      }
+    }
+  }
   .detail, .supplie {
     h3 {
       color: $blue;
@@ -358,7 +370,35 @@
       }
     }
   }
-
+  .main_overlay {
+    background: rgba(32, 33, 54, 0.75);
+    color: $blue_dark;
+  }
+  .modal {
+    background-color: #FFFFFF;
+    color: #5AA6FE;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    &.contact {
+      #form_contact {
+        input {
+          border: 1px solid $grey;
+          color: $anthracite;
+          background-color: $white_smoky;
+        }
+        textarea {
+          border: 1px solid $grey;
+          color: $anthracite;
+          background-color: $white_smoky;
+        }
+      }
+      h4 {
+        color: $blackberry;
+      }
+      a {
+        color: $blue;
+      }
+    }
+  }
   #supplies, .supplies {
     h6 {
       color: $grey;
@@ -382,9 +422,7 @@
       background-color: $grey;
       color: $blue_dark;
     }
-    .suppl_bg {
-      background: rgba(215, 215, 215, 0.75);
-    }
+
     .supplies-item {
       background-color: $white;
       color: $blue;

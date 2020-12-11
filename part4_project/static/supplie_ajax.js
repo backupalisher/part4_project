@@ -49,7 +49,7 @@ function show_supplies(supplies, page, count) {
             }
             $html += '<div class="col-4">\n' +
                 '<a class="btn_info" aria-controls="suppl' + i + '">i</a>\n' +
-                '<div class="suppl_bg suppl' + i + '"></div><div class="supplies-item" id="suppl' + i + '"><div class="supp-title">' + supplies[i][1] + ' - '
+                '<div class="main_overlay suppl' + i + '"></div><div class="supplies-item" id="suppl' + i + '"><div class="supp-title">' + supplies[i][1] + ' - '
             if (supplies[i][2]) {$html += supplies[i][2]}
             else if (supplies[i][3]) {$html += supplies[i][3]}
             $html += '</div> <h6>Analogs of models</h6> <div class="supplies-analogs">'

@@ -23,8 +23,6 @@
                             <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;"/>
                         {% endif %}
                     </div>
-{#                    <div class="price">{% if lang == 'ru' %}Ориентировочная цена#}
-{#                                {% else %}Estimated price{% endif %}: <span>$319.15</span></div>#}
                 </div>
                 <div class="col">
                     <h3 class="title">
@@ -73,6 +71,22 @@
                     </div>
                 </div>
             </div>
+            {% if price %}
+                <div class="row">
+                    <div class="col-auto">
+                        <div class="price">
+                            {% if lang == 'ru' %}Ориентировочная цена
+                            {% else %}Estimated price{% endif %}: <span>{{ price|d_mask }} &#x20bd;</span>
+                            <!--small>({{ vendor }})</small-->
+                        </div>
+                    </div>
+                    <div class="col pt-2">
+                        <button class="btn hover_btn" id="btn-buy">
+                            {% if lang == 'ru' %}Купить{% else %}Buy{% endif %}
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
         </div>
         <div class="row">
             <div class="col-sm-12">
@@ -96,7 +110,7 @@
             </div>
         </div>
     </div>
-
+{% include 'modals/contact.html' %}
 {% endblock %}
 
 {% block search %}

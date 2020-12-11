@@ -188,6 +188,7 @@ def index(request, model_id):
     speed = [init_result[0][15], init_result[0][16]]
     output_type = [init_result[0][17], init_result[0][18]]
     model_status = [init_result[0][19], init_result[0][20]]
+    price = [init_result[0][21], init_result[0][22]]
     loop.create_task(set_weight(detail_id))
     if detail_id:
         post_result = loop.run_until_complete(past_init(request, model_id, detail_id))
@@ -231,6 +232,6 @@ def index(request, model_id):
                        'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module, 'supplies': supplies,
                        'tab': tab, 'type_of_device': type_of_device, 'technology': technology, 'max_format': max_format,
                        'pages_per_month': pages_per_month, 'speed': speed, 'output_type': output_type, 'lang': lang,
-                       'model_status': model_status})
+                       'model_status': model_status, 'price': price})
     else:
         raise Http404('Страница отсутствует, с id: ' + str(detail_id))

@@ -118,6 +118,8 @@ def index(request, detail_id):
         images = init_result[1][0][10]
         brand_id = init_result[1][0][11]
         brand_name = init_result[1][0][12]
+        price = init_result[1][0][13]
+        vendor = init_result[1][0][14]
         try:
             cartridge_options = loop.run_until_complete(get_cartridge_options(partcode))
         except:
@@ -134,4 +136,4 @@ def index(request, detail_id):
                    'detail_name_ru': detail_name_ru, 'images': images, 'partcode': partcode,
                    'detail_desc': part_desc, 'options': options, 'captions': captions, 'subcaptions': subcaptions,
                    'values': values, 'brand_id': brand_id, 'brand_name': brand_name, 'lang': lang,
-                   'cartridge_options': cartridge_options})
+                   'cartridge_options': cartridge_options, 'price': price, 'vendor': vendor})

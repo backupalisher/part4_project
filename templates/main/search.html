@@ -5,123 +5,123 @@
 {% for entry in entries %}
     {% block content %}
         {% if cartridge_result or error_result or all_result %}
+            <div class="search_results card-model">
+                {% if cartridge_result %}
+                    {% for cartridge in cartridge_result %}
+                        <div class="cartridge_result">
+                            <p>
+                                <a href="{% if cartridge.0 %}/supplies/{{ cartridge.0 }}{% endif %}" class="text-blue">
+                                    <span class="text-green pr-2">{{ cartridge.2 }}</span>
+                                    {% if cartridge.3 %}
+                                        {{ cartridge.3 }}
+                                    {% elif cartridge.4 %}
+                                        {{ cartridge.4 }}
+                                    {% endif %}
+                                    {% if cartridge.7 %}
+                                        {{ cartridge.7 }}
+                                    {% endif %}
+                                </a>
+                            </p>
+                            <p>
+                                {% if cartridge.6 %}
+                                    {{ cartridge.6 }}
+                                {% endif %}
+                            </p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if error_result %}
+                    {% for index in error_result %}
+                        <div class="error_result">
+                            <div class="image">
+                                {% if index.7 %}
+                                    <img src="{{ index.7 }}">
+                                {% else %}
+                                    <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;">
+                                {% endif %}
+                            </div>
+                            <div class="desc">
+                                <div class="desc-inner">
+                                    <p>
+                                        Error: <strong class="text-blue">{{ index.2 }}</strong>
+                                    </p>
+                                    {% if index.8 %}
+                                        <div class="models">
+                                            <p>Models:
+                                                <a href="#" id="error_result_models_show"
+                                                   aria-label="models-inner{{ forloop.counter0 }}">show models</a>
+                                            </p>
+                                            <p id="models-inner{{ forloop.counter0 }}" style="display: none;">
+                                                {% for m in index.8 %}
+                                                    <a href="/model/{{ m }}">{{ index.9|list_item:forloop.counter0 }}</a>
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                    {% endif %}
+                                    {% if index.3 %}<p>Display: <strong>{{ index.3 }}</strong></p>{% endif %}
+                                    {% if index.4 %}<p>Description: <strong>{{ index.4 }}</strong></p>{% endif %}
+                                    {% if index.5 %}<p>Causes: <strong>{{ index.5 }}</strong></p>{% endif %}
+                                    {% if index.6 %}<p>Remedy: <strong>{{ index.6 }}</strong></p>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if all_result %}
+                    {% for index in all_result %}
+                        <div class="search_result">
+                            <div class="image">
+                                {% if index.11 %}
+                                    <img src="{{ MEDIA_URL }}{{ index.11 }}">
+                                {% elif index.10 and index.6 is None %}
+                                    <img src="{{ MEDIA_URL }}{{ index.10 }}">
+                                {% else %}
+                                    <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;">
+                                {% endif %}
+                            </div>
+                            <div class="desc">
+                                <div class="desc-inner">
+                                    {% if index.3 == index.7 %}
+                                        <h2><a href="/model/{{ index.12 }}" class="text-blue">{{ index.7 }}</a></h2>
+                                    {% else %}
+                                        {% if index.4 or index.3 %}
+                                            <h2><a href="/detail/{{ index.2 }}" class="text-blue">
+                                                {% if index.4 %}{{ index.4 }}{% elif index.3 %}
+                                                    {{ index.3 }}{% endif %}</a></h2>
+                                        {% endif %}
+                                    {% endif %}
+                                    <div class="rating">
+                                        Rating
+                                        <div class="stars">
+                                            <img src="{{ MEDIA_URL }}icons/star.svg">
+                                            <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                            <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                            <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                            <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                        </div>
+                                    </div>
+                                    <div class="search_result_partcode">
+                                        {% if index.5 != None %}
+                                            <span class="text-yellow">Part code: {{ index.5 }}</span>
+                                        {% endif %}
+                                    </div>
+                                    {% if index.3 != index.7 %}
+                                        <span class="search_result_model">
+                                        {{ index.7 }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
         {% else %}
-             <div class="not_found">
+            <div class="not_found">
                 <img src="{{ MEDIA_URL }}icons/not_found.svg" alt="not found">
                 <h3>Not found...</h3>
             </div>
         {% endif %}
-        <div class="search_results card-model">
-            {% if cartridge_result %}
-                {% for cartridge in cartridge_result %}
-                    <div class="cartridge_result">
-                        <p>
-                            <a href="{% if cartridge.0 %}/cartridge/{{ cartridge.0 }}{% endif %}" class="text-blue">
-                                <span class="text-green pr-2">{{ cartridge.2 }}</span>
-                                {% if cartridge.3 %}
-                                    {{ cartridge.3 }}
-                                {% elif cartridge.4 %}
-                                    {{ cartridge.4 }}
-                                {% endif %}
-                                {% if cartridge.7 %}
-                                    {{ cartridge.7 }}
-                                {% endif %}
-                            </a>
-                        </p>
-                        <p>
-                            {% if cartridge.6 %}
-                                {{ cartridge.6 }}
-                            {% endif %}
-                        </p>
-                    </div>
-                {% endfor %}
-            {% endif %}
-            {% if error_result %}
-                {% for index in error_result %}
-                    <div class="error_result">
-                        <div class="image">
-                            {% if index.7 %}
-                                <img src="{{ index.7 }}">
-                            {% else %}
-                                <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;">
-                            {% endif %}
-                        </div>
-                        <div class="desc">
-                            <div class="desc-inner">
-                                <p>
-                                    Error: <strong class="text-blue">{{ index.2 }}</strong>
-                                </p>
-                                {% if index.8 %}
-                                <div class="models">
-                                    <p>Models:
-                                        <a href="#" id="error_result_models_show"
-                                           aria-label="models-inner{{ forloop.counter0 }}">show models</a>
-                                    </p>
-                                    <p id="models-inner{{ forloop.counter0 }}" style="display: none;">
-                                    {% for m in index.8 %}
-                                        <a href="/model/{{ m }}">{{ index.9|list_item:forloop.counter0 }}</a>
-                                    {% endfor %}
-                                    </p>
-                                </div>
-                                {% endif %}
-                                {% if index.3 %}<p>Display: <strong>{{ index.3 }}</strong></p>{% endif %}
-                                {% if index.4 %}<p>Description: <strong>{{ index.4 }}</strong></p>{% endif %}
-                                {% if index.5 %}<p>Causes: <strong>{{ index.5 }}</strong></p>{% endif %}
-                                {% if index.6 %}<p>Remedy: <strong>{{ index.6 }}</strong></p>{% endif %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-            {% if all_result %}
-                {% for index in all_result %}
-                    <div class="search_result">
-                        <div class="image">
-                            {% if index.11 %}
-                                <img src="{{ MEDIA_URL }}{{ index.11 }}">
-                            {% elif index.10 and index.6 is None %}
-                                <img src="{{ MEDIA_URL }}{{ index.10 }}">
-                            {% else %}
-                                <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;">
-                            {% endif %}
-                        </div>
-                        <div class="desc">
-                            <div class="desc-inner">
-                                {% if index.3 == index.7 %}
-                                    <h2><a href="/model/{{ index.12 }}" class="text-blue">{{ index.7 }}</a></h2>
-                                {% else %}
-                                    {% if index.4 or index.3 %}
-                                        <h2><a href="/detail/{{ index.2 }}" class="text-blue">
-                                            {% if index.4 %}{{ index.4 }}{% elif index.3 %}
-                                                {{ index.3 }}{% endif %}</a></h2>
-                                    {% endif %}
-                                {% endif %}
-                                <div class="rating">
-                                    Rating
-                                    <div class="stars">
-                                        <img src="{{ MEDIA_URL }}icons/star.svg">
-                                        <img src="{{ MEDIA_URL }}icons/star_o.svg">
-                                        <img src="{{ MEDIA_URL }}icons/star_o.svg">
-                                        <img src="{{ MEDIA_URL }}icons/star_o.svg">
-                                        <img src="{{ MEDIA_URL }}icons/star_o.svg">
-                                    </div>
-                                </div>
-                                <div class="search_result_partcode">
-                                    {% if index.5 != None %}
-                                        <span class="text-yellow">Part code: {{ index.5 }}</span>
-                                    {% endif %}
-                                </div>
-                                {% if index.3 != index.7 %}
-                                    <span class="search_result_model">
-                                        {{ index.7 }}
-                                    </span>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
     {% endblock %}
 {% endfor %}
 {% show_pages %}
