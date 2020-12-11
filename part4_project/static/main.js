@@ -140,6 +140,7 @@ $('#btn-buy').click(function () {
     $('.main_overlay').toggleClass('active')
     $('.modal.contact').toggleClass('active')
     $('.c_form').css('display', 'block')
+    $(".c_successful").toggleClass('active')
 });
 $('#send_contact').click(function (event) {
     if ($('.c_name').val().length > 3 && ($('.c_phone').val().length > 8 || $('.c_email').val().length > 4)) {
