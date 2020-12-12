@@ -2,7 +2,7 @@ from django import template
 import locale
 
 register = template.Library()
-locale.setlocale(locale.LC_ALL, 'ru_Ru')
+locale.setlocale(locale.LC_ALL, 'ru_RU')
 
 
 @register.filter(name='d_mask')
