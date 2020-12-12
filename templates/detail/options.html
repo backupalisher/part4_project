@@ -1,11 +1,11 @@
-{% load static mfilters %}
+{% load static mfilters main_extras %}
 <div class="table-responsive">
     <table class="table">
         {% if cartridge_options|length > 0 %}
             {% for option in cartridge_options %}
                 <tr class="cartridge_options">
                     <td><span class="capt">{{ option.2 }}</span></td>
-                    <td>{{ option.3 }}</td>
+                    <td>{{ option.3|d_mask }}</td>
                 </tr>
             {% endfor %}
         {% endif %}
@@ -27,7 +27,7 @@
                                 <td colspan="2">
                                     {% if 'SubCaption' not in subcap %}
                                         <h5 class="capt">{{ subcap|get_caption }}</h5>
-                                        <span class="val">{{ subcap|get_val }}</span>
+                                        <span class="val">{{ subcap|get_val|d_mask }}</span>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -39,7 +39,7 @@
                                             <div>
                                                 {% for val in value.3 %}
                                                     <span class="pl-5 capt">{{ val|get_caption }}</span>
-                                                    <span class="val">{{ val|get_val }}</span>
+                                                    <span class="val">{{ val|get_val|d_mask }}</span>
                                                     <br>
                                                 {% endfor %}
                                             </div>

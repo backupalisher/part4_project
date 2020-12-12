@@ -73,8 +73,10 @@
                             <div class="image">
                                 {% if index.11 %}
                                     <img src="{{ MEDIA_URL }}{{ index.11 }}">
-                                {% elif index.10 and index.6 is None %}
+                                {% elif index.10 and index.5 is None %}
                                     <img src="{{ MEDIA_URL }}{{ index.10 }}">
+                                {% elif index.9 %}
+                                    <img src="{{ MEDIA_URL }}{{ index.9 }}">
                                 {% else %}
                                     <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;">
                                 {% endif %}
