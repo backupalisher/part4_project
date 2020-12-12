@@ -1354,8 +1354,11 @@ body {
   border-radius: 6px;
   font-size: 1.1em;
 }
+.modal.contact h4 {
+  font-size: 1.4em;
+}
 .modal.contact a {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 600;
 }
 
