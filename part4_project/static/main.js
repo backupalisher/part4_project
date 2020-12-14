@@ -15,11 +15,11 @@ $(document).ready(function () {
         if ($('#body').hasClass('dark-theme')) {
             $('#body').removeClass('dark-theme')
             $('#body').addClass('light-theme')
-            Cookies.set('theme', 'light-theme', { expires: 365 })
+            Cookies.set('theme', 'light-theme', {expires: 365})
         } else {
             $('#body').removeClass('light-theme')
             $('#body').addClass('dark-theme')
-            Cookies.set('theme', 'dark-theme', { expires: 365 })
+            Cookies.set('theme', 'dark-theme', {expires: 365})
         }
     })
     $pathname = window.location.pathname;
@@ -77,8 +77,12 @@ $(document).ready(function () {
     }
 
     // Brands
-    brands$ = $('.brands .brand').length
-    $('.brands').css('width', (brands$ - 1) * 134.5)
+    // brands$ = $('.brands .brand').length
+    // $('.brands').css('height', (brands$ - 1) * 134.5)
+    $('.brands').css('height', $('.brands').parent().width())
+    $( window ).resize(function() {
+        $('.brands').css('height', $('.brands').parent().width())
+    })
 
 })
 
@@ -98,7 +102,7 @@ $('#detailTabs a').click(function () {
     $id = $(this).attr('aria-controls')
     $('.tab-pane').removeClass('hide')
     $('.tab_controls a').removeClass('active')
-    $('#controls_'+$id+'-tab').addClass('active')
+    $('#controls_' + $id + '-tab').addClass('active')
 })
 $('.tab_controls a').click(function () {
     $id = $(this).attr('data-toggle')
@@ -107,7 +111,7 @@ $('.tab_controls a').click(function () {
         $($href).toggleClass('hide')
         $(this).removeClass('active')
     } else {
-        $('#'+$id).click()
+        $('#' + $id).click()
     }
 })
 
@@ -133,7 +137,7 @@ $(document).ready(function () {
 // error_result models toggle show
 $('#error_result_models_show').click(function () {
     console.log($(this).attr('aria-label'))
-    $('#'+$(this).attr('aria-label')).toggle()
+    $('#' + $(this).attr('aria-label')).toggle()
 });
 
 $('#btn-buy').click(function () {
@@ -173,3 +177,4 @@ $('.contact_close').click(function () {
     $('.main_overlay').toggleClass('active')
     $('.modal.contact').toggleClass('active')
 });
+

@@ -199,7 +199,10 @@ AWS_SECRET_ACCESS_KEY = 'Indwm3AaawrvDBUYwqKl8gPbQ2GKrcN2SWGslTds'
 AWS_STORAGE_BUCKET_NAME = 'part4images'
 AWS_S3_REGION_NAME = 'ru-central1'
 
-SITE_ID = 1
+if DEBUG:
+    SITE_ID = 2
+else:
+    SITE_ID = 1
 
 X_FRAME_OPTIONS = 'ALLOW-FROM webvisor.com'
 

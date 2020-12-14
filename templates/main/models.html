@@ -17,8 +17,8 @@
         <a href="/" class="active hover_btn">Модели</a>
         <a href="/supplies/" class="hover_btn">Расходные материалы</a>
     </div>
-    <div class="scrollbar-macosx">
-        <div class="brands">
+    <div class="horizontal-scroll-wrapper">
+        <div class="horizontal-scroll brands">
             {% for brand in brands %}
                 <div class="brand hover_btn">
                     <label for="{{ brand.name }}" {% if brand.logotype is not None %}

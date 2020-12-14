@@ -1347,3 +1347,50 @@ h1 {
     }
   }
 }
+
+$scrollBarHeight: 1px;
+
+::-webkit-scrollbar {
+  width: $scrollBarHeight;
+  height: $scrollBarHeight;
+}
+
+::-webkit-scrollbar-button {
+  width: $scrollBarHeight;
+  height: $scrollBarHeight;
+}
+
+body {
+  background: #111;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+.horizontal-scroll-wrapper {
+  position: relative;
+  height: 80px;
+  .horizontal-scroll {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: -90px;
+    margin: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transform: rotate(-90deg) translateY(0);
+    transform-origin: right top;
+    padding: 70px 0 0 0;
+    & > div {
+      margin: 60px 0 0 -40px;
+      display: block;
+      transform: rotate(90deg);
+      transform-origin: right top;
+    }
+  }
+}
+
+.brands {
+
+}
