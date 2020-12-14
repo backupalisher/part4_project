@@ -14,15 +14,15 @@
         <a href="/">Модели</a>
         <a href="/supplies/" class="active">Расходные материалы</a>
     </div>
-    <div class="scrollbar-macosx">
-        <div class="brands">
+    <div class="horizontal-scroll-wrapper">
+        <div class="horizontal-scroll brands">
             {% csrf_token %}
             {% for brand in brands %}
                 <div class="brand hover_btn">
                     <label for="{{ brand.name }}" {% if brand.logotype is not None %}
                            style="background-image: url('{{ MEDIA_URL }}brands/{{ brand.logotype }}')"
                     {% else %}
-                           style="background-image: url('{{ MEDIA_URL }}no-image.png')" style="width: 100%;">
+                           style="background-image: url('{{ MEDIA_URL }}no-image.png'); width: 100%;">
                     {% endif %}>
                     <input type="checkbox" id="{{ brand.name }}" name="{{ brand.id }}" value="{{ brand.id }}">
                     </label>

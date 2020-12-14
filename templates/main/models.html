@@ -19,6 +19,7 @@
     </div>
     <div class="horizontal-scroll-wrapper">
         <div class="horizontal-scroll brands">
+            {% csrf_token %}
             {% for brand in brands %}
                 <div class="brand hover_btn">
                     <label for="{{ brand.name }}" {% if brand.logotype is not None %}
