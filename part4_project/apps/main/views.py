@@ -16,6 +16,7 @@ def index(request):
 
 
 def search(request):
+    lang = request.LANGUAGE_CODE
     variant = 0
     s_value = ''
     for item in request.GET:
@@ -35,7 +36,7 @@ def search(request):
     er = result[1]
     cr = result[2]
     return render(request, 'main/search.html',
-                  context={'all_result': ar, 'error_result': er, 'cartridge_result': cr})
+                  context={'all_result': ar, 'error_result': er, 'cartridge_result': cr, 'lang': lang})
 
 
 def index_models(request):

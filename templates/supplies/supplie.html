@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static main_extras %}
 {% block title %}
     {{ title }} - {{ supplie.1 }}
 {% endblock %}
@@ -72,6 +72,22 @@
                         </div>
                     </div>
                 </div>
+                {% if price %}
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="price">
+                                {% if lang == 'ru' %}Ориентировочная цена
+                                {% else %}Estimated price{% endif %}: <span>{{ price|d_mask }} &#x20bd;</span>
+                                <!--small>({{ vendor }})</small-->
+                            </div>
+                        </div>
+                        <div class="col pt-2">
+                            <button class="btn hover_btn" id="btn-buy">
+                                {% if lang == 'ru' %}Купить{% else %}Buy{% endif %}
+                            </button>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
             <div class="row">
                 <div class="col-sm-12">
@@ -128,6 +144,7 @@
             </nav>
         </div>
     </div>
+{% include 'modals/contact.html' %}
 {% endblock %}
 
 {% block ajaxjs %}

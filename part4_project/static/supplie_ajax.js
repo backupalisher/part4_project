@@ -5,7 +5,8 @@ page = 0
 count = 40
 aTop = $('#load_more').position().top;
 if ($supplies.length > 0) {
-    $supplies = $supplies.replace(/&#x27;/g, "'").replace(/'/g, '"').replace(/\(/g, '[').replace(/\)/g, ']').replace(/None/g, '""')
+    $supplies = $supplies.replace(/&#x27;/g, "'").replace(/'/g, '"').replace(/\(/g, '[').replace(/\)/g, ']').replace(/None/g, '""').replace(/Decimal/g, '')
+    console.log($supplies)
     $supplies = JSON.parse($supplies)
     $page_count = Math.round($supplies.length / count)
     $supplies_all = $supplies

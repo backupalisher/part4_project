@@ -4,10 +4,15 @@ from django.contrib.auth import authenticate, login as auth_login
 
 
 def cabinet(request):
-    return render(request, 'cabinet/index.html')
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+    else:
+        return render(request, 'cabinet/index.html')
+
 
 def login(request):
     return render(request, 'user_passport/index.html')
+
 
 def register(request):
     if request.method == 'POST':

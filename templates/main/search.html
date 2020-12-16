@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static el_pagination_tags mfilters %}
+{% load static el_pagination_tags main_extras mfilters %}
 
 {% paginate entries %}
 {% for entry in entries %}
@@ -27,6 +27,14 @@
                                     {{ cartridge.6 }}
                                 {% endif %}
                             </p>
+                            {% if cartridge.8 %}
+                                <div class="search_result_price">
+                                    <span class="text-grey">{% if lang == 'ru' %}Ориентировочная цена
+                                    {% else %}Estimated price{% endif %}:</span>
+                                    <span class="text-magenta">{{ cartridge.8|d_mask }} &#x20bd;</span>
+                                    <!--small>({{ cartridge.9 }})</small-->
+                                </div>
+                            {% endif %}
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -108,9 +116,17 @@
                                         {% endif %}
                                     </div>
                                     {% if index.3 != index.7 %}
-                                        <span class="search_result_model">
-                                        {{ index.7 }}
-                                    </span>
+                                        <div class="search_result_model">
+                                            {{ index.7 }}
+                                        </div>
+                                    {% endif %}
+                                    {% if index.13 %}
+                                        <div class="search_result_price">
+                                            <span class="text-grey">{% if lang == 'ru' %}Ориентировочная цена
+                                            {% else %}Estimated price{% endif %}:</span>
+                                            <span class="text-magenta">{{ index.13|d_mask }} &#x20bd;</span>
+                                            <!--small>({{ index.14 }})</small-->
+                                        </div>
                                     {% endif %}
                                 </div>
                             </div>

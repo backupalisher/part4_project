@@ -73,6 +73,8 @@ def supplie(request, supplie_id):
         # models = list(set(carts[4]))
         models = [x for x in carts[4] if not (x in tmodels or tmodels.add(x))]
         brand_id = carts[6]
+        price = carts[10]
+        vendor = carts[11]
         if carts[7]:
             brand = carts[7]
         else:
@@ -85,7 +87,7 @@ def supplie(request, supplie_id):
         supplie = tuple(carts)
         return render(request, 'supplies/supplie.html', {'title': title, 'supplie': supplie, 'options': options,
                                                             'brand': brand, 'brand_id': brand_id, 'amodels': amodels,
-                                                            'prices': prices, 'supplie_id': supplie_id,
-                                                            'lang': lang})
+                                                            'prices': prices, 'supplie_id': supplie_id, 'price': price,
+                                                            'vendor': vendor, 'lang': lang})
     else:
         raise Http404('Страница отсутствует, с id: ' + str(supplie_id))
