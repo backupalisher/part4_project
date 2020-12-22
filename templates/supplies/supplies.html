@@ -1,12 +1,16 @@
 {% load static %}
 <div class="p-3 w-100">
-    <input type="text" id="supplie_search" placeholder="найти картридж" class="form-control hover_btn">
+    <input type="text" id="supplie_search" class="form-control hover_btn"
+           placeholder="{% if lang == 'ru' %}найти картридж{% else %}find cartridge{% endif %}">
 </div>
 <div class="table-responsive supplies">
     <div class="row line">
-        <div class="col-3"><span class="title">Код производителя</span></div>
-        <div class="col-5"><span class="title">Наименование</span></div>
-        <div class="col-4"><span class="title">Совместим с моделями</span></div>
+        <div class="col-3"><span class="title">
+            {% if lang == 'ru' %}Код производителя{% else %}Manufacturer's code{% endif %}</span></div>
+        <div class="col-5"><span class="title">
+            {% if lang == 'ru' %}Наименование{% else %}Title{% endif %}</span></div>
+        <div class="col-4"><span class="title">
+            {% if lang == 'ru' %}Совместим с моделями{% else %}Models compatible{% endif %}</span></div>
     </div>
     <div class="scrollbar-macosx">
         <div id="supplie_table">

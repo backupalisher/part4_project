@@ -2,13 +2,13 @@
 <div class="table-responsive supplies">
     <div class="row">
         <div class="col-md-3 col-12">
-            <h6>Парткод</h6>
+            <h6>{% if lang == 'ru' %}Парткод{% else %}Partcode{% endif %}</h6>
             {% for item in supplies %}
                 <div class="py-1"><a href="/supplies/{{ item.0 }}">{{ item.1 }}</a></div>
             {% endfor %}
         </div>
         <div class="col">
-            <h6>Название</h6>
+            <h6>{% if lang == 'ru' %}Название{% else %}Title{% endif %}</h6>
             {% for item in supplies %}
                 <div class="py-1">
                 <span>{% if item.2 %} {{ item.2 }} {% endif %}

@@ -1269,6 +1269,21 @@ body {
   width: calc(100% - 10px) !important;
 }
 
+.filter_show {
+  display: none;
+  height: 2em;
+  line-height: 2em;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2em;
+  text-decoration: none !important;
+}
+
+@media all and (max-width: 768px) {
+  .filter_show {
+    display: inline-block;
+  }
+}
 .loading {
   display: none;
   text-align: center;
@@ -1646,7 +1661,6 @@ body {
 .card-model .tab-content .table .val img {
   height: 1em;
 }
-
 .card-model .price {
   padding: 20px 0;
   text-align: center;
@@ -2044,6 +2058,9 @@ h1 {
 }
 #filter_model button:disabled:hover, #filter_model button[disabled]:hover {
   box-shadow: none;
+}
+#filter_model.active {
+  height: 100%;
 }
 
 .menu_profile {

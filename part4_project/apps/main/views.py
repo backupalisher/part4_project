@@ -47,9 +47,16 @@ def index_models(request):
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     model_count = 0
     pages = 0
-    filter_captions = ['Общие характеристики', 'Принтер', 'Копир', 'Сканер', 'Расходные материалы', 'Лотки',
-                       'Финишер',
-                       'Интерфейсы']
+    filter_captions = [
+        ['Общие характеристики', 'Common options'],
+        ['Принтер', 'Printer'],
+        ['Копир', 'Copier'],
+        ['Сканер', 'Scanner'],
+        ['Расходные материалы', 'Consumables'],
+        ['Лотки', 'Feeder'],
+        ['Финишер', 'Finisher'],
+        ['Интерфейсы', 'Interface']
+    ]
     try:
         page = int(request.GET.get('page'))
     except:

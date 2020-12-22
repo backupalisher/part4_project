@@ -280,6 +280,22 @@ body {
   }
 }
 
+.filter_show {
+  display: none;
+  height: 2em;
+  line-height: 2em;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2em;
+  text-decoration: none !important;
+}
+
+@media all and (max-width: 767px) {
+  .filter_show {
+    display: inline-block;
+  }
+}
+
 .loading {
   display: none;
   text-align: center;
@@ -326,20 +342,26 @@ body {
   padding: 0 15px 55px;
   overflow: hidden;
   width: auto;
+
   &.active {
     display: block;
   }
+
   &.contact {
     padding: 40px 0;
+
     .c_successful {
       display: none;
+
       &.active {
         display: block;
       }
     }
+
     .contact_close, #send_contact {
       font-size: 20px;
     }
+
     #contact_close {
       position: absolute;
       top: 20px;
@@ -350,30 +372,36 @@ body {
       line-height: 30px;
       cursor: pointer;
     }
+
     #form_contact {
       input {
         width: 100%;
         padding: 2px 8px;
         border-radius: 6px;
         font-size: 1.1em;
-         -moz-appearance: textfield;
+        -moz-appearance: textfield;
+
         &::-webkit-inner-spin-button {
           display: none;
         }
       }
+
       textarea {
         width: 100%;
         padding: 2px 8px;
         border-radius: 6px;
         font-size: 1.1em;
       }
+
       button {
 
       }
     }
+
     h4 {
       font-size: 1.4em;
     }
+
     a {
       font-size: 24px;
       font-weight: 600;
@@ -723,9 +751,7 @@ body {
       }
     }
   }
-}
 
-.card-model {
   .price {
     padding: 20px 0;
     text-align: center;
@@ -734,6 +760,18 @@ body {
     span {
       font-size: 1.3em;
       padding: 0 0 0 10px;
+    }
+  }
+}
+
+@media all and (max-width: 767px) {
+  .card-model {
+    .nav-item {
+      a {
+        span {
+          display: none;
+        }
+      }
     }
   }
 }
@@ -898,6 +936,7 @@ body {
     width: 100%;
     padding: 2px 8px;
     margin: 5px 0 15px;
+    line-height: 2em;
   }
 
   .module-name {
@@ -920,6 +959,7 @@ body {
 
     .part-item_img {
       width: 100px;
+      min-width: 100px;
       height: 100px;
       padding: 4px;
       border-radius: 5px;
@@ -967,6 +1007,7 @@ body {
     border: none;
     width: 100%;
     padding: 2px 8px;
+    line-height: 2em;
   }
 
   .error-list {
@@ -1231,6 +1272,10 @@ h1 {
       box-shadow: none;
     }
   }
+
+  &.active {
+    height: 100%;
+  }
 }
 
 .menu_profile {
@@ -1310,6 +1355,17 @@ h1 {
       cursor: pointer;
     }
   }
+  #errors {
+    .error-list {
+      height: 100px;
+    }
+    .error-body {
+      height: 300px;
+    }
+  }
+  .tab-inner-scroll {
+    height: 115px;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -1323,9 +1379,6 @@ h1 {
   }
   .tab_controls {
     display: block;
-  }
-  #detailTabs {
-    display: none;
   }
   #filter_model {
     padding-bottom: 20px;
@@ -1371,6 +1424,7 @@ div {
 .horizontal-scroll-wrapper {
   position: relative;
   height: 80px;
+
   .horizontal-scroll {
     position: absolute;
     display: block;
@@ -1382,6 +1436,7 @@ div {
     transform: rotate(-90deg) translateY(0);
     transform-origin: right top;
     padding: 70px 0 0 0;
+
     & > div {
       margin: 60px 0 0 -40px;
       display: block;

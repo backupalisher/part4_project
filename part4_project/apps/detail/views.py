@@ -86,7 +86,6 @@ async def past_init(request, partcode):
 
 def index(request, detail_id):
     lang = request.LANGUAGE_CODE
-    print(lang)
     # print(start_time, detail_id)
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)

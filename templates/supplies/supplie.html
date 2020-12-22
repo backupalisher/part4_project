@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static main_extras %}
 {% block title %}
-    {{ title }} - {{ supplie.1 }}
+    {% if lang == 'ru' %}{{ title }}{% else %}Consumables{% endif %} - {{ supplie.1 }}
 {% endblock %}
 {% block description %}
     <meta name="description"
@@ -96,7 +96,7 @@
                             <div class="nav nav-tabs">
                                 <div class="nav-item">
                                     <a class="nav-link active" href="#">
-                                        {% if lang == 'ru' %}Характеристики{% else %}Technical Specifications{% endif %}</a>
+                                        {% if lang == 'ru' %}Характеристики{% else %}Specifications{% endif %}</a>
                                 </div>
                             </div>
                         {% endif %}
@@ -133,8 +133,9 @@
         <div class="row">
             <nav class="nav-breadcrumb w-100">
                 <ul>
-                    <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="nav-breadcrumb-item"><a href="/supplies/">{{ title }}</a></li>
+                    <li class="nav-breadcrumb-item"><a href="/">{% if lang == 'ru' %}Главная{% else %}Main{% endif %}</a></li>
+                    <li class="nav-breadcrumb-item"><a href="/supplies/">
+                        {% if lang == 'ru' %}{{ title }}{% else %}Consumables{% endif %}</a></li>
                     {% if supplie %}
                         <li class="breadcrumb-item active">{% if supplie.2 %}{{ supplie.2 }}
                                 {% elif supplie.3 %}{{ supplie.3 }}

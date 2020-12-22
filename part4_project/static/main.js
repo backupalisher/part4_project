@@ -178,3 +178,8 @@ $('.contact_close').click(function () {
     $('.modal.contact').toggleClass('active')
 });
 
+// Show-hide filter
+$('.filter_show').click(function () {
+   $(this).toggleClass('active');
+   $('#filter_model').toggleClass('active');
+});

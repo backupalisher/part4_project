@@ -58,9 +58,11 @@
                 <form action="/search" method="get" class="mb-3">
 {#                    {% csrf_token %}#}
                     <div class="input-group" id="search_main">
-                        <input class="form-control hover_btn" type="search" name="s" placeholder="Поиск" aria-label="Search"
+                        <input class="form-control hover_btn" type="search" name="s"
+                               placeholder="{% if lang == 'ru' %}Поиск{% else %}Search{% endif %}" aria-label="Search"
                                aria-describedby="button-search">
-                        <button class="btn hover_btn" type="submit" id="button-search"><img src="{{ MEDIA_URL }}search_ico.png" ></button>
+                        <button class="btn hover_btn" type="submit" id="button-search">
+                            <img src="{{ MEDIA_URL }}search_ico.png" ></button>
                     </div>
 {#                    <small class="form-text text-muted">#}
 {#                        <span class="text-grey">Например:</span> "hp M603dn"#}

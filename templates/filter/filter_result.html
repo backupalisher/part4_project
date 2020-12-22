@@ -3,7 +3,7 @@
 {#Model list#}
 <div class="card-model-list">
     <div class="loading"><img src="{{ MEDIA_URL }}icons/loading_gear.svg" alt="loading" class="loading_gear"></div>
-    <div class="not-found">Ничего не найдено</div>
+    <div class="not-found">{% if lang == 'ru' %}Ничего не найдено{% else %}Nothing found{% endif %}</div>
     <div class="row"></div>
     <div id="load_more">&nbsp;</div>
 </div>

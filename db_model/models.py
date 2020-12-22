@@ -303,10 +303,11 @@ class FilterSettings(models.Model):
     subcaption = models.CharField(max_length=255, blank=True, null=True)
     sub = models.ForeignKey('SprDetailOptions', models.DO_NOTHING, blank=True, null=True)
     type = models.CharField(max_length=255, blank=True, null=True)
-    values = models.TextField(blank=True, null=True)  # This field type is a guess.
+    values = models.TextField(blank=True, null=True)
     caption_en = models.CharField(max_length=255, blank=True, null=True)
     subcaption_en = models.CharField(max_length=255, blank=True, null=True)
     parent_id = models.SmallIntegerField(blank=True, null=True)
+    values_en = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False

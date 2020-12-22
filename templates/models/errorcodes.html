@@ -6,8 +6,9 @@
     <div class="row">
         {% if verrors is not None %}
             <div class="col-md-3 col-12">
-                <h6>Коды ошибок</h6>
-                <input type="text" placeholder="Поиск по кодам ошибок" id="errors_search" class="errors_search">
+                <h6>{% if lang == 'ru' %}Коды ошибок{% else %}Error codes{% endif %}</h6>
+                <input type="text" id="errors_search" class="errors_search"
+                   placeholder="{% if lang == 'ru' %}Поиск по кодам ошибок{% else %}Search by error codes{% endif %}">
                 <div class="scrollbar-macosx">
                     <div class="error-list">
                         {% for error in verrors %}
@@ -23,7 +24,7 @@
                 </div>
             </div>
             <div class="col">
-                <h6>Описание</h6>
+                <h6>{% if lang == 'ru' %}Описание{% else %}Description{% endif %}</h6>
                 <div class="scrollbar-macosx">
                     <div class="error-body">
                         {% for error in verrors %}
