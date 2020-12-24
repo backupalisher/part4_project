@@ -12,7 +12,7 @@ from db_model.db_utils import _query
 # search in details
 @sync_to_async
 def search_detail(sval):
-    aval = sval.split(' ')
+    aval = sval.replace(':', '').split(' ')
     sval = ''
     for val in aval:
         sval += val + ':* & '

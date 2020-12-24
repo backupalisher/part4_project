@@ -180,6 +180,6 @@ $('.contact_close').click(function () {
 
 // Show-hide filter
 $('.filter_show').click(function () {
-   $(this).toggleClass('active');
+   $('.filter_show').toggleClass('active');
    $('#filter_model').toggleClass('active');
 });
