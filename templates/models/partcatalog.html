@@ -75,14 +75,14 @@
 </div>
 {% block ajaxjs %}
     <script type="text/javascript">
-        function jqueryIsLoaded() {
+        function PartsJqueryIsLoaded() {
             $parts_script = "{% static 'model_parts.js' %}"
             $.getScript($parts_script)
         }
 
         function checkIsJquery() {
             if (window.jQuery) {
-                jqueryIsLoaded();
+                PartsJqueryIsLoaded();
             } else {
                 window.setTimeout(checkIsJquery, 100);
             }

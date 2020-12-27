@@ -23,22 +23,22 @@
 
 {% block ajaxjs %}
     <script type="text/javascript">
-        function jqueryLoaded() {
+        function SupplieJqueryLoaded() {
             $supplies = "{{ supplies }}"
             $media_url = "{{ MEDIA_URL }}"
             $ajax_script = "{% static 'supplie_ajax.js' %}"
             $.getScript($ajax_script)
         }
 
-        function checkJquery() {
+        function SupplieCheckJquery() {
             if (window.jQuery) {
-                jqueryLoaded();
+                SupplieJqueryLoaded();
             } else {
-                window.setTimeout(checkJquery, 100);
+                window.setTimeout(SupplieCheckJquery, 100);
             }
         }
 
-        checkJquery();
+        SupplieCheckJquery();
     </script>
     {#    <script src="{% static 'model_ajax.js' %}"></script>#}
 {% endblock %}

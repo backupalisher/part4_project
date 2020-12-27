@@ -52,6 +52,7 @@
 // }
 
 $('#errors_search').keyup(function () {
+    console.log($(this).val())
     $('.error-title').css('display', 'block')
     if ($(this).val().length > 1) {
         for (let i = 0; i < document.getElementsByClassName('error-title').length; i++) {

@@ -56,19 +56,22 @@
 </div>
 {% block ajaxjs %}
         <script type="text/javascript">
-            function jqueryLoaded() {
+            function ErrorJqueryLoaded() {
+                console.log('load js');
                 $errors = "{{ verrors }}"
                 $media_url = "{{ MEDIA_URL }}"
                 $errors_script = "{% static 'model_errors.js' %}"
                 $.getScript($errors_script)
             }
-            function checkJquery() {
+            function ErrorCheckJquery() {
+                console.log('preload js');
                 if (window.jQuery) {
-                    jqueryLoaded();
+                    ErrorJqueryLoaded();
+                    console.log('loaded js');
                 } else {
-                    window.setTimeout(checkJquery, 100);
+                    window.setTimeout(ErrorCheckJquery, 100);
                 }
             }
-            checkJquery();
+            ErrorCheckJquery();
         </script>
 {% endblock %}
