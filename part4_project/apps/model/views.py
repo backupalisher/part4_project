@@ -214,16 +214,29 @@ def index(request, model_id):
         pass
     elif cur_module is not None:
         tab = 'parts'
-    elif len(subcaptions) > 0:
-        tab = 'options'
-    elif len(supplies) > 0:
-        tab = 'supplies'
-    elif len(verrors) > 0:
-        tab = 'errors'
-    elif len(supplies) > 0:
-        tab = 'supplies'
     else:
         tab = 'options'
+    try:
+        if len(supplies) > 0:
+            tab = 'supplies'
+    except:
+        pass
+    try:
+        if len(verrors) > 0:
+            tab = 'errors'
+    except:
+        pass
+    try:
+        if len(partcatalog) > 0:
+            tab = 'parts'
+    except:
+        pass
+    try:
+        if len(subcaptions) > 0:
+            tab = 'options'
+    except:
+        pass
+
     if model_id:
         return render(request, 'models/index.html',
                       {'detail_id': detail_id, 'model_name': model_name, 'model_main_image': model_main_image,
