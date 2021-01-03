@@ -216,26 +216,26 @@ def index(request, model_id):
         tab = 'parts'
     else:
         tab = 'options'
-    try:
-        if len(supplies) > 0:
-            tab = 'supplies'
-    except:
-        pass
-    try:
-        if len(verrors) > 0:
-            tab = 'errors'
-    except:
-        pass
-    try:
-        if len(partcatalog) > 0:
-            tab = 'parts'
-    except:
-        pass
-    try:
-        if len(subcaptions) > 0:
-            tab = 'options'
-    except:
-        pass
+        try:
+            if len(supplies) > 0:
+                tab = 'supplies'
+        except:
+            pass
+        try:
+            if len(verrors) > 0:
+                tab = 'errors'
+        except:
+            pass
+        try:
+            if len(partcatalog) > 0:
+                tab = 'parts'
+        except:
+            pass
+        try:
+            if len(subcaptions) > 0:
+                tab = 'options'
+        except:
+            pass
 
     if model_id:
         return render(request, 'models/index.html',
