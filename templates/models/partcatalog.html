@@ -51,9 +51,13 @@
                                                         <td><span class="part-name">
                                                         {% if lang == 'ru' %}Деталь{% else %}Detail{% endif %}:</span>
                                                         </td>
-                                                        <td>{% if partc.11 %}{{ partc.11 }}{% endif %}
-                                                            {% if partc.10 and partc.11 %}<br> {% endif %}
-                                                            {% if partc.10 %}{{ partc.10 }}{% endif %}</td>
+                                                        <td>
+                                                            {% if lang == 'ru' %}
+                                                                {% if partc.10 %}{{ partc.10 }}{% else %}{{ partc.11 }}{% endif %}
+                                                            {% else %}
+                                                                {% if partc.11 %}{{ partc.11 }}{% else %}{{ partc.10 }}{% endif %}
+                                                            {% endif %}
+                                                            </td>
                                                     </tr>
                                                     <tr>
                                                         <td>{% if lang == 'ru' %}Парткод{% else %}Partcode{% endif %}:
