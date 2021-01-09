@@ -1713,6 +1713,7 @@ body {
 }
 .detail table td:last-child, .supplie table td:last-child {
   padding: 0 0 5px 35px;
+  word-break: break-all;
 }
 
 #options.desc, .detail.desc, .supplie.desc {

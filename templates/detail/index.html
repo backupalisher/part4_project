@@ -27,9 +27,10 @@
                 <div class="col">
                     <h3 class="title">
                         {% if detail_name_ru != '' and detail_name_ru != None and lang == 'ru' %}
-                            {{ detail_name_ru }} <br> <small>{{ detail_name }}</small>
+                            {{ detail_name_ru }}
+                            {% if detail_name is not None %}<br> <small>{{ detail_name }}</small>{% endif %}
                         {% else %}
-                            {{ detail_name }}
+                            {% if detail_name is not None %}{{ detail_name }}{% else %}{{ detail_name_ru }}{% endif %}
                         {% endif %}
                     </h3>
                     <div class="table-responsive">
@@ -124,7 +125,7 @@
                 <ul>
                     <li class="nav-breadcrumb-item"><a href="/">{% if lang == 'ru' %}Главная{% else %}Main{% endif %}</a></li>
                     <li class="nav-breadcrumb-item"><a href="/model/{{ model_id }}">{{ model_name }}</a></li>
-                    <li class="nav-breadcrumb-item active">{{ detail_name }}</li>
+                    <li class="nav-breadcrumb-item active">{% if detail_name is not None %}{{ detail_name }}{% else %}{{ detail_name_ru }}{% endif %}</li>
                 </ul>
             </nav>
         </div>
