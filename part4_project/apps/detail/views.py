@@ -19,7 +19,6 @@ def detail_view(request):
 # добавление веса
 @sync_to_async
 def set_weight(detail_id):
-    print('set weight', detail_id)
     # print(datetime.datetime.now() - start_time, 'обновление веса')
     _query(
         f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w "
