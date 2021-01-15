@@ -11,7 +11,7 @@ start_time = datetime.datetime.now()
 
 
 def index(request):
-    brands = models.Brands.objects.all()
+    brands = models.Brands.objects.filter(logotype__isnull=False)
     return render(request, 'main/index.html', context={'search_block': True, 'brands': brands})
 
 
@@ -67,12 +67,12 @@ def index_models(request):
     checkboxs = {}
     ranges = {}
     radios = {}
-    brands = models.Brands.objects.all()
+    brands = models.Brands.objects.filter(logotype__isnull=False)
     fbrands = []
     if request.is_ajax():
         if request.method == 'POST':
             if dict(request.POST.lists())['reset'][0] and 'true' in dict(request.POST.lists())['reset'][0]:
-                preloads = loop.run_until_complete(preload(limit, offset))
+                preloads = loop.run_until_complete(preload(limit, offset, ''))
                 brand_models = preloads[1]
                 model_count = len(brand_models)
                 pages = math.ceil(model_count / limit)
@@ -96,7 +96,7 @@ def index_models(request):
                     if brand_models:
                         model_count = len(brand_models)
                 else:
-                    preloads = loop.run_until_complete(preload(limit, offset))
+                    preloads = loop.run_until_complete(preload(limit, offset, ''))
                     sfilter = preloads[0]
                     brand_models = preloads[1]
                     model_count = len(brand_models)
@@ -110,17 +110,31 @@ def index_models(request):
         else:
             return JsonResponse('unsuccessful')
     else:
-        # print(start_time, brand_id)
-        preloads = loop.run_until_complete(preload(limit, offset))
-        sfilter = preloads[0]
-        brand_models = preloads[1]
-        request.session['brand_models'] = brand_models
-        model_count = len(brand_models)
-        pages = math.ceil(model_count / limit)
-        loop.run_until_complete(loop.shutdown_asyncgens())
-        loop.close()
-        # print(datetime.datetime.now() - start_time, 'завершение')
-        return render(request, 'main/models.html', {'search_block': True, 'brands': brands,
-                                                    'brand_models': brand_models, 'lang': lang,
-                                                    'model_count': model_count, 'page': page, 'pages': range(pages),
-                                                    'sfilter': sfilter, 'filter_captions': filter_captions})
+        if 'market' in request.path:
+            preloads = loop.run_until_complete(preload(limit, offset, 'market'))
+            sfilter = preloads[0]
+            brand_models = preloads[1]
+            # request.session['brand_models'] = brand_models
+            model_count = len(brand_models)
+            pages = math.ceil(model_count / limit)
+            loop.run_until_complete(loop.shutdown_asyncgens())
+            loop.close()
+            return render(request, 'main/market.html', {'search_block': True, 'brands': brands,
+                                                        'brand_models': brand_models, 'lang': lang,
+                                                        'model_count': model_count, 'page': page, 'pages': range(pages),
+                                                        'sfilter': sfilter, 'filter_captions': filter_captions})
+        else:
+            # print(start_time, brand_id)
+            preloads = loop.run_until_complete(preload(limit, offset, ''))
+            sfilter = preloads[0]
+            brand_models = preloads[1]
+            # request.session['brand_models'] = brand_models
+            model_count = len(brand_models)
+            pages = math.ceil(model_count / limit)
+            loop.run_until_complete(loop.shutdown_asyncgens())
+            loop.close()
+            # print(datetime.datetime.now() - start_time, 'завершение')
+            return render(request, 'main/models.html', {'search_block': True, 'brands': brands,
+                                                        'brand_models': brand_models, 'lang': lang,
+                                                        'model_count': model_count, 'page': page, 'pages': range(pages),
+                                                        'sfilter': sfilter, 'filter_captions': filter_captions})

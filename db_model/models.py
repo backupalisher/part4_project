@@ -506,6 +506,21 @@ class PayHistory(models.Model):
         db_table = 'pay_history'
 
 
+class Prices(models.Model):
+    detail = models.ForeignKey(Details, models.DO_NOTHING, blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
+    vendor = models.ForeignKey('Vendors', models.DO_NOTHING)
+    partcode_id = models.IntegerField(blank=True, null=True)
+    supplies_id = models.IntegerField(blank=True, null=True)
+    model_id = models.IntegerField(blank=True, null=True)
+    usage_status = models.TextField(blank=True, null=True)  # This field type is a guess.
+
+    class Meta:
+        managed = False
+        db_table = 'prices'
+        unique_together = (('vendor', 'model_id'), ('vendor', 'partcode_id'),)
+
+
 class Profile(models.Model):
     user_id = models.IntegerField()
     name = models.CharField(max_length=255, blank=True, null=True)

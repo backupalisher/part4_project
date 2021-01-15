@@ -1,3 +1,6 @@
+import requests
+
+
 def main_menu(request):
     path = str(request.path)
     menu_list = [
@@ -21,3 +24,9 @@ def main_menu(request):
     except KeyError as e:
         cur_item = 'Главная'
     return {'menu_list': menu_list, 'menu_item_active': cur_item, 'menu_auth': menu_auth}
+
+
+def currency(price):
+    url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=RUB&apikey=34MHK26GZWVBW4O9'
+    req_ob = requests.get(url).json()
+    return {'currency': float(req_ob["Realtime Currency Exchange Rate"]['5. Exchange Rate'])}

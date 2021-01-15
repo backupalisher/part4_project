@@ -1,0 +1,41 @@
+@import "colors";
+
+.dashboard {
+  .sidebar {
+    border-right: 1px solid $grey;
+    li {
+      background: none;
+      &.active {
+        background: rgba(0,0,0,0.2);
+      }
+      a {
+        text-transform: none;
+      }
+    }
+  }
+  #model_list, #parcode_list, #details_list {
+    min-height: 400px;
+    max-height: calc(100vh - 200px);
+    max-width: 30vw;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: start;
+    align-items: start;
+    button {
+      text-align: left;
+    }
+  }
+  .btn_show_model {
+    &.hide {
+      display: none;
+    }
+  }
+  label {
+    color: $anthracite;
+  }
+  #model_detail {
+    padding: 1em 0;
+  }
+}

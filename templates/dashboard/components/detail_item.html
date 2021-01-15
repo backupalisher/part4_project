@@ -1,0 +1,26 @@
+{% load static mathfilters %}
+<div id="detail_item"></div>
+
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function DetailItemLoaded() {
+            detail = "{{ detail }}"
+            partcodes = "{{ partcodes }}"
+            vendors = "{{ vendors }}"
+            media_url = "{{ MEDIA_URL }}"
+            $ajax_script = "{% static 'dashboard/detail_ajax.js' %}"
+            $.getScript($ajax_script)
+        }
+
+        function checkDIJquery() {
+            if (window.jQuery) {
+                DetailItemLoaded();
+            } else {
+                window.setTimeout(checkDIJquery, 100);
+            }
+        }
+
+        checkDIJquery();
+    </script>
+{% endblock %}

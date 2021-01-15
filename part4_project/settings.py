@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'el_pagination',
     'sendmail',
     'accounts',
+    'dashboard',
     'db_model',
     'search',
     'main',
@@ -62,13 +63,14 @@ INSTALLED_APPS = [
     'contacts',
     'brand',
     'filter',
-    'supplies'
+    'supplies',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -100,6 +102,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
                 "context_processors.views.main_menu",
+                "context_processors.views.currency",
                 'django.template.context_processors.request',
             ],
         },
@@ -155,6 +158,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
+LANGUAGES = (
+    ('ru', 'Russian'),
+    ('en', 'English'),
+)
+
 TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
@@ -167,6 +175,10 @@ LOGIN_REDIRECT_URL = '/account/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (

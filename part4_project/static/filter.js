@@ -25,6 +25,7 @@ $(document).ready(function () {
         }
         $(this).parent().toggleClass('checked');
         checkDisable($('.filter_settings').offset().top + 75);
+        $("#form_filter #submit").trigger('click');
     });
 
 

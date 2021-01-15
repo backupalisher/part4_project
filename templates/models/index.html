@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static mfilters main_extras %}
+{% load static mfilters main_extras mathfilters %}
 {% block title %}
     {{ model_name }}
 {% endblock %}
@@ -89,8 +89,8 @@
                 <div class="row">
                     <div class="col-auto">
                         <div class="price">
-                            {% if lang == 'ru' %}Ориентировочная цена{% else %}Estimated price{% endif %}:
-                            <span>{{ price.0|d_mask }} &#x20bd;</span>
+                            {% if lang == 'ru' %}Ориентировочная цена: <span>{{ price.0|d_mask }} &#x20bd;</span>
+                            {% else %} Estimated price: <span>${{ price.0|div:currency|d_mask }} </span> {% endif %}
                             <!--small>({{ price.1 }})</small-->
                         </div>
                     </div>

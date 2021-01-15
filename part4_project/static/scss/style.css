@@ -1055,7 +1055,7 @@ body {
 .header .d-flex {
   justify-content: space-between;
 }
-.header .left_side {
+.header .right_side {
   display: flex;
   justify-content: space-between;
 }
@@ -1073,6 +1073,7 @@ body {
 #toggle-theme {
   cursor: pointer;
   align-items: flex-end;
+  min-width: 58px;
   width: 58px;
   height: 28px;
   border-radius: 14px;
@@ -1117,6 +1118,20 @@ body {
 }
 .logo:hover {
   text-decoration: none;
+}
+
+#language_select .input-group-prepend label {
+  background-color: #FFFFFF;
+  width: 40px;
+  height: 38px;
+  padding: 6px;
+  z-index: 11;
+  margin: 0 -2px 0 5px;
+  border-radius: 6px 0 0 6px;
+  border: 1px solid #ced4da;
+}
+#language_select .input-group-prepend img {
+  max-width: 100%;
 }
 
 #search_main {
@@ -1772,11 +1787,14 @@ body {
 .card.card-model-item .brand_model_title {
   font-size: 14px;
   height: 45px;
-  line-height: 15px;
+  line-height: 45px;
   overflow: hidden;
   position: absolute;
   bottom: -45px;
   width: 100%;
+}
+.card.card-model-item .model_price {
+  margin-bottom: 0.5em;
 }
 .card.card-model-item a:hover {
   text-decoration: none;

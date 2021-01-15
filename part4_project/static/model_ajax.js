@@ -4,13 +4,9 @@ page = 0
 count = 24
 $models_all = []
 aTop = 0
+console.log(currency, lang)
 if (brand_models.length > 0) {
-    brand_models = brand_models.replace(/&#x27;/g, "'")
-    brand_models = brand_models.replace(/'/g, '"')
-    brand_models = brand_models.replace(/\(/g, '[')
-    brand_models = brand_models.replace(/\)/g, ']')
-    brand_models = brand_models.replace(/None/g, '""')
-    brand_models = JSON.parse(brand_models)
+    brand_models = toJSON(brand_models)
     $page_count = Math.round(brand_models.length / count)
     $models_all = brand_models
     show_models($models_all, media_url, page, count)
@@ -52,10 +48,24 @@ function show_models(models, media_url, page, count) {
             } else {
                 $mstyle = 'style="background-image:url(\'' + media_url + 'no_image.svg\'); background-size: 80%;"'
             }
-            $html = '<div class="col-lg-3 col-md-4 col-sm-6 p-2"> <div class="card card-model-item btn">' +
-                '<a href="/model/' + models[i][1] + '" class="brand_model_link" ' + $mstyle + '>' +
-                '<div class="brand_model_title">' + models[i][2] + '</div></a>' +
-                '</div></div>'
+            if (models[i][8]) {
+                console.log(models[i][8])
+                $html = '<div class="col-lg-3 col-md-4 col-sm-6 p-2"> <div class="card card-model-item btn">' +
+                    '<a href="/model/' + models[i][1] + '" class="brand_model_link" ' + $mstyle + '>' +
+                    '<div class="brand_model_title">' + models[i][2] + '</div></a> '
+                if (lang === 'ru') {
+                    $html += '<p class="model_price">' + models[i][8] + ' &#x20bd;</p>'
+                } else {
+                    $html += '<p class="model_price">$' + Math.round(parseInt(models[i][8], 10) / parseInt(currency, 10)) + '</p>'
+                }
+                $html += '</div></div>'
+            } else {
+                $html = '<div class="col-lg-3 col-md-4 col-sm-6 p-2"> <div class="card card-model-item btn">' +
+                    '<a href="/model/' + models[i][1] + '" class="brand_model_link" ' + $mstyle + '>' +
+                    '<div class="brand_model_title">' + models[i][2] + '</div></a>' +
+                    '</div></div>'
+            }
+
             $('.card-model-list .row').append($html)
         }
     }
@@ -95,3 +105,8 @@ $('#filter_search_clear').click(function () {
 })
 
 
+// String to json
+function toJSON(item) {
+    item = item.replace(/&#x27;/g, "'").replace(/'/g, '"').replace(/\\/g, '/').replace(/\(/g, '[').replace(/\)/g, ']').replace(/None/g, '""').replace(/\n/g, '').replace(/Decimal/g, '')
+    return JSON.parse(item)
+}

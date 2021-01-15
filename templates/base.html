@@ -1,4 +1,4 @@
-{% load static compress %}
+{% load static compress i18n %}
 <!DOCTYPE html>
 <html lang="ru" class="h-100">
 <head>
@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     {% block description %}
-        <meta name="description"
-              content="Самый полный справочник оргтехники (принтеров, МФУ, сканеров). Здесь вы сможете найти технические характеристики, парткаталоги, коды ошибок и информацию о картриджах для самых распространенных моделей">
+        <meta name="description" content="{% trans "Description homepage" %}">
     {% endblock %}
     {% block keyword %}
-        <meta name="keyword"
-              content="принтеры, МФУ, сканеры, картриджи, технические характеристики, парткаталоги, коды ошибок">
+        <meta name="keyword" content="{% trans "Keyword homepage" %}">
     {% endblock %}
     {% compress css %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
@@ -34,44 +32,70 @@
                         <a class="logo hover_text" href="/">
                             <span>Part4<br><small>Reference system</small></span>
                         </a>
-                        <div class="left_side">
-                            <div id="toggle-theme" class="hover_btn"><div class="toggle"></div><div class="ico"></div></div>
-{#                            <a href="#" class="main_menu hover_btn">Sign in</a>#}
+                        <div class="right_side">
+                            <div id="toggle-theme" class="hover_btn">
+                                <div class="toggle"></div>
+                                <div class="ico"></div>
+                            </div>
+                            {#                            <a href="#" class="main_menu hover_btn">Sign in</a>#}
+                            <div class="input-group" id="language_select">
+                                <div class="input-group-prepend">
+                                    <label class="" for="language_select">
+                                        <img src="{{ MEDIA_URL }}icons/language_setting_icon.svg">
+                                    </label>
+                                </div>
+                                <form action="{% url 'set_language' %}" method="post">
+                                    {% csrf_token %}
+                                    {% get_current_language as LANGUAGE_CODE %}
+                                    {% get_available_languages as LANGUAGES %}
+                                    {% get_language_info_list for LANGUAGES as languages %}
+
+                                    <input name="next" type="hidden" value="{{ redirect_to }}"/>
+                                    <select class="custom-select" name="language" onchange="this.form.submit()">
+                                        {% for language in languages %}
+                                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}
+                                                    selected="selected"{% endif %}>
+                                                {{ language.code }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-{#                    <div class="auth-block">#}
-{#                        <ul class="float-right navbar-nav">#}
-{#                            {% if user.is_authenticated %}#}
-{#                                <li class="nav-item"><a class="nav-link"#}
-{#                                                        href="{% url 'logout' %}">Выйти {{ user.username }}</a></li>#}
-{#                            {% else %}#}
-{#                                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>#}
-{#                                <li class="nan-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a>#}
-{#                                </li>#}
-{#                            {% endif %}#}
-{#                        </ul>#}
-{#                        <a id="toggle-theme">Тема</a>#}
-{#                    </div>#}
+                {#                    <div class="auth-block">#}
+                {#                        <ul class="float-right navbar-nav">#}
+                {#                            {% if user.is_authenticated %}#}
+                {#                                <li class="nav-item"><a class="nav-link"#}
+                {#                                                        href="{% url 'logout' %}">Выйти {{ user.username }}</a></li>#}
+                {#                            {% else %}#}
+                {#                                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>#}
+                {#                                <li class="nan-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a>#}
+                {#                                </li>#}
+                {#                            {% endif %}#}
+                {#                        </ul>#}
+                {#                        <a id="toggle-theme">Тема</a>#}
+                {#                    </div>#}
             {% endblock %}
             <div class="container p-2">
                 <form action="/search" method="get" class="mb-3">
-{#                    {% csrf_token %}#}
+                    {#                    {% csrf_token %}#}
                     <div class="input-group" id="search_main">
                         <input class="form-control hover_btn" type="search" name="s"
                                placeholder="{% if lang == 'ru' %}Поиск{% else %}Search{% endif %}" aria-label="Search"
                                aria-describedby="button-search">
                         <button class="btn hover_btn" type="submit" id="button-search">
-                            <img src="{{ MEDIA_URL }}search_ico.png" ></button>
+                            <img src="{{ MEDIA_URL }}search_ico.png"></button>
                     </div>
-{#                    <small class="form-text text-muted">#}
-{#                        <span class="text-grey">Например:</span> "hp M603dn"#}
-{#                    </small>#}
+                    {#                    <small class="form-text text-muted">#}
+                    {#                        <span class="text-grey">Например:</span> "hp M603dn"#}
+                    {#                    </small>#}
                 </form>
             </div>
         {% endblock %}
         {% block login %}
-{#            {% include 'main/menu_profile.html' %}#}
+            {#            {% include 'main/menu_profile.html' %}#}
         {% endblock login %}
 
         <div class="container mt-2 main-content">
@@ -86,7 +110,8 @@
 <footer class="footer mt-auto py-3">
     {% block footer %}
         {% block copyright %}
-            <p class="text-center">&copy; Part4 | <a href="mailto:info@part4.info" target="_blank">info@part4.info</a> </p>
+            <p class="text-center">&copy; Part4 | <a href="mailto:info@part4.info" target="_blank">info@part4.info</a>
+            </p>
         {% endblock %}
     {% endblock %}
 </footer>

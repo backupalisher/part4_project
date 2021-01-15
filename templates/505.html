@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}
     Page 500
 {% endblock %}
@@ -6,6 +7,6 @@
 {% block content %}
      <div class="not_found">
         <img src="{{ MEDIA_URL }}icons/not_found.svg" alt="not found">
-        <h3>500 Internal Server Error</h3>
+        <h3>{% trans "500 Internal Server Error" %}</h3>
     </div>
 {% endblock %}

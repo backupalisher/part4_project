@@ -104,10 +104,17 @@ def get_filters():
 
 
 @sync_to_async
-def get_all_models(limit, offset):
+def get_all_models(limit, offset, target):
     # print(datetime.datetime.now() - start_time, 'получение всех моделей')
-    brand_models = _query(
-        f'SELECT * FROM model_for_filter mopt ORDER BY weight DESC, main_image LIMIT {limit} OFFSET {offset};')
+    if target == 'market':
+        brand_models = _query(
+            f'SELECT did, mid, model, ids, main_image, brand_id, "name", weight, CAST(SUM(price) as INTEGER), vendor '
+            f'FROM model_for_filter WHERE price is not NULL '
+            f'GROUP BY did, mid, model, ids, main_image, brand_id, "name", weight,  vendor O'
+            f'RDER BY weight DESC, main_image LIMIT {limit} OFFSET {offset};')
+    else:
+        brand_models = _query(
+            f'SELECT * FROM model_for_filter mopt ORDER BY weight DESC, main_image LIMIT {limit} OFFSET {offset};')
     # print(datetime.datetime.now() - start_time, 'получение всех моделей завершено')
     return brand_models
 
@@ -151,7 +158,7 @@ def get_filtered_model(brands, checkboxs, ranges, radios):
     if len(brands) > 0:
         f_sql += f' ('
         for i, bid in enumerate(brands):
-            if i+1 != len(brands):
+            if i + 1 != len(brands):
                 f_sql += f'brand_id = {int(bid)} OR '
             else:
                 f_sql += f'brand_id = {int(bid)} )'
@@ -161,8 +168,8 @@ def get_filtered_model(brands, checkboxs, ranges, radios):
     return brand_models
 
 
-async def preload(limit, offset):
-    tasks = [get_filters(), get_all_models(limit, offset)]
+async def preload(limit, offset, target):
+    tasks = [get_filters(), get_all_models(limit, offset, target)]
     results = await asyncio.gather(*tasks)
     return results
 

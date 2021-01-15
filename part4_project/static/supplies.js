@@ -6,7 +6,6 @@ $(document).ready(function () {
 
     $('#submit-order').click(function () {
         $form = getFormData($('.order-form form'));
-        console.log($form);
         $.ajax({
             type: 'POST',
             url: '/sendmail/',

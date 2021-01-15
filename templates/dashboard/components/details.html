@@ -1,0 +1,39 @@
+{% load static mathfilters %}
+{% csrf_token %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-auto">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="search_details" placeholder="">
+              <label for="search_details">Details:</label>
+            </div>
+            <div class="scrollbar-macosx">
+                <div class="" id="details_list"></div>
+            </div>
+        </div>
+        <div class="col">
+            <div id="detail_item"></div>
+        </div>
+    </div>
+</div>
+
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function DetailsLoaded() {
+            details = "{{ details }}"
+            $ajax_script = "{% static 'dashboard/details.js' %}"
+            $.getScript($ajax_script)
+        }
+
+        function checkDJquery() {
+            if (window.jQuery) {
+                DetailsLoaded();
+            } else {
+                window.setTimeout(checkDJquery, 100);
+            }
+        }
+
+        checkDJquery();
+    </script>
+{% endblock %}

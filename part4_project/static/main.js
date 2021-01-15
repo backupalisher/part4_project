@@ -136,8 +136,9 @@ $(document).ready(function () {
 
 // error_result models toggle show
 $('#error_result_models_show').click(function () {
-    console.log($(this).attr('aria-label'))
     $('#' + $(this).attr('aria-label')).toggle()
+    $(this).children('.btn_show').toggle()
+    $(this).children('.btn_hide').toggle()
 });
 
 $('#btn-buy').click(function () {

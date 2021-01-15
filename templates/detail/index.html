@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
-{% load static mfilters main_extras %}
+{% load static mfilters main_extras mathfilters %}
 {% block title %}
-    {{ detail_name }}
+    {% if detail_name_ru != '' and detail_name_ru != None and lang == 'ru' %}
+        {{ detail_name_ru }}
+        {% if detail_name is not None %}<br> <small>{{ detail_name }}</small>{% endif %}
+    {% else %}
+        {% if detail_name is not None %}{{ detail_name }}{% else %}{{ detail_name_ru }}{% endif %}
+    {% endif %}
 {% endblock %}
 {% block description %}
     <meta name="description"
@@ -44,19 +49,22 @@
                             {% endif %}
                             {% if model_name != '-' %}
                                 <tr>
-                                    <td><span class="capt">{% if lang == 'ru' %}Модель{% else %} Model {% endif %}</span></td>
+                                    <td><span class="capt">{% if lang == 'ru' %}Модель{% else %}
+                                        Model {% endif %}</span></td>
                                     <td><a href="/model/{{ model_id }}">{{ model_name }}</a></td>
                                 </tr>
                             {% endif %}
                             {% if module_name %}
                                 <tr>
-                                    <td><span class="capt">{% if lang == 'ru' %}Модуль{% else %} Module {% endif %}</span></td>
+                                    <td><span class="capt">{% if lang == 'ru' %}Модуль{% else %}
+                                        Module {% endif %}</span></td>
                                     <td><a href="/model/{{ model_id }}?module={{ module_name }}">{{ module_name }}</a>
                                     </td>
                                 </tr>
                             {% elif module_name_ru %}
                                 <tr>
-                                    <td><span class="capt">{% if lang == 'ru' %}Модуль{% else %} Module {% endif %}</span></td>
+                                    <td><span class="capt">{% if lang == 'ru' %}Модуль{% else %}
+                                        Module {% endif %}</span></td>
                                     <td>
                                         <a href="/model/{{ model_id }}?module={{ module_name_ru }}">{{ module_name_ru }}</a>
                                     </td>
@@ -64,8 +72,16 @@
                             {% endif %}
                             {% if detail_desc != '' and detail_desc != None %}
                                 <tr>
-                                    <td><span class="capt">{% if lang == 'ru' %}Описание{% else %} Description {% endif %}</span></td>
+                                    <td><span class="capt">{% if lang == 'ru' %}Описание{% else %}
+                                        Description {% endif %}</span></td>
                                     <td>{{ detail_desc }}</td>
+                                </tr>
+                            {% endif %}
+                            {% if part_desc != '' and part_desc != None %}
+                                <tr>
+                                    <td><span class="capt">{% if lang == 'ru' %}Дополнительно{% else %}
+                                        Addition {% endif %}</span></td>
+                                    <td>{{ part_desc }}</td>
                                 </tr>
                             {% endif %}
                         </table>
@@ -73,12 +89,12 @@
                 </div>
             </div>
             {% if price %}
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-auto">
                         <div class="price">
-                            {% if lang == 'ru' %}Ориентировочная цена{% else %}Estimated price{% endif %}:
-                            <span>{{ price|d_mask }} &#x20bd;</span>
-                            <!--small>({{ vendor }})</small-->
+                            {% if lang == 'ru' %}Ориентировочная цена: <span>{{ price|d_mask }} &#x20bd;</span>
+                            {% else %} Estimated price: <span>${{ price|div:currency|d_mask }} </span> {% endif %}
+                            <!--small>({{ price.1 }})</small-->
                         </div>
                     </div>
                     <div class="col pt-2">
@@ -112,7 +128,7 @@
             </div>
         </div>
     </div>
-{% include 'modals/contact.html' %}
+    {% include 'modals/contact.html' %}
 {% endblock %}
 
 {% block search %}
@@ -123,9 +139,11 @@
         <div class="row">
             <nav class="nav-breadcrumb w-100">
                 <ul>
-                    <li class="nav-breadcrumb-item"><a href="/">{% if lang == 'ru' %}Главная{% else %}Main{% endif %}</a></li>
+                    <li class="nav-breadcrumb-item"><a href="/">{% if lang == 'ru' %}Главная{% else %}
+                        Main{% endif %}</a></li>
                     <li class="nav-breadcrumb-item"><a href="/model/{{ model_id }}">{{ model_name }}</a></li>
-                    <li class="nav-breadcrumb-item active">{% if detail_name is not None %}{{ detail_name }}{% else %}{{ detail_name_ru }}{% endif %}</li>
+                    <li class="nav-breadcrumb-item active">
+                        {% if detail_name is not None %}{{ detail_name }}{% else %}{{ detail_name_ru }}{% endif %}</li>
                 </ul>
             </nav>
         </div>
