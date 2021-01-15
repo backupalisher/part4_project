@@ -26,14 +26,13 @@ def supplie_get(brand_id):
     if brand_id > 0:
         f_sql += f' WHERE brand_id = {brand_id}'
     f_sql += f" ORDER BY weight DESC, id;"
-    print(f_sql)
     return _query(f_sql)
 
 
 def index(request):
     lang = request.LANGUAGE_CODE
     title = 'Расходные материалы'
-    brands = models.Brands.objects.all()
+    brands = models.Brands.objects.filter(logotype__isnull=False)
     try:
         brand = dict(request.GET.lists())['brand'][0]
         supplies = supplie_get(int(brand))
