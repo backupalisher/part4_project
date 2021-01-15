@@ -114,7 +114,7 @@ def index_models(request):
             preloads = loop.run_until_complete(preload(limit, offset, 'market'))
             sfilter = preloads[0]
             brand_models = preloads[1]
-            # request.session['brand_models'] = brand_models
+            request.session['brand_models'] = brand_models
             model_count = len(brand_models)
             pages = math.ceil(model_count / limit)
             loop.run_until_complete(loop.shutdown_asyncgens())
@@ -124,16 +124,14 @@ def index_models(request):
                                                         'model_count': model_count, 'page': page, 'pages': range(pages),
                                                         'sfilter': sfilter, 'filter_captions': filter_captions})
         else:
-            # print(start_time, brand_id)
             preloads = loop.run_until_complete(preload(limit, offset, ''))
             sfilter = preloads[0]
             brand_models = preloads[1]
-            # request.session['brand_models'] = brand_models
+            request.session['brand_models'] = brand_models
             model_count = len(brand_models)
             pages = math.ceil(model_count / limit)
             loop.run_until_complete(loop.shutdown_asyncgens())
             loop.close()
-            # print(datetime.datetime.now() - start_time, 'завершение')
             return render(request, 'main/models.html', {'search_block': True, 'brands': brands,
                                                         'brand_models': brand_models, 'lang': lang,
                                                         'model_count': model_count, 'page': page, 'pages': range(pages),

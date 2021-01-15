@@ -19,11 +19,9 @@ def detail_view(request):
 # добавление веса
 @sync_to_async
 def set_weight(detail_id):
-    # print(datetime.datetime.now() - start_time, 'обновление веса')
     _query(
         f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w "
         f"WHERE id = {detail_id}")
-    # print(datetime.datetime.now() - start_time, 'обновление веса завершено')
 
 
 @sync_to_async
@@ -33,11 +31,8 @@ def get_detail(detail_id):
 
 @sync_to_async
 def get_options(detail_id):
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение опций')
     q_options = f"SELECT * FROM all_options_for_details WHERE detail_id = {detail_id}"
     option_vals = _query(q_options)
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение опций завершен')
-    # print(datetime.datetime.now() - start_time, 'Сортировка опций')
     captions = []
     subcaptions = []
     values = []
@@ -54,15 +49,12 @@ def get_options(detail_id):
         else:
             values.append(opts)
     options = option_vals
-    # print(datetime.datetime.now() - start_time, 'Сортировка опций завершена')
     return options, captions, subcaptions, values
 
 
 @sync_to_async
 def get_cartridge_options(partcode):
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение картриджей')
     cartridge_options = _query(f"SELECT * FROM all_options_for_cartridges WHERE code = '{partcode}'")
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение картриджей завершен')
     return cartridge_options
 
 
@@ -85,13 +77,11 @@ async def past_init(request, partcode):
 
 def index(request, detail_id):
     lang = request.LANGUAGE_CODE
-    # print(start_time, detail_id)
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop = asyncio.get_event_loop()
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     loop.create_task(set_weight(detail_id))
-    # print(datetime.datetime.now() - start_time, 'start')
     init_result = loop.run_until_complete(init(detail_id))
     try:
         try:

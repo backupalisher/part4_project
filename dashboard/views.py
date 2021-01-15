@@ -90,7 +90,6 @@ def models(request):
                     moiid = None
                     module_image = None
                     for data in datas:
-                        print(data)
                         if 'model_name' in data['id']:
                             mid = data['id'].replace('model_name', '')
                             name = data['val']
@@ -230,7 +229,6 @@ def details(request):
                               {'tab': 'details', 'detail': str(detail), 'partcodes': str(partcodes),
                                "vendors": str(list(vendors.values_list()))})
             if vals['action'] == 'save':
-                print(vals)
                 did = vals['did']
                 spr_id = vals['spr_id']
                 detail_name = vals['detail_name']
