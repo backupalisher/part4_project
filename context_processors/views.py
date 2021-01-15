@@ -27,6 +27,7 @@ def main_menu(request):
 
 
 def currency(price):
-    url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=RUB&apikey=34MHK26GZWVBW4O9'
-    req_ob = requests.get(url).json()
-    return {'currency': float(req_ob["Realtime Currency Exchange Rate"]['5. Exchange Rate'])}
+    return {'currency': 73.7}
+    # url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=RUB&apikey=34MHK26GZWVBW4O9'
+    # req_ob = requests.get(url).json()
+    # return {'currency': float(req_ob["Realtime Currency Exchange Rate"]['5. Exchange Rate'])}
