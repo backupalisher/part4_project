@@ -72,7 +72,7 @@
                                                     {% if partc.18.0 is not None %}
                                                     <tr>
                                                         <td>{% if lang == 'ru' %}Цена{% else %}Price{% endif %}:</td>
-                                                        <td>
+                                                        <td class="text-magenta">
                                                             {% if lang == 'ru' %}<span>{{ partc.18.0|d_mask }} &#x20bd;</span>
                                                             {% else %} <span>${{ partc.18.0|divide:currency|d_mask }} </span> {% endif %}
                                                         </td>
