@@ -793,6 +793,18 @@ body {
   }
 }
 
+.col-responsive {
+  .header {
+    font-size: 20px;
+    .first {
+      font-size: 22px;
+    }
+  }
+  a {
+    font-size: 20px;
+  }
+}
+
 @media all and (max-width: 767px) {
   .card-model {
     .nav-item {
@@ -918,11 +930,11 @@ body {
 
     .brand_model_title {
       font-size: 14px;
-      height: 45px;
-      line-height: 45px;
+      height: 50px;
+      line-height: 20px;
       overflow: hidden;
       position: absolute;
-      bottom: -45px;
+      bottom: -50px;
       width: 100%;
     }
 

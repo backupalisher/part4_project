@@ -89,9 +89,8 @@
                 <div class="row">
                     <div class="col-auto">
                         <div class="price">
-                            {% if lang == 'ru' %}Ориентировочная цена: <span>{{ price.0|d_mask }} &#x20bd;</span>
-                            {% else %} Estimated price: <span>${{ price.0|div:currency|d_mask }} </span> {% endif %}
-                            <!--small>({{ price.1 }})</small-->
+                            {% if lang == 'ru' %}Цена: <span>{{ price.0|d_mask }} &#x20bd;</span>
+                            {% else %} Price: <span>${{ price.0|divide:currency|d_mask }} </span> {% endif %}
                         </div>
                     </div>
                     <div class="col pt-2">

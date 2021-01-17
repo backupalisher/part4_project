@@ -19,3 +19,8 @@ def list_item(lst, i):
         return lst[i]
     except:
         return None
+
+
+@register.filter
+def divide(value, arg):
+    return str(round(float(value)/arg, 2))

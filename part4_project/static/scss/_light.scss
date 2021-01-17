@@ -272,7 +272,17 @@
       }
     }
   }
-
+  .col-responsive {
+    .header {
+      color: $blackberry;
+      .first {
+        color: $blue_gray_habr;
+      }
+    }
+    a {
+      color: $cornflower;
+    }
+  }
   #options, .detail, .supplie {
 
     table {

@@ -393,6 +393,15 @@ $black: #262629;
 .light-theme .detail .price span, .light-theme .supplie .price span {
   color: #E93BAE;
 }
+.light-theme .col-responsive .header {
+  color: #68687B;
+}
+.light-theme .col-responsive .header .first {
+  color: #799AB9;
+}
+.light-theme .col-responsive a {
+  color: #5386FC;
+}
 .light-theme #options table td, .light-theme .detail table td, .light-theme .supplie table td {
   color: #78A9D8;
 }
@@ -911,6 +920,15 @@ $black: #262629;
 }
 .dark-theme .detail .price span, .dark-theme .supplie .price span, .dark-theme #supplies .price span {
   color: #E93BAE;
+}
+.dark-theme .col-responsive .header {
+  color: #68687B;
+}
+.dark-theme .col-responsive .header .first {
+  color: #799AB9;
+}
+.dark-theme .col-responsive a {
+  color: #5386FC;
 }
 .dark-theme #options, .dark-theme .detail, .dark-theme .supplie {
   color: #78A9D8;
@@ -1703,6 +1721,16 @@ body {
   padding: 0 0 0 10px;
 }
 
+.col-responsive .header {
+  font-size: 20px;
+}
+.col-responsive .header .first {
+  font-size: 22px;
+}
+.col-responsive a {
+  font-size: 20px;
+}
+
 @media all and (max-width: 767px) {
   .card-model .nav-item a span {
     display: none;
@@ -1786,11 +1814,11 @@ body {
 }
 .card.card-model-item .brand_model_title {
   font-size: 14px;
-  height: 45px;
-  line-height: 45px;
+  height: 50px;
+  line-height: 20px;
   overflow: hidden;
   position: absolute;
-  bottom: -45px;
+  bottom: -50px;
   width: 100%;
 }
 .card.card-model-item .model_price {

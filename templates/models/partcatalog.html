@@ -1,4 +1,4 @@
-{% load static mfilters %}
+{% load static mfilters main_extras mathfilters %}
 <div class="container">
     <div class="row">
         <div class="col-md-3 col-12">
@@ -9,12 +9,13 @@
                 <div class="tab-inner-scroll">
                     {% for module in modules %}
                         <div class="module-title opts{{ forloop.counter }}
-                                {% if module == cur_module %}selected-module{% endif %}"
+                                {% if lang == 'ru' and module.1 == cur_module %}selected-module
+                                {% elif module.0 == cur_module %}selected-module{% endif %}"
                              onclick=" $('.module-title').removeClass('selected-module');
                                      $(this).addClass('selected-module');
                                      $( '.model-opts' ).css('display', 'none');
                                      $( '#opts{{ forloop.counter }}' ).toggle();">
-                            {{ module }}
+                            {% if lang == 'ru' %}{{ module.0 }} ({{ module.1 }}){% else %}{{ module.0 }}{% endif %}
                         </div>
                     {% endfor %}
                 </div>
@@ -28,14 +29,16 @@
                     {% for module in modules %}
                         <div class="model-opts"
                              id="opts{{ forloop.counter }}"
-                                {% if cur_module == module %}
+                                {% if lang == 'ru' and module.1 == cur_module %}
+                             style="display: block;"
+                                {% elif module.0 == cur_module %}
                              style="display: block;"
                                 {% else %}
                              style="display: none;"
                                 {% endif %}
                         >
                             {% for partc in partcatalog %}
-                                {% if module == partc.3 or module == partc.4 %}
+                                {% if module.0 == partc.3 %}
                                     <div class="part-item">
                                         <div class="part-item_img">
                                             {% if partc.9 %}
@@ -53,17 +56,28 @@
                                                         </td>
                                                         <td>
                                                             {% if lang == 'ru' %}
-                                                                {% if partc.10 %}{{ partc.10 }}{% else %}{{ partc.11 }}{% endif %}
+                                                                {% if partc.10 %}{{ partc.10 }}{% else %}
+                                                                    {{ partc.11 }}{% endif %}
                                                             {% else %}
-                                                                {% if partc.11 %}{{ partc.11 }}{% else %}{{ partc.10 }}{% endif %}
+                                                                {% if partc.11 %}{{ partc.11 }}{% else %}
+                                                                    {{ partc.10 }}{% endif %}
                                                             {% endif %}
-                                                            </td>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>{% if lang == 'ru' %}Парткод{% else %}Partcode{% endif %}:
                                                         </td>
-                                                        <td><a href="/detail/{{ partc.15 }}">{{ partc.8 }}</a></td>
+                                                        <td><a href="/detail/{{ partc.17 }}">{{ partc.8 }}</a></td>
                                                     </tr>
+                                                    {% if partc.18.0 is not None %}
+                                                    <tr>
+                                                        <td>{% if lang == 'ru' %}Цена{% else %}Price{% endif %}:</td>
+                                                        <td>
+                                                            {% if lang == 'ru' %}<span>{{ partc.18.0|d_mask }} &#x20bd;</span>
+                                                            {% else %} <span>${{ partc.18.0|divide:currency|d_mask }} </span> {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                    {% endif %}
                                                 </table>
                                             </div>
                                         </div>

@@ -78,15 +78,13 @@ def get_errors(model_id):
 def qet_partcatalog(request, model_id):
     # 'Получение id парткодов, моделей, модулей, названий детали для модулей и парткаталога', q_code_module)
     modules = []
-    partcatalog = _query(f'SELECT * FROM all_partcatalog WHERE model_id = {model_id}')
+    partcatalog = _query(f'SELECT * FROM all_partcatalog WHERE model_id = {model_id} AND partcode is not null;')
 
     if partcatalog and len(partcatalog) > 0:
         for parts in partcatalog:
-            if parts[4]:
-                modules.append(parts[4])
-            elif parts[3]:
-                modules.append(parts[3])
-        modules = list(dict.fromkeys(modules))
+            modules.append([parts[3], parts[4]])
+    b_set = set(tuple(x) for x in modules)
+    modules = [list(x) for x in b_set]
     if request.GET.get('module'):
         cur_module = request.GET.get('module')
     else:
