@@ -97,10 +97,10 @@
                     <div class="col-responsive container-fluid">
                         <div class="row header">
                             <div class="col-5">
-                                <span class="first">Compatible models</span>
+                                <span class="first">{% if lang == 'ru' %}Мовместимые модели{% else %}Compatible models{% endif %}</span>
                             </div>
                             <div class="col">
-                                <span>Compatible modules</span>
+                                <span>{% if lang == 'ru' %}Модули{% else %}Compatible modules{% endif %}</span>
                             </div>
                         </div>
                         {% for model in c_models %}
@@ -110,7 +110,9 @@
                                 </div>
                                 <div class="col">
                                     <a href="/model/{{ model.0 }}?module={{ model.3 }}">
-                                        {% if lang == 'ru' and model.4 %}{{ model.4 }} ({{ model.3 }}){% else %}{{ model.3 }}{% endif %}
+                                        {% if lang == 'ru' and model.4 %}{{ model.4 }}
+                                            {% if model.3 %}({{ model.3 }}){% endif %}
+                                        {% else %}{{ model.3 }}{% endif %}
                                     </a>
                                 </div>
                             </div>
