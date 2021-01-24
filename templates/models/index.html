@@ -27,7 +27,7 @@
     <div class="card-model">
         <div class="card-head">
             <div class="row">
-                <div class="col-auto">
+                <div class="col-sm-auto col-12">
                     <div class="card-image">
                         {% if model_main_image %}
                             <img src="{{ MEDIA_URL }}{{ model_main_image }}" alt="{{ model_name }}"/>
@@ -38,7 +38,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-sm col-12">
                     <h3><span class="model-title"> {{ model_name }}</span></h3>
                     <div class="rating">
                         {% if lang == 'ru' %}Рейтинг{% else %}Rating{% endif %}
@@ -58,29 +58,44 @@
                             <h5><span class="partcode"> {{ caption|cut:'Status: ' }} </span></h5>
                         {% endif %}
                     {% endfor %}
-                    <div class="table-responsive detail desc">
-                        <table>
-                            {% if type_of_device.0 %}
-                                <tr><td><span>{{ type_of_device.0 }}</span></td><td>{{ type_of_device.1 }}</td></tr>
-                            {% endif %}
-                            {% if technology.0 %}
-                                <tr><td><span>{{ technology.0 }}</span></td><td>{{ technology.1 }}</td></tr>
-                            {% endif %}
-                            {% if max_format.0 %}
-                                <tr><td><span>{{ max_format.0 }}</span></td><td>{{ max_format.1 }}</td></tr>
-                            {% endif %}
-                            {% if pages_per_month.0 %}
-                                <tr><td><span>{{ pages_per_month.0 }}</span></td><td>{{ pages_per_month.1|d_mask }}</td></tr>
-                            {% endif %}
-                            {% if speed.0 %}
-                                <tr><td><span>{% if lang == 'ru' %}Скорость печати {% endif %}
-                                    {{ speed.0 }} {% if lang != 'ru' %} print speed{% endif %}</span></td>
-                                    <td>{{ speed.1|d_mask }}</td></tr>
-                            {% endif %}
-                            {% if output_type.0 %}
-                                <tr><td><span>{{ output_type.0 }}</span></td><td>{{ output_type.1 }}</td></tr>
-                            {% endif %}
-                        </table>
+                    <div class="container-fluid table-tech detail desc">
+                        {% if type_of_device.0 %}
+                            <div class="row">
+                                <div class="col-md-4 col-12 first"><span>{{ type_of_device.0 }}</span></div>
+                                <div class="col-md-7 offset-md-1 offset-1 col-11">{{ type_of_device.1 }}</div>
+                            </div>
+                        {% endif %}
+                        {% if technology.0 %}
+                            <div class="row">
+                                <div class="col-md-4 col-12 first"><span>{{ technology.0 }}</span></div>
+                                <div class="col-md-7 offset-md-1 offset-1 col-11">{{ technology.1 }}</div>
+                            </div>
+                        {% endif %}
+                        {% if max_format.0 %}
+                            <div class="row">
+                                <div class="col-md-4 col-12 first"><span>{{ max_format.0 }}</span></div>
+                                <div class="col-md-7 offset-md-1 offset-1 col-11">{{ max_format.1 }}</div>
+                            </div>
+                        {% endif %}
+                        {% if pages_per_month.0 %}
+                            <div class="row">
+                                <div class="col-md-4 col-12 first"><span>{{ pages_per_month.0 }}</span></div>
+                                <div class="col-md-7 offset-md-1 offset-1 col-11">{{ pages_per_month.1 }}</div>
+                            </div>
+                        {% endif %}
+                        {% if speed.0 %}
+                            <div class="row">
+                                <div class="col-md-4 col-12 first"><span>{% if lang == 'ru' %}Скорость печати {% endif %}
+                                {{ speed.0 }} {% if lang != 'ru' %} print speed{% endif %}</span></div>
+                                <div class="col-md-7 offset-md-1 offset-1 col-11">{{ speed.1|d_mask }}</div>
+                            </div>
+                        {% endif %}
+                        {% if output_type.0 %}
+                            <div class="row">
+                                <div class="col-md-4 col-12 first"><span>{{ output_type.0 }}</span></div>
+                                <div class="col-md-7 offset-md-1 offset-1 col-11">{{ output_type.1 }}</div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -49,6 +49,17 @@
     }
   }
 
+  .border-bottom {
+    border-bottom: 1px dashed $blackberry !important;
+  }
+  .table-tech {
+    .row {
+      border-bottom: 1px dashed $blackberry !important;
+      padding: 0 0 2px 0;
+      margin: 0 0 10px 0;
+    }
+  }
+
   #search_main {
     input {
       background-color: $anthracite;

@@ -9,13 +9,16 @@
                 <div class="tab-inner-scroll">
                     {% for module in modules %}
                         <div class="module-title opts{{ forloop.counter }}
+                            {% if cur_module is not None %}
                                 {% if lang == 'ru' and module.1 == cur_module %}selected-module
-                                {% elif module.0 == cur_module %}selected-module{% endif %}"
+                                {% elif module.0 == cur_module %}selected-module{% endif %}
+                            {% endif %}"
                              onclick=" $('.module-title').removeClass('selected-module');
                                      $(this).addClass('selected-module');
                                      $( '.model-opts' ).css('display', 'none');
                                      $( '#opts{{ forloop.counter }}' ).toggle();">
-                            {% if lang == 'ru' %}{{ module.0 }} {% if module.1 %}({{ module.1 }}){% endif %}
+                            {% if lang == 'ru' %}{% if module.0 %}{{ module.0 }}{% elif module.1 %}({{ module.1 }})
+                            {% endif %}
                             {% else %}{% if module.0 %}{{ module.0 }}{% else %}{{ module.1 }}{% endif %}{% endif %}
                         </div>
                     {% endfor %}
@@ -24,7 +27,7 @@
         </div>
         <div class="col">
             <h6>{% if lang == 'ru' %}Детали{% else %}Details{% endif %}
-                {% if cur_module %}{{ cur_module }}{% endif %}</h6>
+                <small>{% if cur_module %}{{ cur_module }}{% endif %}</small></h6>
             <div class="scrollbar-macosx">
                 <div class="tab-inner-scroll">
                     {% for module in modules %}
@@ -71,13 +74,16 @@
                                                         <td><a href="/detail/{{ partc.17 }}">{{ partc.8 }}</a></td>
                                                     </tr>
                                                     {% if partc.18.0 is not None %}
-                                                    <tr>
-                                                        <td>{% if lang == 'ru' %}Цена{% else %}Price{% endif %}:</td>
-                                                        <td class="text-magenta">
-                                                            {% if lang == 'ru' %}<span>{{ partc.18.0|d_mask }} &#x20bd;</span>
-                                                            {% else %} <span>${{ partc.18.0|divide:currency|d_mask }} </span> {% endif %}
-                                                        </td>
-                                                    </tr>
+                                                        <tr>
+                                                            <td>{% if lang == 'ru' %}Цена{% else %}Price{% endif %}:
+                                                            </td>
+                                                            <td class="text-magenta">
+                                                                {% if lang == 'ru' %}
+                                                                    <span>{{ partc.18.0|d_mask }} &#x20bd;</span>
+                                                                {% else %}
+                                                                    <span>${{ partc.18.0|divide:currency|d_mask }} </span> {% endif %}
+                                                            </td>
+                                                        </tr>
                                                     {% endif %}
                                                 </table>
                                             </div>

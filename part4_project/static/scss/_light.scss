@@ -49,6 +49,10 @@
     }
   }
 
+  .border-bottom {
+    border-bottom: 1px dashed $grey !important;
+  }
+
   #search_main {
     input {
       background-color: $white;

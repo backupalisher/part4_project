@@ -1,56 +1,52 @@
 {% load static mfilters main_extras %}
-<div class="table-responsive">
-    <table class="table">
+<div class="container-fluid">
+    <div class="row">
         {% if cartridge_options|length > 0 %}
             {% for option in cartridge_options %}
-                <tr class="cartridge_options">
-                    <td><span class="capt">{{ option.2 }}</span></td>
-                    <td>{{ option.3|d_mask }}</td>
-                </tr>
+                <div class="cartridge_options">
+                    <div class="col-md-5 col-12"><span class="capt">{{ option.2 }}</span></div>
+                    <div class="col-md-7 col-12">{{ option.3|d_mask }}</div>
+                </div>
             {% endfor %}
         {% endif %}
-        {% for caption in captions.0.3 %}
-            {% if 'Status' not in caption %}
-                <thead>
-                <tr>
-                    {% for subcaption in subcaptions %}
-                        {% if subcaption.2 == caption and subcaption.3|length > 0 %}
-                            <th colspan="2"><h5>{{ caption }}</h5></th>
-                        {% endif %}
-                    {% endfor %}
-                </tr>
-                </thead>
+    </div>
+    {% for caption in captions.0.3 %}
+        {% if 'Status' not in caption %}
+            <div class="row">
                 {% for subcaption in subcaptions %}
-                    {% if subcaption.2 == caption %}
-                        {% for subcap in subcaption.3 %}
-                            <tr>
-                                <td colspan="2">
-                                    {% if 'SubCaption' not in subcap %}
-                                        <h5 class="capt">{{ subcap|get_caption }}</h5>
-                                        <span class="val">{{ subcap|get_val|d_mask }}</span>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% for value in values %}
-                                <tr>
-                                    {% if value.0 == subcaption.1 %}
-                                        <td class="pl-3">
-                                            <h5>{{ value.2 }}</h5>
-                                            <div>
-                                                {% for val in value.3 %}
-                                                    <span class="pl-5 capt">{{ val|get_caption }}</span>
-                                                    <span class="val">{{ val|get_val|d_mask }}</span>
-                                                    <br>
-                                                {% endfor %}
-                                            </div>
-                                        </td>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
-                        {% endfor %}
+                    {% if subcaption.2 == caption and subcaption.3|length > 0 %}
+                        <div class="col-12"><h5>{{ caption }}</h5></div>
                     {% endif %}
                 {% endfor %}
-            {% endif %}
-        {% endfor %}
-    </table>
+            </div>>
+            {% for subcaption in subcaptions %}
+                {% if subcaption.2 == caption %}
+                    {% for subcap in subcaption.3 %}
+                        <div class="row">
+                            <div class="col-12">
+                                {% if 'SubCaption' not in subcap %}
+                                    <h5 class="capt">{{ subcap|get_caption }}</h5>
+                                    <span class="val">{{ subcap|get_val|d_mask }}</span>
+                                {% endif %}
+                            </div>
+                        </div>>
+                        {% for value in values %}
+                            <div class="row">
+                                {% if value.0 == subcaption.1 %}
+                                    <h5>{{ value.2 }}</h5>
+                                    <div>
+                                        {% for val in value.3 %}
+                                            <span class="pl-5 capt">{{ val|get_caption }}</span>
+                                            <span class="val">{{ val|get_val|d_mask }}</span>
+                                            <br>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            <div class="row">
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
 </div>

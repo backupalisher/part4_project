@@ -20,7 +20,7 @@
     <div class="card-model detail">
         <div class="card-head">
             <div class="row">
-                <div class="col-auto">
+                <div class="col-sm-auto col-12">
                     <div class="card-image">
                         {% if images %}
                             <img src="{{ MEDIA_URL }}{{ images }}"/>
@@ -29,7 +29,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-sm col-12">
                     <h3 class="title">
                         {% if detail_name_ru != '' and detail_name_ru != None and lang == 'ru' %}
                             {{ detail_name_ru }}
@@ -38,30 +38,29 @@
                             {% if detail_name is not None %}{{ detail_name }}{% else %}{{ detail_name_ru }}{% endif %}
                         {% endif %}
                     </h3>
-                    <div class="table-responsive">
-                        <table>
-                            {% if partcode and partcode != '-' %}
-                                <tr>
-                                    <td class="first"><span class="capt">
-                                        {% if lang == 'ru' %}Парткод{% else %} Part code {% endif %} </span></td>
-                                    <td>{{ partcode }}</td>
-                                </tr>
-                            {% endif %}
-                            {% if description != '' and description != None %}
-                                <tr>
-                                    <td><span class="capt">{% if lang == 'ru' %}Описание{% else %}
-                                        Description {% endif %}</span></td>
-                                    <td>{{ description }}</td>
-                                </tr>
-                            {% endif %}
-                            {% if partcode_description != '' and partcode_description != None %}
-                                <tr>
-                                    <td><span class="capt">{% if lang == 'ru' %}Дополнительно{% else %}
-                                        Addition {% endif %}</span></td>
-                                    <td>{{ partcode_description }}</td>
-                                </tr>
-                            {% endif %}
-                        </table>
+                    <div class="container-fluid table-tech">
+                        {% if partcode and partcode != '-' %}
+                            <div class="row">
+                                <div class="col-md-4 col-12 first"><span class="capt">
+                                        {% if lang == 'ru' %}Парткод{% else %} Part code {% endif %} </span></div>
+                                <div class="col-md-7 offset-md-1 offset-1 col-11">{{ partcode }}</div>
+                            </div>
+                        {% endif %}
+                        {% if description != '' and description != None %}
+                            <div class="row">
+                                <div class="col-md-4 col-12 first"><span class="capt">{% if lang == 'ru' %}Описание{% else %}
+                                    Description {% endif %}</span></div>
+                                <div class="col-md-7 offset-md-1 offset-1 col-11">{{ description }}</div>
+                            </div>
+                        {% endif %}
+                        {% if partcode_description != '' and partcode_description != None %}
+                            <div class="row">
+                                <div class="col-md-4 col-12 first">
+                                    <span class="capt">{% if lang == 'ru' %}Дополнительно{% else %}
+                                        Addition {% endif %}</span></div>
+                                <div class="col-md-7 offset-md-1 offset-1 col-11">{{ partcode_description }}</div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
