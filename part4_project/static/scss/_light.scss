@@ -53,6 +53,24 @@
     border-bottom: 1px dashed $grey !important;
   }
 
+  .table-tech {
+    .row .first {
+      border-bottom: 1px solid $grey !important;
+    }
+  }
+
+  @media all and (max-width: 767px) {
+    .table-tech {
+      .row {
+        border-bottom: 1px solid $grey !important;
+
+        .first {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
   #search_main {
     input {
       background-color: $white;
@@ -64,10 +82,12 @@
       background-color: $blue;
     }
   }
+
   #btn-buy {
     color: $white_smoky;
     background-color: $blue;
   }
+
   .brands {
     .brand {
       background-color: $white;
@@ -81,8 +101,10 @@
   .search_results {
 
   }
+
   .error_result, .search_result, .supplie_result {
     border-bottom: 1px solid $grey;
+
     .image {
       background-color: $white;
       box-shadow: 0 0 5px $grey;
@@ -128,6 +150,7 @@
       }
     }
   }
+
   #filter_badge {
     .fbadge {
       border: 1px solid $pink_rich;
@@ -135,13 +158,15 @@
       color: $white_smoky;
     }
   }
+
   .filter-result {
     color: $blue_gray;
     background-color: $white;
   }
 
   .filter_search {
-    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+
     &.is_filtered {
       box-shadow: 0 0 1px 2px $grey;
     }
@@ -172,10 +197,12 @@
     .line {
       border-bottom: 1px solid $grey;
     }
+
     .title {
       color: $grey;
     }
   }
+
   .supplies {
     color: $blue_gray;
     background-color: $white;
@@ -204,6 +231,7 @@
     color: $blue_gray;
     background-color: $white;
     box-shadow: 0 0 5px #D7D7D7;
+
     .nav-tabs {
       border-bottom: 1px solid $grey !important;
     }
@@ -212,6 +240,7 @@
       h3 {
         color: $blue_dark;
       }
+
       .card-image {
         background-color: $white;
         box-shadow: 0 0 5px $grey;
@@ -239,6 +268,7 @@
       }
     }
   }
+
   .card-model {
     .price {
       color: $grey;
@@ -248,6 +278,7 @@
       }
     }
   }
+
   .detail, .supplie {
     h3 {
       color: $blue;
@@ -256,12 +287,14 @@
         color: $blue_gray;
       }
     }
+
     &.desc {
       td:first-child span {
         z-index: 2;
         background-color: $white !important;
       }
     }
+
     table {
       td {
         color: $blue_gray;
@@ -276,17 +309,21 @@
       }
     }
   }
+
   .col-responsive {
     .header {
       color: $blackberry;
+
       .first {
         color: $blue_gray_habr;
       }
     }
+
     a {
       color: $cornflower;
     }
   }
+
   #options, .detail, .supplie {
 
     table {
@@ -311,10 +348,12 @@
     h6 {
       color: $grey
     }
+
     .parts_search {
       background-color: $white_smoky;
       color: $blue_gray;
     }
+
     .module-title, .model-opts > div {
       &:hover {
         background-color: rgba(233, 59, 174, 0.1);
@@ -324,11 +363,14 @@
         color: $blue;
       }
     }
+
     .part-item {
       border-bottom: 1px solid $white_smoky;
+
       &.active {
         background-color: rgba(233, 59, 174, 0.1);
       }
+
       .part-item_img {
         background-color: $white;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
@@ -343,9 +385,11 @@
       background-color: $white_smoky;
       color: $blue_gray;
     }
+
     h6 {
       color: $grey;
     }
+
     .error-list {
 
     }
@@ -384,14 +428,17 @@
       }
     }
   }
+
   .main_overlay {
     background: rgba(32, 33, 54, 0.75);
     color: $blue_dark;
   }
+
   .modal {
     background-color: #FFFFFF;
     color: #5AA6FE;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
     &.contact {
       #form_contact {
         input {
@@ -399,29 +446,35 @@
           color: $anthracite;
           background-color: $white_smoky;
         }
+
         textarea {
           border: 1px solid $grey;
           color: $anthracite;
           background-color: $white_smoky;
         }
       }
+
       h4 {
         color: $blackberry;
       }
+
       a {
         color: $blue;
       }
     }
   }
+
   #supplies, .supplies {
     h6 {
       color: $grey;
     }
+
     table {
       tr {
         &:hover td:nth-child(2) {
           background-color: rgba(233, 59, 174, 0.1);
         }
+
         //&:not(:first-child):hover td:nth-child(2) {
         //  background-color: rgba(233, 59, 174, 0.1);
         //}
@@ -459,6 +512,7 @@
       background-color: $pink_yellowish;
     }
   }
+
   .not_found {
     h3 {
       color: $blackberry;
