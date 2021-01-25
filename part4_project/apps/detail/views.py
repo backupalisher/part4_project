@@ -83,7 +83,10 @@ def index(request, partcode_id):
     loop = asyncio.get_event_loop()
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     loop.create_task(set_weight(partcode_id))
-    init_result = list(loop.run_until_complete(init(partcode_id))[0][0])
+    try:
+        init_result = list(loop.run_until_complete(init(partcode_id))[0][0])
+    except:
+        init_result = None
     vendors = models.Vendors.objects.all()
     try:
         model_ids = init_result[1]
