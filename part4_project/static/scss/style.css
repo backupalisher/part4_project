@@ -246,15 +246,18 @@ $black: #262629;
 .light-theme .border-bottom {
   border-bottom: 1px dashed #D7D7D7 !important;
 }
-.light-theme .table-tech .row .first {
-  border-bottom: 1px solid #D7D7D7 !important;
+.light-theme .table-tech .row .first span {
+  background-color: #FFFFFF;
+}
+.light-theme .table-tech .row .first span:after {
+  border-bottom: 1px dashed #D7D7D7;
 }
 @media all and (max-width: 767px) {
   .light-theme .table-tech .row {
     border-bottom: 1px solid #D7D7D7 !important;
   }
   .light-theme .table-tech .row .first {
-    border-bottom: none;
+    border-bottom: none !important;
   }
 }
 .light-theme #search_main input {

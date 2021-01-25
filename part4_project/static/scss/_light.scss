@@ -55,7 +55,12 @@
 
   .table-tech {
     .row .first {
-      border-bottom: 1px solid $grey !important;
+      span {
+        background-color: $white;
+        &:after {
+          border-bottom: 1px dashed $grey;
+        }
+      }
     }
   }
 
@@ -65,7 +70,7 @@
         border-bottom: 1px solid $grey !important;
 
         .first {
-          border-bottom: none;
+          border-bottom: none !important;
         }
       }
     }
