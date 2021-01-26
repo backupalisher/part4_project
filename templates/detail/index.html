@@ -48,7 +48,8 @@
                         {% endif %}
                         {% if description != '' and description != None %}
                             <div class="row">
-                                <div class="col-md-4 col-12 first"><span class="capt">{% if lang == 'ru' %}Описание{% else %}
+                                <div class="col-md-4 col-12 first"><span class="capt">{% if lang == 'ru' %}
+                                    Описание{% else %}
                                     Description {% endif %}</span></div>
                                 <div class="col-md-7 offset-md-1 offset-1 col-11">{{ description }}</div>
                             </div>
@@ -64,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            {% if v_prices.0.0 is not None%}
+            {% if v_prices.0.0 is not None %}
                 <div class="row mt-3">
                     <div class="col-auto">
                         <div class="price">
@@ -86,17 +87,18 @@
                     <ul class="nav nav-tabs" id="detailTabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link "
-                                   id="options-tab" data-toggle="tab" role="tab" href="#options"
-                                   aria-controls="options" aria-selected="">
-                                    <img src="{{ MEDIA_URL }}icons/options_ico.png">
-                                    <span>{% if lang == 'ru' %}Характеристики{% else %}Specifications{% endif %}</span>
-                                </a>
+                               id="options-tab" data-toggle="tab" role="tab" href="#options"
+                               aria-controls="options" aria-selected="">
+                                <img src="{{ MEDIA_URL }}icons/options_ico.png">
+                                <span>{% if lang == 'ru' %}Характеристики{% else %}Specifications{% endif %}</span>
+                            </a>
                         </li>
                     </ul>
                     <div class="col-responsive container-fluid">
                         <div class="row header">
                             <div class="col-5">
-                                <span class="first">{% if lang == 'ru' %}Мовместимые модели{% else %}Compatible models{% endif %}</span>
+                                <span class="first">{% if lang == 'ru' %}Мовместимые модели{% else %}Compatible
+                                    models{% endif %}</span>
                             </div>
                             <div class="col">
                                 <span>{% if lang == 'ru' %}Модули{% else %}Compatible modules{% endif %}</span>
@@ -141,7 +143,14 @@
                 <ul>
                     <li class="nav-breadcrumb-item"><a href="/">{% if lang == 'ru' %}Главная{% else %}
                         Main{% endif %}</a></li>
-                    <li class="nav-breadcrumb-item active">{{ partcode }}</li>
+                    <li class="nav-breadcrumb-item active">
+                        {% if detail_name_ru != '' and detail_name_ru != None and lang == 'ru' %}
+                            {{ detail_name_ru }}
+                            {% if detail_name is not None %}<small> ({{ detail_name }})</small>{% endif %}
+                        {% else %}
+                        {% if detail_name is not None %}{{ detail_name }}{% else %}{{ detail_name_ru }}{% endif %}
+                        {% endif %}
+                    </li>
                 </ul>
             </nav>
         </div>
