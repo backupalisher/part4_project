@@ -1147,6 +1147,11 @@ body {
   padding: 10px 20px;
 }
 
+.models_list {
+  padding: 10px 0;
+  display: none;
+}
+
 @media all and (max-width: 1199px) {
   #search_form_main {
     padding: 0 60px;

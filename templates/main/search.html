@@ -6,6 +6,48 @@
     {% block content %}
         {% if cartridge_result or error_result or all_result %}
             <div class="search_results card-model">
+                {% if model_result %}
+                    {% for model in model_result %}
+                        <div class="search_result">
+                            <div class="image">
+                                {% if model.3 %}
+                                    <img src="{{ MEDIA_URL }}{{ model.3 }}">
+                                {% else %}
+                                    <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;">
+                                {% endif %}
+                            </div>
+                            <div class="desc">
+                                <div class="desc-inner">
+                                    {% if model.1 %}
+                                        <h2><a href="/model/{{ model.1 }}" class="text-blue">{{ model.2 }}</a></h2>
+                                    {% endif %}
+                                    <div class="rating">
+                                        Rating
+                                        <div class="stars">
+                                            <img src="{{ MEDIA_URL }}icons/star.svg">
+                                            <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                            <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                            <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                            <img src="{{ MEDIA_URL }}icons/star_o.svg">
+                                        </div>
+                                    </div>
+                                    <div class="search_result_partcode">
+                                        {% if model.7 %}
+                                            <span class="text-yellow">{{ model.7 }}: {{ model.8 }}</span>
+                                        {% endif %}
+                                    </div>
+                                    {% if model.21 %}
+                                        <div class="search_result_price">
+                                            <span class="text-grey">{% if lang == 'ru' %}Ориентировочная цена
+                                            {% else %}Estimated price{% endif %}:</span>
+                                            <span class="text-magenta">{{ model.21|d_mask }} &#x20bd;</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 {% if cartridge_result %}
                     {% for cartridge in cartridge_result %}
                         <div class="supplie_result">
@@ -90,26 +132,26 @@
                     {% for index in all_result %}
                         <div class="search_result">
                             <div class="image">
-                                {% if index.11 %}
-                                    <img src="{{ MEDIA_URL }}{{ index.11 }}">
-                                {% elif index.10 and index.5 is None %}
-                                    <img src="{{ MEDIA_URL }}{{ index.10 }}">
-                                {% elif index.9 %}
-                                    <img src="{{ MEDIA_URL }}{{ index.9 }}">
+                                {% if index.13 %}
+                                    <img src="{{ MEDIA_URL }}{{ index.13 }}">
                                 {% else %}
                                     <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;">
                                 {% endif %}
                             </div>
                             <div class="desc">
                                 <div class="desc-inner">
-                                    {% if index.3 == index.7 %}
+                                    {% if index.12 is None %}
                                         <h2><a href="/model/{{ index.12 }}" class="text-blue">{{ index.7 }}</a></h2>
-                                    {% else %}
-                                        {% if index.4 or index.3 %}
-                                            <h2><a href="/detail/{{ index.2 }}" class="text-blue">
-                                                {% if index.4 %}{{ index.4 }}{% elif index.3 %}
-                                                    {{ index.3 }}{% endif %}</a></h2>
-                                        {% endif %}
+                                    {% elif index.8 %}
+                                        <h2><a href="/detail/{{ index.2 }}" class="text-blue">
+                                            {% if lang == 'ru' %}
+                                                {% if index.9 %}{{ index.9 }}{% else %}{{ index.8 }}{% endif %}
+                                            {% else %}
+                                                {{ index.8 }}
+                                            {% endif %}
+                                        </a></h2>
+                                    {% elif index.9 %}
+                                        <h2><a href="/detail/{{ index.2 }}" class="text-blue">{{ index.9 }}</a></h2>
                                     {% endif %}
                                     <div class="rating">
                                         Rating
@@ -122,20 +164,36 @@
                                         </div>
                                     </div>
                                     <div class="search_result_partcode">
-                                        {% if index.5 != None %}
-                                            <span class="text-yellow">Part code: {{ index.5 }}</span>
+                                        {% if index.12 != None %}
+                                            <span class="text-yellow">Part code: {{ index.12 }}</span>
                                         {% endif %}
                                     </div>
-                                    {% if index.3 != index.7 %}
+                                    {% if index.3|length > 0 and index.4|length > 0 and index.3.0 != None %}
                                         <div class="search_result_model">
-                                            {{ index.7 }}
+                                            <button class="btn hover_btn bg-cornflower text-white_smoky"
+                                                    value="models_{{ index.12 }}">
+                                                {% if lang == 'ru' %}Модели{% else %}Models{% endif %}
+                                            </button>
+                                            <div id="models_{{ index.12 }}" class="models_list">
+                                                {% for id in index.3 %}
+                                                    {% with idx=forloop.counter0 %}
+                                                        <a href="/model/{{ id }}">
+                                                            {% for model in index.4 %}
+                                                                {% if forloop.counter0 == idx %}
+                                                                    {{ model }}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </a><br />
+                                                    {% endwith %}
+                                                {% endfor %}
+                                            </div>
                                         </div>
                                     {% endif %}
-                                    {% if index.13 %}
+                                    {% if index.14.0 %}
                                         <div class="search_result_price">
                                             <span class="text-grey">{% if lang == 'ru' %}Ориентировочная цена
                                             {% else %}Estimated price{% endif %}:</span>
-                                            <span class="text-magenta">{{ index.13|d_mask }} &#x20bd;</span>
+                                            <span class="text-magenta">{{ index.14.0|d_mask }} &#x20bd;</span>
                                             <!--small>({{ index.14 }})</small-->
                                         </div>
                                     {% endif %}

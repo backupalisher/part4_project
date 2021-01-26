@@ -24,19 +24,23 @@ def search(request):
             s_value = request.GET.__getitem__('s')
         if 'v' in item:
             variant = int(request.GET.__getitem__('v'))
-    ar = None
+    pr = None
     er = None
     cr = None
+    mr = None
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop = asyncio.get_event_loop()
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
     result = loop.run_until_complete(search_init(s_value))
-    ar = result[0]
+    pr = result[0]
     er = result[1]
     cr = result[2]
+    mr = result[3]
+    print(mr)
     return render(request, 'main/search.html',
-                  context={'all_result': ar, 'error_result': er, 'cartridge_result': cr, 'lang': lang})
+                  context={'all_result': pr, 'error_result': er, 'cartridge_result': cr, 'model_result': mr,
+                           'lang': lang})
 
 
 def index_models(request):

@@ -184,3 +184,8 @@ $('.filter_show').click(function () {
    $('.filter_show').toggleClass('active');
    $('#filter_model').toggleClass('active');
 });
+
+// Show-hide model list for search
+$(document).on('click','.search_result_model button', function() {
+    $('#'+$(this).val()).toggle()
+});
