@@ -1,10 +1,10 @@
 {% load static mfilters main_extras %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="cartridge_options table-tech">
         {% if cartridge_options|length > 0 %}
             {% for option in cartridge_options %}
-                <div class="cartridge_options">
-                    <div class="col-md-5 col-12"><span class="capt">{{ option.2 }}</span></div>
+                <div class="row">
+                    <div class="col-md-5 col-12 first"><span class="capt">{{ option.2 }}</span></div>
                     <div class="col-md-7 col-12">{{ option.3|d_mask }}</div>
                 </div>
             {% endfor %}
@@ -32,16 +32,16 @@
                         </div>>
                         {% for value in values %}
                             <div class="row">
-                                {% if value.0 == subcaption.1 %}
-                                    <h5>{{ value.2 }}</h5>
-                                    <div>
-                                        {% for val in value.3 %}
-                                            <span class="pl-5 capt">{{ val|get_caption }}</span>
-                                            <span class="val">{{ val|get_val|d_mask }}</span>
-                                            <br>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
+                            {% if value.0 == subcaption.1 %}
+                                <h5>{{ value.2 }}</h5>
+                                <div>
+                                    {% for val in value.3 %}
+                                        <span class="pl-5 capt">{{ val|get_caption }}</span>
+                                        <span class="val">{{ val|get_val|d_mask }}</span>
+                                        <br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                             <div class="row">
                         {% endfor %}
                     {% endfor %}
@@ -49,4 +49,4 @@
             {% endfor %}
         {% endif %}
     {% endfor %}
-</div>
+    </div>

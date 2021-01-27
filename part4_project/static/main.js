@@ -135,7 +135,7 @@ $(document).ready(function () {
 });
 
 // error_result models toggle show
-$('#error_result_models_show').click(function () {
+$('.error_result_models_show').click(function () {
     $('#' + $(this).attr('aria-label')).toggle()
     $(this).children('.btn_show').toggle()
     $(this).children('.btn_hide').toggle()

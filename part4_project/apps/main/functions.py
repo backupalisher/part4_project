@@ -17,6 +17,7 @@ def search_detail(sval):
     for val in aval:
         sval += val + ':* & '
     sval = re.sub(r'\s[&]\s$', '', sval)
+    print(sval)
     with connections['default'].cursor() as c:
         try:
             c.execute("BEGIN")

@@ -1701,6 +1701,10 @@ body {
   font-size: 1.2em;
 }
 
+.cartridge_options {
+  font-size: 15px;
+}
+
 .card-model {
   border-radius: 10px;
 }
