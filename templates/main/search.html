@@ -48,45 +48,6 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-                {% if cartridge_result %}
-                    {% for cartridge in cartridge_result %}
-                        <div class="supplie_result">
-                            <div class="image">
-                                <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;">
-                            </div>
-                            <div class="desc">
-                                <div class="desc-inner">
-                                    <p>
-                                        <a href="{% if cartridge.0 %}/supplies/{{ cartridge.0 }}{% endif %}" class="text-blue">
-                                            <span class="text-green pr-2">{{ cartridge.2 }}</span>
-                                            {% if cartridge.3 %}
-                                                {{ cartridge.3 }}
-                                            {% elif cartridge.4 %}
-                                                {{ cartridge.4 }}
-                                            {% endif %}
-                                            {% if cartridge.7 %}
-                                                {{ cartridge.7 }}
-                                            {% endif %}
-                                        </a>
-                                    </p>
-                                    <p>
-                                        {% if cartridge.6 %}
-                                            {{ cartridge.6 }}
-                                        {% endif %}
-                                    </p>
-                                    {% if cartridge.8 %}
-                                        <div class="search_result_price">
-                                            <span class="text-grey">{% if lang == 'ru' %}Ориентировочная цена
-                                            {% else %}Estimated price{% endif %}:</span>
-                                            <span class="text-magenta">{{ cartridge.8|d_mask }} &#x20bd;</span>
-                                            <!--small>({{ cartridge.9 }})</small-->
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
                 {% if error_result %}
                     {% for index in error_result %}
                         <div class="error_result">
@@ -199,6 +160,64 @@
                                             {% else %}Estimated price{% endif %}:</span>
                                             <span class="text-magenta">{{ index.14.0|d_mask }} &#x20bd;</span>
                                             <!--small>({{ index.14 }})</small-->
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if cartridge_result %}
+                    {% for cartridge in cartridge_result %}
+                        <div class="supplie_result">
+                            <div class="image">
+                                <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;">
+                            </div>
+                            <div class="desc">
+                                <div class="desc-inner">
+                                    <p>
+                                        <a href="{% if cartridge.0 %}/supplies/{{ cartridge.0 }}{% endif %}" class="text-blue">
+                                            <span class="text-green pr-2">{{ cartridge.2 }}</span>
+                                            {% if cartridge.3 %}
+                                                {{ cartridge.3 }}
+                                            {% elif cartridge.4 %}
+                                                {{ cartridge.4 }}
+                                            {% endif %}
+                                            {% if cartridge.7 %}
+                                                {{ cartridge.7 }}
+                                            {% endif %}
+                                        </a>
+                                    </p>
+                                    <div class="search_result_model">
+                                        <div class="models">
+                                            <p>{% if lang == 'ru' %}Модели{% else %}Models{% endif %}:
+                                                <a href="#" class="error_result_models_show"
+                                                   aria-label="models-inner_{{ cartridge.0 }}">
+                                                    <span class="btn_show">show models</span>
+                                                    <span class="btn_hide" style="display: none;">hide models</span>
+                                                </a>
+                                            </p>
+                                            <p id="models-inner_{{ cartridge.0 }}" style="display: none;">
+                                                {% for id in cartridge.5 %}
+                                                    {% with idx=forloop.counter0 %}
+                                                        <a href="/model/{{ id }}">
+                                                            {% for model in cartridge.6 %}
+                                                                {% if forloop.counter0 == idx %}
+                                                                    {{ model }}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </a>
+                                                    {% endwith %}
+                                                {% endfor %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    {% if cartridge.8 %}
+                                        <div class="search_result_price">
+                                            <span class="text-grey">{% if lang == 'ru' %}Ориентировочная цена
+                                            {% else %}Estimated price{% endif %}:</span>
+                                            <span class="text-magenta">{{ cartridge.8|d_mask }} &#x20bd;</span>
+                                            <!--small>({{ cartridge.9 }})</small-->
                                         </div>
                                     {% endif %}
                                 </div>

@@ -37,9 +37,14 @@ def search(request):
     er = result[1]
     cr = result[2]
     mr = result[3]
-    print(mr)
+    pr_set = []
+    for x in pr:
+        try:
+            idx = pr_set.index(x)
+        except:
+            pr_set.append(x)
     return render(request, 'main/search.html',
-                  context={'all_result': pr, 'error_result': er, 'cartridge_result': cr, 'model_result': mr,
+                  context={'all_result': pr_set, 'error_result': er, 'cartridge_result': cr, 'model_result': mr,
                            'lang': lang})
 
 

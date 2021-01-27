@@ -67,9 +67,7 @@ async def init(partcode_id):
 
 async def past_init(request, partcode):
     if partcode != '-':
-        tasks = [
-            get_cartridge_options(partcode),
-        ]
+        tasks = [get_cartridge_options(partcode),]
         results = await asyncio.gather(*tasks)
         return results
     else:
@@ -116,7 +114,6 @@ def index(request, partcode_id):
         c_models = []
         for i in range(len(prices)):
             v_prices.append([prices[i], vendor_ids[i]])
-        print(v_prices)
         for i in range(len(module_ids)):
             c_models.append([model_ids[i], model_names[i], module_ids[i], module_names[i], module_ru_names[i]])
     except:
