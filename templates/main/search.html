@@ -38,7 +38,7 @@
                                     </div>
                                     {% if model.21 %}
                                         <div class="search_result_price">
-                                            <span class="text-grey">{% if lang == 'ru' %}Ориентировочная цена
+                                            <span class="text-grey">{% if lang == 'ru' %}Цена
                                             {% else %}Estimated price{% endif %}:</span>
                                             <span class="text-magenta">{{ model.21|d_mask }} &#x20bd;</span>
                                         </div>
@@ -66,11 +66,15 @@
                                     {% if index.8 %}
                                         <div class="models">
                                             <p>Models:
-                                                <a href="#" class="error_result_models_show"
+                                                <button class="error_result_models_show btn btn-link"
                                                    aria-label="models-inner{{ forloop.counter0 }}">
-                                                    <span class="btn_show">show models</span>
-                                                    <span class="btn_hide" style="display: none;">hide models</span>
-                                                </a>
+                                                    <span class="btn_show">
+                                                        {% if lang == 'ru' %}показать модели{% else %}show models{% endif %}
+                                                    </span>
+                                                    <span class="btn_hide" style="display: none;">
+                                                        {% if lang == 'ru' %}скрыть модели{% else %}hide models{% endif %}
+                                                    </span>
+                                                </button>
                                             </p>
                                             <p id="models-inner{{ forloop.counter0 }}" style="display: none;">
                                                 {% for m in index.8 %}
@@ -132,11 +136,15 @@
                                         <div class="search_result_model">
                                             <div class="models">
                                                 <p>{% if lang == 'ru' %}Модели{% else %}Models{% endif %}:
-                                                    <a href="#" class="error_result_models_show"
+                                                    <button class="error_result_models_show btn btn-link"
                                                        aria-label="models-inner_{{ index.2 }}">
-                                                        <span class="btn_show">show models</span>
-                                                        <span class="btn_hide" style="display: none;">hide models</span>
-                                                    </a>
+                                                        <span class="btn_show">
+                                                            {% if lang == 'ru' %}показать модели{% else %}show models{% endif %}
+                                                        </span>
+                                                        <span class="btn_hide" style="display: none;">
+                                                            {% if lang == 'ru' %}скрыть модели{% else %}hide models{% endif %}
+                                                        </span>
+                                                    </button>
                                                 </p>
                                                 <p id="models-inner_{{ index.2 }}" style="display: none;">
                                                     {% for id in index.3 %}
@@ -156,7 +164,7 @@
                                     {% endif %}
                                     {% if index.14.0 %}
                                         <div class="search_result_price">
-                                            <span class="text-grey">{% if lang == 'ru' %}Ориентировочная цена
+                                            <span class="text-grey">{% if lang == 'ru' %}Цена
                                             {% else %}Estimated price{% endif %}:</span>
                                             <span class="text-magenta">{{ index.14.0|d_mask }} &#x20bd;</span>
                                             <!--small>({{ index.14 }})</small-->
@@ -175,7 +183,7 @@
                             </div>
                             <div class="desc">
                                 <div class="desc-inner">
-                                    <p>
+                                    <h2>
                                         <a href="{% if cartridge.0 %}/supplies/{{ cartridge.0 }}{% endif %}" class="text-blue">
                                             <span class="text-green pr-2">{{ cartridge.2 }}</span>
                                             {% if cartridge.3 %}
@@ -187,15 +195,19 @@
                                                 {{ cartridge.7 }}
                                             {% endif %}
                                         </a>
-                                    </p>
+                                    </h2>
                                     <div class="search_result_model">
                                         <div class="models">
                                             <p>{% if lang == 'ru' %}Модели{% else %}Models{% endif %}:
-                                                <a href="#" class="error_result_models_show"
+                                                <button class="error_result_models_show btn btn-link"
                                                    aria-label="models-inner_{{ cartridge.0 }}">
-                                                    <span class="btn_show">show models</span>
-                                                    <span class="btn_hide" style="display: none;">hide models</span>
-                                                </a>
+                                                    <span class="btn_show">
+                                                        {% if lang == 'ru' %}показать модели{% else %}show models{% endif %}
+                                                    </span>
+                                                    <span class="btn_hide" style="display: none;">
+                                                        {% if lang == 'ru' %}скрыть модели{% else %}hide models{% endif %}
+                                                    </span>
+                                                </button>
                                             </p>
                                             <p id="models-inner_{{ cartridge.0 }}" style="display: none;">
                                                 {% for id in cartridge.5 %}
@@ -214,7 +226,7 @@
                                     </div>
                                     {% if cartridge.8 %}
                                         <div class="search_result_price">
-                                            <span class="text-grey">{% if lang == 'ru' %}Ориентировочная цена
+                                            <span class="text-grey">{% if lang == 'ru' %}цена
                                             {% else %}Estimated price{% endif %}:</span>
                                             <span class="text-magenta">{{ cartridge.8|d_mask }} &#x20bd;</span>
                                             <!--small>({{ cartridge.9 }})</small-->

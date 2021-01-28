@@ -113,7 +113,7 @@
                                     <a href="/model/{{ model.0 }}?module={{ model.3 }}">
                                         {% if lang == 'ru' and model.4 %}{{ model.4 }}
                                             {% if model.3 %}({{ model.3 }}){% endif %}
-                                        {% else %}{{ model.3 }}{% endif %}
+                                        {% elif model.3 %}{{ model.3 }}{% else %}{{ model.4 }}{% endif %}
                                     </a>
                                 </div>
                             </div>
