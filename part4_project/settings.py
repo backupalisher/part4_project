@@ -19,6 +19,7 @@ SECRET_KEY = '59bh9hwmjovry$@gjah!7pe5vrh*d+&_srj=udw*^w0w*y81ds'
 DEBUG = DEBUG_STATE
 
 ALLOWED_HOSTS = [
+    '*',
     '127.0.0.1',
     'localhost',
     '.d.part4.info',
@@ -83,9 +84,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'part4_project.urls'
 
 AUTHENTICATION_BACKENDS = (
-        'django.contrib.auth.backends.ModelBackend',
-    )
-
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 TEMPLATES = [
     {
@@ -214,7 +214,7 @@ AWS_S3_REGION_NAME = 'ru-central1'
 if DEBUG:
     SITE_ID = 2
 else:
-    SITE_ID = 1
+    SITE_ID = 2
 
 X_FRAME_OPTIONS = 'ALLOW-FROM webvisor.com'
 
@@ -226,3 +226,34 @@ EMAIL_HOST = EMAIL_HOST
 EMAIL_HOST_USER = EMAIL_USER
 EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
 EMAIL_PORT = EMAIL_PORT
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(name)-12s %(levelname)-8s %(message)s'
+        },
+        'file': {
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'file',
+            'filename': 'debug.log'
+        }
+    },
+    'loggers': {
+        '': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'file']
+        }
+    }
+}
