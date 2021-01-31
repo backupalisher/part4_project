@@ -43,7 +43,7 @@ urlpatterns = [
                   path('sendmail/', include('sendmail.urls')),
                   path('account/', include('accounts.urls')),
                   path('dashboard/', include('dashboard.urls')),
-                  # path('accounts/', include('django.contrib.auth.urls')),
+                  path('accounts/', include('django.contrib.auth.urls')),
                   path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
