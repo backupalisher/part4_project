@@ -7,7 +7,6 @@ $(document).ready(function () {
                 $('#'+$id+' .part-item').removeClass('active');
                 document.getElementsByClassName($id)[0].click();
                 $items = document.querySelectorAll('#'+$id+' .part-item')
-                console.log($items)
                 $items.forEach(x => {
                     if (x.innerHTML.indexOf($(this).val().toUpperCase()) > -1) {
                         x.classList.add('active')
