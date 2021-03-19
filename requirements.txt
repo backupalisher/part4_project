@@ -9,7 +9,7 @@ django-debug-toolbar==2.2
 django-el-pagination==3.3.0
 django-libsass==0.8
 django-silk==4.0.1
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 gprof2dot==2019.11.30
 idna==2.9
 Jinja2==2.11.2
