@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static brand_extras mfilters main_extras mathfilters %}
+{% block title %}
+    {{ model_name }}
+{% endblock %}
+{% block description %}
+    <meta name="description"
+          content="
+          {% for caption in captions %}
+              {% for subcaption in subcaptions %}
+                    {% if subcaption.2 == caption %}
+                        {% for subcap in subcaption.3 %}
+                            {% if '' != subcap|get_val and '-' not in subcap|get_val and '+' not in subcap|get_val %}
+                                {{ subcap }},
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+          ">
+{% endblock %}
+{% block keyword %}
+    <meta name="keyword"
+          content="{{ brand_name }}, {{ model_name }}, характеристики, коды ошибок, part, парт каталог, картридж, расходные материалы, ремкомплект, сервисный комплект, KIT">
+{% endblock %}
+{% block content %}
+    <div id="model_wrap">
+        <div class="model_head">
+            <div class="model_main_image">
+                {% if model_main_image %}
+                    <img src="{{ MEDIA_URL }}{{ model_main_image }}" alt="{{ model_name }}"/>
+                {% elif model_images|length > 0 and model_images.0 != '' %}
+                    <img src="{{ MEDIA_URL }}{{ model_images.0 }}" alt="{{ model_name }}">
+                {% else %}
+                    <img src="{{ MEDIA_URL }}no_image.svg" alt="{{ model_name }}" style="width: 100%;"/>
+                {% endif %}
+            </div>
+            <div class="model_head_content">
+                <h3 class="model_title">{{ model_name }}</h3>
+                <div class="rating">
+                    {% if lang == 'ru' %}Рейтинг{% else %}Rating{% endif %}
+                    <div class="stars">
+                        <span class="material-icons" style="color:#FFED00;">grade</span>
+                        <span class="material-icons">grade</span>
+                        <span class="material-icons">grade</span>
+                        <span class="material-icons">grade</span>
+                        <span class="material-icons">grade</span>
+                    </div>
+                    {% if model_status %}
+                        <span class="status">{{ model_status }}</span>
+                    {% endif %}
+                </div>
+                <div class="table-tech">
+                    {% for opt_m in options_m %}
+                        {% if 'Status' not in opt_m.0 %}
+                            <div>
+                                <h4><span>{{ opt_m.0 }} </span></h4>
+                                <p>{{ opt_m.1 }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% if price %}
+                <div class="price">
+                    {% if lang == 'ru' %}Цена: <span>{{ price|d_mask }} &#x20bd;</span>
+                    {% else %} Price: <span>${{ price|divide:currency|d_mask }} </span> {% endif %}
+                </div>
+                <div class="btn_price">
+                    <button class="btn hover_btn c_phone" id="btn-buy">
+                        {% if lang == 'ru' %}Купить{% else %}Buy{% endif %}
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+        <div class="model-content">
+            <div class="nav nav-tabs" id="detailTabs" role="tablist">
+                {% if options|length > 0 %}
+                    <a class="nav-link {% if tab == 'options' %} active {% endif %}"
+                       id="options-tab" data-toggle="tab" role="tab" href="?tab=options"
+                       aria-controls="options"
+                       aria-selected="{% if cur_module is None and tab == 'options' %} true {% endif %}">
+                        <span class="material-icons">fact_check</span>
+                        <span>{% if lang == 'ru' %}Характеристики{% else %}
+                            Specifications{% endif %}</span>
+                    </a>
+                {% endif %}
+                {% if modules is not None and modules|length > 0 %}
+                    <a class="nav-link {% if tab == 'parts' %} active {% endif %}"
+                       id="parts-tab" data-toggle="tab" href="?tab=parts" role="tab"
+                       aria-controls="parts" aria-selected="false">
+                        <span class="material-icons">settings</span>
+                        <span>{% if lang == 'ru' %}Парткаталог{% else %}Parts catalog{% endif %}</span>
+                    </a>
+                {% endif %}
+                {% if verrors is not None and verrors|length > 0 %}
+                    <a class="nav-link {% if tab == 'errors' %} active {% endif %}"
+                       id="errors-tab" data-toggle="tab" href="?tab=errors" role="tab"
+                       aria-controls="errors" aria-selected="false">
+                        <span class="material-icons">announcement</span>
+                        <span>{% if lang == 'ru' %}Коды ошибок{% else %}Error codes{% endif %}</span>
+                    </a>
+                {% endif %}
+                {% if supplies is not None and supplies|length > 0 %}
+                    <a class="nav-link {% if tab == 'supplies' %} active {% endif %}"
+                       id="cartridges-tab" data-toggle="tab" href="?tab=supplies" role="tab"
+                       aria-controls="supplies" aria-selected="false">
+                        <span class="material-icons">extension</span>
+                        <span>{% if lang == 'ru' %}Расходные материалы{% else %}
+                            Consumables{% endif %}</span>
+                    </a>
+                {% endif %}
+            </div>
+            <div class="tab-content" id="modelsTabContent">
+                {% if options|length > 0 %}
+                    <div class="tab-pane {% if tab == 'options' %} active {% endif %}"
+                         id="options" role="tabpanel">
+                        {% include 'models/options.html' %}
+                    </div>
+                {% endif %}
+                {% if modules|length > 0 %}
+                    <div class="tab-pane {% if tab == 'parts' %} active {% endif %}"
+                         id="parts" role="tabpanel">
+                        {% include 'models/partcatalog.html' %}
+                    </div>
+                {% endif %}
+                {% if verrors|length > 0 %}
+                    <div class="tab-pane {% if tab == 'errors' %} active {% endif %}"
+                         id="errors" role="tabpanel">
+                        {% include 'models/errorcodes.html' %}
+                    </div>
+                {% endif %}
+                {% if supplies|length > 0 %}
+                    <div class="tab-pane {% if tab == 'supplies' %} active {% endif %}"
+                         id="supplies" role="tabpanel">
+                        {% include 'models/supplies.html' %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% include 'modals/contact.html' %}
+{% endblock %}
+{% block breadcrumbs %}
+    {#    <div class="row">#}
+    {#        <nav class="nav-breadcrumb w-100">#}
+    {#            <ul>#}
+    {#                <li class="nav-breadcrumb-item"><a href="/">{% if lang == 'ru' %}Главная{% else %}Main{% endif %}</a></li>#}
+    {#                <li class="nav-breadcrumb-item active">{{ model_name }}</li>#}
+    {#            </ul>#}
+    {#        </nav>#}
+    {#    </div>#}
+{% endblock %}
+{% block search %}
+{% endblock %}
+
+{% block ajaxjs %}
+        <script type="text/javascript">
+            function mItemJqueryLoaded() {
+                $media_url = "{{ MEDIA_URL }}"
+                $mItem_script = "{% static 'model_item.js' %}"
+                $.getScript($mItem_script)
+            }
+            function mItemCheckJquery() {
+                if (window.jQuery) {
+                    mItemJqueryLoaded();
+                } else {
+                    window.setTimeout(mItemCheckJquery, 100);
+                }
+            }
+            mItemCheckJquery();
+        </script>
+{% endblock %}

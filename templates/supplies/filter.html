@@ -1,0 +1,40 @@
+{% load static %}
+<div class="scrollbar-macosx">
+    <div class="brands">
+        {% csrf_token %}
+        {% for brand in brands %}
+            <div class="hover_btn" {% if brand.logotype is not None %}
+                       style="background-image: url('{{ MEDIA_URL }}brands/{{ brand.logotype }}')"
+                {% else %}
+                       style="background-image: url('{{ MEDIA_URL }}no-image.png'); width: 100%;">
+                {% endif %}>
+                <label for="supp{{ brand.name }}">
+                <input type="checkbox" id="supp{{ brand.name }}" name="{{ brand.id }}" value="{{ brand.id }}">
+                {{ brand.name }}
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function SuppliesJqueryLoaded() {
+            $media_url = "{{ MEDIA_URL }}"
+            $lang = "{{ lang }}"
+            $ajax_script = "{% static 'supplies.js' %}"
+            $.getScript($ajax_script)
+        }
+
+        function SuppliesCheckJquery() {
+            if (window.jQuery) {
+                SuppliesJqueryLoaded();
+            } else {
+                window.setTimeout(SuppliesCheckJquery, 100);
+            }
+        }
+
+        SuppliesCheckJquery();
+    </script>
+    {#    <script src="{% static 'model_ajax.js' %}"></script>#}
+{% endblock %}

@@ -1,3 +1,4 @@
+$brands = []
 $(document).ready(function () {
     //Toggle phone and email
     $('#toggle-order').click(function () {
@@ -43,3 +44,36 @@ function getFormData($form) {
 
     return indexed_array;
 }
+
+// Change brand checks
+$('.brands label input').click(function () {
+    $(this).parent().toggleClass('checked')
+    $(this).checked = true
+    if ($brands.length > 0) {
+        idx = $brands.indexOf(parseInt($(this).val()))
+        if (idx < 0) {
+            $brands.push(parseInt($(this).val()))
+        } else {
+            $brands.splice(idx, 1)
+        }
+    } else {
+        $brands.push(parseInt($(this).val()))
+    }
+    let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    $.ajax({
+        type: 'POST',
+        url: '',
+        headers: {'X-CSRFToken': csrftoken},
+        data: {
+            "reset": JSON.stringify(false),
+            'brands': JSON.stringify($brands)
+        },
+        contentType: "application/x-www-form-urlencoded;charset=utf-8",
+        success: function (data) {
+            // console.log(data)
+            $(".supplies_wrap").html('').append(
+                data
+            );
+        }
+    });
+})

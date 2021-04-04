@@ -17,10 +17,9 @@ def detail_view(request):
 
 # добавление веса
 @sync_to_async
-def set_weight(detail_id):
-    _query(
-        f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w "
-        f"WHERE id = {detail_id}")
+def set_weight(model_id):
+    _query(f"""UPDATE models SET weight = (w.weight+1) FROM (SELECT weight FROM models WHERE id = {model_id}) w 
+            WHERE id = {model_id}""")
 
 
 # Запрос на получение опций и вывод опций
@@ -78,7 +77,7 @@ def get_errors(model_id):
 def qet_partcatalog(request, model_id):
     # 'Получение id парткодов, моделей, модулей, названий детали для модулей и парткаталога', q_code_module)
     modules = []
-    partcatalog = _query(f'SELECT * FROM all_partcatalog WHERE model_id = {model_id} AND partcode is not null;')
+    partcatalog = _query(f'SELECT * FROM partcatalog WHERE model_id = {model_id} and supplies is not true;')
 
     if partcatalog and len(partcatalog) > 0:
         for parts in partcatalog:
@@ -96,13 +95,13 @@ def qet_partcatalog(request, model_id):
 # Получение данных для модели
 @sync_to_async
 def get_model(model_id):
-    return _query(f'SELECT * FROM all_models WHERE model_id = {model_id}')
+    return _query(f'SELECT * FROM model_for_filter WHERE mid = {model_id}')
 
 
 # Получение данных картриджей
 @sync_to_async
-def get_cartridge(model_id):
-    supplies = _query(f"SELECT * FROM all_cartridge WHERE {model_id} = ANY(model_id)")
+def get_supplies(model_id):
+    supplies = _query(f"SELECT * FROM partcatalog WHERE model_id = {model_id} and supplies is true")
     for idx in range(len(supplies)):
         supp = list(supplies[idx])
         supp[4] = list(set(supp[4]))
@@ -119,20 +118,12 @@ async def init(model_id):
     return results
 
 
-async def past_init(request, model_id, detail_id):
-    if detail_id:
-        tasks = [
-            qet_partcatalog(request, model_id),
-            get_errors(model_id),
-            get_cartridge(model_id),
-            get_options(detail_id),
-        ]
-    else:
-        tasks = [
-            qet_partcatalog(request, model_id),
-            get_errors(model_id),
-            get_cartridge(model_id)
-        ]
+async def past_init(request, model_id):
+    tasks = [
+        qet_partcatalog(request, model_id),
+        get_errors(model_id),
+        get_supplies(model_id)
+    ]
     results = await asyncio.gather(*tasks)
     return results
 
@@ -150,35 +141,36 @@ def index(request, model_id):
     asyncio.set_event_loop(loop)
     loop = asyncio.get_event_loop()
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
-    init_result = loop.run_until_complete(init(model_id))[0]
-    detail_id = init_result[0][0]
-    model_id = init_result[0][1]
-    model_name = init_result[0][2]
-    model_main_image = init_result[0][3]
-    model_images = init_result[0][4]
-    brand_id = init_result[0][5]
-    brand_name = init_result[0][6]
-    type_of_device = [init_result[0][7], init_result[0][8]]
-    technology = [init_result[0][9], init_result[0][10]]
-    max_format = [init_result[0][11], init_result[0][12]]
-    pages_per_month = [init_result[0][13], init_result[0][14]]
-    speed = [init_result[0][15], init_result[0][16]]
-    output_type = [init_result[0][17], init_result[0][18]]
-    model_status = [init_result[0][19], init_result[0][20]]
-    price = [init_result[0][21], init_result[0][22]]
-    loop.create_task(set_weight(detail_id))
-    if detail_id:
-        post_result = loop.run_until_complete(past_init(request, model_id, detail_id))
-        options = post_result[3][0]
-        captions = post_result[3][1]
-        subcaptions = post_result[3][2]
-        values = post_result[3][3]
-    else:
-        post_result = loop.run_until_complete(past_init(request, model_id, None))
-        options = None
-        captions = None
-        subcaptions = None
-        values = None
+    init_result = loop.run_until_complete(init(model_id))[0][0]
+    model_id = init_result[0]
+    model_name = init_result[1]
+    model_main_image = init_result[3]
+    model_images = init_result[4]
+    brand_id = init_result[5]
+    brand_name = init_result[6]
+    options_ru = []
+    model_status = ''
+    for opt in init_result[10]:
+        if opt:
+            optL = opt.split(':')
+            options_ru.append(optL)
+            if optL[0] == 'Status':
+                model_status = optL[1]
+    options_en = []
+    for opt in init_result[11]:
+        if opt:
+            optL = opt.split(':')
+            options_en.append(optL)
+            if optL[0] == 'Status':
+                model_status = optL[1]
+    price = init_result[8]
+    vendor = init_result[9]
+    loop.create_task(set_weight(model_id))
+    post_result = loop.run_until_complete(past_init(request, model_id))
+    options = None
+    captions = None
+    subcaptions = None
+    values = None
     loop.run_until_complete(loop.shutdown_asyncgens())
     loop.close()
     modules = post_result[0][0]
@@ -214,13 +206,11 @@ def index(request, model_id):
             pass
 
     if model_id:
-        return render(request, 'models/index.html',
-                      {'detail_id': detail_id, 'model_name': model_name, 'model_main_image': model_main_image,
+        return render(request, 'main/models.html',
+                      {'model_name': model_name, 'model_main_image': model_main_image,
                        'modules': modules, 'verrors': verrors, 'model_images': model_images, 'options': options,
                        'partcatalog': partcatalog, 'captions': captions, 'brand_id': brand_id, 'brand_name': brand_name,
                        'subcaptions': subcaptions, 'values': values, 'cur_module': cur_module, 'supplies': supplies,
-                       'tab': tab, 'type_of_device': type_of_device, 'technology': technology, 'max_format': max_format,
-                       'pages_per_month': pages_per_month, 'speed': speed, 'output_type': output_type, 'lang': lang,
-                       'model_status': model_status, 'price': price})
+                       'tab': tab,  'lang': lang, 'model_status': model_status, 'price': price, 'vendor': vendor})
     else:
-        raise Http404('Страница отсутствует, с id: ' + str(detail_id))
+        raise Http404('Страница отсутствует, с id: ' + str(model_id))

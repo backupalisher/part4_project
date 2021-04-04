@@ -1,9 +1,14 @@
+import json
+
+import boto3
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import JsonResponse
 from django.shortcuts import render
-from db_model.models import *
+from werkzeug.utils import secure_filename
+
 from db_model.db_utils import _query
-import json
+from db_model.models import *
+from part4_project.env import *
 
 
 # Create your views here.
@@ -17,6 +22,30 @@ def save_price(price, id, vendor, type, price_id):
             _query(f'INSERT INTO prices (price, partcode_id, vendor_id) VALUES ({price}, {id}, {vendor}) ;')
         if type == 'detail':
             _query(f'INSERT INTO prices (price, detail_id, vendor_id) VALUES ({price}, {id}, {vendor}) ;')
+
+
+def save_file(file_path, filename):
+    print(type(file_path), file_path)
+    print(type(filename), filename)
+    print(type(aws_bucket), aws_bucket)
+    print(type(aws_access_key_id), aws_access_key_id)
+    print(type(aws_secret_access_key), aws_secret_access_key)
+    # conn = boto3.client(service_name='s3', endpoint_url='https://storage.yandexcloud.net',
+    #                     aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+    # with open(file_path, "rb") as f:
+    #     conn.upload_fileobj(f, aws_bucket, filename)
+    session = boto3.session.Session()
+    s3 = session.client(
+        service_name='s3',
+        endpoint_url='https://storage.yandexcloud.net',
+        aws_access_key_id=aws_access_key_id[0],
+        aws_secret_access_key=aws_secret_access_key
+    )
+    # with open(file_path, "rb") as f:
+    s3.upload_file(file_path, aws_bucket, filename)
+    # s3.Bucket(aws_bucket).put_object(Key=filename, Body=file)
+    # print(secure_filename(file))
+    # s3.put_object(Bucket=aws_bucket, Body=file, Key=secure_filename(filename), StorageClass='COLD')
 
 
 @staff_member_required
@@ -38,6 +67,10 @@ def brands(request):
         else:
             return JsonResponse('unsuccessful')
     else:
+        if request.FILES:
+            file_path = request.FILES['filetoupload'].temporary_file_path()
+            filename = request.FILES['filetoupload'].name
+            save_file(file_path, filename)
         brands = Brands.objects.all()
         return render(request, 'dashboard/index.html', {'tab': 'brands', 'brands': brands})
 

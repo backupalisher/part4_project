@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'rest_framework',
+    'storages',
     # 'silk',
     # 'debug_toolbar',
     'compressor',
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     'dashboard',
     'db_model',
     'search',
+    'main_views',
     'main',
     'user_passport',
     'detail',
@@ -226,6 +228,21 @@ EMAIL_HOST = EMAIL_HOST
 EMAIL_HOST_USER = EMAIL_USER
 EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
 EMAIL_PORT = EMAIL_PORT
+
+AWS_ACCESS_KEY_ID = aws_access_key_id
+AWS_SECRET_ACCESS_KEY = aws_secret_access_key
+AWS_STORAGE_BUCKET_NAME = aws_bucket
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+DEFAULT_FILE_STORAGE = 'part4_project.storage_backends.MediaStorage'
+
+
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
 
 # LOGGING = {
 #     'version': 1,

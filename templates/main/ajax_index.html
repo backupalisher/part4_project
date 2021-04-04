@@ -1,73 +1,11 @@
 {% extends 'base.html' %}
-{% load static el_pagination_tags %}
+{% load static %}
 
-{% paginate entries %}
-{% for entry in entries %}
-    {% block content %}
-        {% if sresult %}
-            {% for index in sresult %}
-                <p class="search_result">
-                    {% if index.3 == index.7 %}
-                        Модель: <strong><a href="/model/{{ index.2 }}">{{ index.7 }}</a></strong>
-                    {% else %}
-                        Деталь: <strong><a href="/detail/{{ index.2 }}">{{ index.3 }}</a></strong>
-                    {% endif %}
-                    <span class="search_result_partcode">
-                        {% if index.5 != None %}
-                            &nbsp; Парткод: {{ index.5 }}
-                        {% endif %}
-                    </span><br>
-                    {% if index.3 != index.7 %}
-                        <span class="search_result_model">
-                            Модель: {{ index.7 }}
-                        </span>
-                    {% endif %}
-                </p>
-            {% endfor %}
-        {% elif erresult %}
-            {% for index in erresult %}
-                <div class="error_result">
-                    <div class="image">
-                        {% if index.7 %}
-                            <img src="{{ index.7 }}">
-                        {% endif %}
-                    </div>
-                    <div class="desc">
-                        <p>
-                            Ошибка: <strong><a href="/model/{{ index.0 }}">{{ index.2 }}</a></strong>
-                        </p>
-                        <p>
-                            Display: <strong>{{ index.3 }}</strong>
-                        </p>
-                        <p>
-                            Description: <strong>{{ index.4 }}</strong>
-                        </p>
-                        <p>Causes: <strong>{{ index.5 }}</strong></p>
-                        <p>Remedy: <strong>{{ index.6 }}</strong></p>
-                    </div>
-                </div>
-            {% endfor %}
-        {% endif %}
-        <div class="row">
-            {% for brand in brands %}
-                <div class="col-lg-2 col-md-3 col-sm-4 mb-3">
-                    <div class="card btn">
-                        <a href="/brand/{{ brand.id }}">
-                            <!--h5 class="text-center">{{ brand.name }}</h5-->
-                            {% if brand.logotype is not None %}
-                                <img src="{% static '/image/brands/' %}{{ brand.logotype }}" class="img-fluid"
-                                     alt="{{ brand.name }}">
-                            {% else %}
-                                <img src="{% static '/image/no-image.png' %}" class="img-fluid" alt="{{ brand.name }}">
-                            {% endif %}
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% endblock %}
-{% endfor %}
-{% show_pages %}
+
+{% block content %}
+
+{% endblock %}
+
 
 
 {% block title %}
@@ -76,4 +14,24 @@
 
 {% block breadcrumbs %}
 
+{% endblock %}
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function jqueryLoaded() {
+            lang = "{{ lang }}"
+            $html = "{{ html }}"
+            $ajax_script = "{% static 'ajax_main.js' %}"
+            $.getScript($ajax_script)
+        }
+        function checkJquery() {
+            if (window.jQuery) {
+                jqueryLoaded();
+            } else {
+                window.setTimeout(checkJquery, 100);
+            }
+        }
+        checkJquery();
+    </script>
+{#    <script src="{% static 'model_ajax.js' %}"></script>#}
 {% endblock %}

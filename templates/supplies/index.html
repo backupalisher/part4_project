@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    {% if lang == 'ru' %}{{ title }}{% else %}Consumables{% endif %}
+    {% if lang == 'ru' %}Расходные материалы{% else %}Consumables{% endif %}
 {% endblock %}
 {% block description %}
     <meta name="description" content="Каталоги картриджей Brother, Canon, Dell, Epson, HP, IBM, Konica Minolta, Kyocera Mita, Lexmark, OKI, Olivetti, Panasonic, Philips, Ricoh, Samsung, Sharp, Toshiba, Xerox">
@@ -10,28 +10,7 @@
     <meta name="keyword" content="каталог картриджей, расходные материалы для оргтехники, картридж, картриджи, картриджи для принтеров, картридж для принтера">
 {% endblock %}
 {% block content %}
-    <div class="container nav_tabs">
-        <a href="/" class="hover_btn">{% if lang == 'ru' %}Модели{% else %}Models{% endif %}</a>
-        <a href="/supplies/" class="hover_btn active">{% if lang == 'ru' %}Расходные материалы{% else %}Consumables{% endif %}</a>
-        <a href="/market/" class="hover_btn">{% if lang == 'ru' %}Магазин{% else %}Market{% endif %}</a>
-    </div>
-    <div class="horizontal-scroll-wrapper">
-        <div class="horizontal-scroll brands">
-            {% csrf_token %}
-            {% for brand in brands %}
-                <div class="brand hover_btn">
-                    <label for="{{ brand.name }}" {% if brand.logotype is not None %}
-                           style="background-image: url('{{ MEDIA_URL }}brands/{{ brand.logotype }}')"
-                    {% else %}
-                           style="background-image: url('{{ MEDIA_URL }}no-image.png'); width: 100%;">
-                    {% endif %}>
-                    <input type="checkbox" id="{{ brand.name }}" name="{{ brand.id }}" value="{{ brand.id }}">
-                    </label>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="row mt-3 supplies">
+    <div class="supplies_wrap">
         {% include 'supplies/supplies.html' %}
     </div>
 {% endblock %}

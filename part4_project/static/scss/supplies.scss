@@ -1,0 +1,148 @@
+.filter_supplies {
+  .brands {
+    div {
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center right;
+      margin: 0 10px 0 0;
+    }
+  }
+}
+
+.supplies_wrap {
+  padding-top: 1em;
+
+  #supplie_table {
+
+  }
+
+  #supplie_items {
+    max-height: calc(1000px);
+    padding: 1.5em 0;
+    display: grid;
+    grid-gap: 1.5em;
+  }
+
+  .supplie_search {
+    display: inline-flex;
+    width: 100%;
+    margin-bottom: 0.5em;
+
+    input {
+      background-color: var(--bg_form_input);
+      width: 100%;
+      font-size: 1.8em;
+      padding: 0.2em 0.6em;
+      border: none;
+      color: var(--text_base);
+    }
+  }
+
+  .supplies {
+    color: var(--text_filter);
+
+    .line {
+      display: grid;
+      grid-template-columns: 30% 50% 20%;
+    }
+  }
+
+  .supplies-item {
+    display: grid;
+    grid-gap: 1.5em;
+    grid-template-columns: auto 1fr;
+
+    .supplie_image {
+      display: flex;
+      justify-content: center;
+      align-self: center;
+      height: 10em;
+      width: 10em;
+      background-color: var(--white);
+      padding: 0.5em;
+      border-radius: 0.5em;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .supplie_desc {
+      font-size: 1.4em;
+      display: flex;
+      flex-direction: column;
+
+      h4:nth-child(4) {
+        font-size: 1.3em;
+      }
+    }
+
+    .btn_info {
+      cursor: pointer;
+      margin: 0 0.5em;
+      padding: 0;
+
+      span {
+        color: var(--accent);
+      }
+    }
+
+    p {
+      color: var(--placeholder_color);
+      display: flex;
+      align-items: center;
+    }
+
+    a {
+      padding: 0 0 0.5em 0;
+    }
+  }
+
+  .supplies-item_overlay {
+    display: none;
+    position: fixed;
+    background-color: var(--bg_section);
+    top: 10%;
+    bottom: 10%;
+    left: 10%;
+    right: 10%;
+    z-index: 21;
+    padding: 2em;
+
+    &.active {
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      grid-gap: 1em;
+    }
+
+    .supp-title {
+      font-size: 2em;
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 1.6em;
+    }
+
+    .supplies-analogs {
+      padding: 0 1em;
+      a {
+        font-size: 1.6em;
+        line-height: 2em;
+      }
+    }
+
+    button {
+      font-size: 2.2em;
+      background-color: var(--warning);
+      color: var(--white);
+      border: none;
+      padding: .3em 1em;
+      cursor: pointer;
+      &:hover {
+        box-shadow: 0 0 .25em .1em var(--accent);
+      }
+    }
+  }
+}
+

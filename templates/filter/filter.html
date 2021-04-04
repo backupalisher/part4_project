@@ -1,93 +1,102 @@
-<div class="filter">
-{#    <h4 class="pt-1 title" id="filter-title">Фильтр:</h4>#}
-    <!--span>моделей {{ model_count.0.0 }}</span-->
-    <form method="post" action="" id="form_filter">
-        {% csrf_token %}
-        <div class="scrollbar-macosx filter_settings mb-3">
-            {% for caption in filter_captions %}
-                <h5>{% if lang == 'ru' %}{{ caption.0 }}{% else %}{{ caption.1 }}{% endif %}</h5>
-                {% for filter in sfilter %}
-                    {% if filter.caption == caption.0 %}
-                        <div class="float-left w-100 pl-2 pb-3">
-                            <h6>
-                                {% if lang == 'ru' %}{{ filter.subcaption }}{% else %}{{ filter.subcaption_en }}{% endif %}
-                            </h6>
-                            {% if filter.type == 'checkbox' %}
-                                {% if lang == 'ru' %}
-                                    {% for fval in filter.values %}
-                                        <div class="form-group form-check checkbox">
-                                            <label class="form-check-label" for="{{ fval.id }}">
-                                                <input type="checkbox" class="form-check-input"
-                                                   name="checkbox{{ filter.sub_id }}" id="{{ fval.id }}"
-                                                   value="{{ fval.id }}">{{ fval.val }}</label>
-                                        </div>
-                                    {% endfor %}
-                                {% else %}
-                                    {% for fval in filter.values_en %}
-                                        <div class="form-group form-check checkbox">
-                                            <label class="form-check-label" for="{{ fval.id }}">
-                                                <input type="checkbox" class="form-check-input"
-                                                   name="checkbox{{ filter.sub_id }}" id="{{ fval.id }}"
-                                                   value="{{ fval.id }}">{{ fval.val }}</label>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endif %}
-                            {% if filter.type == 'radio' %}
-                                {% if lang == 'ru' %}
-                                    {% for fval in filter.values %}
-                                        <div class="form-group radio">
-                                            <label class="form-check-label" for="{{ fval.id }}">
-                                                <input type="radio" class="form-check-input"
-                                                   name="radio{{ filter.sub_id }}" id="{{ fval.id }}"
-                                                   value="{{ fval.id }}">
-                                                {% if fval.val == '+' %} есть {% endif %}
-                                                {% if fval.val == '-' %} нет {% endif %}
-                                            </label>
-                                        </div>
-                                    {% endfor %}
-                                {% else %}
-                                    {% for fval in filter.values_en %}
-                                        <div class="form-group radio">
-                                            <label class="form-check-label" for="{{ fval.id }}">
-                                                <input type="radio" class="form-check-input"
-                                                   name="radio{{ filter.sub_id }}" id="{{ fval.id }}"
-                                                   value="{{ fval.id }}">
-                                                {% if fval.val == '+' %} yes {% endif %}
-                                                {% if fval.val == '-' %} no {% endif %}
-                                            </label>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endif %}
-                            {% if filter.type == 'range' %}
-                                <div class="form-row">
-                                    <div class="input_num">
-                                        <input type="number" class="form-control"
-                                               name="range{{ filter.sub_id }}min"
-                                               id="range{{ forloop.counter }}min" placeholder="{{ filter.values.0.min }}"
-                                               min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
-                                        >
-                                    </div>
-                                    <div class="input_num">
-                                        <input type="number" class="form-control"
-                                               name="range{{ filter.sub_id }}max"
-                                               id="range{{ forloop.counter }}max" placeholder="{{ filter.values.1.max }}"
-                                               min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
-                                        >
-                                    </div>
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
+<form method="post" action="" id="form_filter">
+    {% csrf_token %}
+    <div class="scrollbar-macosx filter_settings">
+        <h3>{% if lang == 'ru' %}Бренды{% else %}Brands{% endif %}</h3>
+        <div class="brand">
+            {% for brand in brands %}
+                <label for="{{ brand.name }}">
+                   <input type="checkbox" id="{{ brand.name }}" name="{{ brand.id }}" value="{{ brand.id }}">
+                   {{ brand.name }}
+{#                   {% if brand.logotype is not None %}#}
+{#                       <img src="{{ MEDIA_URL }}brands/{{ brand.logotype }}" alt="{{ brand.name }}">#}
+{#                    {% else %}#}
+{#                       <img src="{{ MEDIA_URL }}no-image.png')" alt="{{ brand.name }}">#}
+{#                    {% endif %}#}
+                </label>
             {% endfor %}
         </div>
-        <a id="reset" class="btn bg-pink_yellowish text-white hover_btn float-left disabled">
-            {% if lang == 'ru' %}Сбросить{% else %}Reset{% endif %}</a>
-        <a id="submit" class="btn btn-filter bg-blue text-white hover_btn float-right disabled">
-            {% if lang == 'ru' %}Применить{% else %}Apply{% endif %}</a>
-        <a id="float" class="btn btn-filter bg-blue text-white hover_btn float-right disabled">
-            {% if lang == 'ru' %}Применить{% else %}Apply{% endif %}</a>
-    </form>
-</div>
+
+        {% for caption in filter_captions %}
+            <h3>{% if lang == 'ru' %}{{ caption.0 }}{% else %}{{ caption.1 }}{% endif %}</h3>
+            {% for filter in sfilter %}
+                {% if filter.caption == caption.0 %}
+                    <div class="">
+                        <h4>
+                            {% if lang == 'ru' %}{{ filter.subcaption }}{% else %}{{ filter.subcaption_en }}{% endif %}
+                        </h4>
+                        {% if filter.type == 'checkbox' %}
+                            {% if lang == 'ru' %}
+                                {% for fval in filter.values %}
+                                    <div class="checkbox">
+                                        <label class="" for="{{ fval.id }}">
+                                            <input type="checkbox" class=""
+                                               name="checkbox{{ filter.sub_id }}" id="{{ fval.id }}"
+                                               value="{{ fval.id }}">{{ fval.val }}</label>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                {% for fval in filter.values_en %}
+                                    <div class="checkbox">
+                                        <label class="" for="{{ fval.id }}">
+                                            <input type="checkbox" class=""
+                                               name="checkbox{{ filter.sub_id }}" id="{{ fval.id }}"
+                                               value="{{ fval.id }}">{{ fval.val }}</label>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                        {% if filter.type == 'radio' %}
+                            {% if lang == 'ru' %}
+                                <div class="radio">
+                                    {% for fval in filter.values %}
+                                        <label class="" for="{{ fval.id }}">
+                                            <input type="radio" class=""
+                                               name="radio{{ filter.sub_id }}" id="{{ fval.id }}"
+                                               value="{{ fval.id }}">
+                                            {% if fval.val == '+' %} есть {% endif %}
+                                            {% if fval.val == '-' %} нет {% endif %}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="radio">
+                                    {% for fval in filter.values_en %}
+
+                                        <label class="" for="{{ fval.id }}">
+                                            <input type="radio" class=""
+                                               name="radio{{ filter.sub_id }}" id="{{ fval.id }}"
+                                               value="{{ fval.id }}">
+                                            {% if fval.val == '+' %} yes {% endif %}
+                                            {% if fval.val == '-' %} no {% endif %}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        {% if filter.type == 'range' %}
+                            <div class="input_num">
+                                <input type="number" class=""
+                                       name="range{{ filter.sub_id }}min"
+                                       id="range{{ forloop.counter }}min" placeholder="{{ filter.values.0.min }}"
+                                       min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
+                                >
+                                <input type="number" class=""
+                                       name="range{{ filter.sub_id }}max"
+                                       id="range{{ forloop.counter }}max" placeholder="{{ filter.values.1.max }}"
+                                       min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
+                                >
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <a id="reset" class="btn btn-reset btn-hover disabled">
+        {% if lang == 'ru' %}Сбросить{% else %}Reset{% endif %}</a>
+{#        <a id="submit" class="btn btn-filter btn-hover disabled">#}
+{#            {% if lang == 'ru' %}Применить{% else %}Apply{% endif %}</a>#}
+    <a id="float" class="btn btn-hover btn-filter disabled">
+        {% if lang == 'ru' %}Применить{% else %}Apply{% endif %}</a>
+</form>
+

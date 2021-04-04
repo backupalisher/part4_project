@@ -1,51 +1,51 @@
 {% load static main_extras %}
-<div class="main_overlay"></div>
+<div class="main_overlay hide_contact"></div>
 <div class="modal contact">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4 col-12">
-            <h4>{% if lang == 'ru' %}Позвонить{% else %}Call{% endif %}</h4>
-            <a href="tel:+79771371640">+7 (977) 137 16 40</a>
-        </div>
-        <div class="col-md-4 col-12">
-            <h4>{% if lang == 'ru' %}Написать{% else %}Mail{% endif %}</h4>
-            <a href="mailto:info@part4.info">info@part4.info</a>
-        </div>
-        <div class="col-md-2"></div>
+    <div>
+        <a class="hover_btn contact_close" id="contact_close">&#x2715;</a>
     </div>
-    <div class="row pt-4">
-        <div class="col-md-2"></div>
-        <div class="col">
-            <div class="c_successful">
-                <h5 class="c_successful">Спасибо за ваше сообщение!</h5>
-                <p class="text-center pt-5">
-                    <a class="btn bg-pink_yellowish text-white hover_btn contact_close">{% if lang == 'ru' %}Закрыть{% else %}Close{% endif %}</a>
+    <div>
+        <h4>{% if lang == 'ru' %}Позвонить{% else %}Call{% endif %}</h4>
+        <a href="tel:+79771371640">+7 (977) 137 16 40</a>
+    </div>
+    <div>
+        <h4>{% if lang == 'ru' %}Написать{% else %}Mail{% endif %}</h4>
+        <a href="mailto:info@part4.info">info@part4.info</a>
+    </div>
+    <div>
+        <div class="c_successful">
+            <h5>Спасибо за ваше сообщение!</h5>
+            <p class="text-center pt-5">
+                <a class="btn bg-pink_yellowish text-white hover_btn contact_close">{% if lang == 'ru' %}
+                    Закрыть{% else %}Close{% endif %}</a>
+            </p>
+        </div>
+        <div class="c_form">
+            <h4>{% if lang == 'ru' %}Оставить заявку{% else %}Leave a request{% endif %}</h4>
+            <div id="form_contact">{% csrf_token %}
+                <p>
+                    <input type="text" name="name" class="c_name" required
+                           placeholder="{% if lang == 'ru' %}Имя{% else %}Name{% endif %}">
+                </p>
+                <p>
+                    <input type="text" name="phone" class="c_phone"
+                           placeholder="{% if lang == 'ru' %}+7 (___) ___-__-__{% else %}+_ (___) ___-__-__{% endif %}">
+                </p>
+                <p>
+                    <input type="email" name="email" class="c_email"
+                           placeholder="{% if lang == 'ru' %}Email{% else %}Email{% endif %}">
+                </p>
+                <p>
+                    <textarea name="message" class="c_message"
+                              placeholder="{% if lang == 'ru' %}Текст сообщения{% else %}Message{% endif %}"></textarea>
+                </p>
+                <p class="text-center">
+                    <a id="send_contact" class="btn bg-pink_yellowish text-white hover_btn">{% if lang == 'ru' %}
+                        Отправить{% else %}Send{% endif %}</a>
                 </p>
             </div>
-            <div class="c_form">
-                <h4>{% if lang == 'ru' %}Оставить заявку{% else %}Leave a request{% endif %}</h4>
-                <div id="form_contact">{% csrf_token %}
-                    <p>
-                        <input type="text" name="name" class="c_name" required placeholder="{% if lang == 'ru' %}Имя{% else %}Name{% endif %}">
-                    </p>
-                    <p>
-                        <input type="text" name="phone" class="c_phone" placeholder="{% if lang == 'ru' %}+7 (___) ___-__-__{% else %}+_ (___) ___-__-__{% endif %}">
-                    </p>
-                    <p>
-                        <input type="email" name="email" class="c_email" placeholder="{% if lang == 'ru' %}Email{% else %}Email{% endif %}">
-                    </p>
-                    <p>
-                        <textarea name="message" class="c_message" placeholder="{% if lang == 'ru' %}Текст сообщения{% else %}Message{% endif %}"></textarea>
-                    </p>
-                    <p class="text-center">
-                        <a id="send_contact" class="btn bg-pink_yellowish text-white hover_btn">{% if lang == 'ru' %}Отправить{% else %}Send{% endif %}</a>
-                    </p>
-                </div>
-            </div>
         </div>
-        <div class="col-md-2"></div>
     </div>
-    <a class="bg-pink_yellowish text-white hover_btn contact_close" id="contact_close">&#x2715;</a>
 </div>
 <script type="text/javascript">
     function jqueryLoaded() {

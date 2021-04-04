@@ -1,6 +1,6 @@
 from rest_framework import generics
 
-from db_model.models import Details
+from db_model.models import Partcodes
 from .serializers import DetailsCreateSerialize, DetailsListSerialize
 
 
@@ -10,9 +10,9 @@ class DetailsCreateView(generics.CreateAPIView):
 
 class DetailsListView(generics.ListAPIView):
     serializer_class = DetailsListSerialize
-    queryset = Details.objects.all()
+    queryset = Partcodes.objects.all()
 
 
 class DetailsEditView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DetailsCreateSerialize
-    queryset = Details.objects.all()
+    queryset = Partcodes.objects.all()

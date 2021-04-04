@@ -13,38 +13,13 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container nav_tabs">
-        <a href="/" class="active hover_btn">{% if lang == 'ru' %}Модели{% else %}Models{% endif %}</a>
-        <a href="/supplies/" class="hover_btn">{% if lang == 'ru' %}Расходные материалы{% else %}Consumables{% endif %}</a>
-        <a href="/market/" class="hover_btn">{% if lang == 'ru' %}Магазин{% else %}Market{% endif %}</a>
+    <div class="" id="filter_badge">
     </div>
-    <div class="horizontal-scroll-wrapper">
-        <div class="horizontal-scroll brands">
-            {% csrf_token %}
-            {% for brand in brands %}
-                <div class="brand hover_btn">
-                    <label for="{{ brand.name }}" {% if brand.logotype is not None %}
-                           style="background-image: url('{{ MEDIA_URL }}brands/{{ brand.logotype }}')"
-                    {% else %}
-                           style="background-image: url('{{ MEDIA_URL }}no-image.png'); width: 100%;">
-                    {% endif %}>
-                    <input type="checkbox" id="{{ brand.name }}" name="{{ brand.id }}" value="{{ brand.id }}">
-                    </label>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="row my-2" id="filter_badge">
-    </div>
-    <div class="row mt-3">
-        <div id="filter_model" class="col-lg-3 col-md-4 col-12">
-            <a href="#" class="filter_show active">{% if lang == 'ru' %}Открыть фильтр{% else %}Show filter{% endif %}</a>
-            <a href="#" class="filter_show">{% if lang == 'ru' %}Скрыть фильтр{% else %}Hide filter{% endif %}</a>
-            {% include 'filter/filter.html' %}
-        </div>
-        <div class="col-lg-9 col-md-8 col-12 filter-result">
+    <div class="loading"><img src="{{ MEDIA_URL }}icons/loading_gear.svg" alt="loading" class="loading_gear"></div>
+    <div class="row">
+        <div class="filter-result">
             {#Search#}
-            <div class="input-group w-100 filter_search hover_btn">
+            <div class="filter_search hover_btn">
                 <input type="text" id="filter_search" name="filter_search" aria-label="Close"
                        class="form-control"
                        placeholder="{% if lang == 'ru' %}Поиск по модели{% else %}Search by model{% endif %}">

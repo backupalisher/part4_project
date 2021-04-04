@@ -24,7 +24,12 @@ $(document).ready(function () {
     })
     $pathname = window.location.pathname;
 
-    //Wait for element exist
+    // Toggle language
+    $('#language_select label').click(function () {
+        $('#language_select .custom-select').toggleClass('active')
+    })
+
+    // Wait for element exist
     var waitForEl = function (selector, callback) {
         if (jQuery(selector).length) {
             callback();
@@ -84,6 +89,22 @@ $(document).ready(function () {
         $('.brands').css('height', $('.brands').parent().width())
     })
 
+    // Active ursl
+    $('#filters h2').removeClass('active')
+    $('#filters h2 span').removeClass('active')
+    $('.filter').removeClass('active')
+    if ($pathname.indexOf('market') > 0) {
+        $('#nav_market').parent().addClass('active')
+        $('.filter_market').addClass('active')
+    } else if ($pathname.indexOf('supplies') > 0) {
+        $('#nav_consumables').parent().addClass('active')
+        $('.filter_supplies').addClass('active')
+    } else if ($pathname.indexOf('about') > 0) {
+        $('#nav_about').parent().addClass('active')
+    } else {
+        $('#nav_models').parent().addClass('active')
+        $('.filter_model').addClass('active')
+    }
 })
 
 function getUrlVars() {
@@ -141,7 +162,7 @@ $('.error_result_models_show').click(function () {
     $(this).children('.btn_hide').toggle()
 });
 
-$('#btn-buy').click(function () {
+$('#btn-buy, .hide_contact').click(function () {
     $('.main_overlay').toggleClass('active')
     $('.modal.contact').toggleClass('active')
     $('.c_form').css('display', 'block')

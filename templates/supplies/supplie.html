@@ -145,22 +145,22 @@
 {% include 'modals/contact.html' %}
 {% endblock %}
 
-{% block ajaxjs %}
-    <script type="text/javascript">
-        function jqueryLoaded() {
-            $ajax_script = "{% static 'supplies.js' %}"
-            $.getScript($ajax_script)
-        }
-
-        function checkJquery() {
-            if (window.jQuery) {
-                jqueryLoaded();
-            } else {
-                window.setTimeout(checkJquery, 100);
-            }
-        }
-
-        checkJquery();
-    </script>
+{#{% block ajaxjs %}#}
+{#    <script type="text/javascript">#}
+{#        function jqueryLoaded() {#}
+{#            $ajax_script = "{% static 'supplies.js' %}"#}
+{#            $.getScript($ajax_script)#}
+{#        }#}
+{##}
+{#        function checkJquery() {#}
+{#            if (window.jQuery) {#}
+{#                jqueryLoaded();#}
+{#            } else {#}
+{#                window.setTimeout(checkJquery, 100);#}
+{#            }#}
+{#        }#}
+{##}
+{#        checkJquery();#}
+{#    </script>#}
     {#    <script src="{% static 'model_ajax.js' %}"></script>#}
-{% endblock %}
+{#{% endblock %}#}

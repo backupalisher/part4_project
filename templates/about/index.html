@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    {{ partcode.code }}
+    Part4 | {% if lang == 'en' %}About{% else %} О нас {% endif %}
 {% endblock %}
 
 {% block content %}
-    <h1>О нас</h1>
+    <h1>{% if lang == 'en' %}About{% else %} О нас {% endif %}</h1>
 
 {% endblock %}
 

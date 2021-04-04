@@ -128,7 +128,7 @@ def index_models(request):
             pages = math.ceil(model_count / limit)
             loop.run_until_complete(loop.shutdown_asyncgens())
             loop.close()
-            return render(request, 'main/market.html', {'search_block': True, 'brands': brands,
+            return render(request, 'main/../../../templates/market/market.html', {'search_block': True, 'brands': brands,
                                                         'brand_models': brand_models, 'lang': lang,
                                                         'model_count': model_count, 'page': page, 'pages': range(pages),
                                                         'sfilter': sfilter, 'filter_captions': filter_captions})
@@ -141,7 +141,7 @@ def index_models(request):
             pages = math.ceil(model_count / limit)
             loop.run_until_complete(loop.shutdown_asyncgens())
             loop.close()
-            return render(request, 'main/models.html', {'search_block': True, 'brands': brands,
+            return render(request, 'main/../../../templates/models/models.html', {'search_block': True, 'brands': brands,
                                                         'brand_models': brand_models, 'lang': lang,
                                                         'model_count': model_count, 'page': page, 'pages': range(pages),
                                                         'sfilter': sfilter, 'filter_captions': filter_captions})

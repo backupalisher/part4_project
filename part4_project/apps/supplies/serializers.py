@@ -1,14 +1,14 @@
 from rest_framework import serializers
-from db_model.models import Cartridge
+from db_model.models import Partcodes
 
 
-class CartridgeCreateSerialize(serializers.ModelSerializer):
+class SuppliesCreateSerialize(serializers.ModelSerializer):
     class Meta:
-        model = Cartridge
+        model = Partcodes
         fields = '__all__'
 
 
-class CartridgeListSerialize(serializers.ModelSerializer):
+class SuppliesListSerialize(serializers.ModelSerializer):
     class Meta:
-        model = Cartridge
+        model = Partcodes
         fields = ('id', 'code')

@@ -1,18 +1,18 @@
 from rest_framework import generics
 
-from db_model.models import Cartridge
-from .serializers import CartridgeCreateSerialize, CartridgeListSerialize
+from db_model.models import Partcodes
+from .serializers import SuppliesCreateSerialize, SuppliesListSerialize
 
 
 class SupplieCreateView(generics.CreateAPIView):
-    serializer_class = CartridgeCreateSerialize
+    serializer_class = SuppliesCreateSerialize
 
 
 class SupplieListView(generics.ListAPIView):
-    serializer_class = CartridgeListSerialize
-    queryset = Cartridge.objects.all()
+    serializer_class = SuppliesListSerialize
+    queryset = Partcodes.objects.filter(supplies=True)
 
 
 class SupplieEditView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = CartridgeCreateSerialize
-    queryset = Cartridge.objects.all()
+    serializer_class = SuppliesCreateSerialize
+    queryset = Partcodes.objects.filter(supplies=True)

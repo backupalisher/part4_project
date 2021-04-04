@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    {#    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">#}
     {% block description %}
         <meta name="description" content="{% trans "Description homepage" %}">
     {% endblock %}
@@ -12,9 +13,9 @@
         <meta name="keyword" content="{% trans "Keyword homepage" %}">
     {% endblock %}
     {% compress css %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+        {#        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">#}
         <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.scrollbar.css' %}">
-        <link type="text/x-scss" href="{% static 'scss/style.scss' %}" rel="stylesheet" media="all">
+        <link type="text/x-scss" href="{% static 'scss/main.scss' %}" rel="stylesheet" media="all">
     {% endcompress %}
     <title>
         {% block title %}
@@ -22,103 +23,127 @@
         {% endblock %}
     </title>
 </head>
-<body id="body" class="d-flex flex-column h-100">
-<main class="flex-shrink-0">
-    <div class="wrap">
-        {% block head %}
-            {% block nav %}
-                <div class="header">
-                    <div class="container-fluid d-flex">
-                        <a class="logo hover_text" href="/">
-                            <span>Part4<br><small>Reference system</small></span>
-                        </a>
-                        <form action="/search" method="get" id="search_form_main">
-                            {#                    {% csrf_token %}#}
-                            <div class="input-group" id="search_main">
-                                <input class="form-control hover_btn" type="search" name="s"
-                                       placeholder="{% if lang == 'ru' %}Поиск{% else %}Search{% endif %}" aria-label="Search"
-                                       aria-describedby="button-search">
-                                <button class="btn hover_btn" type="submit" id="button-search">
-                                    <img src="{{ MEDIA_URL }}search_ico.png"></button>
-                            </div>
-                            {#                    <small class="form-text text-muted">#}
-                            {#                        <span class="text-grey">Например:</span> "hp M603dn"#}
-                            {#                    </small>#}
-                        </form>
-                        <div class="right_side">
-                            <div id="toggle-theme" class="hover_btn">
-                                <div class="toggle"></div>
-                                <div class="ico"></div>
-                            </div>
-                            {#                            <a href="#" class="main_menu hover_btn">Sign in</a>#}
-                            <div class="input-group" id="language_select">
-                                <div class="input-group-prepend">
-                                    <label class="" for="language_select">
-                                        <img src="{{ MEDIA_URL }}icons/language_setting_icon.svg">
-                                    </label>
-                                </div>
-                                <form action="{% url 'set_language' %}" method="post">
-                                    {% csrf_token %}
-                                    {% get_current_language as LANGUAGE_CODE %}
-                                    {% get_available_languages as LANGUAGES %}
-                                    {% get_language_info_list for LANGUAGES as languages %}
-
-                                    <input name="next" type="hidden" value="{{ redirect_to }}"/>
-                                    <select class="custom-select" name="language" onchange="this.form.submit()">
-                                        {% for language in languages %}
-                                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}
-                                                    selected="selected"{% endif %}>
-                                                {{ language.code }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {#                    <div class="auth-block">#}
-                {#                        <ul class="float-right navbar-nav">#}
-                {#                            {% if user.is_authenticated %}#}
-                {#                                <li class="nav-item"><a class="nav-link"#}
-                {#                                                        href="{% url 'logout' %}">Выйти {{ user.username }}</a></li>#}
-                {#                            {% else %}#}
-                {#                                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>#}
-                {#                                <li class="nan-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a>#}
-                {#                                </li>#}
-                {#                            {% endif %}#}
-                {#                        </ul>#}
-                {#                        <a id="toggle-theme">Тема</a>#}
-                {#                    </div>#}
-            {% endblock %}
-        {% endblock %}
+<body id="body" class="">
+<div class="grid_main">
+    <aside>
+        <a href="/" class="logotype"></a>
+        <nav id="filters">
+            <h2 class="active"><a href="/" id="nav_models">{% if lang == 'ru' %}Модели{% else %}Models{% endif %}
+                    <span class="material-icons up">arrow_drop_up</span>
+                    <span class="material-icons down">arrow_drop_down</span>
+                </a></h2>
+            <div class="filter filter_model" area-label="models">
+                <a href="#" class="filter_show active">Открыть фильтр</a>
+                <a href="#" class="filter_show">Скрыть фильтр</a>
+                {% include 'filter/filter.html' %}
+            </div>
+            <h2><a href="/supplies/" id="nav_consumables">{% if lang == 'ru' %}Расходные материалы{% else %}
+                    Consumables{% endif %}
+                    <span class="material-icons up">arrow_drop_up</span>
+                    <span class="material-icons down">arrow_drop_down</span>
+                </a></h2>
+            <div class="filter filter_supplies">
+                {% include 'supplies/filter.html' %}
+            </div>
+            <h2><a href="/market/" id="nav_market">{% if lang == 'ru' %}Магазин{% else %}Market{% endif %}
+                    <span class="material-icons up">arrow_drop_up</span>
+                    <span class="material-icons down">arrow_drop_down</span>
+                </a></h2>
+            <div class="filter filter_market"></div>
+            <h2><a href="/about/" id="nav_about">{% if lang == 'ru' %}Информация{% else %}About{% endif %}</a></h2>
+        </nav>
         {% block login %}
             {#            {% include 'main/menu_profile.html' %}#}
         {% endblock login %}
+    </aside>
+    <div class="grid_content">
+        <header>
+            {% block head %}
+                {% block nav %}
+                    <a href="/" class="logo"><img src="{{ MEDIA_URL }}P4.svg" alt="logo"></a>
+                    <div class="form_search">
+                        <form action="/search" method="get" id="search_form_main">
+                            <input class="hover_btn" type="search" name="s"
+                                   placeholder="{% if lang == 'ru' %}Поиск{% else %}Search{% endif %}"
+                                   aria-label="Search"
+                                   aria-describedby="button-search">
+                            <button class="btn hover_btn" type="submit" id="button-search">
+                                <img src="{{ MEDIA_URL }}search_ico.png"></button>
+                        </form>
+                    </div>
+                {% endblock %}
+            {% endblock %}
+        </header>
 
-        <div class="container mt-2 main-content">
+        <main id="main_content">
             {% block breadcrumbs %}
             {% endblock %}
             {% block content %}
                 There is no any content for you
             {% endblock %}
-        </div>
+        </main>
+        <footer>
+            {% block footer %}
+                {% block copyright %}
+                    <p class="text-center">&copy; Part4 | <a href="mailto:info@part4.info" target="_blank">info@part4.info</a>
+                    </p>
+                {% endblock %}
+            {% endblock %}
+        </footer>
     </div>
-</main>
-<footer class="footer mt-auto py-3">
-    {% block footer %}
-        {% block copyright %}
-            <p class="text-center">&copy; Part4 | <a href="mailto:info@part4.info" target="_blank">info@part4.info</a>
-            </p>
-        {% endblock %}
-    {% endblock %}
-</footer>
-<div id="to_up"><img src="{{ MEDIA_URL }}to_up.png" alt="to_up"></div>
+    <div class="right_side">
+        <div class="heading">
+            <div id="toggle-theme" class="hover_btn">
+                <span class="material-icons-outlined light">wb_sunny</span>
+                <span class="material-icons-outlined dark">dark_mode</span>
+            </div>
+            {#                            <a href="#" class="main_menu hover_btn">Sign in</a>#}
+            <div class="input-group" id="language_select">
+                <label class="" for="language_select">
+                    <span class="material-icons-outlined">language</span>
+                </label>
+                <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+
+                    <input name="next" type="hidden" value="{{ redirect_to }}"/>
+                    <select class="custom-select" name="language" onchange="this.form.submit()">
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}
+                                    selected="selected"{% endif %}>
+                                {{ language.code }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+            {#            <div class="auth-block">#}
+            {#                <ul class="float-right navbar-nav">#}
+            {#                    {% if user.is_authenticated %}#}
+            {#                        <li class="nav-item"><a class="nav-link"#}
+            {#                                                href="{% url 'logout' %}">Выйти {{ user.username }}</a></li>#}
+            {#                    {% else %}#}
+            {#                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>#}
+            {#                        <li class="nan-item"><a class="nav-link" href="{% url 'register' %}">Регистрация</a>#}
+            {#                        </li>#}
+            {#                    {% endif %}#}
+            {#                </ul>#}
+            {#                <a id="toggle-theme">Тема</a>#}
+            {#            </div>#}
+        </div>
+        <div>
+
+        </div>
+        <div id="to_up"><img src="{{ MEDIA_URL }}to_up.png" alt="to_up"></div>
+    </div>
+</div>
 {% compress js inline %}
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {#    <script src="{% static 'js/bootstrap.min.js' %}"></script>#}
     <script src="{% static 'js/jquery.scrollbar.min.js' %}"></script>
     <script src="{% static 'js/js.cookie.min.js' %}"></script>
     <script src="{% static 'main.js' %}"></script>

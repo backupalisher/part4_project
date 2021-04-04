@@ -30,11 +30,16 @@ $(document).ready(function () {
 
 
     // Ajax filter
-    if ($('#filter_model').length) {
+    if ($('.filter_model').length) {
         $("#form_filter #reset").click(function () {
+            $("#reset").removeClass('active');
+            $("#filter_badge").removeClass('active').html('');
             $checkboxs = {}
+            $tcheckboxs = {}
             $ranges = {}
+            $tranges = {}
             $radios = {}
+            $tradios = {}
             $brands = []
             $('.brand label').removeClass('checked');
             $('.filter_settings label').removeClass('checked');
@@ -73,11 +78,11 @@ $(document).ready(function () {
                     }
                 });
                 $.each($tranges, function (key, arr) {
-                    $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key+arr[0] + '" type="' + arr[1] + '">'
+                    $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key + arr[0] + '" type="' + arr[1] + '">'
                         + arr[2] + '</div>'
                 });
                 $.each($tradios, function (key, arr) {
-                    $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key+arr[0] + '" type="' + arr[1] + '">' + arr[2] + '</div>'
+                    $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key + arr[0] + '" type="' + arr[1] + '">' + arr[2] + '</div>'
                 });
                 $('#filter_badge').addClass('active').html($inHtml);
                 event.preventDefault();
@@ -121,13 +126,7 @@ $(document).ready(function () {
     $(document).on('click', '.fbadge', function () {
         $key = $(this).attr('key');
         $id = $(this).attr('id').replace($key, '');
-        $type = $(this).attr('type');
-        $title = $(this).text();
-        set_array($key, $id, $type, $title, 'remove');
-        $("input[id=" + $id + "]").prop('checked', false);
-        $("input[id=" + $id + "]").parent().removeClass('checked');
-        $(this).remove();
-        document.getElementById('submit').click();
+        document.getElementById($id).click()
     });
 
     // Filter change
@@ -141,86 +140,104 @@ $(document).ready(function () {
         } else {
             $('#float').css('top', pos - 15 - $('.filter_settings').offset().top).css('display', 'block');
         }
-        $('#filter_model a.btn').removeClass("disabled");
+        $('.filter_model a.btn').removeClass("disabled");
     }
 
     function change_input(el) {
-        switch (el.attr('type')) {
-            case 'checkbox':
-                el.parent().toggleClass('checked');
-                $key = el.attr('name');
-                $value = el.attr('id');
-                $title = el.parent().text().replace(/ +/g, ' ').trim();
-                set_array($key, $value, el.attr('type'), $title, '');
-                break;
-            case 'number':
-                $key = el.attr('name')
-                $value = el.val()
-                $title = el.parent().parent().parent().children('h6').text() + ' ' + el.parent().text().replace(/ +/g, ' ').trim()
-                set_array($key, $value, el.attr('type'), $title, '')
-                break;
-            case 'radio':
-                sname = el.attr("name")
-                _radios = $('input[name~="' + sname + '"]')
-                _checked = false
-                _id0 = _radios[0]['id']
-                _id1 = _radios[1]['id']
-                if ($('input[id~=' + _id0 + ']').parent().hasClass('checked') ||
-                    $('input[id~=' + _id1 + ']').parent().hasClass('checked')) {
-                    $('input[id~=' + _id0 + ']').parent().toggleClass('checked')
-                    $('input[id~=' + _id1 + ']').parent().toggleClass('checked')
-                } else {
-                    el.parent().addClass('checked')
-                }
-                $key = el.attr('name')
-                $value = el.attr('id')
-                $title = el.parent().parent().parent().children('h6').text() + ' ' + el.parent().text().replace(/ +/g, ' ').trim()
-                set_array($key, $value, el.attr('type'), $title, '')
-                break;
+        if (el.parent().parent().hasClass('brand')) {
+            $("#reset").addClass('active')
+            $key = el.attr('name');
+            $value = el.attr('id');
+            $title = el.parent().text().replace(/ +/g, ' ').trim();
+            $.extend($tcheckboxs, {[$key + $value]: [$value, el.attr('type'), $title]})
+            $('#form_filter #float').trigger('click');
+        } else {
+            switch (el.attr('type')) {
+                case 'checkbox':
+                    el.parent().toggleClass('checked');
+                    $key = el.attr('name');
+                    $value = el.attr('id');
+                    $title = el.parent().text().replace(/ +/g, ' ').trim();
+                    set_array($key, $value, el.attr('type'), $title, '');
+                    break;
+                case 'number':
+                    $key = el.attr('name')
+                    $value = el.val()
+                    $title = el.parent().parent().parent().children('h6').text() + ' ' + el.parent().text().replace(/ +/g, ' ').trim()
+                    set_array($key, $value, el.attr('type'), $title, '')
+                    break;
+                case 'radio':
+                    sname = el.attr("name")
+                    _radios = $('input[name~="' + sname + '"]')
+                    _checked = false
+                    _id0 = _radios[0]['id']
+                    _id1 = _radios[1]['id']
+                    if ($('input[id~=' + _id0 + ']').parent().hasClass('checked') ||
+                        $('input[id~=' + _id1 + ']').parent().hasClass('checked')) {
+                        $('input[id~=' + _id0 + ']').parent().toggleClass('checked')
+                        $('input[id~=' + _id1 + ']').parent().toggleClass('checked')
+                    } else {
+                        el.parent().addClass('checked')
+                    }
+                    $key = el.attr('name')
+                    $value = el.attr('id')
+                    $title = el.parent().parent().parent().children('h6').text() + ' ' + el.parent().text().replace(/ +/g, ' ').trim()
+                    set_array($key, $value, el.attr('type'), $title, '')
+                    break;
+            }
         }
         checkDisable(el.offset().top);
     }
 
     function set_array(key, value, type, title, action) {
         console.log(key, value, type, title, action)
+        $("#reset").addClass('active')
+        $("#filter_badge").addClass('active')
         $newelem = {[key]: value}
         switch (type) {
             case 'checkbox':
-                if (Object.getOwnPropertyNames($checkboxs).length === 0) {
-                    $.extend($checkboxs, {[key]: [value]})
-                    $.extend($tcheckboxs, {[key+value]: [value, type, title]})
+                if (action === 'remove') {
+                    delete $checkboxs[key]
+                    delete $tcheckboxs[key + value]
                 } else {
-                    let idx = ''
-                    let index = null
-                    $.each($checkboxs, function (k, v) {
-                        if (key === k) {
-                            idx = k
-                            if (Array.isArray(v)) {
-                                $.each(v, function (i, val) {
-                                    if (val === value) {
-                                        index = i
-                                    }
-                                })
-                            }
-                        }
-                    })
-                    if (idx !== '' && index !== null) {
-                        $checkboxs[idx].splice(index, 1);
-                        delete $tcheckboxs[idx+value];
-                    } else if (idx !== '') {
-                        $checkboxs[idx].push(value)
-                        $.extend($tcheckboxs, {[key+value]: [value, type, title]})
-                    } else {
+                    if (Object.getOwnPropertyNames($checkboxs).length === 0) {
                         $.extend($checkboxs, {[key]: [value]})
-                        $.extend($tcheckboxs, {[key+value]: [value, type, title]})
+                        $.extend($tcheckboxs, {[key + value]: [value, type, title]})
+                    } else {
+                        let idx = ''
+                        let index = null
+                        $.each($checkboxs, function (k, v) {
+                            if (key === k) {
+                                idx = k
+                                if (Array.isArray(v)) {
+                                    $.each(v, function (i, val) {
+                                        if (val === value) {
+                                            index = i
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                        if (idx !== '' && index !== null) {
+                            $checkboxs[idx].splice(index, 1);
+                            delete $tcheckboxs[idx + value];
+                        } else if (idx !== '') {
+                            $checkboxs[idx].push(value)
+                            $.extend($tcheckboxs, {[key + value]: [value, type, title]})
+                        } else {
+                            $.extend($checkboxs, {[key]: [value]})
+                            $.extend($tcheckboxs, {[key + value]: [value, type, title]})
+                        }
                     }
                 }
+
                 $.each($checkboxs, function (k, v) {
                     if (v.length < 1) {
                         delete $checkboxs[k]
-                        delete $tcheckboxs[k+v]
+                        delete $tcheckboxs[k + v]
                     }
                 });
+                // console.log($checkboxs);
                 // console.log($tcheckboxs);
                 break;
             case 'number':
@@ -306,5 +323,6 @@ $(document).ready(function () {
                 // console.log($tradios);
                 break;
         }
+        $('#form_filter #float').trigger('click')
     }
 })
