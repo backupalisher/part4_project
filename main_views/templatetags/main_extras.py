@@ -12,4 +12,3 @@ def cut(value):
         return mask
     except:
         return value
-

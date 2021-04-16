@@ -13,7 +13,7 @@ start_time = datetime.datetime.now()
 
 
 def detail_view(request):
-    return render(request, 'detail/index.html')
+    return render(request, 'partcode/index.html')
 
 
 # добавление веса
@@ -120,7 +120,7 @@ def index(request, partcode_id):
         loop.run_until_complete(loop.shutdown_asyncgens())
         loop.close()
         raise Http404('Страница отсутствует, с id: ' + str(partcode_id))
-    return render(request, 'detail/index.html',
+    return render(request, 'partcode/index.html',
                   {'lang': lang, "vendors": str(list(vendors.values_list())), 'cartridge_options': cartridge_options,
                    'c_models': c_models, 'v_prices': v_prices,
                    'detail_name': detail_name, 'detail_name_ru': detail_name_ru, 'options': options,

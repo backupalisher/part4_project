@@ -11,7 +11,7 @@ function detail_show() {
         detail = toJSON(detail)
         vendors = toJSON(vendors)
         console.log(detail)
-        $inner_html = '<h4><small>detail: </small>' + detail[2] + ' (' + detail[7] + ')</h4><form class="form-floating">' +
+        $inner_html = '<h4><small>partcode: </small>' + detail[2] + ' (' + detail[7] + ')</h4><form class="form-floating">' +
             '<input type="hidden" id="spr_id" value="' + detail[1] + '">' +
             '<div class="form-floating mb-3">' +
             '<input type="text" class="form-control" id="detail_name" value="' + detail[3] + '">' +

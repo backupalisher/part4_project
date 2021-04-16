@@ -7,9 +7,9 @@ from django.db import connections
 from db_model.db_utils import _query
 
 
-# search in details
+# search in partcodes
 @sync_to_async
-def search_detail(sval):
+def search_partcode(sval):
     aval = sval.replace(':', '').split(' ')
     sval = ''
     for val in aval:
@@ -18,7 +18,7 @@ def search_detail(sval):
     with connections['default'].cursor() as c:
         try:
             c.execute("BEGIN")
-            c.callproc('details_search_v1', (sval,))
+            c.callproc('partcode_search', (sval,))
             ar = c.fetchall()
             c.execute("COMMIT")
         finally:
@@ -61,13 +61,12 @@ def search_models(sval):
     sval = '%'
     for val in aval:
         sval += val + '%'
-    return _query(f"SELECT * FROM all_models WHERE trigrams ilike '{sval}'")
+    return _query(f"SELECT * FROM all_models WHERE document @@ websearch_to_tsquery('{sval}') OR trigrams % ('{sval}')")
 
 
 # init search
 async def search_init(sval):
-    async_tasks = [search_detail(sval), search_error(sval), search_cartridge(sval), search_models(sval)]
+    # async_tasks = [search_detail(sval), search_error(sval), search_cartridge(sval), search_models(sval)]
+    async_tasks = [search_partcode(sval), search_error(sval), search_models(sval)]
     results = await asyncio.gather(*async_tasks)
     return results
-
-

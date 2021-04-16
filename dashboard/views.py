@@ -20,7 +20,7 @@ def save_price(price, id, vendor, type, price_id):
             _query(f'INSERT INTO prices (price, model_id, vendor_id) VALUES ({price}, {id}, {vendor}) ;')
         if type == 'partcode':
             _query(f'INSERT INTO prices (price, partcode_id, vendor_id) VALUES ({price}, {id}, {vendor}) ;')
-        if type == 'detail':
+        if type == 'partcode':
             _query(f'INSERT INTO prices (price, detail_id, vendor_id) VALUES ({price}, {id}, {vendor}) ;')
 
 
@@ -259,7 +259,7 @@ def details(request):
                     if int(vals['did']) == int(item[0]):
                         detail = item
                 return render(request, 'dashboard/components/detail_item.html',
-                              {'tab': 'details', 'detail': str(detail), 'partcodes': str(partcodes),
+                              {'tab': 'details', 'partcode': str(detail), 'partcodes': str(partcodes),
                                "vendors": str(list(vendors.values_list()))})
             if vals['action'] == 'save':
                 did = vals['did']
@@ -287,7 +287,7 @@ def details(request):
                 if detail_price != '':
                     if vals['price_id']:
                         price_id = vals['price_id']
-                    save_price(detail_price, did, vendor, 'detail', price_id)
+                    save_price(detail_price, did, vendor, 'partcode', price_id)
 
                 return render(request, 'dashboard/index.html', {'tab': 'details', 'details': details})
     return render(request, 'dashboard/index.html', {'tab': 'details', 'details': details})

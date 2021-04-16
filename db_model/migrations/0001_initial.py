@@ -776,7 +776,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='DetailPrice',
             fields=[
-                ('detail', models.OneToOneField(on_delete=django.db.models.deletion.DO_NOTHING, primary_key=True, serialize=False, to='db_model.Details')),
+                ('partcode', models.OneToOneField(on_delete=django.db.models.deletion.DO_NOTHING, primary_key=True, serialize=False, to='db_model.Details')),
                 ('price', models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True)),
             ],
             options={

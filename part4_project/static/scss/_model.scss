@@ -1,4 +1,4 @@
-.model_head {
+.model_head, {
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: 1em;
@@ -25,42 +25,7 @@
     color: var(--text_headers);
   }
 
-  .table-tech {
-    font-size: 1.6em;
 
-    div {
-      display: grid;
-      grid-template-columns: 15em 1fr;
-      grid-gap: .5em;
-      margin: .2em 0 0 0;
-
-      h4 {
-        font-weight: 500;
-        position: relative;
-        margin: 0;
-
-        &:after {
-          content: '';
-          position: absolute;
-          top: 1em;
-          right: 0;
-          width: 100%;
-          border-bottom: 0.1em dashed var(--hr);
-          z-index: 1;
-        }
-
-        span {
-          padding: 0 .2em 0 0;
-          background-color: var(--bg_section);
-          display: inline-block;
-          height: 100%;
-          position: relative;
-          z-index: 2;
-          line-height: 1.6em;
-        }
-      }
-    }
-  }
 
   .rating {
     display: flex;
@@ -96,16 +61,6 @@
     }
   }
 
-  .btn_price {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-
-    button {
-      color: var(--white);
-      font-size: 2em;
-    }
-  }
 }
 
 .model-content {

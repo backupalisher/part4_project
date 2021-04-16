@@ -8,7 +8,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 from db_model import models
-from functions.main import GetModels as gm, search_init, get_filters, get_all_models, get_partcodes
+from functions.main import GetModels as gm, search_init, get_filters, get_all_models, get_partcodes, get_partcode, \
+    get_supplies
 
 from db_model import *
 from main_views.model_views import model_index
@@ -29,6 +30,7 @@ start_time = datetime.datetime.now()
 def index(request, path):
     lang = request.LANGUAGE_CODE
     brands = models.Brands.objects.filter(logotype__isnull=False)
+    
     base_context = {
         'lang': lang,
         'filter_captions': filter_captions,
@@ -53,8 +55,20 @@ def index(request, path):
         sfilter = get_filters()
         context.update({'sfilter': sfilter})
         return render(request, template, context)
-    elif path.replace('/', '') == 'supplies':
-        template, context = index_supplies(request)
+    elif 'supplies' in path.replace('/', ''):
+        try:
+            partcode_id = int(path.replace('supplies/', ''))
+        except:
+            partcode_id = None
+        template, context = index_supplies(request, partcode_id)
+        context.update(base_context)
+        return render(request, template, context)
+    elif 'partcode' in path:
+        try:
+            partcode_id = int(path.replace('partcode/', ''))
+        except:
+            partcode_id = None
+        template, context = index_partcode(request, partcode_id)
         context.update(base_context)
         return render(request, template, context)
     elif path.replace('/', '') == 'about':
@@ -63,6 +77,8 @@ def index(request, path):
         return render(request, template, context)
     elif path.replace('/', '') == 'search':
         template, context = search(request)
+        sfilter = get_filters()
+        context.update({'sfilter': sfilter})
         context.update(base_context)
         return render(request, template, context)
     else:
@@ -85,15 +101,11 @@ def search(request):
     result = loop.run_until_complete(search_init(s_value))
     pr = result[0]
     er = result[1]
-    cr = result[2]
-    mr = result[3]
-    pr_set = []
-    for x in pr:
-        try:
-            idx = pr_set.index(x)
-        except:
-            pr_set.append(x)
-    return 'main/search.html', {'all_result': pr_set, 'error_result': er, 'cartridge_result': cr, 'model_result': mr}
+    mr = result[2]
+    # print(pr)
+    # print(er)
+    print(mr)
+    return 'main/search.html', {'partcode_result': pr, 'error_result': er, 'model_result': mr}
 
 
 def index_about(request):
@@ -101,8 +113,71 @@ def index_about(request):
     return 'about/index.html', {'title': title}
 
 
-def index_supplies(request):
-    if request.is_ajax():
+def index_partcode(request, partcode_id):
+    partcode = get_partcode(partcode_id)[0]
+    request.session['supplies'] = partcode
+    option_ru = []
+    option_en = []
+    models = []
+    partcodes = []
+    prices = []
+    if partcode[8]:
+        for opt in partcode[8]:
+            if opt:
+                option_ru.append(opt.split('~'))
+    if partcode[9]:
+        for opt in partcode[9]:
+            if opt:
+                option_ru.append(opt.split('~'))
+    if partcode[10]:
+        for m in partcode[10]:
+            if m:
+                models.append(m.split('~'))
+    if partcode[11]:
+        for p in partcode[11]:
+            if p:
+                partcodes.append(p.split('~'))
+    if partcode[12]:
+        for p in partcode[12]:
+            if p:
+                prices.append(p.split('~'))
+    print(partcode)
+    return 'supplies/supplie.html', {'supplie': partcode, 'option_ru': option_ru, 'option_en': option_en,
+                                         'models': models, 'partcodes': partcodes, 'prices': prices}
+
+
+def index_supplies(request, partcode_id):
+    if partcode_id:
+        supplie = get_supplies(partcode_id)[0]
+        request.session['supplies'] = supplie
+        option_ru = []
+        option_en = []
+        models = []
+        partcodes = []
+        prices = []
+        if supplie[8]:
+            for opt in supplie[8]:
+                if opt:
+                    option_ru.append(opt.split('~'))
+        if supplie[9]:
+            for opt in supplie[9]:
+                if opt:
+                    option_ru.append(opt.split('~'))
+        if supplie[10]:
+            for m in supplie[10]:
+                if m:
+                    models.append(m.split('~'))
+        if supplie[11]:
+            for p in supplie[11]:
+                if p:
+                    partcodes.append(p.split('~'))
+        if supplie[12]:
+            for p in supplie[12]:
+                if p:
+                    prices.append(p.split('~'))
+        return 'supplies/supplie.html', {'supplie': supplie, 'option_ru': option_ru, 'option_en': option_en,
+                                         'models': models, 'partcodes': partcodes, 'prices': prices}
+    elif request.is_ajax():
         if request.method == 'POST':
             brand_id = ''
             for bid in json.loads(request.POST['brands']):

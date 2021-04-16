@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% load static mfilters main_extras mathfilters %}
 {% block title %}
-    {% if detail_name_ru != '' and detail_name_ru != None and lang == 'ru' %}
-        {{ detail_name_ru }}
-        {% if detail_name is not None %}({{ detail_name }}){% endif %}
+    {% if partcode.7 is not None and lang != 'ru' %}
+        {{ partcode.7 }}
+    {% elif partcode.8 is not None %}
+        {{ partcode.8 }}
     {% else %}
-        {% if detail_name is not None %}{{ detail_name }}{% else %}{{ detail_name_ru }}{% endif %}
+        {{ partcode.7 }}
     {% endif %}
 {% endblock %}
 {% block description %}
     <meta name="description"
-          content="деталь, {{ detail_name }}, {{ detail_name_ru }}, парт код, {{ partcodes.code }}, модель, {{ model }}, модуль,  {{ module.name_ru }}, {{ module.name }}, {{ detail_desc }}">
+          content="деталь, {{ partcode.7 }}, {{ partcode.8 }}, парт код, {{ partcode.1 }}, модель, {{ partcode.14 }}, модуль">
 {% endblock %}
 {% block keyword %}
-    <meta name="keyword"
-          content="{{ detail_name }}, {{ detail_name_ru }}, {{ module.name_ru }}, {{ module.name }}, part, парт каталог, расходные материалы, ремкомплект, расходные материалы, запчасть, запчасти">
+    <meta name="keyword" content="{{ partcode.7 }}, {{ partcode.8 }}, {{ partcode.1 }}, part, парт каталог,
+                                    расходные материалы, ремкомплект, расходные материалы, запчасть, запчасти">
 {% endblock %}
 {% block content %}
     <div class="card-model detail">
@@ -22,8 +23,8 @@
             <div class="row">
                 <div class="col-sm-auto col-12">
                     <div class="card-image">
-                        {% if images %}
-                            <img src="{{ MEDIA_URL }}{{ images }}"/>
+                        {% if partcode.3 %}
+                            <img src="{{ MEDIA_URL }}{{ partcode.3 }}"/>
                         {% else %}
                             <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;"/>
                         {% endif %}
@@ -122,7 +123,7 @@
                     <div class="tab-content">
                         {% if cartridge_options|length > 0 or subcaptions|length > 0 %}
                             <div class="tab-pane fade show active" id="options">
-                                {% include 'detail/options.html' %}
+                                {% include 'partcode/options.html' %}
                             </div>
                         {% endif %}
                     </div>
@@ -134,25 +135,4 @@
 {% endblock %}
 
 {% block search %}
-{% endblock %}
-
-{% block breadcrumbs %}
-    <div class="container">
-        <div class="row">
-            <nav class="nav-breadcrumb w-100">
-                <ul>
-                    <li class="nav-breadcrumb-item"><a href="/">{% if lang == 'ru' %}Главная{% else %}
-                        Main{% endif %}</a></li>
-                    <li class="nav-breadcrumb-item active">
-                        {% if detail_name_ru != '' and detail_name_ru != None and lang == 'ru' %}
-                            {{ detail_name_ru }}
-                            {% if detail_name is not None %}<small> ({{ detail_name }})</small>{% endif %}
-                        {% else %}
-                        {% if detail_name is not None %}{{ detail_name }}{% else %}{{ detail_name_ru }}{% endif %}
-                        {% endif %}
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
 {% endblock %}

@@ -63,6 +63,14 @@ def get_all_models(limit, offset, target):
     return brand_models
 
 
+def get_supplies(partcode_id):
+    return _query(f"""SELECT * FROM all_supplies WHERE id = {partcode_id};""")
+
+
+def get_partcode(partcode_id):
+    return _query(f"""SELECT * FROM all_partcodes WHERE id = {partcode_id};""")
+
+
 def get_partcodes(target, model_id=None, brand_id=None):
     if model_id:
         return _query(f'SELECT * FROM all_partcodes ORDER BY weight DESC, images;')
@@ -127,7 +135,6 @@ def get_filtered_model(brands, checkboxs, ranges, radios):
     f_sql += f' ORDER BY weight DESC, main_image;'
     brand_models = _query(f_sql)
     return brand_models
-
 
 # async def fpreload(brands, checkboxs, ranges, radios):
 #     tasks = [get_filtered_model(brands, checkboxs, ranges, radios)]

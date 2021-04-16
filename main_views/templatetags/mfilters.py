@@ -23,4 +23,12 @@ def list_item(lst, i):
 
 @register.filter
 def divide(value, arg):
-    return str(round(float(value)/arg, 2))
+    return str(round(float(value) / arg, 2))
+
+
+@register.filter(name='d_split')
+def split(value, key):
+    if value:
+        return value.split(key)
+    else:
+        return None

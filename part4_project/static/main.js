@@ -210,3 +210,33 @@ $('.filter_show').click(function () {
 $(document).on('click','.search_result_model button', function() {
     $('#'+$(this).val()).toggle()
 });
+
+// Show-hide main menu
+$('.btn_menu').click(function () {
+    $('.btn_menu').toggleClass('active');
+    $('.top_menu').toggleClass('active');
+})
+
+// Show hide main search
+$('.btn_search').click(function () {
+    $('.form_search').toggleClass('active');
+})
+
+// Nav's set active
+$(document).ready(function () {
+    $('.nav-item').removeClass('active');
+    if ($pathname.indexOf('model') > 0) {
+        $('.nav-item.models').addClass('active');
+    } else if ($pathname.indexOf('supplie') > 0) {
+        $('.nav-item.consumables').addClass('active');
+    } else if ($pathname.indexOf('market') > 0) {
+        $('.nav-item.market').addClass('active');
+    } else {
+        $('.nav-item.models').addClass('active');
+    }
+})
+
+// Show hide filter
+$('.btn_filter, .btn_close_filter').click(function() {
+    $('aside').toggleClass('active');
+})

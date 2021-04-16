@@ -244,7 +244,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(
             model_name='detailprice',
-            name='detail',
+            name='partcode',
         ),
         migrations.DeleteModel(
             name='DetailStatistics',
