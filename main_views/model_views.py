@@ -49,7 +49,19 @@ def model_index(request, model_id):
     else:
         supplies = []
     if all_options:
-        options, captions = all_options
+        scaptions = []
+        captions = []
+        options, tcatp = all_options
+        for cap in tcatp:
+            for opt in options:
+                if opt[0] == cap:
+                    scaptions.append(cap)
+        scaptions = set(scaptions)
+        for tcap in tcatp:
+            for cap in scaptions:
+                if tcap == cap:
+                    captions.append(tcap)
+        
     else:
         options = []
         captions = []

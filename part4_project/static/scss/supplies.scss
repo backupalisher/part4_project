@@ -208,3 +208,18 @@
     }
   }
 }
+
+@media screen and (max-width: 640px){
+  .supplie {
+    .supplie_head {
+      .supplie_image {
+        width: 12em;
+        height: 12em;
+      }
+    }
+    .supplie_content {
+      grid-template-columns: auto;
+      grid-gap: 1em;
+    }
+  }
+}

@@ -3,6 +3,7 @@
            placeholder="{% if lang == 'ru' %}Поиск по парткодам{% else %}Search by partcodes{% endif %}">
 <div class="parts">
     <div class="parts_module">
+        <span class="smodule visible_mobile">{% if lang == 'ru' %} Модуль: {% else %} Module: {% endif %} &nbsp;<span id='selected_module'></span></span>
         <div class="scrollbar-macosx">
             <div class="tab-inner-scroll">
                 {% for module in modules %}

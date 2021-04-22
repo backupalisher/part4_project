@@ -240,3 +240,13 @@ $(document).ready(function () {
 $('.btn_filter, .btn_close_filter').click(function() {
     $('aside').toggleClass('active');
 })
+
+// Expand modules
+$('.parts_module').click(function() {
+    $(this).toggleClass('active')
+})
+
+$('.module-title').click(function() {
+    $text = $(this).html()
+    $('#selected_module').html($text)
+})

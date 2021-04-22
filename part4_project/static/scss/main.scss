@@ -190,6 +190,7 @@ body {
   background-color: var(--bg_main);
   overflow-x: hidden;
   transition: all .5s ease 0s;
+  margin: 0;
 }
 
 input::-webkit-outer-spin-button,
@@ -544,9 +545,6 @@ aside {
       padding: 0.5em 0.7em 0.2em;
     }
 
-    .radio {
-
-    }
 
     label {
       display: inline-block;
@@ -817,7 +815,7 @@ header {
 }
 
 main {
-  background-color: var(--bg_main);
+  background-color: var(--bg_section);
   padding: 0.5em 1em 1em;
   border-radius: 1em;
   position: relative;
@@ -1070,10 +1068,26 @@ main {
 
 @media all and (max-width: 800px) {
   .card-model-list {
-    background-color: var(--bg_section);
+    background-color: var(--bg_main);
 
     .row {
       grid-template-columns: 1fr;
+    }
+  }
+  .modal {
+    &.contact {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+  .supplies_wrap {
+    .supplies-item_overlay {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
   }
 }
@@ -1097,9 +1111,6 @@ footer {
 .modal {
   display: none;
 
-  .contact {
-
-  }
 }
 
 @media all and (max-width: 1280px) {
@@ -1142,12 +1153,15 @@ footer {
 
 @media all and (max-width: 800px) {
   .grid_main {
-    padding: 0;
+    padding: 0.5em;
   }
-
 }
 
 @media all and (max-width: 640px) {
+  main {
+    padding: 0;
+    background-color: var(--bg_main);
+  }
   .grid_main {
     grid-template-columns: auto;
   }
@@ -1186,6 +1200,29 @@ footer {
       display: block;
     }
   }
+  .table-tech {
+    font-size: 1.3em;
+    word-break: break-word;
+    div {
+      display: flex;
+      flex-direction: column;
+      grid-gap: .1em;
+      h4 {
+        span {
+          line-height: 1.2em;
+        }
+        &:after {
+          display: none;
+        }
+      }
+      p {
+        margin: 0;
+        padding-left: 1em;
+        line-height: 1.2em;
+        color: var(--white_black);
+      }
+    }
+  }
   .top_menu {
     display: none;
     position: absolute;
@@ -1197,16 +1234,44 @@ footer {
     font-size: 2em;
     line-height: 2.4em;
     color: var(--white_black);
+    top: 2em;
 
     &.active {
       display: flex;
       flex-direction: column;
     }
-
-    .material-icons-outlined {
-      margin: 0!important;
-      font-size: 1em;
+    #nav_about {
+      color: var(--white_black);
+      text-decoration: none;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      span {
+        font-size: 1.3em;
+        margin: 0 0.2em 0 0;
+      }
     }
+    #toggle-theme {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      .material-icons-outlined {
+        font-size: 1.3em;
+        margin: 0 0.2em 0 0;
+      }
+    }
+    #language_select {
+      label {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+      }
+      .material-icons-outlined {
+        font-size: 1.3em;
+        margin: 0 0.2em 0 0;
+      }
+    }
+    
   }
   aside {
     .logotype {display: none;}
@@ -1223,7 +1288,6 @@ footer {
         position: absolute;
         top: 0;
         right: 0;
-        background-color: var(--warning);
         color: var(--white);
         z-index: 1;
         width: 2em;

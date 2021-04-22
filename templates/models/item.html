@@ -26,6 +26,7 @@
 {% block content %}
     <div id="model_wrap">
         <div class="model_head">
+            <h3 class="model_title visible_mobile">{{ model_name }}</h3>
             <div class="model_main_image">
                 {% if model_main_image %}
                     <img src="{{ MEDIA_URL }}{{ model_main_image }}" alt="{{ model_name }}"/>
@@ -35,9 +36,22 @@
                     <img src="{{ MEDIA_URL }}no_image.svg" alt="{{ model_name }}" style="width: 100%;"/>
                 {% endif %}
             </div>
+            <div class="rating visible_mobile">
+                {% if lang == 'ru' %}Рейтинг{% else %}Rating{% endif %}
+                <div class="stars">
+                    <span class="material-icons" style="color:#FFED00;">grade</span>
+                    <span class="material-icons">grade</span>
+                    <span class="material-icons">grade</span>
+                    <span class="material-icons">grade</span>
+                    <span class="material-icons">grade</span>
+                </div>
+                {% if model_status %}
+                    <span class="status">{{ model_status }}</span>
+                {% endif %}
+            </div>
             <div class="model_head_content">
-                <h3 class="model_title">{{ model_name }}</h3>
-                <div class="rating">
+                <h3 class="model_title visible_desktop">{{ model_name }}</h3>
+                <div class="rating visible_desktop">
                     {% if lang == 'ru' %}Рейтинг{% else %}Rating{% endif %}
                     <div class="stars">
                         <span class="material-icons" style="color:#FFED00;">grade</span>
@@ -61,6 +75,7 @@
                     {% endfor %}
                 </div>
             </div>
+            
             {% if price %}
                 <div class="price">
                     {% if lang == 'ru' %}Цена: <span>{{ price|d_mask }} &#x20bd;</span>

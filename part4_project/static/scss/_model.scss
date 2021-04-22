@@ -1,4 +1,4 @@
-.model_head, {
+.model_head {
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: 1em;
@@ -253,6 +253,100 @@
         }
         span {
           color: var(--bg_form_input);
+        }
+      }
+    }
+  }
+}
+@media all and (max-width: 640px) {
+  .model_head {
+    grid-template-areas: "title title"
+                        "image techs"
+                        "rating techs"
+                        "price price";
+    grid-template-rows: auto auto 1fr auto;
+    padding: 1.5em 0 0 0;
+    .model_title {
+      grid-area: title;
+    }
+    .model_main_image {
+      grid-area: image;
+      width: 12em;
+      height: 12em;
+    }
+    .rating {
+      grid-area: rating;
+      flex-direction: column;
+    }
+    .model_head_content {
+      grid-area: techs;
+    }
+  }
+  
+  .model-content {
+    .nav-tabs {
+      .nav-link {
+        span:last-child {
+          display: none;
+        }
+      }
+    }
+    .tab-content {
+      padding: 1em 0;
+      .tab-pane .option_item .option_inner h5 span {
+        background-color: var(--bg_main);
+      }
+    }
+    #parts {
+      .parts {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        grid-gap: 1em;
+      }
+      .parts_module {
+        position: relative;
+        height: 0;
+        overflow: hidden;
+        padding-top: 2em;
+        &.active {
+          height: auto;
+        }
+        span.smodule {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-size: 1.2em;
+          line-height: 1.7em;
+          content: 'Выбрать модуль';
+        }
+        &::after {
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-family: 'Material Icons Outlined';
+          content: '\e313';
+          font-size: 1.7em;
+        }
+      }
+      .parts_catalog {
+        max-width: 100%;
+        overflow: hidden;
+
+        .part-item {
+          grid-gap: .4em;
+          tr {
+            display: flex;
+            flex-direction: column;
+            td {
+              font-size: .8em;
+              &:last-child {
+                font-size: .9em;
+                word-break: break-all;
+              }
+            }
+          }
         }
       }
     }
