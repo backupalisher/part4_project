@@ -1,0 +1,114 @@
+{% load static mfilters main_extras mathfilters %}
+<h1> {% if lang == 'ru' %}Корзина{% else %}Cart {% endif %}</h1>
+{% csrf_token %}
+<div class="cart_order">
+    <a href="#" class="btn">{% if lang == 'ru' %}Оформить{% else %}Order {% endif %}</a>
+</div>
+<div class="cart_table">
+    <table>
+        {#        <thead>#}
+        {#            <tr>#}
+        {#                <td>data</td>#}
+        {#                <td>orders</td>#}
+        {#                <td>count</td>#}
+        {#                <td>price</td>#}
+        {#                <td>actions</td>#}
+        {#            </tr>#}
+        {#        </thead>#}
+        <tbody>
+        {% for item in cart_items %}
+            <tr class="cart_item">
+                <td>{{ item.1 }}</td>
+                <td><a href="{% if item.5 %}/partcode/
+                    {{ item.5 }}{% else %}/model/{{ item.6 }}{% endif %}">{{ item.2 }}</a></td>
+                <td class="cart_counter" counts="{{ item.8 }}">
+                    <span class="material-icons-outlined cart_minus" aria-id="{{ item.7 }}">remove</span>
+                    <input type="number" value="{{ item.3 }}" aria-id="{{ item.7 }}">
+                    <span class="material-icons-outlined cart_plus" aria-id="{{ item.7 }}">add</span>
+                </td>
+                <td>{% if lang == 'ru' %}Цена: <span>{{ item.4|d_mask }} &#x20bd;</span>
+                {% else %} Price: <span>${{ item.4|divide:currency|d_mask }} </span> {% endif %}</td>
+                <td>
+                    <span class="material-icons-outlined cart_item_remove" id="{{ item.7 }}">delete</span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="main_overlay"></div>
+<div class="cart_order_modal">
+    <span class="material-icons-outlined cart_modal_close">close</span>
+    <div class="modal_inner">
+        <div class="scrollbar-macosx">
+            <div class="cart_items">
+                {% for item in cart_items %}
+                    <div class="cart_item">
+                        <div>{{ item.2 }}</div>
+                        <div>{{ item.3 }}</div>
+                        <div>{% if lang == 'ru' %}Цена: <span>{{ item.4|d_mask }} &#x20bd;</span>
+                        {% else %} Price: <span>${{ item.4|divide:currency|d_mask }} </span> {% endif %}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="cart_sum">Итого: <span>{% if lang == 'ru' %}<span>{{ cart_summa|d_mask }} &#x20bd;</span>
+        {% else %} Summa: <span>${{ cart_summa|divide:currency|d_mask }} </span> {% endif %}</span></div>
+    </div>
+    <div class="user_modal_data">
+        <form action="" method="post" class="profile-form">
+            <div>
+            <label for="first_name">
+                    <p>{% if lang == 'ru' %}Имя{% else %}First name{% endif %}:</p>
+                    <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="First name" id="first_name">
+                </label>
+            </div>
+            <div>
+                <label for="last_name">
+                    <p>{% if lang == 'ru' %}Фамилия{% else %}Last name{% endif %}:</p>
+                    <input type="text" name="last_name" value="{{ user.last_name }}" placeholder="Last name" id="last_name">
+                </label>
+            </div>
+            <div>
+                <label for="email">
+                    <p>{% if lang == 'ru' %}Email{% else %}Email{% endif %}:</p>
+                    <input type="email" name="email" value="{{ user.email }}" placeholder="Email" id="email">
+                </label>
+            </div>
+            <div>
+                <label for="address">
+                    <p>{% if lang == 'ru' %}Адрес{% else %}Address{% endif %}:</p>
+                    <input type="text" name="address" value="{{ profile.1 }}" placeholder="Address" id="address">
+                </label>
+            </div>
+            <div>
+                <label for="phone">
+                    <p>{% if lang == 'ru' %}Телефон{% else %}Phone{% endif %}:</p>
+                    <input type="tel" name="phone" value="{{ profile.2 }}" placeholder="Phone" id="phone">
+                </label>
+            </div>
+        </form>
+    </div>
+    <div class="modal_btn_block">
+        <a href="" class="btn btn-primary">{% if lang == 'ru' %}Заказать{% else %}Order{% endif %}</a>
+    </div>
+</div>
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function cItemJqueryLoaded() {
+            $cItem_script = "{% static 'cart.js' %}"
+            $.getScript($cItem_script)
+        }
+
+        function cItemCheckJquery() {
+            if (window.jQuery) {
+                cItemJqueryLoaded();
+            } else {
+                window.setTimeout(cItemCheckJquery, 100);
+            }
+        }
+
+        cItemCheckJquery();
+    </script>
+{% endblock %}

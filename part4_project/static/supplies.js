@@ -71,7 +71,7 @@ $('.brands label input').click(function () {
         contentType: "application/x-www-form-urlencoded;charset=utf-8",
         success: function (data) {
             // console.log(data)
-            $(".supplies_wrap").html('').append(
+            $("#supplie_items").html('').append(
                 data
             );
         }

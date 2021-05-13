@@ -26,14 +26,13 @@ sitemaps = {
 }
 urlpatterns = [
                   re_path(r'^i18n/', include('django.conf.urls.i18n')),
-                  path('', include('main_views.urls')),
                   path('404', include('main_views.urls')),
                   path('auth/', include('user_passport.urls')),
                   path('cabinet/', include('user_passport.urls')),
                   path('sendmail/', include('sendmail.urls')),
-                  path('account/', include('accounts.urls')),
                   path('dashboard/', include('dashboard.urls')),
-                  path('accounts/', include('django.contrib.auth.urls')),
+                  path('auth/', include('django.contrib.auth.urls')),
+                  path('', include('main_views.urls')),
                   path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

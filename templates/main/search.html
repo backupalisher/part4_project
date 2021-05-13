@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block title %}
+    Part4 | {% if lang == 'ru' %}Поиск{% else %}Search {% endif %}
+{% endblock %}
 {% load static el_pagination_tags main_extras mfilters %}
 
 {% paginate entries %}
@@ -132,7 +135,7 @@
                                 {% endif %}
                             </div>
                             <div class="desc">
-                                <h2><a href="/supplies/{{ index.2 }}">
+                                <h2><a href="/partcode/{{ index.2 }}">
                                     {% if lang == 'ru' %}
                                         {% if index.4 %} {{ index.4 }} <small>{{ index.3 }}</small>
                                         {% else %} {{ index.3 }} {% endif %}

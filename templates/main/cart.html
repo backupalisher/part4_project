@@ -1,0 +1,30 @@
+{% load static %}
+<div class="cart_icon">
+    {% if cart_count > 0 %}
+        <span class="cart_badge">{{ cart_count }}</span>
+    {% endif %}
+    <a href="/cabinet/?tab=cart"><span class="material-icons-outlined">shopping_cart</span></a>
+</div>
+{#<div class="cart_items">#}
+{#    {% for item in cart_items %}#}
+{#        {{ item }}#}
+{#    {% endfor %}#}
+{#</div>#}
+
+
+{% block ajaxjs %}
+        <script type="text/javascript">
+            function cItemJqueryLoaded() {
+                $cItem_script = "{% static 'cart.js' %}"
+                $.getScript($cItem_script)
+            }
+            function cItemCheckJquery() {
+                if (window.jQuery) {
+                    cItemJqueryLoaded();
+                } else {
+                    window.setTimeout(cItemCheckJquery, 100);
+                }
+            }
+            cItemCheckJquery();
+        </script>
+{% endblock %}

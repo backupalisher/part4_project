@@ -43,6 +43,10 @@ def search(request):
             idx = pr_set.index(x)
         except:
             pr_set.append(x)
+    print(pr_set)
+    print(er)
+    print(cr)
+    print(mr)
     return render(request, 'main/search.html',
                   context={'all_result': pr_set, 'error_result': er, 'cartridge_result': cr, 'model_result': mr,
                            'lang': lang})

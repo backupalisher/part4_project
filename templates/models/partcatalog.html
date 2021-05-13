@@ -46,8 +46,8 @@
                             {% if module.0 == partc.3 %}
                                 <div class="part-item">
                                     <div class="part-item_img">
-                                        {% if partc.13 %}
-                                            <img src="{{ MEDIA_URL }}{{ partc.13 }}" alt="{{ partc.9 }}">
+                                        {% if partc.8 %}
+                                            <img src="{{ MEDIA_URL }}{{ partc.8 }}" alt="{{ partc.9 }}">
                                         {% else %}
                                             <img src="{{ MEDIA_URL }}no_image.svg" alt="{{ partc.9 }}">
                                         {% endif %}
@@ -74,6 +74,12 @@
                                                     </td>
                                                     <td><a href="/partcode/{{ partc.16 }}">{{ partc.5 }}</a></td>
                                                 </tr>
+                                                {% if partc.15 %}
+                                                <tr>
+                                                    <td>{% if lang == 'ru' %}Цена:{% else %} Price: {% endif %}</td>
+                                                    <td class="price">{% if lang == 'ru' %}{{ partc.15|d_mask }} &#x20bd;{% else %}${{ partc.15|divide:currency|d_mask }}{% endif %}</td>
+                                                </tr>
+                                                {% endif %}
                                                 {% if partc.14 is not None %}
                                                     <tr>
                                                         <td>{% if lang == 'ru' %}Цена{% else %}Price{% endif %}:

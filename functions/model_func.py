@@ -94,14 +94,15 @@ def get_model(model_id):
 # Получение данных картриджей
 @sync_to_async
 def get_supplies(model_id):
-    supplies = _query(f"SELECT * FROM partcodes_by_model WHERE id = {model_id} and supplies is true")
-    for idx in range(len(supplies)):
-        supp = list(supplies[idx])
-        supp[4] = list(set(supp[4]))
-        supplies[idx] = tuple(supp)
-        supp_alt = list(supplies[idx])
-        supp_alt[8] = list(set(supp[8]))
-        supplies[idx] = tuple(supp_alt)
+    # supplies = _query(f"SELECT * FROM partcodes_by_model WHERE id = {model_id} and supplies is true")
+    supplies = _query(f"SELECT * FROM all_partcodes WHERE supplies is true AND CAST(analog_models as TEXT) ILIKE '%\"{model_id}~%';")
+    # for idx in range(len(supplies)):
+    #     supp = list(supplies[idx])
+    #     supp[4] = list(set(supp[4]))
+    #     supplies[idx] = tuple(supp)
+    #     supp_alt = list(supplies[idx])
+    #     supp_alt[8] = list(set(supp[8]))
+    #     supplies[idx] = tuple(supp_alt)
     return supplies
 
 

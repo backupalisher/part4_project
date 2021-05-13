@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static brand_extras mfilters main_extras mathfilters %}
 {% block title %}
-    {{ model_name }}
+    Part4 | {{ model_name }}
 {% endblock %}
 {% block description %}
     <meta name="description"
@@ -76,17 +76,21 @@
                 </div>
             </div>
             
-            {% if price %}
+            {% for price in prices %}
                 <div class="price">
-                    {% if lang == 'ru' %}Цена: <span>{{ price|d_mask }} &#x20bd;</span>
-                    {% else %} Price: <span>${{ price|divide:currency|d_mask }} </span> {% endif %}
+                    <p>
+                    {% if lang == 'ru' %}Цена: <span>{{ price.1|d_mask }} &#x20bd;</span>
+                    {% else %} Price: <span>${{ price.1|divide:currency|d_mask }} </span> {% endif %}
+                    </p>
+                    <p>{% if lang == 'ru' %}Доступно: {% else %}Available: {% endif %} <span>{{ price.2 }}</span></p>
                 </div>
                 <div class="btn_price">
-                    <button class="btn hover_btn c_phone" id="btn-buy">
-                        {% if lang == 'ru' %}Купить{% else %}Buy{% endif %}
+                    <button class="btn hover_btn c_phone" id="btn-buy" value="{{ price.3 }}">
+                        <span class="material-icons-outlined">add_shopping_cart</span>
+                        {% if lang == 'ru' %}в корзину{% else %}to cart{% endif %}
                     </button>
                 </div>
-            {% endif %}
+            {% endfor %}
         </div>
         <div class="model-content">
             <div class="nav nav-tabs" id="detailTabs" role="tablist">

@@ -30,7 +30,10 @@ def model_index(request, model_id):
                 options_m.append(optL)
                 if optL[0] == 'Status':
                     model_status = optL[1]
-    price = model[8]
+    prices = []
+    for p in model[8]:
+        if p:
+            prices.append(p.split('~'))
     vendor = model[9]
     if partcatalog:
         modules = partcatalog[0]
@@ -93,11 +96,12 @@ def model_index(request, model_id):
             pass
 
     if model_id:
+        print(supplies)
         return 'models/item.html', {'model_name': model_name, 'model_main_image': model_main_image, 'modules': modules,
                                     'options_m': options_m, 'brand_name': brand_name,
                                     'verrors': verrors, 'model_images': model_images, 'options': options,
                                     'partcatalog': partcatalog, 'captions': captions, 'brand_id': brand_id,
                                     'cur_module': cur_module, 'supplies': supplies, 'tab': tab, 'lang': lang,
-                                    'model_status': model_status, 'price': price, 'vendor': vendor}
+                                    'model_status': model_status, 'prices': prices, 'vendor': vendor}
     else:
         raise Http404('Страница отсутствует, с id: ' + str(model_id))

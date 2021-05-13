@@ -19,40 +19,16 @@
     {% endcompress %}
     <title>
         {% block title %}
-            Part4 |
-            {% if tab == 'profile' %}
-                {% if lang == 'ru' %}Профиль{% else %}Profile {% endif %}
-            {% elif tab == 'cart' %}
-                 {% if lang == 'ru' %}Корзина{% else %}Cart {% endif %}
-             {% elif tab == 'favorite' %}
-                 {% if lang == 'ru' %}Избранное{% else %}Favorite {% endif %}
-             {% endif %}
+            Part4
         {% endblock %}
     </title>
 </head>
-<body id="body" class="cabinet">
+<body id="body" class="auth">
     <div class="container">
-        <div class="grid_wrap">
-            <aside>
-                <a href="/" class="logotype"></a>
-                {% block tabs %}
-                    {% include 'cabinet/menu.html' %}
-                {% endblock %}
-            </aside>
-            <main>
-                {% block content %}
-                     {% if tab == 'profile' %}
-                         {% include 'cabinet/profile.html' %}
-                     {% elif tab == 'cart' %}
-                         <div class="cart_wrap">
-                         {% include 'cabinet/cart.html' %}
-                         </div>
-                     {% elif tab == 'favorite' %}
-                         {% include 'cabinet/favorite.html' %}
-                     {% endif %}
-                {% endblock %}
-            </main>
-        </div>
+    <a href="/" class="logotype"></a>
+    {% block content %}
+        There is no any content for you
+    {% endblock %}
     </div>
 
 {% compress js inline %}
@@ -63,7 +39,6 @@
     <script src="{% static 'js/jquery.scrollbar.min.js' %}"></script>
     <script src="{% static 'js/js.cookie.min.js' %}"></script>
     <script src="{% static 'main.js' %}"></script>
-    <script src="{% static 'cabinet.js' %}"></script>
 {% endcompress %}
 
 {% if debug is not True %}

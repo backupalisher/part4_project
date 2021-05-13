@@ -318,6 +318,7 @@ a {
   width: auto;
   cursor: pointer;
   transition: 0.5s all ease;
+  text-decoration: none;
 }
 .btn:hover {
   transition: 0.5s all ease;
@@ -1317,7 +1318,7 @@ footer a {
 #model_wrap .model-content #parts .parts {
   font-size: 1em;
   display: grid;
-  grid-gap: 2em;
+  grid-gap: 1em;
   grid-template-columns: auto 1fr;
   padding: 1em 0;
 }

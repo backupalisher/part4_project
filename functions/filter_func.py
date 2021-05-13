@@ -17,7 +17,7 @@ def sql_get_range(cid, rmin, rmax):
     if rmax:
         pass
     else:
-        rmax = 1000000
+        rmax = 2000000
     q = f'SELECT * FROM select_id_for_range({cid}, {rmin}, {rmax})'
     rids = _query(q)
     for i, rid in enumerate(rids):
@@ -61,10 +61,6 @@ def get_all_models(limit, offset, target):
             f'SELECT * FROM model_for_filter ORDER BY weight DESC, main_image LIMIT {limit} OFFSET {offset};')
     # print(datetime.datetime.now() - start_time, 'получение всех моделей завершено')
     return brand_models
-
-
-def get_supplies(partcode_id):
-    return _query(f"""SELECT * FROM all_supplies WHERE id = {partcode_id};""")
 
 
 def get_partcode(partcode_id):
@@ -135,6 +131,41 @@ def get_filtered_model(brands, checkboxs, ranges, radios):
     f_sql += f' ORDER BY weight DESC, main_image;'
     brand_models = _query(f_sql)
     return brand_models
+
+
+def add_cart_item(price_id, user_id, date, count):
+    q = f"""UPDATE cart SET count = cart.count + 1 WHERE price_id = {price_id} and user_id = {user_id};
+            INSERT INTO cart (price_id, user_id, date, status, count) 
+            SELECT {price_id}, {user_id}, '{date}', true, {count}
+            WHERE NOT EXISTS (SELECT 1 FROM cart WHERE price_id = {price_id} and user_id = {user_id});"""
+    _query(q)
+    return True
+
+
+def remove_cart_item(price_id, user_id):
+    q = f"""DELETE FROM cart WHERE price_id = {price_id} AND user_id = {user_id}"""
+    _query(q)
+    return True
+
+
+def change_cart_count(price_id, user_id, value):
+    q = ''
+    if value == 'plus':
+        q = f"""UPDATE cart SET count = cart.count + 1 WHERE price_id = {price_id} and user_id = {user_id};"""
+    elif value == 'minus':
+        q = f"""UPDATE cart SET count = cart.count - 1 WHERE price_id = {price_id} and user_id = {user_id};"""
+    _query(q)
+    return True
+
+def select_cart_items(user_id):
+    q = f"""SELECT cart.cart_id, cart.date, concat(ap.code, ' ', ap.name_en, ' ', ap.name_ru, ' ', am.model_name) 
+            orders, cart.count, p.price, p.partcode_id, p.model_id, cart.price_id, p.count as counts FROM cart 
+            LEFT JOIN prices p ON p.id = price_id
+            LEFT JOIN vendors v ON v.id = p.vendor_id
+            LEFT JOIN all_partcodes ap ON ap.id = p.partcode_id
+            LEFT JOIN all_models am ON am.model_id = p.model_id
+            WHERE user_id = {user_id};"""
+    return _query(q)
 
 # async def fpreload(brands, checkboxs, ranges, radios):
 #     tasks = [get_filtered_model(brands, checkboxs, ranges, radios)]

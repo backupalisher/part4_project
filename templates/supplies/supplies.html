@@ -1,37 +1,30 @@
-{% load static %}
-<div class="supplie_search">
-    <input type="text" id="supplie_search" class="form-control hover_btn"
-           placeholder="{% if lang == 'ru' %}найти расходник{% else %}find supplies{% endif %}">
-</div>
-<div class="supplies">
-    <div class="scrollbar-macosx">
-        <div id="supplie_table">
-            <div id="supplie_items"></div>
-            <div id="load_more"></div>
+{% extends 'base.html' %}
+{% load static brand_extras %}
+{% block title %}
+    Part4
+{% endblock %}
+{% block description %}
+    <meta name="description"
+          content="Каталог моделей, характеристики, парт каталог, коды ошибок, расходные материалы, картриджи">
+{% endblock %}
+{% block keyword %}
+    <meta name="keyword"
+          content="характеристики, коды ошибок, принтеров, мфу, part, парт каталог, картриджи, картриджи для принтера, картриджи для принтеров, расходные материалы для оргтехники">
+{% endblock %}
+
+{% block content %}
+    <div class="supplies_wrap">
+        <div class="supplie_search">
+            <input type="text" id="supplie_search" class="form-control hover_btn"
+                   placeholder="{% if lang == 'ru' %}найти расходник{% else %}find supplies{% endif %}">
+        </div>
+        <div class="supplies">
+            <div class="scrollbar-macosx">
+                <div id="supplie_table">
+                    {% include 'supplies/supplie_items.html' %}
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-
-{% block ajaxjs %}
-    <script type="text/javascript">
-        function SupplieJqueryLoaded() {
-            $supplies = "{{ supplies }}"
-            $media_url = "{{ MEDIA_URL }}"
-            $lang = "{{ lang }}"
-            $ajax_script = "{% static 'supplie_ajax.js' %}"
-            $.getScript($ajax_script)
-        }
-
-        function SupplieCheckJquery() {
-            if (window.jQuery) {
-                SupplieJqueryLoaded();
-            } else {
-                window.setTimeout(SupplieCheckJquery, 100);
-            }
-        }
-
-        SupplieCheckJquery();
-    </script>
-    {#    <script src="{% static 'model_ajax.js' %}"></script>#}
 {% endblock %}

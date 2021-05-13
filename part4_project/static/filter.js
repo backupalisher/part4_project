@@ -79,7 +79,7 @@ $(document).ready(function () {
                 });
                 $.each($tranges, function (key, arr) {
                     $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key + arr[0] + '" type="' + arr[1] + '">'
-                        + arr[2] + '</div>'
+                        + arr[0] + ' ' + arr[2] + '</div>'
                 });
                 $.each($tradios, function (key, arr) {
                     $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key + arr[0] + '" type="' + arr[1] + '">' + arr[2] + '</div>'
@@ -126,7 +126,17 @@ $(document).ready(function () {
     $(document).on('click', '.fbadge', function () {
         $key = $(this).attr('key');
         $id = $(this).attr('id').replace($key, '');
-        document.getElementById($id).click()
+        $type = $(this).attr('type');
+        console.log($type, $id, $key)
+        if ($type === 'number') {
+            $(this).remove();
+            document.getElementsByName($key+'min')[0].value = '';
+            document.getElementsByName($key+'max')[0].value = '';
+            delete $ranges[$key]
+            $("#form_filter #float").click();
+        } else {
+            document.getElementById($id).click();
+        }
     });
 
     // Filter change

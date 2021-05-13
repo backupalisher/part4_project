@@ -1,0 +1,10 @@
+{#{% extends 'cabinet/index.html' %}#}
+{#{% load static %}#}
+
+{% block content %}
+    <nav>
+        <h2 class="menu-item {% if tab == 'profile' %}active{% endif %}"><a href="?tab=profile">{% if lang == 'ru' %}Профиль{% else %}Profile{% endif %}</a></h2>
+        <h2 class="menu-item {% if tab == 'cart' %}active{% endif %}"><a href="?tab=cart">{% if lang == 'ru' %}Корзина{% else %}Cart{% endif %}</a></h2>
+        <h2 class="menu-item {% if tab == 'favorite' %}active{% endif %}"><a href="?tab=favorite">{% if lang == 'ru' %}Избранное{% else %}Favorite{% endif %}</a></h2>
+    </nav>
+{% endblock %}

@@ -58,15 +58,15 @@ INSTALLED_APPS = [
     'db_model',
     'search',
     'main_views',
-    'main',
     'user_passport',
-    'detail',
-    'model',
-    'about',
-    'contacts',
-    'brand',
-    'filter',
-    'supplies',
+    # 'main',
+    # 'detail',
+    # 'model',
+    # 'about',
+    # 'contacts',
+    # 'brand',
+    # 'filter',
+    # 'supplies',
     'mathfilters',
 ]
 
@@ -243,6 +243,8 @@ DEFAULT_FILE_STORAGE = 'part4_project.storage_backends.MediaStorage'
 FILE_UPLOAD_HANDLERS = [
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
 ]
+
+GOOGLE_RECAPTCHA_SECRET_KEY = GOOGLE_RECAPTCHA_SECRET_KEY
 
 # LOGGING = {
 #     'version': 1,

@@ -3,13 +3,14 @@ import datetime
 import asyncio
 import json
 import math
+from time import sleep
 
 from django.http import JsonResponse
 from django.shortcuts import render
 
 from db_model import models
-from functions.main import GetModels as gm, search_init, get_filters, get_all_models, get_partcodes, get_partcode, \
-    get_supplies
+from functions.filter_func import add_cart_item, select_cart_items, remove_cart_item
+from functions.main import GetModels as gm, search_init, get_filters, get_all_models, get_partcodes, get_partcode
 
 from db_model import *
 from main_views.model_views import model_index
@@ -30,63 +31,83 @@ start_time = datetime.datetime.now()
 def index(request, path):
     lang = request.LANGUAGE_CODE
     brands = models.Brands.objects.filter(logotype__isnull=False)
-    
+
     base_context = {
         'lang': lang,
         'filter_captions': filter_captions,
         'brands': brands
     }
-    if 'model/' in path:
-        model_id = int(path.replace('model/', ''))
-        template, context = model_index(request, model_id)
+    if 'changecart' in request.POST:
+        template, context = add_to_cart(request)
         context.update(base_context)
         sfilter = get_filters()
         context.update({'sfilter': sfilter})
         return render(request, template, context)
-    if path.replace('/', '') == 'models':
-        template, context = index_models(request)
-        context.update(base_context)
-        sfilter = get_filters()
-        context.update({'sfilter': sfilter})
-        return render(request, template, context)
-    elif path.replace('/', '') == 'market':
-        template, context = index_market(request)
-        context.update(base_context)
-        sfilter = get_filters()
-        context.update({'sfilter': sfilter})
-        return render(request, template, context)
-    elif 'supplies' in path.replace('/', ''):
-        try:
-            partcode_id = int(path.replace('supplies/', ''))
-        except:
-            partcode_id = None
-        template, context = index_supplies(request, partcode_id)
-        context.update(base_context)
-        return render(request, template, context)
-    elif 'partcode' in path:
-        try:
-            partcode_id = int(path.replace('partcode/', ''))
-        except:
-            partcode_id = None
-        template, context = index_partcode(request, partcode_id)
-        context.update(base_context)
-        return render(request, template, context)
-    elif path.replace('/', '') == 'about':
-        template, context = index_about(request)
-        context.update(base_context)
-        return render(request, template, context)
-    elif path.replace('/', '') == 'search':
-        template, context = search(request)
-        sfilter = get_filters()
-        context.update({'sfilter': sfilter})
-        context.update(base_context)
-        return render(request, template, context)
+
     else:
-        template, context = index_models(request)
-        context.update(base_context)
-        sfilter = get_filters()
-        context.update({'sfilter': sfilter})
-        return render(request, template, context)
+        if request.user.is_authenticated:
+            cart_items = select_cart_items(request.user.id)
+            cart_count = len(cart_items)
+            base_context = {
+                'lang': lang,
+                'filter_captions': filter_captions,
+                'brands': brands,
+                'cart_count': cart_count,
+                'cart_items': cart_items
+            }
+        if 'model/' in path:
+            model_id = int(path.replace('model/', ''))
+            template, context = model_index(request, model_id)
+            context.update(base_context)
+            sfilter = get_filters()
+            context.update({'sfilter': sfilter})
+            return render(request, template, context)
+        if path.replace('/', '') == 'models':
+            template, context = index_models(request)
+            context.update(base_context)
+            sfilter = get_filters()
+            context.update({'sfilter': sfilter})
+            return render(request, template, context)
+        elif path.replace('/', '') == 'market':
+            template, context = index_market(request)
+            context.update(base_context)
+            sfilter = get_filters()
+            context.update({'sfilter': sfilter})
+            return render(request, template, context)
+        elif 'supplies' in path.replace('/', ''):
+            try:
+                partcode_id = int(path.replace('supplies/', ''))
+            except:
+                partcode_id = None
+            template, context = index_supplies(request, partcode_id)
+            context.update(base_context)
+            return render(request, template, context)
+        elif 'partcode' in path:
+            try:
+                partcode_id = int(path.replace('partcode/', ''))
+            except:
+                partcode_id = None
+            template, context = index_partcode(request, partcode_id)
+            sfilter = get_filters()
+            context.update({'sfilter': sfilter})
+            context.update(base_context)
+            return render(request, template, context)
+        elif path.replace('/', '') == 'about':
+            template, context = index_about(request)
+            context.update(base_context)
+            return render(request, template, context)
+        elif path.replace('/', '') == 'search':
+            template, context = search(request)
+            sfilter = get_filters()
+            context.update({'sfilter': sfilter})
+            context.update(base_context)
+            return render(request, template, context)
+        else:
+            template, context = index_models(request)
+            context.update(base_context)
+            sfilter = get_filters()
+            context.update({'sfilter': sfilter})
+            return render(request, template, context)
 
 
 def search(request):
@@ -102,9 +123,6 @@ def search(request):
     pr = result[0]
     er = result[1]
     mr = result[2]
-    # print(pr)
-    # print(er)
-    print(mr)
     return 'main/search.html', {'partcode_result': pr, 'error_result': er, 'model_result': mr}
 
 
@@ -121,34 +139,36 @@ def index_partcode(request, partcode_id):
     models = []
     partcodes = []
     prices = []
-    if partcode[8]:
-        for opt in partcode[8]:
-            if opt:
-                option_ru.append(opt.split('~'))
-    if partcode[9]:
-        for opt in partcode[9]:
-            if opt:
-                option_ru.append(opt.split('~'))
     if partcode[10]:
-        for m in partcode[10]:
-            if m:
-                models.append(m.split('~'))
+        for opt in partcode[10]:
+            if opt:
+                option_ru.append(opt.split('~'))
     if partcode[11]:
-        for p in partcode[11]:
+        for opt in partcode[11]:
+            if opt:
+                option_en.append(opt.split('~'))
+    if partcode[14]:
+        for m in partcode[14]:
+            if m:
+                models.append(m.split(':'))
+    if partcode[13]:
+        for p in partcode[13]:
             if p:
                 partcodes.append(p.split('~'))
-    if partcode[12]:
-        for p in partcode[12]:
+    if partcode[15]:
+        for p in partcode[15]:
             if p:
                 prices.append(p.split('~'))
-    print(partcode)
-    return 'supplies/supplie.html', {'supplie': partcode, 'option_ru': option_ru, 'option_en': option_en,
-                                         'models': models, 'partcodes': partcodes, 'prices': prices}
+    b_set = set(tuple(x) for x in models)
+    models = [list(x) for x in b_set]
+
+    return 'partcode/index.html', {'partcode': partcode, 'option_ru': option_ru, 'option_en': option_en,
+                                   'models': models, 'partcodes': partcodes, 'prices': prices}
 
 
 def index_supplies(request, partcode_id):
     if partcode_id:
-        supplie = get_supplies(partcode_id)[0]
+        supplie = get_partcode(partcode_id)[0]
         request.session['supplies'] = supplie
         option_ru = []
         option_en = []
@@ -175,7 +195,7 @@ def index_supplies(request, partcode_id):
             for p in supplie[12]:
                 if p:
                     prices.append(p.split('~'))
-        return 'supplies/supplie.html', {'supplie': supplie, 'option_ru': option_ru, 'option_en': option_en,
+        return 'partcode/index.html', {'supplie': supplie, 'option_ru': option_ru, 'option_en': option_en,
                                          'models': models, 'partcodes': partcodes, 'prices': prices}
     elif request.is_ajax():
         if request.method == 'POST':
@@ -185,13 +205,13 @@ def index_supplies(request, partcode_id):
                     brand_id += str(bid)
                 else:
                     brand_id += ',' + str(bid)
-            supplies = get_partcodes(target='supplies', brand_id=brand_id)
-            request.session['supplies'] = supplies
-            return 'supplies/supplies.html', {'supplies': supplies}
+            partcodes = get_partcodes(target='supplies', brand_id=brand_id)
+            request.session['partcodes'] = partcodes
+            return 'supplies/supplie_items.html', {'partcodes': partcodes}
     else:
-        supplies = get_partcodes('supplies')
-        request.session['supplies'] = supplies
-        return 'supplies/index.html', {'supplies': supplies}
+        partcodes = get_partcodes('supplies')
+        request.session['supplies'] = partcodes
+        return 'supplies/index.html', {'partcodes': partcodes}
 
 
 def index_market(request):
@@ -248,3 +268,16 @@ def index_models(request):
     else:
         brand_models = get_all_models(limit, offset, '')
         return 'main/models.html', {'search_block': True, 'brand_models': brand_models}
+
+
+def add_to_cart(request):
+    if request.POST['action'] == 'add':
+        price_id = request.POST['pid']
+        add_cart_item(price_id, request.user.id, datetime.date.today(), 1)
+    cart_items = select_cart_items(request.user.id)
+    cart_summa = 0
+    for item in cart_items:
+        cart_summa += float(item[4]) * item[3]
+
+    return 'main/cart.html', {'cart_count': len(cart_items), 'cart_items': cart_items, 'cart_summa': cart_summa,
+                              'user': request.user}

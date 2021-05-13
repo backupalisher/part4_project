@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    console.log('main init')
     //Toggle themes
     if (Cookies.get('theme')) {
         if (Cookies.get('theme') === 'light-theme') {
@@ -11,7 +12,8 @@ $(document).ready(function () {
     } else {
         $('#body').addClass('light-theme')
     }
-    $('#toggle-theme').click(function () {
+    $('.toggle-theme').click(function () {
+        console.log('toggle-theme')
         if ($('#body').hasClass('dark-theme')) {
             $('#body').removeClass('dark-theme')
             $('#body').addClass('light-theme')
@@ -84,10 +86,10 @@ $(document).ready(function () {
     // Brands
     // brands$ = $('.brands .brand').length
     // $('.brands').css('height', (brands$ - 1) * 134.5)
-    $('.brands').css('height', $('.brands').parent().width())
-    $( window ).resize(function() {
-        $('.brands').css('height', $('.brands').parent().width())
-    })
+    // $('.brands').css('height', $('.brands').parent().width())
+    // $( window ).resize(function() {
+    //     $('.brands').css('height', $('.brands').parent().width())
+    // })
 
     // Active ursl
     $('#filters h2').removeClass('active')
@@ -98,7 +100,7 @@ $(document).ready(function () {
         $('.filter_market').addClass('active')
     } else if ($pathname.indexOf('supplies') > 0) {
         $('#nav_consumables').parent().addClass('active')
-        $('.filter_supplies').addClass('active')
+        $('.filter_partcodes').addClass('active')
     } else if ($pathname.indexOf('about') > 0) {
         $('#nav_about').parent().addClass('active')
     } else {
@@ -162,12 +164,7 @@ $('.error_result_models_show').click(function () {
     $(this).children('.btn_hide').toggle()
 });
 
-$('#btn-buy, .hide_contact').click(function () {
-    $('.main_overlay').toggleClass('active')
-    $('.modal.contact').toggleClass('active')
-    $('.c_form').css('display', 'block')
-    $(".c_successful").removeClass('active')
-});
+
 $('#send_contact').click(function (event) {
     if ($('.c_name').val().length > 3 && ($('.c_phone').val().length > 8 || $('.c_email').val().length > 4)) {
         console.log(event)
@@ -227,7 +224,7 @@ $(document).ready(function () {
     $('.nav-item').removeClass('active');
     if ($pathname.indexOf('model') > 0) {
         $('.nav-item.models').addClass('active');
-    } else if ($pathname.indexOf('supplie') > 0) {
+    } else if ($pathname.indexOf('partcodes') > 0) {
         $('.nav-item.consumables').addClass('active');
     } else if ($pathname.indexOf('market') > 0) {
         $('.nav-item.market').addClass('active');
@@ -250,3 +247,10 @@ $('.module-title').click(function() {
     $text = $(this).html()
     $('#selected_module').html($text)
 })
+
+
+// Show hide account menu
+$('.account_btn').click(function () {
+    $('.account_menu').toggleClass('active')
+})
+

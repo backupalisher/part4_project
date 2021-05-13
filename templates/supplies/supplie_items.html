@@ -1,38 +1,31 @@
 {% load static %}
-{% for cartridge in cartridges %}
-    <tr>
-        <td>
-            <a href="/supplies/{{ cartridge.0 }}" class="text-yellow">{{ cartridge.1 }}</a>
-        </td>
-        <td>
-            <span class="text-green">{% if cartridge.2 %}{{ cartridge.2 }}{% elif cartridge.3 %}{{ cartridge.3 }}{% endif %}</span>
-        </td>
-        <td style="width: 30%;">
-            <div class="accordion">
-                <a class="btn-collapse text-grey" data-toggle="collapse"
-                        data-target="#collapse{{ forloop.counter0 }}" aria-expanded="false"
-                        aria-controls="collapse{{ forloop.counter0 }}">
-                  Показать модели
-                </a>
-                <div class="collapse" id="collapse{{ forloop.counter0 }}">
-                    <div class="text-white">
-                        {% if cartridge.4 %}
-                            {% for item in cartridge.4 %}
-                                {{ item }}<br>
-                            {% endfor %}
-                        {% endif %}
-                        {% if cartridge.8 %}
-                            {% for item in cartridge.8 %}
-                                {{ item }}<br>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </td>
-    </tr>
-{% endfor %}
-<div id="load_more">Загрузка ...</div>
-<script>
-    $('.collapse').collapse()
-</script>
+
+<div id="partcode_items">
+    <div class="not-found">{% if lang == 'ru' %}Ничего не найдено{% else %}Nothing found{% endif %}</div>
+    <div class="row"></div>
+    <div id="load_more">&nbsp;</div>
+</div>
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function SupplieJqueryLoaded() {
+            $partcodes = "{{ partcodes }}"
+            $media_url = "{{ MEDIA_URL }}"
+            $lang = "{{ lang }}"
+            $ajax_script = "{% static 'supplie_ajax.js' %}"
+            $.getScript($ajax_script)
+            {#$('.collapse').collapse()#}
+        }
+
+        function SupplieCheckJquery() {
+            if (window.jQuery) {
+                SupplieJqueryLoaded();
+            } else {
+                window.setTimeout(SupplieCheckJquery, 100);
+            }
+        }
+
+        SupplieCheckJquery();
+    </script>
+    {#    <script src="{% static 'model_ajax.js' %}"></script>#}
+{% endblock %}
