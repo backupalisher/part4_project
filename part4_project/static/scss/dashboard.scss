@@ -1,8 +1,194 @@
-@import "colors";
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialicons/v81/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+}
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons Outlined';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialiconsoutlined/v51/gok-H7zzDkdnRel8-DQ6KAXJ69wP1tGnf4ZGhUce.woff2) format('woff2');
+}
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons Round';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialiconsround/v50/LDItaoyNOAY6Uewc665JcIzCKsKc_M9flwmP.woff2) format('woff2');
+}
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons Sharp';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialiconssharp/v51/oPWQ_lt5nv4pWNJpghLP75WiFR4kLh3kvmvR.woff2) format('woff2');
+}
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons Two Tone';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialiconstwotone/v49/hESh6WRmNCxEqUmNyh3JDeGxjVVyMg4tHGctNCu0.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-outlined {
+  font-family: 'Material Icons Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-round {
+  font-family: 'Material Icons Round';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-sharp {
+  font-family: 'Material Icons Sharp';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-two-tone {
+  font-family: 'Material Icons Two Tone';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+
+.dark-theme {
+  // Dark colors
+  --primary: #50599B;
+  --accent: #F39A4A;
+  --warning: #F05F52;
+  --apply: #00A745;
+  --white: #FFFFFF;
+  --white_black: #FFFFFF;
+  --blue_gray: #f5f5f5;
+  --rating: #FFED00;
+  --toggle_dl: #FFFFFF;
+  --hr: #42445A;
+  --primary_hover: #5862AB;
+  --placeholder_color: #6A6778;
+  --input-text: #CACDD6;
+  --bg_main: #252330;
+  --bg_section: #2C293A;
+  --text_base: #42445A;
+  --text_headers: #E7EBFE;
+  --text_link: #6CB0FF;
+  --text_filter: #CACDD6;
+  --text_filter_select: #E7EBFE;
+  --text_filter_h: #CACDD6;
+  --text_filter_input_check: #E7EBFE;
+  --border_filter_input: #252330;
+  --bg_filter_input: #42445A;
+  --bg_form_input: #42445A;
+}
+
+.light-theme {
+  // Light colors
+  --primary: #50599B;
+  --accent: #F39A4A;
+  --warning: #F05F52;
+  --apply: #00A745;
+  --white: #FFFFFF;
+  --white_black: #252330;
+  --blue_gray: #FFFFFF;
+  --rating: #FFED00;
+  --toggle_dl: #252330;
+  --hr: #42445A;
+  --primary_hover: #5862AB;
+  --placeholder_color: #CACDD6;
+  --input-text: #6A6778;
+  --bg_main: #F8F9FA;
+  --bg_section: #FFFFFF;
+  --text_base: #42445A;
+  --text_headers: #2C293A;
+  --text_link: #2580F4;
+  --text_filter: #6A6778;
+  --text_filter_select: #2C293A;
+  --text_filter_h: #CACDD6;
+  --text_filter_input_check: #2C293A;
+  --border_filter_input: #CACDD6;
+  --bg_filter_input: #F8F9FA;
+  --bg_form_input: #FFFFFF;
+}
+
+* {
+  outline: none;
+}
 
 .dashboard {
   .sidebar {
-    border-right: 1px solid $grey;
+    border-right: 1px solid var(--text_base);
     li {
       background: none;
       &.active {
@@ -33,7 +219,7 @@
     }
   }
   label {
-    color: $anthracite;
+    color: var(--bg_main);
   }
   #model_detail {
     padding: 1em 0;

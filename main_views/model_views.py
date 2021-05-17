@@ -47,10 +47,6 @@ def model_index(request, model_id):
         verrors = errors
     else:
         verrors = []
-    if supplies:
-        supplies = supplies[0]
-    else:
-        supplies = []
     if all_options:
         scaptions = []
         captions = []
@@ -64,7 +60,6 @@ def model_index(request, model_id):
             for cap in scaptions:
                 if tcap == cap:
                     captions.append(tcap)
-        
     else:
         options = []
         captions = []
@@ -96,7 +91,6 @@ def model_index(request, model_id):
             pass
 
     if model_id:
-        print(supplies)
         return 'models/item.html', {'model_name': model_name, 'model_main_image': model_main_image, 'modules': modules,
                                     'options_m': options_m, 'brand_name': brand_name,
                                     'verrors': verrors, 'model_images': model_images, 'options': options,

@@ -1,5 +1,6 @@
 import asyncio
 import concurrent.futures
+import datetime
 import json
 
 from asgiref.sync import sync_to_async
@@ -7,8 +8,10 @@ from asgiref.sync import sync_to_async
 import db_model.models as models
 from db_model.db_utils import _query
 
-
 # Function for get option ids from range and generate sql parts
+from sendmail.services import send
+
+
 def sql_get_range(cid, rmin, rmax):
     if rmin:
         pass
@@ -52,7 +55,8 @@ def get_all_models(limit, offset, target):
     # print(datetime.datetime.now() - start_time, 'получение всех моделей')
     if target == 'market':
         brand_models = _query(
-            f'SELECT * FROM model_for_filter WHERE price is not null LIMIT {limit} OFFSET {offset} ORDER BY weight DESC, main_image;')
+            f"""SELECT * FROM model_for_filter WHERE prices::text not ilike '%NULL%' ORDER BY weight DESC, main_image 
+            LIMIT {limit} OFFSET {offset};""")
     elif target == 'supplies':
         brand_models = _query(
             f'SELECT * FROM all_partcodes WHERE supplies is null LIMIT {limit} OFFSET {offset};')
@@ -157,15 +161,69 @@ def change_cart_count(price_id, user_id, value):
     _query(q)
     return True
 
-def select_cart_items(user_id):
+
+def select_cart_items(user_id, active):
     q = f"""SELECT cart.cart_id, cart.date, concat(ap.code, ' ', ap.name_en, ' ', ap.name_ru, ' ', am.model_name) 
-            orders, cart.count, p.price, p.partcode_id, p.model_id, cart.price_id, p.count as counts FROM cart 
-            LEFT JOIN prices p ON p.id = price_id
+            orders, cart.count, p.price, p.partcode_id, p.model_id, cart.price_id, p.count as counts, p.vendor_id 
+            FROM cart  LEFT JOIN prices p ON p.id = price_id
             LEFT JOIN vendors v ON v.id = p.vendor_id
             LEFT JOIN all_partcodes ap ON ap.id = p.partcode_id
             LEFT JOIN all_models am ON am.model_id = p.model_id
-            WHERE user_id = {user_id};"""
+            WHERE user_id = {user_id} AND status = {active};"""
     return _query(q)
+
+
+def get_orders(request):
+    orders = []
+    cart_history = _query(f"""SELECT cart.cart_id, cart.date, concat(ap.code, ' ', ap.name_en, ' ', ap.name_ru, ' ', am.model_name) 
+            orders, cart.count, cart.price, cart.status, cart.partcode_id, cart.model_id FROM cart_history cart
+            LEFT JOIN vendors v ON v.id = cart.vendors_id
+            LEFT JOIN all_partcodes ap ON ap.id = cart.partcode_id
+            LEFT JOIN all_models am ON am.model_id = cart.model_id
+            WHERE user_id = {request.user.id};""")
+    ors = _query(f'SELECT * FROM orders WHERE orders.user_id = {request.user.id};')
+    for order in ors:
+        hists = []
+        total = 0
+        for hist in cart_history:
+            if hist[0] in order[4]:
+                total += total + float(hist[4])
+                hists.append({
+                    'date': hist[1],
+                    'orders': hist[2],
+                    'count': hist[3],
+                    'price': hist[4],
+                    'status': hist[5],
+                    'partcode_id': hist[6],
+                    'model_id': hist[7]
+                })
+        if len(hists) > 0:
+            o_item = {'order_num': order[0], 'address': order[2], 'phone': order[3], 'status': order[5],
+                      'cart_history': hists, 'total': total}
+            orders.append(o_item)
+    return orders
+
+
+def order_cart(request):
+    if 'cart_items' in request.POST:
+        items = []
+        for item in json.loads(request.POST['cart_items']):
+            items.append(item['cart_id'])
+            model_id = 'null'
+            partcode_id = 'null'
+            if item['model_id']:
+                model_id = item['model_id']
+            if item['partcode_id']:
+                partcode_id = item['partcode_id']
+            _query(f"""INSERT INTO cart_history(cart_id, date, status, count, user_id, price, model_id, partcode_id, 
+            vendors_id) VALUES ({item['cart_id']}, '{datetime.datetime.now()}', 'new', {item['count']}, 
+            {request.user.id}, {item['price']}, {model_id}, {partcode_id}, {item['vendor_id']})""")
+        order_q = f"""INSERT INTO orders(user_id, address, phone, cart_id, status) VALUES ({request.user.id}, 
+        '{request.POST['address']}', '{request.POST['phone']}', '{items}', 'new') RETURNING ID"""
+        order = _query(order_q)[0][0]
+        print(order)
+        # send(request, order)
+        return order
 
 # async def fpreload(brands, checkboxs, ranges, radios):
 #     tasks = [get_filtered_model(brands, checkboxs, ranges, radios)]

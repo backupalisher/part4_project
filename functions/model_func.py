@@ -95,7 +95,8 @@ def get_model(model_id):
 @sync_to_async
 def get_supplies(model_id):
     # supplies = _query(f"SELECT * FROM partcodes_by_model WHERE id = {model_id} and supplies is true")
-    supplies = _query(f"SELECT * FROM all_partcodes WHERE supplies is true AND CAST(analog_models as TEXT) ILIKE '%\"{model_id}~%';")
+    supplies = _query(f"""SELECT ap.* FROM models m LEFT JOIN link_model_supplies lms ON lms.model_id = m.id
+                    LEFT JOIN all_partcodes ap ON ap.id = lms.supplies_id WHERE m.id = {model_id}""")
     # for idx in range(len(supplies)):
     #     supp = list(supplies[idx])
     #     supp[4] = list(set(supp[4]))

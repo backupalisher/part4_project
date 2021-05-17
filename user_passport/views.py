@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login as auth_login, logout
 
-from functions.filter_func import select_cart_items, remove_cart_item, change_cart_count
+from functions.filter_func import select_cart_items, remove_cart_item, change_cart_count, order_cart, get_orders
 from user_passport.functions import get_profile, save_profile
 
 
@@ -11,6 +11,7 @@ def cabinet(request):
     if not request.user.is_authenticated:
         return redirect('/auth/login/')
     else:
+        order = None
         if request.POST and 'csrfmiddlewaretoken' in request.POST:
             user = User.objects.get(username=request.user.username)
             user.first_name = request.POST['first_name']
@@ -27,9 +28,12 @@ def cabinet(request):
                 remove_cart_item(request.POST['pid'], request.user.id)
             if request.POST['action'] == 'count':
                 change_cart_count(request.POST['pid'], request.user.id, request.POST['value'])
-        cart_items = select_cart_items(request.user.id)
+        if 'order' in request.POST:
+            order = order_cart(request)
+        cart_items = select_cart_items(request.user.id, 'true')
         cart_count = len(cart_items)
         cart_summa = 0
+        orders = get_orders(request)
         for item in cart_items:
             cart_summa += float(item[4]) * item[3]
         profile = get_profile(request.user)[0]
@@ -39,29 +43,32 @@ def cabinet(request):
             'cart_items': cart_items,
             'cart_summa': cart_summa,
             'user': request.user,
-            'profile': profile
+            'profile': profile,
+            'order': order,
+            'orders': orders
         }
 
         if 'tab' in request.GET:
             if 'profile' in request.GET['tab']:
                 context.update({'tab': 'profile'})
                 return render(request, 'cabinet/index.html', context)
-            elif 'cart' in request.GET['tab']:
+            elif 'favorite' in request.GET['tab']:
+                context.update({'tab': 'favorite'})
+                return render(request, 'cabinet/index.html', context)
+            else:
                 if request.is_ajax():
                     context.update({'tab': 'cart'})
                     return render(request, 'cabinet/cart.html', context)
                 else:
                     context.update({'tab': 'cart'})
                     return render(request, 'cabinet/index.html', context)
-            elif 'favorite' in request.GET['tab']:
-                context.update({'tab': 'favorite'})
-                return render(request, 'cabinet/index.html', context)
+        else:
+            if request.is_ajax():
+                context.update({'tab': 'cart'})
+                return render(request, 'cabinet/cart.html', context)
             else:
                 context.update({'tab': 'cart'})
                 return render(request, 'cabinet/index.html', context)
-        else:
-            context.update({'tab': 'cart'})
-            return render(request, 'cabinet/index.html', context)
 
 
 def login(request):

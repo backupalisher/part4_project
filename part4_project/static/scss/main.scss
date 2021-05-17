@@ -317,7 +317,7 @@ a {
   .material-icons-outlined {
     cursor: pointer;
     font-size: 3.2em;
-    color: var(--text_link);
+    color: var(--toggle_dl);
     margin: 0 0.3em 0 0;
   }
 
@@ -504,7 +504,7 @@ a {
 input {
   border: 1px solid var(--text_base);
   background-color: var(--bg_main);
-  width: 5em;
+  width: auto;
   padding: 0.25em 0.3em;
 }
 
@@ -1017,7 +1017,11 @@ main {
           font-size: 1.14em;
           line-height: 1.3em;
         }
-
+        .model_price {
+          margin: .4em 0 0 0;
+          font-size: 1.2em;
+          color: var(--accent);
+        }
         .status {
           color: var(--accent);
         }
@@ -1358,7 +1362,7 @@ footer {
         margin: 0 0.2em 0 0;
       }
     }
-    #language_select {
+    .material-icons-outlined {
       label {
         display: flex;
         justify-content: start;
@@ -1430,5 +1434,6 @@ footer {
 }
 
 @import "partcodes.scss";
+@import "supplies.scss";
 @import "auth.scss";
 @import "cabinet.scss";

@@ -40,6 +40,7 @@
                 {% endblock %}
             </aside>
             <main>
+                <a href="/" class="close_window"><span class="material-icons-outlined cart_modal_close">close</span></a>
                 {% block content %}
                      {% if tab == 'profile' %}
                          {% include 'cabinet/profile.html' %}

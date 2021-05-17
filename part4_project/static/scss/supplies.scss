@@ -1,0 +1,10 @@
+.supplies_items {
+  display: grid;
+  grid-row-gap: 1em;
+  grid-column-gap: 2em;
+  grid-template-columns: auto 1fr;
+  .supplies_title {
+    font-size: 1.4em;
+  }
+
+}

@@ -46,7 +46,7 @@ def index(request, path):
 
     else:
         if request.user.is_authenticated:
-            cart_items = select_cart_items(request.user.id)
+            cart_items = select_cart_items(request.user.id, 'true')
             cart_count = len(cart_items)
             base_context = {
                 'lang': lang,
@@ -134,6 +134,7 @@ def index_about(request):
 def index_partcode(request, partcode_id):
     partcode = get_partcode(partcode_id)[0]
     request.session['supplies'] = partcode
+    print(partcode)
     option_ru = []
     option_en = []
     models = []
@@ -147,6 +148,10 @@ def index_partcode(request, partcode_id):
         for opt in partcode[11]:
             if opt:
                 option_en.append(opt.split('~'))
+    if partcode[12]:
+        for m in partcode[12]:
+            if m:
+                models.append(m.split('~'))
     if partcode[14]:
         for m in partcode[14]:
             if m:
@@ -223,6 +228,8 @@ def index_market(request):
     offset = 24 * page
     brand_models = get_all_models(limit, offset, 'market')
     request.session['brand_models'] = brand_models
+    for model in brand_models:
+        model[8][0] = model[8][0].split('~')[1]
     if brand_models:
         model_count = len(brand_models)
     else:
@@ -243,7 +250,6 @@ def index_models(request):
 
     if request.is_ajax():
         if request.method == 'POST':
-            print(request.POST)
             if dict(request.POST.lists())['reset'][0] and 'true' in dict(request.POST.lists())['reset'][0]:
                 brand_models = get_all_models(limit, offset, '')
                 model_count = len(brand_models)

@@ -41,6 +41,7 @@ if ($('.card-model-list').length) {
 function show_models(models, media_url, page, count) {
     for (let i = page * count; i < (page + 1) * count; i++) {
         if (models[i]) {
+            console.log(models[i][8][0])
             $priced = ''
             $desc = ''
             if (models[i][3] !== "") {
@@ -48,11 +49,11 @@ function show_models(models, media_url, page, count) {
             } else {
                 $mstyle = 'style="background-image:url(\'' + media_url + 'no_image.svg\'); background-size: 80%;"'
             }
-            if (models[i][8]) {
+            if (models[i][8][0]) {
                 if (lang === 'ru') {
-                    $priced = '<p class="model_price">' + models[i][7] + ' &#x20bd;</p>'
+                    $priced = '<p class="model_price">' + models[i][8][0] + ' &#x20bd;</p>'
                 } else {
-                    $priced = '<p class="model_price">$' + Math.round(parseInt(models[i][7], 10) / parseInt(currency, 10)) + '</p>'
+                    $priced = '<p class="model_price">$' + Math.round(parseInt(models[i][8][0], 10) / parseInt(currency, 10)) + '</p>'
                 }
             }
             if (models[i][10]) {
@@ -75,7 +76,7 @@ function show_models(models, media_url, page, count) {
                     '<a href="/model/' + models[i][0] + '" class="card_model_link">' +
                     '<div class="card-image" ' + $mstyle + '></div>' +
                     '<div class="card-desc">' +
-                    '<h4>' + models[i][1] + '</h4>' + $desc +'</div></a></div>'
+                    '<h4>' + models[i][1] + '</h4>' + $desc + $priced + '</div></a></div>'
 
             $('.card-model-list .row').append($html)
         }

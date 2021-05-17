@@ -2,23 +2,19 @@
 <h1> {% if lang == 'ru' %}Корзина{% else %}Cart {% endif %}</h1>
 {% csrf_token %}
 <div class="cart_order">
-    <a href="#" class="btn">{% if lang == 'ru' %}Оформить{% else %}Order {% endif %}</a>
+    {% if cart_items|length > 0 %}
+        <a href="#" class="btn">{% if lang == 'ru' %}Оформить{% else %}Order {% endif %}</a>
+    {% endif %}
 </div>
 <div class="cart_table">
+    {% if order %}
+        <h2 class="order_notify">Ваш заказ № {{ order }} сформирован и передан на обработку</h2>
+    {% endif %}
     <table>
-        {#        <thead>#}
-        {#            <tr>#}
-        {#                <td>data</td>#}
-        {#                <td>orders</td>#}
-        {#                <td>count</td>#}
-        {#                <td>price</td>#}
-        {#                <td>actions</td>#}
-        {#            </tr>#}
-        {#        </thead>#}
         <tbody>
         {% for item in cart_items %}
             <tr class="cart_item">
-                <td>{{ item.1 }}</td>
+{#                <td>{{ item.1 }}</td>#}
                 <td><a href="{% if item.5 %}/partcode/
                     {{ item.5 }}{% else %}/model/{{ item.6 }}{% endif %}">{{ item.2 }}</a></td>
                 <td class="cart_counter" counts="{{ item.8 }}">
@@ -31,11 +27,59 @@
                 <td>
                     <span class="material-icons-outlined cart_item_remove" id="{{ item.7 }}">delete</span>
                 </td>
+
             </tr>
         {% endfor %}
+        <tr>
+            <td></td>
+            <td style="text-align: right">{% if lang == 'ru' %}Итого: {% else %}Total: {% endif %}</td>
+            <td class="order_total">{% if lang == 'ru' %}{{ cart_summa|d_mask }}  &#x20bd;{% else %} ${{ cart_summa|divide:currency|d_mask }}{% endif %}</td>
+            <td></td>
+        </tr>
         </tbody>
     </table>
 </div>
+
+{% if orders|length > 0 %}
+    <h2 class="order_title">{% if lang == 'ru' %}Заказы:{% else %}Orders:{% endif %}</h2>
+    {% for order in orders %}
+        <div class="order_item">
+            <div class="order_info">
+                {% if lang == 'ru' %}
+                    Заказ № {{ order.order_num }} от {{ order.cart_history.0.date }}
+                    <br>адрес {{ order.address }} <br>телефон {{ order.phone }}
+                    <span class="order_status">текущий статус: {{ order.status }}</span>
+                {% else %}
+                    Order # {{ order.order_num }} from {{ order.cart_history.0.date }}
+                    <br>to {{ order.address }} <br>phone {{ order.phone }}
+                    <span class="order_status">current status: {{ order.status }}</span>
+                {% endif %}
+            </div>
+            <div class="cart_table">
+                <table>
+                    <tbody>
+                    {% for item in order.cart_history %}
+                        <tr class="cart_item">
+                            <td><a href="{% if item.partcode_id %}/partcode/
+                                {{ item.partcode_id }}{% else %}/model/{{ item.model_id }}{% endif %}">{{ item.orders }}</a>
+                            </td>
+                            <td>{{ item.count }}</td>
+                            <td>{% if lang == 'ru' %}Цена: <span>{{ item.price|d_mask }} &#x20bd;</span>
+                            {% else %} Price: <span>${{ item.price|divide:currency|d_mask }} </span> {% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td>{% if lang == 'ru' %}Итого: {% else %}Total: {% endif %}</td>
+                        <td class="order_total">{% if lang == 'ru' %}{{ order.total|d_mask }}  &#x20bd;{% else %} ${{ order.total|divide:currency|d_mask }}{% endif %}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endif %}
 
 <div class="main_overlay"></div>
 <div class="cart_order_modal">
@@ -53,21 +97,23 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="cart_sum">Итого: <span>{% if lang == 'ru' %}<span>{{ cart_summa|d_mask }} &#x20bd;</span>
-        {% else %} Summa: <span>${{ cart_summa|divide:currency|d_mask }} </span> {% endif %}</span></div>
+        <div class="cart_sum">{% if lang == 'ru' %}Итого: <span>{{ cart_summa|d_mask }} &#x20bd;</span>
+        {% else %} Summa: <span>${{ cart_summa|divide:currency|d_mask }} </span> {% endif %}</div>
     </div>
     <div class="user_modal_data">
         <form action="" method="post" class="profile-form">
             <div>
-            <label for="first_name">
+                <label for="first_name">
                     <p>{% if lang == 'ru' %}Имя{% else %}First name{% endif %}:</p>
-                    <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="First name" id="first_name">
+                    <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="First name"
+                           id="first_name">
                 </label>
             </div>
             <div>
                 <label for="last_name">
                     <p>{% if lang == 'ru' %}Фамилия{% else %}Last name{% endif %}:</p>
-                    <input type="text" name="last_name" value="{{ user.last_name }}" placeholder="Last name" id="last_name">
+                    <input type="text" name="last_name" value="{{ user.last_name }}" placeholder="Last name"
+                           id="last_name">
                 </label>
             </div>
             <div>
@@ -91,13 +137,14 @@
         </form>
     </div>
     <div class="modal_btn_block">
-        <a href="" class="btn btn-primary">{% if lang == 'ru' %}Заказать{% else %}Order{% endif %}</a>
+        <a class="btn btn-primary" id="cart_order">{% if lang == 'ru' %}Заказать{% else %}Order{% endif %}</a>
     </div>
 </div>
 {% block ajaxjs %}
     <script type="text/javascript">
         function cItemJqueryLoaded() {
             $cItem_script = "{% static 'cart.js' %}"
+            $cart_items = "{{ cart_items }}"
             $.getScript($cItem_script)
         }
 

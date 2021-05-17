@@ -1,4 +1,5 @@
 .cabinet {
+  position: relative;
   .grid_wrap {
     display: grid;
     grid-gap: 2em;
@@ -11,6 +12,14 @@
     height: 4.2em;
     display: block;
     margin: 0 auto 3em;
+  }
+
+  .close_window {
+    position: absolute;
+    top: -4em;
+    right: 1em;
+    font-size: 2em;
+    color: var(--white_black);
   }
 
   aside {
@@ -124,6 +133,10 @@
   }
   .cart_table {
     width: 100%;
+    .order_notify {
+      color: var(--accent);
+      font-size: 1.8em;
+    }
     table {
       width: 100%;
       color: var(--text_headers);
@@ -168,6 +181,28 @@
     }
   }
 }
+
+.order_title {
+  margin: 3em 0 1em 0;
+  font-size: 2em;
+}
+.order_item {
+  margin: 2em 0 0 0;
+  .order_info {
+    font-size: 1.6em;
+    padding: 0 0 0.5em 0;
+
+    .order_status {
+      color: var(--accent);
+      float: right;
+    }
+  }
+}
+.order_total {
+  color: var(--accent);
+  font-size: 1.8em!important;
+}
+
 .cart_order_modal {
   position: fixed;
   top: 10%;
@@ -201,7 +236,7 @@
     }
   }
   .cart_items {
-    width: 100%;
+    width: 99%;
     color: var(--text_headers);
     border: 1px solid var(--bg_filter_input);
     border-radius: .3em;
@@ -218,6 +253,7 @@
     justify-content: flex-end;
     font-size: 1.6em;
     line-height: 5em;
+    width: 99%;
     span {
       font-size: 1.5em;
       color: var(--accent);

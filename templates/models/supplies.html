@@ -1,25 +1,17 @@
 {% load static mfilters %}
-<div class="table-responsive supplies">
-    <div class="row">
-        <div class="col-md-3 col-12">
-            <h6>{% if lang == 'ru' %}Парткод{% else %}Partcode{% endif %}</h6>
-            {% for item in supplies %}
-                <div class="py-1"><a href="/supplies/{{ item.0 }}">{{ item.1 }}</a></div>
-            {% endfor %}
-        </div>
-        <div class="col">
-            <h6>{% if lang == 'ru' %}Название{% else %}Title{% endif %}</h6>
-            {% for item in supplies %}
-                <div class="py-1">
+<div class="supplies_items">
+        <h4 class="supplies_title">{% if lang == 'ru' %}Парткод{% else %}Partcode{% endif %}</h4>
+        <h4 class="supplies_title">{% if lang == 'ru' %}Название{% else %}Title{% endif %}</h4>
+        {% for item in supplies %}
+            <div class="supplies_code"><a href="/partcode/{{ item.0 }}">{{ item.1 }}</a></div>
+            <div class="supplies_name">
                 <span>
                     {% if lang == 'ru' %}
-                        {% if item.3 %}{{ item.3 }}{% elif item.2 %}{{ item.2 }}{% endif %}
+                        {% if item.17 %}{{ item.17 }}{% elif item.16 %}{{ item.16 }}{% endif %}
                     {% else %}
-                        {% if item.2 %}{{ item.2 }}{% elif item.3 %}{{ item.3 }}{% endif %}
+                        {% if item.16 %}{{ item.16 }}{% elif item.17 %}{{ item.17 }}{% endif %}
                     {% endif %}
                 </span>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
+            </div>
+        {% endfor %}
 </div>
