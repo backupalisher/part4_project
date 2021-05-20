@@ -1,4 +1,4 @@
-$('.nav-link').click(function (e) {
+$('#model_wrap .nav-link').click(function (e) {
     e.preventDefault()
     $area = $(this).attr('aria-controls')
     $('.nav-link').removeClass('active')
