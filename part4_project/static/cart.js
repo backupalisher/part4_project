@@ -7,7 +7,7 @@ $('#btn-buy, .hide_contact').click(function () {
 });
 */
 
-if ($cart_items.length > 0) {
+if (typeof $cart_items !== 'undefined' && $cart_items.length > 0) {
     $cart_items = $cart_items.replace(/&#x27;/g, "'").replace(/'/g, '"').replace(/\(/g, '[').replace(/\)/g, ']').replace(/None/g, '""').replace(/\n/g, '').replace(/Decimal/g, '').replace(/datetime.date/g, '')
     $cart_items = JSON.parse($cart_items)
 }

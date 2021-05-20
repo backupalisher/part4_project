@@ -79,11 +79,11 @@ def get_partcodes(target, model_id=None, brand_id=None):
     elif target == 'supplies':
         if brand_id:
             return _query(f"""SELECT id, code, article_code, images, description, name_en, name_ru, image, 
-            description_en, description_ru, brand_id, brand, models 
+            description_en, description_ru, brand_id, brand, analog_models 
             FROM all_partcodes WHERE supplies is not null and brand_id in ({brand_id}) ORDER BY weight DESC, images;""")
         else:
             return _query(f"""SELECT id, code, article_code, images, description, name_en, name_ru, image, 
-            description_en, description_ru, brand_id, brand, models 
+            description_en, description_ru, brand_id, brand, analog_models 
             FROM all_partcodes WHERE supplies is not null ORDER BY weight DESC, images;""")
     else:
         return _query(f'SELECT * FROM all_partcodes ORDER BY weight DESC, images;')

@@ -226,6 +226,7 @@ class Prices(models.Model):
     usage_status = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
     images = models.TextField(blank=True, null=True)
+    count = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False

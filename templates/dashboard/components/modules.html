@@ -4,15 +4,15 @@
     <div class="row">
         <div class="col-auto">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="search_details" placeholder="">
-              <label for="search_details">Details:</label>
+              <input type="text" class="form-control" id="search_modules" placeholder="">
+              <label for="search_modules">Modules:</label>
             </div>
             <div class="scrollbar-macosx">
-                <div class="" id="details_list"></div>
+                <div class="" id="modules_list"></div>
             </div>
         </div>
         <div class="col">
-            <div id="detail_item"></div>
+            <div id="module_item"></div>
         </div>
     </div>
 </div>
@@ -21,8 +21,8 @@
 {% block ajaxjs %}
     <script type="text/javascript">
         function DetailsLoaded() {
-            details = "{{ details }}"
-            $ajax_script = "{% static 'dashboard/details.js' %}"
+            modules = "{{ modules }}"
+            $ajax_script = "{% static 'dashboard/modules.js' %}"
             $.getScript($ajax_script)
         }
 

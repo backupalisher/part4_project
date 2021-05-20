@@ -10,46 +10,29 @@ function model_show() {
         brands = toJSON(brands)
         model = toJSON(model)
         vendors = toJSON(vendors)
-        console.log(vendors)
+        console.log(brands)
+        console.log(model)
         $inner_html = '<form class="form-floating" id="model_save">\n' +
             '<div class="form-floating mb-3">\n' +
-            '<input type="text" class="form-control" id="model_name' + model[0][1] + '" value="' + model[0][2] + '">\n' +
+            '<input type="text" class="form-control" id="model_name' + model[0][0] + '" value="' + model[0][1] + '">\n' +
             '<label for="model_name">Model:</label></div>\n' +
             '<div class="form-floating mb-3">\n' +
-            '<input type="text" class="form-control" id="model_main_image" placeholder="" value="' + model[0][4] + '">\n' +
+            '<input type="text" class="form-control" id="model_main_image" placeholder="" value="' + model[0][3] + '">\n' +
             '<label for="model_main_image">Main image:</label></div>\n' +
             '<div class="form-floating mb-3">\n' +
-            '<input type="text" class="form-control" id="model_image" placeholder="" value="' + model[0][5] + '">\n' +
+            '<input type="text" class="form-control" id="model_image" placeholder="" value="' + model[0][4] + '">\n' +
             '<label for="model_image">Image:</label></div>\n' +
             '<div class="form-floating mb-3">' +
             '<select class="form-select" id="model_brand_name">'
                 for (let i = 0; i < brands.length; i++) {
                     $inner_html += '<option value="' + brands[i][0] + '"'
-                    if (model[0][6] === brands[i][1]) {
-                        $inner_html += ' selected>'
-                    }
-                    $inner_html += brands[i][1] + '</option>'
-                }
-                $inner_html += '</select>' +
-            '<label for="model_brand_name">Brand:</label></div>' +
-            '<div class="form-floating mb-3">' +
-            '<select class="form-select" id="vendor_price">' +
-                    '<option value="'+model[0][8]+'">---</option>'
-                for (let i = 0; i < vendors.length; i++) {
-                    $inner_html += '<option value="' + vendors[i][0] + '"'
-                    if (model[0][8] === vendors[i][0]) {
-                        $inner_html += ' selected>'
+                    if (model[0][5] === brands[i][1]) {
+                        $inner_html += ' selected>' + brands[i][1] + '</option>'
                     } else {
-                        $inner_html += ' >'
+                        $inner_html += '>' + brands[i][1] + '</option>'
                     }
-                    $inner_html += vendors[i][1] + '</option>'
                 }
-                $inner_html += '</select>' +
-            '<label for="vendor_price">Vendor:</label></div>' +
-            '<div class="form-floating mb-3">' +
-            '<input type="text" class="form-control" id="model_price" value="' + model[0][7] + '">' +
-            '<label for="model_price">Price:</label></div>' +
-            '<input type="hidden" id="price_id" value="'+model[0][9]+'">'
+                $inner_html += '</select><label for="model_brand_name">Brand:</label></div>'
         for (let i = 0; i < moduls.length; i++) {
             $inner_html += '<p><a class="btn btn-link" type="button" data-bs-toggle="collapse" ' +
                 'aria-expanded="false" data-bs-target="#module' + moduls[i][1] + '" ' +
@@ -59,17 +42,11 @@ function model_show() {
                 '<input type="text" class="form-control" id="module' + moduls[i][1] + '" value="' + moduls[i][4] + '">' +
                 '<label for="module' + moduls[i][1] + '">Module:</label></div>' +
                 '<div class="form-floating mb-3">' +
-                '<input type="text" class="form-control" id="m_description' + moduls[i][2] + '" value="' + moduls[i][5] + '">' +
-                '<label for="m_description' + moduls[i][1] + '">Module description:</label></div>' +
+                '<input type="text" class="form-control" id="m_name_ru' + moduls[i][3] + '" value="' + moduls[i][5] + '">' +
+                '<label for="m_name_ru' + moduls[i][5] + '">Module name_ru:</label></div>' +
                 '<div class="form-floating mb-3">' +
-                '<input type="text" class="form-control" id="m_scheme_picture' + moduls[i][2] + '" value="' + moduls[i][6] + '">' +
-                '<label for="m_scheme_picture' + moduls[i][1] + '">Module scheme_picture:</label></div>' +
-                '<div class="form-floating mb-3">' +
-                '<input type="text" class="form-control" id="m_name_ru' + moduls[i][2] + '" value="' + moduls[i][7] + '">' +
-                '<label for="m_name_ru' + moduls[i][1] + '">Module name_ru:</label></div>' +
-                '<div class="form-floating mb-3">' +
-                '<input type="text" class="form-control" id="m_image' + moduls[i][2] + '" value="' + moduls[i][9] + '">' +
-                '<label for="m_image' + moduls[i][2] + '">Module image:</label></div>' +
+                '<input type="text" class="form-control" id="m_image' + moduls[i][3] + '" value="' + moduls[i][7] + '">' +
+                '<label for="m_image' + moduls[i][7] + '">Module image:</label></div>' +
                 '</div></div>'
         }
         $inner_html += '<div class="form-floating mb-3">' +

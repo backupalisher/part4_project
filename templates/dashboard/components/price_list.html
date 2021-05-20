@@ -1,0 +1,10 @@
+{% for price in prices %}
+    {% if price.8 %}
+        <button type="button" class="btn btn-link btn_price" value="{{ price.8 }}">{{ price.1 }}</button>
+    {% else %}
+        <button type="button" class="btn btn-link btn_price" value="{{ price.0 }}">{{ price.1 }}</button>
+    {% endif %}
+{% endfor %}
+{% for partcode in partcodes %}
+        <button type="button" class="btn btn-link btn_new_price" area_type="partcode" value="{{ partcode.0 }}">{{ partcode.1 }}</button>
+{% endfor %}

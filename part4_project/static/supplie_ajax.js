@@ -76,11 +76,12 @@ function show_partcodes(partcodes, page, count) {
                 $modal += '</div> <h3>Analogs of models:</h3> <div class="partcodes-analogs">'
                 for (let ci = 0; ci < partcodes[i][12].length; ci++) {
                     if (partcodes[i][12][ci]) {
-                        $modal += '<a href="/model/' + partcodes[i][12][ci].match(/^.*:/)[0].replace(":", "") + '" >' +
-                            partcodes[i][12][ci].match(/:.*/)[0].replace(":", "") + '</a><br>'
+                        $modal += '<a href="/model/' + partcodes[i][12][ci].split('~')[0] + '" >' +
+                            partcodes[i][12][ci].split('~')[1] + '</a><br>'
                     }
                 }
-                $modal += '</div><div class="justify-center"><button type="button" aria-controls="suppl' + i + '">Close</button></div></div></div>'
+                $modal += '</div><div class="btm_modal_close"><button type="button" aria-controls="suppl' + i + '">' +
+                    '<span class="material-icons-outlined">close</span></button></div></div></div>'
             }
             $html += $image + $desc + $modal + '</div>'
             $('#partcode_items .row').append($html)

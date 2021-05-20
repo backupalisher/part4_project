@@ -100,10 +100,10 @@ def models(request):
                 if vals['action'] == 'show_model':
                     mid = vals['mid']
                     model = _query(f'SELECT * FROM all_brand_models WHERE id = {mid};')
-                    moduls = _query(f'SELECT * FROM link_model_module_image lmmi '
-                                    f'LEFT JOIN spr_modules sm ON sm.id = lmmi.spr_module_id '
-                                    f'LEFT JOIN spr_module_image smi ON smi.id = lmmi.spr_module_image_id '
-                                    f'WHERE lmmi.model_id = {mid}')
+                    moduls = _query(f"""SELECT * FROM link_model_module_image lmmi 
+                        LEFT JOIN dictionary_modules dm ON dm.id = lmmi.dictionary_module_id 
+                        LEFT JOIN dictionary_module_image dmi ON dmi.id = lmmi.dictionary_module_image_id 
+                        WHERE lmmi.model_id = {mid}""")
                     return render(request, 'dashboard/components/model_item.html',
                                   {'tab': 'models', 'model': str(model), 'brands': str(list(brands.values_list())),
                                    "moduls": str(moduls), "vendors": str(list(vendors.values_list()))})
@@ -155,10 +155,10 @@ def models(request):
                             if moid is not None and module_name is not None and module_description is not None and module_name_ru is not None and module_scheme_picture is not None:
                                 module_dict = DictionaryModules.objects.get(id=moid)
                                 module_dict.name_en = module_name
-                                module_dict.save()
                                 module_dict.name_ru = module_name_ru
-                                module_spr.description = module_description
-                                module_spr.scheme_picture = module_scheme_picture
+                                module_dict.save()
+                                # module_spr.description = module_description
+                                # module_spr.scheme_picture = module_scheme_picture
                                 moid = None
                                 module_name = None
                                 module_description = None
@@ -195,7 +195,8 @@ def models(request):
             else:
                 return JsonResponse('unsuccessful')
         return render(request, 'dashboard/index.html',
-                      {'tab': 'models', 'models': str(list(models.values_list())), 'limit': int(limit), 'page': int(page),
+                      {'tab': 'models', 'models': str(list(models.values_list())), 'limit': int(limit),
+                       'page': int(page),
                        'm_length': int(m_length / limit), 'brands': brands})
 
 
@@ -204,99 +205,188 @@ def partcodes(request):
         return redirect('/cabinet/')
     else:
         brands = Brands.objects.all()
-        vendors = Vendors.objects.all()
+        models = Models.objects.order_by('name').all()
+        modules = DictionaryModules.objects.all()
         if request.is_ajax():
             if request.method == 'POST':
                 vals = request.POST
+                if vals['action'] == 'remove':
+                    _query(f"""DELETE FROM link_model_module_partcode WHERE partcode_id = {int(vals['pid'])}
+                        AND model_id = {int(vals['model_id'])} AND module_id = {int(vals['module_id'])}""")
+                    partcode = _query(f"""SELECT p.id, p.code, p.images, p.article_code, p.description, 
+                                            p.dictionary_partcode_id, b.id bid, b.name, dp.name_en, dp.name_ru, dp.image, dp.description_en, 
+                                            dp.description_ru FROM partcodes p 
+                                            LEFT JOIN dictionary_partcode dp ON dp.id = p.dictionary_partcode_id 
+                                            LEFT JOIN brands b ON b.id = p.manufacturer 
+                                            WHERE p.id = {int(vals['pid'])}""")
+                    linking = _query(
+                        f"""SELECT * FROM link_model_module_partcode WHERE partcode_id = {int(vals['pid'])}""")
+                    return render(request, 'dashboard/components/partcode_item.html',
+                                  {'tab': 'partcodes', 'partcode': str(partcode), 'linking': str(linking),
+                                   'brands': str(list(brands.values_list())), 'models': str(list(models.values_list())),
+                                   'modules': str(list(modules.values_list()))})
                 if vals['action'] == 'show_partcode':
                     pid = vals['pid']
-                    partcode = []
-                    qpartcode = _query(f'SELECT * FROM partcodes WHERE id = {pid};')
-                    price = _query(f'SELECT price, vendor_id, id FROM prices WHERE partcode_id = {pid};')
-                    partcode.append(qpartcode)
-                    partcode.append(price)
+                    partcode = _query(f"""SELECT p.id, p.code, p.images, p.article_code, p.description, 
+                        p.dictionary_partcode_id, b.id bid, b.name, dp.name_en, dp.name_ru, dp.image, dp.description_en, 
+                        dp.description_ru FROM partcodes p 
+                        LEFT JOIN dictionary_partcode dp ON dp.id = p.dictionary_partcode_id 
+                        LEFT JOIN brands b ON b.id = p.manufacturer 
+                        WHERE p.id = {pid}""")
+                    linking = _query(f"""SELECT * FROM link_model_module_partcode WHERE partcode_id = {pid}""")
                     return render(request, 'dashboard/components/partcode_item.html',
-                                  {'tab': 'partcodes', 'partcode': str(partcode),
-                                   "vendors": str(list(vendors.values_list())), 'brands': str(list(brands.values_list()))})
+                                  {'tab': 'partcodes', 'partcode': str(partcode), 'linking': str(linking),
+                                   'brands': str(list(brands.values_list())), 'models': str(list(models.values_list())),
+                                   'modules': str(list(modules.values_list()))})
+                elif vals['action'] == 'search_partcode':
+                    partcodes = _query(f"""SELECT * FROM partcodes WHERE code ILIKE '%{vals['val']}%'""")
+                    return render(request, 'dashboard/components/partcode_list.html',
+                                  {'tab': 'partcodes', 'partcodes': partcodes,
+                                   'models': str(list(models.values_list())),
+                                   'modules': str(list(modules.values_list()))})
                 else:
-                    partcode = []
-                    pid = vals['pid']
-                    partcode_desc = vals['partcode_desc']
-                    partcode_image = vals['partcode_image'].replace('/', '\\')
-                    partcode_article = vals['partcode_article']
-                    mpartcode = Partcodes.objects.get(id=pid)
-                    mpartcode.description = partcode_desc
-                    mpartcode.images = partcode_image
-                    mpartcode.article_code = partcode_article
-                    mpartcode.save()
-                    detail_price = vals['detail_price']
-                    vendor = vals['vendor']
-                    if vals['price_id']:
-                        price_id = vals['price_id']
-                    else:
-                        price_id = 0
-                    save_price(detail_price, pid, vendor, 'partcode', price_id)
-                    _query(f"UPDATE partcodes SET (description, images, article_code) = ('{partcode_desc}',"
-                           f"'{partcode_image}', '{partcode_article}') WHERE id = 55158")
-                    partcode = _query(f'SELECT * FROM partcodes WHERE id = {pid};')
-                    price = _query(f'SELECT price, vendor_id, id FROM prices WHERE partcode_id = {pid};')
-                    partcode.append(partcode)
-                    partcode.append(price)
+                    partcode = Partcodes.objects.get(id=vals['pid'])
+                    partcode.images = vals['partcode_image'].replace('/', '\\')
+                    partcode.article_code = vals['partcode_article']
+                    partcode.description = vals['partcode_desc']
+                    partcode.save()
+                    if vals['pid'] != '' and vals['module_id'] != '' and vals['module_id'] != '':
+                        q = f"""INSERT INTO link_model_module_partcode(partcode_id, model_id, module_id)  
+                                   VALUES ({int(vals['pid'])}, {int(vals['model_id'])}, {int(vals['module_id'])});"""
+                        _query(q)
+                    if vals['for_all'] == 'true':
+                        dictionary_partcode_id = vals['dictionary_partcode_id']
+                        dictionary_partcode = DictionaryPartcode.objects.get(id=dictionary_partcode_id)
+                        dictionary_partcode.name_en = vals['partcode_name_en']
+                        dictionary_partcode.name_ru = vals['partcode_name_ru']
+                        dictionary_partcode.description_en = vals['partcode_desc_en']
+                        dictionary_partcode.description_ru = vals['partcode_desc_ru']
+                        dictionary_partcode.save()
+                    partcode = _query(f"SELECT * FROM partcodes WHERE id = {vals['pid']};")
                     return render(request, 'dashboard/components/partcodes.html',
                                   {'tab': 'partcodes', 'partcode': str(partcode),
-                                   'brands': str(list(brands.values_list()))})
-        partcodes = _query(f"SELECT * FROM all_partcodes ORDER BY id")
-        return render(request, 'dashboard/index.html', {'tab': 'partcodes', 'partcodes': partcodes})
+                                   'brands': str(list(brands.values_list())), 'models': str(list(models.values_list())),
+                                   'modules': str(list(modules.values_list()))})
+        partcodes = []
+        return render(request, 'dashboard/index.html',
+                      {'tab': 'partcodes', 'partcodes': partcodes, 'models': str(list(models.values_list())),
+                       'modules': str(list(modules.values_list()))})
 
 
-def details(request):
+def modules(request):
     if not request.user.is_superuser:
         return redirect('/cabinet/')
     else:
-        details = _query(f'SELECT d.id d_id, sd.*, sm.name module, p.detail_id, p.price, p.usage_status, p.vendor_id, p.id '
-                         f'FROM details d LEFT JOIN spr_details sd ON sd.id = d.spr_detail_id '
-                         f'LEFT JOIN spr_modules sm ON sm.id = d.module_id LEFT JOIN prices p ON p.detail_id = d.id '
-                         f'WHERE d.partcode_id is NULL and d.module_id is not NULL')
-        partcodes = _query(f"SELECT * FROM all_partcodes ORDER BY id")
+        modules = DictionaryModules.objects.all()
+        if request.is_ajax():
+            if request.method == 'POST':
+                vals = request.POST
+                if vals['action'] == 'show_module':
+                    module = DictionaryModules.objects.filter(id=int(vals['module_id']))
+                    return render(request, 'dashboard/components/module_item.html',
+                                  {'tab': 'modules', 'module': str(list(module.values_list()))})
+                if vals['action'] == 'save':
+                    module = DictionaryModules.objects.get(id=int(vals['module_id']))
+                    module.name_en = vals['name_en']
+                    module.name_ru = vals['name_ru']
+                    module.save()
+                    module = DictionaryModules.objects.filter(id=int(vals['module_id']))
+                    return render(request, 'dashboard/components/module_item.html',
+                                  {'tab': 'modules', 'module': str(list(module.values_list()))})
+        return render(request, 'dashboard/index.html', {'tab': 'modules', 'modules': str(list(modules.values_list()))})
+
+
+def prices(request):
+    if not request.user.is_superuser:
+        return redirect('/cabinet/')
+    else:
+        models = Models.objects.order_by('name').all()
         vendors = Vendors.objects.all()
         if request.is_ajax():
             if request.method == 'POST':
                 vals = request.POST
-                if vals['action'] == 'show_detail':
-                    detail = None
-                    for item in details:
-                        if int(vals['did']) == int(item[0]):
-                            detail = item
-                    return render(request, 'dashboard/components/detail_item.html',
-                                  {'tab': 'details', 'partcode': str(detail), 'partcodes': str(partcodes),
-                                   "vendors": str(list(vendors.values_list()))})
+                if vals['action'] == 'search_price':
+                    q = f"""SELECT p.code, m.name model, v.name vendor, pr.* FROM prices pr
+                            LEFT JOIN partcodes p ON p.id = pr.partcode_id
+                            LEFT JOIN models m ON m.id = pr.model_id
+                            LEFT JOIN vendors v ON v.id = pr.vendor_id
+                            WHERE m.name ILIKE '%{vals['val']}%' or p.code ILIKE '%{vals['val']}%'"""
+                    prices = _query(q)
+                    return render(request, 'dashboard/components/price_list.html',
+                                  {'tab': 'prices', 'prices': prices, 'models': str(list(models.values_list())),
+                                   'vendors': str(list(vendors.values_list()))})
+                if vals['action'] == 'search_add':
+                    partcodes = _query(f"""SELECT * FROM partcodes WHERE code ILIKE '%{vals['val']}%';""")
+                    prices = _query(f"""SELECT p.code, m.name model, v.name vendor, pr.* FROM prices pr
+                                        LEFT JOIN partcodes p ON p.id = pr.partcode_id
+                                        LEFT JOIN models m ON m.id = pr.model_id
+                                        LEFT JOIN vendors v ON v.id = pr.vendor_id
+                                        WHERE m.name ILIKE '%{vals['val']}%' or p.code ILIKE '%{vals['val']}%'""")
+                    return render(request, 'dashboard/components/price_list.html',
+                                  {'tab': 'prices', 'prices': prices, 'models': str(list(models.values_list())),
+                                   'vendors': str(list(vendors.values_list())), 'partcodes': partcodes})
+                if vals['action'] == 'show_price':
+                    price = _query(f"""SELECT p.code, m.name model, v.name vendor, pr.* FROM prices pr
+                                                LEFT JOIN partcodes p ON p.id = pr.partcode_id
+                                                LEFT JOIN models m ON m.id = pr.model_id
+                                                LEFT JOIN vendors v ON v.id = pr.vendor_id
+                                                WHERE pr.id = {vals['id']}""")
+                    return render(request, 'dashboard/components/price_item.html',
+                                  {'tab': 'prices', 'price': price, 'models': str(list(models.values_list())),
+                                   'vendors': str(list(vendors.values_list()))})
+                if vals['action'] == 'new_price':
+                    price = 'new'
+                    if vals['type'] == 'model':
+                        title = Models.objects.get(id=vals['id']).name
+                    else:
+                        title = Partcodes.objects.get(id=vals['id']).code
+                    return render(request, 'dashboard/components/price_item.html',
+                                  {'tab': 'prices', 'price': price, 'models': str(list(models.values_list())),
+                                   'vendors': str(list(vendors.values_list())), 'ptype': vals['type'],
+                                   'nid': vals['id'], 'title': title})
+                if vals['action'] == 'add_price':
+                    print(vals)
+                    if vals['type'] == 'model':
+                        model_id = int(vals['id'])
+                        partcode_id = None
+                        ids = f"(pr.model_id = {model_id} OR pr.partcode_id = NULL)"
+                    else:
+                        partcode_id = int(vals['id'])
+                        model_id = None
+                        ids = f"(pr.model_id = NULL OR pr.partcode_id = {partcode_id})"
+                    try:
+                        sprice = Prices(price=float(vals['price']), vendor_id=int(vals['vendor_id']),
+                                        partcode_id=partcode_id, model_id=model_id,
+                                        usage_status=vals['usage_status'], description=vals['description'],
+                                        images=vals['images'], count=vals['count'])
+                        sprice.save()
+                    except Exception as err:
+                        print(err)
+                    price = _query(f"""SELECT p.code, m.name model, v.name vendor, pr.* FROM prices pr
+                        LEFT JOIN partcodes p ON p.id = pr.partcode_id
+                        LEFT JOIN models m ON m.id = pr.model_id
+                        LEFT JOIN vendors v ON v.id = pr.vendor_id
+                        WHERE pr.vendor_id = {int(vals['vendor_id'])} AND pr.price = {float(vals['price'])} AND  
+                        {ids}""")
+                    print(price)
+                    return render(request, 'dashboard/components/price_item.html',
+                                  {'tab': 'prices', 'price': price, 'models': str(list(models.values_list())),
+                                   'vendors': str(list(vendors.values_list()))})
                 if vals['action'] == 'save':
-                    did = vals['did']
-                    spr_id = vals['spr_id']
-                    detail_name = vals['detail_name']
-                    description = vals['description']
-                    seo = vals['seo']
-                    base_img = vals['base_img']
-                    detail_price = vals['detail_price']
-                    use_status = vals['use_status']
-                    partcode = vals['partcode']
-                    vendor = vals['vendor']
-                    price_id = 0
-                    if detail_name != '' or description != '' or base_img != '' or seo != '' or detail_price != '' or use_status != '':
-                        qspr_detail = SprDetails.objects.get(id=spr_id)
-                        qspr_detail.name_ru = detail_name
-                        qspr_detail.description = description
-                        qspr_detail.seo = seo
-                        qspr_detail.base_img = base_img
-                        qspr_detail.save()
-                    if partcode != '':
-                        qdetail = Details.objects.get(id=did)
-                        qdetail.partcode_id = partcode
-                        qdetail.save()
-                    if detail_price != '':
-                        if vals['price_id']:
-                            price_id = vals['price_id']
-                        save_price(detail_price, did, vendor, 'partcode', price_id)
-
-                    return render(request, 'dashboard/index.html', {'tab': 'details', 'details': details})
-        return render(request, 'dashboard/index.html', {'tab': 'details', 'details': details})
+                    sprice = Prices.objects.get(id=vals['id'])
+                    sprice.price = float(vals['price'])
+                    sprice.vendor_id = int(vals['vendor_id'])
+                    sprice.usage_status = vals['usage_status']
+                    sprice.description = vals['description']
+                    sprice.images = vals['images']
+                    sprice.count = int(vals['count'])
+                    sprice.save()
+                    price = _query(f"""SELECT p.code, m.name model, v.name vendor, pr.* FROM prices pr
+                            LEFT JOIN partcodes p ON p.id = pr.partcode_id
+                            LEFT JOIN models m ON m.id = pr.model_id
+                            LEFT JOIN vendors v ON v.id = pr.vendor_id
+                            WHERE pr.id = {vals['id']}""")
+                    return render(request, 'dashboard/components/price_item.html',
+                                  {'tab': 'prices', 'price': price, 'models': str(list(models.values_list())),
+                                   'vendors': str(list(vendors.values_list()))})
+        return render(request, 'dashboard/index.html', {'tab': 'prices', 'models': str(list(models.values_list()))})

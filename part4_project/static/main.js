@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    console.log('main init')
     //Toggle themes
     if (Cookies.get('theme')) {
         if (Cookies.get('theme') === 'light-theme') {

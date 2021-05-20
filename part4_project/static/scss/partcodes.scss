@@ -126,10 +126,10 @@
     display: none;
     position: fixed;
     background-color: var(--bg_section);
-    top: 10%;
-    bottom: 10%;
-    left: 10%;
-    right: 10%;
+    top: 20%;
+    bottom: 20%;
+    left: 20%;
+    right: 20%;
     z-index: 21;
     padding: 2em;
 
@@ -158,12 +158,10 @@
     }
 
     button {
-      font-size: 2.2em;
-      background-color: var(--warning);
       color: var(--white);
       border: none;
-      padding: .3em 1em;
       cursor: pointer;
+      background: none;
 
       &:hover {
         box-shadow: 0 0 .25em .1em var(--accent);

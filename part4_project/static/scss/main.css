@@ -447,6 +447,12 @@ a {
   display: none;
 }
 
+.btm_modal_close {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+}
+
 .text-center {
   text-align: center;
 }
@@ -1702,10 +1708,10 @@ footer a {
   display: none;
   position: fixed;
   background-color: var(--bg_section);
-  top: 10%;
-  bottom: 10%;
-  left: 10%;
-  right: 10%;
+  top: 20%;
+  bottom: 20%;
+  left: 20%;
+  right: 20%;
   z-index: 21;
   padding: 2em;
 }
@@ -1729,12 +1735,10 @@ footer a {
   line-height: 2em;
 }
 .partcodes_wrap .partcodes-item_overlay button {
-  font-size: 2.2em;
-  background-color: var(--warning);
   color: var(--white);
   border: none;
-  padding: 0.3em 1em;
   cursor: pointer;
+  background: none;
 }
 .partcodes_wrap .partcodes-item_overlay button:hover {
   box-shadow: 0 0 0.25em 0.1em var(--accent);

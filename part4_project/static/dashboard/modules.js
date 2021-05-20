@@ -4,43 +4,41 @@ function toJSON(item) {
     return JSON.parse(item)
 }
 
-details = toJSON(details)
+modules = toJSON(modules)
+console.log(modules)
 
-$('#search_details').keyup(function () {
+$('#search_modules').keyup(function () {
     val = $(this).val().toLowerCase()
+    console.log(val)
     if (val.length > 2) {
-        sdetails = details.filter(x => x[2].toLowerCase().indexOf(val) > -1)
+        smodules = modules.filter(x => x[1].toLowerCase().indexOf(val) > -1)
         $html = ''
-        sdetails.forEach(item => {
-            $html += '<button type="button" class="btn btn-link btn_detail" value="' + item[0] + '">' + item[2] + '</button>'
+        smodules.forEach(item => {
+            $html += '<button type="button" class="btn btn-link btn_module" value="' + item[0] + '">' + item[1] + '</button>'
         })
-        $('#details_list').append().html($html)
+        $('#modules_list').append().html($html)
     } else {
-        sdetails = details
+        smodules = modules
     }
 });
 
-$(document).on('click', '.btn_detail', function (event) {
+$(document).on('click', '.btn_module', function (event) {
     event.stopPropagation();
     event.preventDefault();
-    $('.btn_detail').removeClass('disabled');
+    $('.btn_module').removeClass('disabled');
     $(this).addClass('disabled');
-    did = $(this).val();
-    console.log(did);
     let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     $.ajax({
         type: 'POST',
-        url: '/dashboard/details',
+        url: '/dashboard/modules',
         headers: {'X-CSRFToken': csrftoken},
         data: {
-            "did": did,
-            "action": 'show_detail',
+            "module_id": $(this).val(),
+            "action": 'show_module',
         },
         contentType: "application/x-www-form-urlencoded;charset=utf-8",
         success: function (data) {
-             $("#detail_item").html('').append(
-                data
-            );
+             $("#module_item").html('').append(data);
         }
     });
 })

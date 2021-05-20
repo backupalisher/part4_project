@@ -187,6 +187,12 @@
 }
 
 .dashboard {
+  .btn-link {
+    line-height: 1em;
+    padding: 0;
+    margin: 0 1em;
+    color: var(--white_black);
+  }
   .sidebar {
     border-right: 1px solid var(--text_base);
     li {
@@ -199,8 +205,8 @@
       }
     }
   }
-  #model_list, #parcode_list, #details_list {
-    min-height: 400px;
+  #model_list, #parcode_list, #modules_list, #select_list, #prices_list {
+    //min-height: 400px;
     max-height: calc(100vh - 200px);
     max-width: 30vw;
     min-width: 200px;
@@ -211,6 +217,7 @@
     align-items: start;
     button {
       text-align: left;
+      margin: 0 0 0.5em 0;
     }
   }
   .btn_show_model {

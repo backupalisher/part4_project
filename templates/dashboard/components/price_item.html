@@ -1,23 +1,24 @@
 {% load static mathfilters %}
-<div id="partcode_item"></div>
+<div id="detail_item"></div>
 
 
 {% block ajaxjs %}
     <script type="text/javascript">
-        function PartItemLoaded() {
-            partcode = "{{ partcode }}"
-            brands = "{{ brands }}"
+        function priceItemLoaded() {
+            price = "{{ price }}"
+            ptype = "{{ ptype }}"
             models = "{{ models }}"
-            modules = "{{ modules }}"
-            linking = "{{ linking }}"
+            vendors = "{{ vendors }}"
+            nid = "{{ nid }}"
+            title = "{{ title }}"
             media_url = "{{ MEDIA_URL }}"
-            $ajax_script = "{% static 'dashboard/partcode_ajax.js' %}"
+            $ajax_script = "{% static 'dashboard/price_ajax.js' %}"
             $.getScript($ajax_script)
         }
 
         function checkPIJquery() {
             if (window.jQuery) {
-                PartItemLoaded();
+                priceItemLoaded();
             } else {
                 window.setTimeout(checkPIJquery, 100);
             }
