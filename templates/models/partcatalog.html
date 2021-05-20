@@ -61,11 +61,11 @@
                                                     </td>
                                                     <td>
                                                         {% if lang == 'ru' %}
-                                                            {% if partc.9 %}{{ partc.9 }}{% else %}
-                                                                {{ partc.10 }}{% endif %}
-                                                        {% else %}
                                                             {% if partc.10 %}{{ partc.10 }}{% else %}
                                                                 {{ partc.9 }}{% endif %}
+                                                        {% else %}
+                                                            {% if partc.9 %}{{ partc.9 }}{% else %}
+                                                                {{ partc.10 }}{% endif %}
                                                         {% endif %}
                                                     </td>
                                                 </tr>
