@@ -104,7 +104,7 @@ function search_partcodes(s) {
     show_partcodes($partcodes_all, page, count)
 }
 
-$('#partcode_search').keyup(function () {
+$('#supplie_search').keyup(function () {
     let sval = $(this).val()
     if (sval.length > 2) {
         $('#partcode_items .row').html('')

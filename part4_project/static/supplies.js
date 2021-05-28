@@ -60,6 +60,7 @@ $('.brands label input').click(function () {
         $brands.push(parseInt($(this).val()))
     }
     let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    $('.loading').addClass('active');
     $.ajax({
         type: 'POST',
         url: '',
@@ -74,6 +75,7 @@ $('.brands label input').click(function () {
             $("#supplie_table").html('').append(
                 data
             );
+            $('.loading').removeClass('active');
         }
     });
 })
