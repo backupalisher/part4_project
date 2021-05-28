@@ -154,7 +154,7 @@ $(document).ready(function () {
     }
 
     function change_input(el) {
-        if (el.parent().parent().hasClass('brand')) {
+        if (el.parent().parent().parent().hasClass('brand')) {
             $("#reset").addClass('active')
             $key = el.attr('name');
             $value = el.attr('id');

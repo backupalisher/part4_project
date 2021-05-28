@@ -647,6 +647,12 @@ aside .filter .brand {
   display: flex;
   flex-direction: column;
 }
+aside .filter .brand .hover_btn {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center right;
+  margin: 0 10px 0 0;
+}
 aside .filter .brand::-webkit-scrollbar {
   display: none;
 }
@@ -1358,7 +1364,7 @@ footer a {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--input-text);
+  color: var(--white);
   text-decoration: none;
   border: 0.1em solid var(--bg_section);
   padding: 0.6em 0;
@@ -1497,7 +1503,7 @@ footer a {
   font-size: 1em;
   display: grid;
   grid-gap: 2em;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 30% 1fr;
   padding: 1em 0;
 }
 #model_wrap .model-content #errors .errors .error-list {
@@ -1512,7 +1518,7 @@ footer a {
   color: var(--accent);
 }
 #model_wrap .model-content #errors .errors .error-list .error-title.active {
-  color: var(--white);
+  color: var(--text_link);
   font-weight: 600;
 }
 #model_wrap .model-content #errors .errors .error-item div {
@@ -1553,7 +1559,7 @@ footer a {
   }
   #model_wrap .model-content #parts .parts {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 30% 1fr;
     grid-gap: 1em;
   }
   #model_wrap .model-content #parts .parts_module {

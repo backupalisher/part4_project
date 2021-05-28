@@ -33,7 +33,7 @@ def model_index(request, model_id):
     prices = []
     for p in model[8]:
         if p:
-            prices.append(p.split('~'))
+            prices.append(p.split(';'))
     vendor = model[9]
     if partcatalog:
         modules = partcatalog[0]

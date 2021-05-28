@@ -116,7 +116,8 @@ def get_filters():
 @sync_to_async
 def get_all_models(limit, offset, target):
     # print(datetime.datetime.now() - start_time, 'получение всех моделей')
-    brand_models = _query(f'SELECT * FROM model_for_filter ORDER BY weight DESC, main_image LIMIT {limit} OFFSET {offset};')
+    brand_models = _query(
+        f'SELECT * FROM model_for_filter ORDER BY weight DESC, main_image LIMIT {limit} OFFSET {offset};')
     if target == 'market':
         pass
     else:

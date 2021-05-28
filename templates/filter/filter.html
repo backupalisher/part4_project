@@ -4,15 +4,21 @@
         <h3>{% if lang == 'ru' %}Бренды{% else %}Brands{% endif %}</h3>
         <div class="brand">
             {% for brand in brands %}
-                <label for="{{ brand.name }}">
-                   <input type="checkbox" id="{{ brand.name }}" name="{{ brand.id }}" value="{{ brand.id }}">
-                   {{ brand.name }}
-{#                   {% if brand.logotype is not None %}#}
-{#                       <img src="{{ MEDIA_URL }}brands/{{ brand.logotype }}" alt="{{ brand.name }}">#}
-{#                    {% else %}#}
-{#                       <img src="{{ MEDIA_URL }}no-image.png')" alt="{{ brand.name }}">#}
-{#                    {% endif %}#}
-                </label>
+                <div class="hover_btn" {% if brand.logotype is not None %}
+                       style="background-image: url('{{ MEDIA_URL }}brands/{{ brand.logotype }}')"
+                {% else %}
+                       style="background-image: url('{{ MEDIA_URL }}no-image.png'); width: 100%;">
+                {% endif %}>
+                    <label for="{{ brand.name }}" >
+                       <input type="checkbox" id="{{ brand.name }}" name="{{ brand.id }}" value="{{ brand.id }}">
+                       {{ brand.name }}
+    {#                   {% if brand.logotype is not None %}#}
+    {#                       <img src="{{ MEDIA_URL }}brands/{{ brand.logotype }}" alt="{{ brand.name }}">#}
+    {#                    {% else %}#}
+    {#                       <img src="{{ MEDIA_URL }}no-image.png')" alt="{{ brand.name }}">#}
+    {#                    {% endif %}#}
+                    </label>
+                </div>
             {% endfor %}
         </div>
 
@@ -20,7 +26,7 @@
             <h3>{% if lang == 'ru' %}{{ caption.0 }}{% else %}{{ caption.1 }}{% endif %}</h3>
             {% for filter in sfilter %}
                 {% if filter.caption == caption.0 %}
-                    <div class="">
+                    <div class="filter_in">
                         <h4>
                             {% if lang == 'ru' %}{{ filter.subcaption }}{% else %}{{ filter.subcaption_en }}{% endif %}
                         </h4>

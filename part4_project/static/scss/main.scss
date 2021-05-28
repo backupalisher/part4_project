@@ -728,6 +728,13 @@ aside {
       display: flex;
       flex-direction: column;
 
+      .hover_btn {
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center right;
+        margin: 0 10px 0 0;
+      }
+
       &::-webkit-scrollbar {
         display: none;
       }

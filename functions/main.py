@@ -1,3 +1,4 @@
+from part4_project.apps.main.functions import preload
 from .filter_func import *
 from .search_func import *
 
@@ -11,6 +12,7 @@ class GetModels(object):
         return preload(limit, offset, url)
 
     def filtered(self, post):
+        print(post)
         checkboxs = {}
         ranges = {}
         radios = {}

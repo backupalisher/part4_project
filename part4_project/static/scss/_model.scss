@@ -76,7 +76,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: var(--input-text);
+      color: var(--white);
       text-decoration: none;
       border: .1em solid var(--bg_section);
       padding: .6em 0;
@@ -247,7 +247,7 @@
       font-size: 1em;
       display: grid;
       grid-gap: 2em;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: 30% 1fr;
       padding: 1em 0;
 
       .error-list {
@@ -263,7 +263,7 @@
           }
 
           &.active {
-            color: var(--white);
+            color: var(--text_link);
             font-weight: 600;
           }
         }
@@ -322,7 +322,7 @@
     #parts {
       .parts {
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: 30% 1fr;
         grid-gap: 1em;
       }
       .parts_module {
