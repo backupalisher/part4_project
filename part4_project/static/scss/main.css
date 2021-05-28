@@ -499,6 +499,9 @@ aside h2 {
   transition: all 0.25s ease-in;
   background-repeat: no-repeat;
 }
+aside h2:first-child {
+  border-top: none;
+}
 aside h2 a:hover {
   color: var(--accent);
 }
@@ -857,6 +860,8 @@ main .loading .loading_gear {
   padding: 0.2em 0.6em;
   border: 1px solid var(--text_base);
   color: var(--text_base);
+  margin: 0 0.5em 0.2em;
+  border-radius: 0.3em;
 }
 
 .card {
@@ -1445,7 +1450,7 @@ footer a {
   font-size: 1em;
   display: grid;
   grid-gap: 2em;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 30% 1fr;
   padding: 1em 0;
 }
 #model_wrap .model-content #parts .parts .module-title {
@@ -1491,11 +1496,11 @@ footer a {
   word-break: break-all;
 }
 #model_wrap .model-content #errors #errors_search {
-  background-color: var(--bg_form_input);
+  background-color: var(--bg_main);
   font-size: 1.2em;
   line-height: 1.8em;
   border-radius: 0.2em;
-  border: none;
+  border: 1px solid var(--text_base);
   padding: 0 0.5em;
   margin: 0.8em 0;
 }
@@ -1634,11 +1639,13 @@ footer a {
   margin-bottom: 0.5em;
 }
 .partcodes_wrap .partcode_search input {
-  background-color: var(--bg_form_input);
+  background-color: var(--bg_main);
   width: 100%;
   font-size: 1.8em;
   padding: 0.2em 0.6em;
-  border: none;
+  border: 1px solid var(--text_base);
+  border-radius: 0.3em;
+  margin: 0 0.5em 0.2em;
   color: var(--text_base);
 }
 .partcodes_wrap .partcodes {
@@ -1652,7 +1659,7 @@ footer a {
   display: grid;
   grid-gap: 1.5em;
   grid-template-columns: auto 1fr;
-  margin: 2em;
+  margin: 1em;
 }
 .partcodes_wrap .partcodes-item .partcode_image {
   display: flex;

@@ -30,11 +30,13 @@
     margin-bottom: 0.5em;
 
     input {
-      background-color: var(--bg_form_input);
+      background-color: var(--bg_main);
       width: 100%;
       font-size: 1.8em;
       padding: 0.2em 0.6em;
-      border: none;
+      border: 1px solid var(--text_base);
+      border-radius: 0.3em;
+      margin: 0 .5em .2em;
       color: var(--text_base);
     }
   }
@@ -52,7 +54,7 @@
     display: grid;
     grid-gap: 1.5em;
     grid-template-columns: auto 1fr;
-    margin: 2em;
+    margin: 1em;
 
     .partcode_image {
       display: flex;

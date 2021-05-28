@@ -174,7 +174,7 @@
       font-size: 1em;
       display: grid;
       grid-gap: 2em;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: 30% 1fr;
       padding: 1em 0;
 
       .module-title {
@@ -234,11 +234,11 @@
 
   #errors {
     #errors_search {
-      background-color: var(--bg_form_input);
+      background-color: var(--bg_main);
       font-size: 1.2em;
       line-height: 1.8em;
       border-radius: 0.2em;
-      border: none;
+      border: 1px solid var(--text_base);
       padding: 0 0.5em;
       margin: .8em 0;
     }

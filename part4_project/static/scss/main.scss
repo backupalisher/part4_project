@@ -538,6 +538,9 @@ aside {
     background-size: 0% 100%;
     transition: all .25s ease-in;
     background-repeat: no-repeat;
+    &:first-child {
+      border-top: none;
+    }
 
     a {
       &:hover {
@@ -969,6 +972,8 @@ main {
       padding: 0.2em 0.6em;
       border: 1px solid var(--text_base);
       color: var(--text_base);
+      margin: 0 .5em .2em;
+      border-radius: .3em;
     }
   }
 }

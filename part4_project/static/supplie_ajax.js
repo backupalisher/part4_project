@@ -4,7 +4,6 @@ $page_count = 0
 page = 0
 count = 40
 aTop = $('#load_more').position().top;
-
 if ($partcodes.length > 0) {
     $partcodes = $partcodes.replace(/&#x27;/g, "'").replace(/'/g, '"').replace(/\(/g, '[').replace(/\)/g, ']').replace(/None/g, '""').replace(/\n/g, '').replace(/Decimal/g, '')
     $partcodes = JSON.parse($partcodes)
@@ -54,8 +53,11 @@ function show_partcodes(partcodes, page, count) {
             }
             $image += '</div>'
 
-            $desc = '<div class="partcode_desc"><p><a href="/partcode/' + partcodes[i][0] + '" class="partcodes_code">' + partcodes[i][1] + '</a> ' +
-                '<a class="btn_info" aria-controls="suppl' + i + '"><span class="material-icons">info</span></a></p>'
+            $desc = '<div class="partcode_desc"><p><a href="/partcode/' + partcodes[i][0] + '" class="partcodes_code">' + partcodes[i][1] + '</a> '
+                if (partcodes[i][12]) {
+                    $desc += '<a class="btn_info" aria-controls="suppl' + i + '"><span class="material-icons">info</span></a>'
+                }
+                $desc += '</p>'
             if (partcodes[i][6] && $lang === 'ru') {
                 $desc += '<h4>' + partcodes[i][6] + '</h4>'
             }

@@ -211,6 +211,7 @@ def index_supplies(request, partcode_id):
                 else:
                     brand_id += ',' + str(bid)
             partcodes = get_partcodes(target='supplies', brand_id=brand_id)
+            print(partcodes)
             request.session['partcodes'] = partcodes
             return 'supplies/supplie_items.html', {'partcodes': partcodes}
     else:
