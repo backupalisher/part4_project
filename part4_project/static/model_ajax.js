@@ -53,7 +53,7 @@ function show_models(models, media_url, page, count) {
                 if (lang === 'ru') {
                     $priced = '<p class="model_price">' + models[i][8][0].split(';')[1] + ' &#x20bd;</p>'
                 } else {
-                    $priced = '<p class="model_price">$' + Math.round(parseInt(models[i][8][0], 10) / parseInt(currency, 10)) + '</p>'
+                    $priced = '<p class="model_price">$' + Math.round(parseInt(models[i][8][0].split(';')[1], 10) / parseInt(currency, 10)) + '</p>'
                 }
             }
             if (models[i][10]) {

@@ -48,6 +48,7 @@ def model_index(request, model_id):
     else:
         verrors = []
     if all_options:
+        print(all_options)
         scaptions = []
         captions = []
         options, tcatp = all_options
@@ -63,6 +64,7 @@ def model_index(request, model_id):
     else:
         options = []
         captions = []
+    print(options)
     if tab:
         pass
     elif cur_module is not None:

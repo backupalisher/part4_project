@@ -25,7 +25,7 @@
         {% for caption in filter_captions %}
             <h3>{% if lang == 'ru' %}{{ caption.0 }}{% else %}{{ caption.1 }}{% endif %}</h3>
             {% for filter in sfilter %}
-                {% if filter.caption == caption.0 %}
+                {% if filter.caption == caption.0 or filter.caption == caption.1 %}
                     <div class="filter_in">
                         <h4>
                             {% if lang == 'ru' %}{{ filter.subcaption }}{% else %}{{ filter.subcaption_en }}{% endif %}

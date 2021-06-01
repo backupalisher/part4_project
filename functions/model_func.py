@@ -14,37 +14,70 @@ def set_weight(model_id):
 
 # Запрос на получение опций и вывод опций
 @sync_to_async
-def get_options(model_id):
-    captions = [
-        'Общие характеристики',
-        'Принтер',
-        'Копир',
-        'Сканер',
-        'Расходные материалы',
-        'Факс',
-        'Телефон',
-        'Шрифты и языки управления',
-        'Лотки',
-        'Финишер',
-        'Интерфейсы',
-        'Память/Процессор',
-        'Дополнительная информация',
-        'Фото',
-        'Общая информация',
-        'Габариты',
-        # 'Снят с производства',
-        # 'Актуальный',
-    ]
-    options_ru = []
+def get_options(request, model_id):
+    lang = request.LANGUAGE_CODE
+    if lang == 'ru':
+        captions = [
+            'Общие характеристики',
+            'Принтер',
+            'Копир',
+            'Сканер',
+            'Расходные материалы',
+            'Факс',
+            'Телефон',
+            'Шрифты и языки управления',
+            'Лотки',
+            'Финишер',
+            'Интерфейсы',
+            'Память/Процессор',
+            'Дополнительная информация',
+            'Фото',
+            'Общая информация',
+            'Габариты',
+            # 'Снят с производства',
+            # 'Актуальный',
+        ]
+    else:
+        captions = [
+            'Common options',
+            'Printer',
+            'Copier',
+            'Scanner',
+            'Consumables',
+            'Fax',
+            'Telephone',
+            'Fonts and control languages',
+            'Feeder',
+            'Finisher',
+            'Interface',
+            'Memory/Processor',
+            'Additional information',
+            'Photo',
+            'General information',
+            'Size',
+            # 'Снят с производства',
+            # 'Актуальный',
+        ]
+    options = []
     option_vals = _query(f"SELECT * FROM all_options_by_model WHERE id = {model_id};")
+    print(option_vals)
     if option_vals:
-        for opt in option_vals[0][2]:
-            opts = opt.split('~')
-            capt = opts[0].split(';')
-            caption = capt[0].strip()
-            subcaption = capt[1].strip()
-            val = opts[1].strip()
-            options_ru.append([caption, subcaption, val])
+        if lang == 'ru':
+            for opt in option_vals[0][2]:
+                opts = opt.split('~')
+                capt = opts[0].split(';')
+                caption = capt[0].strip()
+                subcaption = capt[1].strip()
+                val = opts[1].strip()
+                options.append([caption, subcaption, val])
+        else:
+            for opt in option_vals[0][3]:
+                opts = opt.split('~')
+                capt = opts[0].split(';')
+                caption = capt[0].strip()
+                subcaption = capt[1].strip()
+                val = opts[1].strip()
+                options.append([caption, subcaption, val])
             # if opts[0] is None and opts[1] is not None:
             #     for opt in opts[3]:
             #         if 'SubCaption' in opt:
@@ -52,7 +85,7 @@ def get_options(model_id):
             #     subcaptions.append(opts)
             # else:
             #     values.append(opts)
-    return options_ru, captions
+    return options, captions
 
 
 # Запрос на получение ошибок
@@ -110,7 +143,7 @@ def get_supplies(model_id):
 async def init(request, model_id):
     tasks = [
         get_model(model_id),
-        get_options(model_id),
+        get_options(request, model_id),
         qet_partcatalog(request, model_id),
         get_errors(model_id),
         get_supplies(model_id),
