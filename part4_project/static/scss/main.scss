@@ -202,6 +202,16 @@ input::-webkit-inner-spin-button {
   margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
 input {
   color: var(--input-text) !important;
 
@@ -588,17 +598,6 @@ aside {
     width: 100%;
   }
 
-  .filter {
-    height: 0;
-    transition: all .4s ease 0s;
-    overflow: hidden;
-    display: none;
-
-    &.active {
-      height: auto;
-      display: flex;
-    }
-  }
 
   .filter_show {
     display: none;
@@ -611,10 +610,40 @@ aside {
   }
 
   .filter {
+    height: 0;
+    transition: all .4s ease 0s;
+    overflow: hidden;
+    display: none;
     border-radius: 0.3em;
     padding: 0 0.3em;
     color: var(--text_filter);
     background-color: var(--bg_section);
+    &.active {
+      height: auto;
+      display: flex;
+    }
+
+    #form_filter {
+        width: 100%;
+    }
+
+    .hover_btn {
+        display: flex;
+        justify-content: space-between;
+        align-content: start;
+    }
+    .brand_btn_bg {
+        height: 2.7em;
+        background-color: rgb(255, 255, 255);
+        margin: 0 10px 0 0;
+        text-align: right;
+        padding: .1em .5em;
+        width: 5em;
+        img {
+            max-height: 100%;
+            max-width: 100%;
+        }
+    }
 
     .filter_settings {
       max-height: calc(100vh - 400px);
@@ -636,17 +665,10 @@ aside {
     label {
       display: inline-block;
       font-size: 1.5em;
-      padding: 0 0.5em 0.25em 2.5em;
+      padding: 0 0.5em 0.25em 3.2em;
+      line-height: 1.8em;
       position: relative;
-
-      input {
-        display: block;
-        width: 0;
-        height: 0;
-        background-color: var(--bg_main);
-        border-color: var(--text_base);
-
-        &:before {
+      &:before, &::before {
           left: 1em;
           position: absolute;
           content: '';
@@ -654,7 +676,14 @@ aside {
           border: 1px solid var(--text_base);
           width: 1.5em;
           height: 1.5em;
-        }
+      }
+      input {
+        display: none;
+        width: 0;
+        height: 0;
+        background-color: var(--bg_main);
+        border-color: var(--text_base);
+
       }
 
       &:hover {
@@ -662,25 +691,20 @@ aside {
 
         input {
           border: 1px solid var(--accent);
-
-          &:before {
+        }
+        &:before {
             border: 1px solid var(--accent);
-          }
         }
       }
 
-      input[type=checkbox] {
-        &:checked {
-          &:after {
-            font-family: 'Material Icons';
-            left: 0.4em;
-            top: 0;
-            position: absolute;
-            content: 'check';
-            color: var(--text_filter_input_check);
-            font-size: 2.2em;
-          }
-        }
+      &.checked:after {
+        font-family: 'Material Icons';
+        left: 0.45em;
+        top: -0.1em;
+        position: absolute;
+        content: 'check';
+        color: var(--text_filter_input_check);
+        font-size: 2.2em;
       }
 
       input[type=radio] {
@@ -730,13 +754,6 @@ aside {
       overflow-x: hidden;
       display: flex;
       flex-direction: column;
-
-      .hover_btn {
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center right;
-        margin: 0 10px 0 0;
-      }
 
       &::-webkit-scrollbar {
         display: none;

@@ -80,8 +80,10 @@
                 <h4>{% if lang == 'ru' %}Совместимые модели{% else %}Analog models{% endif %}:</h4>
                 <div class="partcode_content_inner">
                 <button class="error_result_models_show btn-link" aria-label="models-inner_1">
-                    <span class="btn_show" style="">показать модели {{ models|length }}</span>
-                    <span class="btn_hide" style="display: none;">скрыть модели</span>
+                    <span class="btn_show" style="">{% if lang == 'ru' %}показать модели{% else %}show
+                                                                models{% endif %} {{ models|length }}</span>
+                    <span class="btn_hide" style="display: none;">{% if lang == 'ru' %}скрыть модели{% else %}hide
+                                                                models{% endif %}</span>
                 </button>
                 <div class="models-inner" id="models-inner_1" style="display: none;">
                     {% for model in models %}
