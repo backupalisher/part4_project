@@ -13,8 +13,9 @@ if (typeof $cart_items !== 'undefined' && $cart_items.length > 0) {
 }
 
 // Add to cart
-$('#btn-buy').click(function () {
-    change_cart($(this).val(), 'add', '')
+$('.btn-buy').click(function () {
+    console.log('btn-buy', $(this).val());
+    change_cart($(this).val(), 'add', '');
 })
 
 $(".cart_item_remove").click(function () {

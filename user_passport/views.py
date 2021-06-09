@@ -86,6 +86,9 @@ def login(request):
                         return redirect('/cabinet/')
                     else:
                         return render(request, 'registration/login.html')
+                else:
+                    return render(request, 'registration/login.html', context={'error': 'Wrong username or password',
+                                                                               'error_ru': 'Не верное имя или пароль'})
             else:
                 return render(request, 'registration/login.html')
         else:

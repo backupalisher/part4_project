@@ -637,7 +637,7 @@ aside {
         background-color: rgb(255, 255, 255);
         margin: 0 10px 0 0;
         text-align: right;
-        padding: .1em .5em;
+        padding: 0 .5em;
         width: 5em;
         img {
             max-height: 100%;
@@ -659,93 +659,6 @@ aside {
       font-size: 1.6em;
       margin: 0;
       padding: 0.5em 0.7em 0.2em;
-    }
-
-
-    label {
-      display: inline-block;
-      font-size: 1.5em;
-      padding: 0 0.5em 0.25em 3.2em;
-      line-height: 1.8em;
-      position: relative;
-      &:before, &::before {
-          left: 1em;
-          position: absolute;
-          content: '';
-          background-color: var(--bg_main);
-          border: 1px solid var(--text_base);
-          width: 1.5em;
-          height: 1.5em;
-      }
-      input {
-        display: none;
-        width: 0;
-        height: 0;
-        background-color: var(--bg_main);
-        border-color: var(--text_base);
-
-      }
-
-      &:hover {
-        color: var(--accent);
-
-        input {
-          border: 1px solid var(--accent);
-        }
-        &:before {
-            border: 1px solid var(--accent);
-        }
-      }
-
-      &.checked:after {
-        font-family: 'Material Icons';
-        left: 0.45em;
-        top: -0.1em;
-        position: absolute;
-        content: 'check';
-        color: var(--text_filter_input_check);
-        font-size: 2.2em;
-      }
-
-      input[type=radio] {
-        &:before {
-          border-radius: 50%;
-        }
-
-        &:checked {
-          &:after {
-            position: absolute;
-            top: 0.6em;
-            left: 1.1em;
-            content: '';
-            background-color: var(--text_filter_input_check);
-            border-radius: 50%;
-            width: 1.5em;
-            height: 1.5em;
-          }
-        }
-      }
-    }
-
-    .input_num {
-      display: flex;
-      padding: 0.3em 1.25em;
-
-      ::placeholder {
-        color: var(--placeholder_color);
-      }
-      input {
-        color: var(--text_filter);
-        border: 1px solid var(--text_base);
-        background-color: var(--bg_main);
-        width: 5em;
-        padding: 0.25em 0.3em;
-        font-size: 1.4em;
-
-        &:first-child {
-          margin-right: 0.3em;
-        }
-      }
     }
 
     .brand {
@@ -1462,11 +1375,17 @@ footer {
   }
 }
 
+.form-error {
+    color: var(--warning);
+}
+
 #model_wrap {
   @import "_model.scss";
   color: var(--input-text);
 }
-
+.filter {
+    @import "inputs.scss";
+}
 @import "partcodes.scss";
 @import "supplies.scss";
 @import "auth.scss";

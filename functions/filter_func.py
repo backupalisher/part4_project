@@ -181,7 +181,7 @@ def get_orders(request):
             LEFT JOIN all_partcodes ap ON ap.id = cart.partcode_id
             LEFT JOIN all_models am ON am.model_id = cart.model_id
             WHERE user_id = {request.user.id};""")
-    ors = _query(f'SELECT * FROM orders WHERE orders.user_id = {request.user.id};')
+    ors = _query(f'SELECT * FROM orders WHERE orders.user_id = {request.user.id} ORDER BY id DESC;')
     for order in ors:
         hists = []
         total = 0
@@ -207,7 +207,9 @@ def get_orders(request):
 def order_cart(request):
     if 'cart_items' in request.POST:
         items = []
+        cart_ids = '('
         for item in json.loads(request.POST['cart_items']):
+            cart_ids += str(item['cart_id']) + ', '
             items.append(item['cart_id'])
             model_id = 'null'
             partcode_id = 'null'
@@ -221,6 +223,8 @@ def order_cart(request):
         order_q = f"""INSERT INTO orders(user_id, address, phone, cart_id, status) VALUES ({request.user.id}, 
         '{request.POST['address']}', '{request.POST['phone']}', '{items}', 'new') RETURNING ID"""
         order = _query(order_q)[0][0]
+        cart_ids += '0)'
+        _query(f"""DELETE FROM cart WHERE cart_id in {cart_ids}""")
         print(order)
         # send(request, order)
         return order

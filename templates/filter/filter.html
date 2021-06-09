@@ -81,15 +81,15 @@
                         {% endif %}
                         {% if filter.type == 'range' %}
                             <div class="input_num">
-                                <input type="number" class=""
+                                <input type="number" class="{{ filter.values.0 }}"
                                        name="range{{ filter.sub_id }}min"
-                                       id="range{{ forloop.counter }}min" placeholder="{{ filter.values.0.min }}"
-                                       min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
+                                       id="range{{ forloop.counter }}min" placeholder="{{ filter.values.0.0.min }}"
+                                       min="{{ filter.values.0.0.min }}" max="{{ filter.values.0.0.max }}"
                                 >
                                 <input type="number" class=""
                                        name="range{{ filter.sub_id }}max"
-                                       id="range{{ forloop.counter }}max" placeholder="{{ filter.values.1.max }}"
-                                       min="{{ filter.values.0.min }}" max="{{ filter.values.1.max }}"
+                                       id="range{{ forloop.counter }}max" placeholder="{{ filter.values.0.1.max }}"
+                                       min="{{ filter.values.0.0.min }}" max="{{ filter.values.0.1.max }}"
                                 >
                             </div>
                         {% endif %}
