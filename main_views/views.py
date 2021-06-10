@@ -123,6 +123,9 @@ def search(request):
     pr = result[0]
     er = result[1]
     mr = result[2]
+    for m in mr:
+        if m[8][0]:
+            m[8][0] = m[8][0].split('~')
     return 'main/search.html', {'partcode_result': pr, 'error_result': er, 'model_result': mr}
 
 
@@ -135,7 +138,7 @@ def index_partcode(request, partcode_id):
     partcode = get_partcode(partcode_id)[0]
     request.session['supplies'] = partcode
     print(partcode)
-    option_ru = []
+    options = []
     option_en = []
     models = []
     partcodes = []
@@ -143,7 +146,7 @@ def index_partcode(request, partcode_id):
     if partcode[10]:
         for opt in partcode[10]:
             if opt:
-                option_ru.append(opt.split('~'))
+                options.append(opt.split('~'))
     if partcode[11]:
         for opt in partcode[11]:
             if opt:
@@ -167,7 +170,7 @@ def index_partcode(request, partcode_id):
     b_set = set(tuple(x) for x in models)
     models = [list(x) for x in b_set]
 
-    return 'partcode/index.html', {'partcode': partcode, 'option_ru': option_ru, 'option_en': option_en,
+    return 'partcode/index.html', {'partcode': partcode, 'options': options, 'option_en': option_en,
                                    'models': models, 'partcodes': partcodes, 'prices': prices}
 
 

@@ -39,18 +39,11 @@
 {#                        <h4><span>Partcode:</span></h4>#}
                         <p>Partcode: {% if partcode.1 %}{{ partcode.1 }}{% elif partcode.2 %}{{ partcode.2 }}{% endif %}</p>
                     </div>
-                    {%  if option_en %}
-                        {% for option in option_en %}
+                    {%  if options %}
+                        {% for option in options %}
                             <div>
-                                <h4><span>{{ option.0 }}</span></h4>
-                                <p>{{ option.1 }}</p>
-                            </div>
-                        {% endfor %}
-                    {% elif option_ru %}
-                        {% for option in option_ru %}
-                            <div>
-                                <h4><span>{{ option.0 }}</span></h4>
-                                <p>{{ option.1 }}</p>
+                                <h4><span>{% if lang == 'en' and option.1 %}{{ option.1 }}{% else %}{{ option.0 }}{% endif %}</span></h4>
+                                <p>{% if lang == 'en' and option.3 %}{{ option.3 }}{% else %}{{ option.2 }}{% endif %}</p>
                             </div>
                         {% endfor %}
                     {% endif %}

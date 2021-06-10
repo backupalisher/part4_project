@@ -64,13 +64,15 @@
                                             {% endfor %}
                                         {% endif %}
                                     </div>
-                                    {% if model.8 %}
-                                        <div class="search_result_price">
-                                            <span class="text-grey">{% if lang == 'ru' %}Цена
-                                            {% else %}Estimated price{% endif %}:</span>
-                                            <span class="text-magenta">{{ model.8|d_mask }} &#x20bd;</span>
-                                        </div>
-                                    {% endif %}
+                                    {% for price in model.8 %}
+                                        {% if price %}
+                                            <div class="search_result_price">
+                                                <span>{% if lang == 'ru' %}Цена
+                                                    {% else %}Estimated price{% endif %}:</span>
+                                                <span>{{ price.1|d_mask }} &#x20bd;</span>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -187,10 +189,9 @@
                                 {% endif %}
                                 {% if index.14.0 %}
                                     <div class="search_result_price">
-                                            <span class="text-grey">{% if lang == 'ru' %}Цена
+                                        <span>{% if lang == 'ru' %}Цена
                                             {% else %}Estimated price{% endif %}:</span>
-                                        <span class="text-magenta">{{ index.14.0|d_mask }} &#x20bd;</span>
-                                        <!--small>({{ index.14 }})</small-->
+                                        <span>{{ index.14.0|d_mask }} &#x20bd;</span>
                                     </div>
                                 {% endif %}
                             </div>
