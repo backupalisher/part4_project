@@ -137,7 +137,6 @@ def index_about(request):
 def index_partcode(request, partcode_id):
     partcode = get_partcode(partcode_id)[0]
     request.session['supplies'] = partcode
-    print(partcode)
     options = []
     option_en = []
     models = []

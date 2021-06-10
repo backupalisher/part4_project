@@ -21,15 +21,24 @@ def model_index(request, model_id):
     model_images = model[4]
     brand_id = model[5]
     brand_name = model[6]
-    options_m = []
+    options_m_ru = []
+    options_m_en = []
     model_status = ''
+    model_status_en = ''
     if model[10]:
         for opt in model[10]:
             if opt:
                 optL = opt.split(':')
-                options_m.append(optL)
+                options_m_ru.append(optL)
                 if optL[0] == 'Status':
                     model_status = optL[1]
+    if model[10]:
+        for opt in model[11]:
+            if opt:
+                optL = opt.split(':')
+                options_m_en.append(optL)
+                if optL[0] == 'Status':
+                    model_status_en = optL[1]
     prices = []
     for p in model[8]:
         if p:
@@ -94,10 +103,11 @@ def model_index(request, model_id):
 
     if model_id:
         return 'models/item.html', {'model_name': model_name, 'model_main_image': model_main_image, 'modules': modules,
-                                    'options_m': options_m, 'brand_name': brand_name,
+                                    'options_m_ru': options_m_ru, 'options_m_en': options_m_en, 'brand_name': brand_name,
                                     'verrors': verrors, 'model_images': model_images, 'options': options,
                                     'partcatalog': partcatalog, 'captions': captions, 'brand_id': brand_id,
                                     'cur_module': cur_module, 'supplies': supplies, 'tab': tab, 'lang': lang,
-                                    'model_status': model_status, 'prices': prices, 'vendor': vendor}
+                                    'model_status': model_status, 'model_status_en': model_status_en, 'prices': prices,
+                                    'vendor': vendor}
     else:
         raise Http404('Страница отсутствует, с id: ' + str(model_id))

@@ -46,7 +46,7 @@
                     <span class="material-icons">grade</span>
                 </div>
                 {% if model_status %}
-                    <span class="status">{{ model_status }}</span>
+                    <span class="status">{% if lang == 'ru' %}{{ model_status }}{% else %}{{ model_status_en }}{% endif %}</span>
                 {% endif %}
             </div>
             <div class="model_head_content">
@@ -65,14 +65,25 @@
                     {% endif %}
                 </div>
                 <div class="table-tech">
-                    {% for opt_m in options_m %}
-                        {% if 'Status' not in opt_m.0 %}
-                            <div>
-                                <h4><span>{{ opt_m.0 }} </span></h4>
-                                <p>{{ opt_m.1 }}</p>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                    {% if lang == 'ru' %}{
+                        {% for opt_m in options_m_ru %}
+                            {% if 'Status' not in opt_m.0 %}
+                                <div>
+                                    <h4><span>{{ opt_m.0 }} </span></h4>
+                                    <p>{{ opt_m.1 }}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {% for opt_m in options_m_en %}
+                            {% if 'Status' not in opt_m.0 %}
+                                <div>
+                                    <h4><span>{{ opt_m.0 }} </span></h4>
+                                    <p>{{ opt_m.1 }}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
             
