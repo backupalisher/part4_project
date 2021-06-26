@@ -9,7 +9,7 @@ $(document).ready(function () {
             $('#body').addClass('dark-theme')
         }
     } else {
-        $('#body').addClass('light-theme')
+        $('#body').addClass('dark-theme')
     }
     $('.toggle-theme').click(function () {
         console.log('toggle-theme')
