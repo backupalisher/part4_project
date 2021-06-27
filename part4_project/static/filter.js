@@ -66,6 +66,7 @@ $(document).ready(function () {
             $('#filter_badge').removeClass('active');
         })
         $("#form_filter #submit, #form_filter #float").click(function (event) {
+            console.log($tranges, $tradios)
             if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0 || $brands.length > 0) {
                 $('.loading').addClass('active');
                 $('.not-found').removeClass('active');
@@ -79,7 +80,7 @@ $(document).ready(function () {
                 });
                 $.each($tranges, function (key, arr) {
                     $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key + arr[0] + '" type="' + arr[1] + '">'
-                        + arr[0] + ' ' + arr[2] + '</div>'
+                        + arr[2] + '</div>'
                 });
                 $.each($tradios, function (key, arr) {
                     $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key + arr[0] + '" type="' + arr[1] + '">' + arr[2] + '</div>'
@@ -200,7 +201,9 @@ $(document).ready(function () {
                 case 'number':
                     $key = el.attr('name')
                     $value = el.val()
-                    $title = el.parent().parent().parent().children('h6').text() + ' ' + el.parent().text().replace(/ +/g, ' ').trim()
+                    $title = el.parent().parent().children('h4').text() +
+                                el.parent().children('input:first-child').val() + '-' +
+                                el.parent().children('input:last-child').val()
                     set_array($key, $value, el.attr('type'), $title, '')
                     break;
                 case 'radio':
@@ -218,7 +221,7 @@ $(document).ready(function () {
                     }
                     $key = el.attr('name')
                     $value = el.attr('id')
-                    $title = el.parent().parent().parent().children('h6').text() + ' ' + el.parent().text().replace(/ +/g, ' ').trim()
+                    $title = el.parent().parent().parent().children('h4').text() + ' ' + el.parent().text().replace(/ +/g, ' ').trim()
                     set_array($key, $value, el.attr('type'), $title, '')
                     break;
             }
