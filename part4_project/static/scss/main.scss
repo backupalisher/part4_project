@@ -188,7 +188,7 @@
 
 body {
   font-size: 10px;
-  font-family: Roboto, sans-serif;
+  font-family: Ubuntu, Roboto, sans-serif;
   background-color: var(--bg_main);
   overflow-x: hidden;
   transition: all .5s ease 0s;
@@ -633,7 +633,7 @@ aside {
     }
 
     .filter_settings {
-      max-height: calc(100vh - 400px);
+      max-height: calc(100vh - 300px);
     }
 
     h3 {
@@ -1003,6 +1003,7 @@ main {
 
         p {
           margin: 0;
+          font-weight: 400;
           font-size: 1.14em;
           line-height: 1.3em;
         }
