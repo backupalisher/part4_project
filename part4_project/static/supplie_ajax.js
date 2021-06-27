@@ -95,7 +95,7 @@ function show_partcodes(partcodes, page, count) {
 function search_partcodes(s) {
     $partcodes_all = []
     for (let i = 0; i < $partcodes.length; i++) {
-        if ($partcodes[i][1].toLowerCase().indexOf(s.toLowerCase()) > -1 || $partcodes[i][2].toLowerCase().indexOf(s.toLowerCase()) > -1 || $partcodes[i][3].toLowerCase().indexOf(s.toLowerCase()) > -1) {
+        if ($partcodes[i][1].toLowerCase().indexOf(s.toLowerCase()) > -1 || $partcodes[i][5].toLowerCase().indexOf(s.toLowerCase()) > -1 || $partcodes[i][6].toLowerCase().indexOf(s.toLowerCase()) > -1) {
             $partcodes_all.push($partcodes[i])
         }
     }

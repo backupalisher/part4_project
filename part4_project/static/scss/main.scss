@@ -631,18 +631,6 @@ aside {
         justify-content: space-between;
         align-content: start;
     }
-    .brand_btn_bg {
-        height: 2.7em;
-        background-color: rgb(255, 255, 255);
-        margin: 0 10px 0 0;
-        text-align: right;
-        padding: 0 .5em;
-        width: 5em;
-        img {
-            max-height: 100%;
-            max-width: 100%;
-        }
-    }
 
     .filter_settings {
       max-height: calc(100vh - 400px);
@@ -660,22 +648,67 @@ aside {
       padding: 0.5em 0.7em 0.2em;
     }
 
-    .brand {
+    .brand, .brands {
       height: 18em;
       overflow-y: scroll;
       overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 1em;
+      padding: 0 6px;
 
       &::-webkit-scrollbar {
         display: none;
       }
 
       label {
+        position: relative;
+        padding: 0;
+        font-size: 0;
+        line-height: 0;
+        border-radius: 6px;
+        border: 2px solid var(--white_black);
+        padding: 4px;
+        background: var(--white_black);
+        cursor: pointer;
+        &::before {
+            background: none;
+            border: none;
+        }
         img {
-          max-height: 1em;
+          max-width: 100%;
+          cursor: pointer;
+        }
+        &:hover {
+            border: 2px solid var(--white_black);
+            box-shadow: 0 0 4px 1px var(--accent);
+            &:after {
+                display: none;
+                font-family: 'Material Icons';
+                left: 8px;
+                top: 15px;
+                position: absolute;
+                content: 'check';
+                color: var(--bg_section);
+                font-weight: 900;
+                font-size: 30px;
+            }
+        }
+        &.checked {
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 4px 1px var(--accent);
+            &::after {
+                display: none;
+                color: #00A745;
+                font-weight: 900;
+                left: 8px;
+                top: 15px;
+            }
         }
       }
+    }
+    .brands {
+        height: auto;
     }
   }
 }
@@ -780,6 +813,16 @@ header {
       background-color: var(--bg_form_input);
       font-size: 1.2em;
       padding: .2em .6em;
+    }
+  }
+}
+
+@media all and (max-width: 1440px) {
+  aside {
+    .filter {
+      .brand, .brands {
+          grid-template-columns: 1fr 1fr;
+      }
     }
   }
 }

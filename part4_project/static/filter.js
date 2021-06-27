@@ -14,7 +14,7 @@ $(document).ready(function () {
     // Brands checkbox
     $('.brand label input').click(function () {
         if ($brands.length > 0) {
-            idx = $brands.indexOf(parseInt($(this).val()))
+            idx = $brands.indexOf(parseInt($(this).attr('name')))
             if (idx < 0) {
                 $brands.push(parseInt($(this).val()))
             } else {
@@ -74,7 +74,7 @@ $(document).ready(function () {
                 $.each($tcheckboxs, function (key, arr) {
                     for (let i = 0; i < arr.length / 3; i++) {
                         $inHtml += '<div class="fbadge" key="' + key.replace(arr[i * 3], '') + '" id="' + key + '" type="' + arr[1 + i * 3] + '">'
-                            + arr[2 + i * 3] + '</div>'
+                            + arr[2] + '</div>'
                     }
                 });
                 $.each($tranges, function (key, arr) {
@@ -127,13 +127,14 @@ $(document).ready(function () {
         $key = $(this).attr('key');
         $id = $(this).attr('id').replace($key, '');
         $type = $(this).attr('type');
-        console.log($type, $id, $key)
         if ($type === 'number') {
             $(this).remove();
             document.getElementsByName($key+'min')[0].value = '';
             document.getElementsByName($key+'max')[0].value = '';
             delete $ranges[$key]
             $("#form_filter #float").click();
+        } else if ($type === 'checkbox' && $key.indexOf('checkbox') < 0) {
+            document.getElementById($key).click();
         } else {
             document.getElementById($id).click();
         }
@@ -156,10 +157,36 @@ $(document).ready(function () {
     function change_input(el) {
         if (el.parent().parent().parent().hasClass('brand')) {
             $("#reset").addClass('active')
-            $key = el.attr('name');
-            $value = el.attr('id');
-            $title = el.parent().text().replace(/ +/g, ' ').trim();
-            $.extend($tcheckboxs, {[$key + $value]: [$value, el.attr('type'), $title]})
+            $value = el.attr('value');
+            $title = el.attr('id');
+            $key = el.attr('name') + $title;
+            $type = el.attr('type');
+            if (Object.getOwnPropertyNames($tcheckboxs).length === 0) {
+                $.extend($tcheckboxs, {[$key]: [$value, $type, $title]})
+            } else {
+                let idx = ''
+                let index = null
+                $.each($tcheckboxs, function (k, v) {
+                    if ($key === k) {
+                        idx = k
+                        if (Array.isArray(v)) {
+                            $.each(v, function (i, val) {
+                                if (val === $value) {
+                                    index = i
+                                }
+                            })
+                        }
+                    }
+                })
+                if (idx !== '' && index !== null) {
+                    $tcheckboxs[$key].splice(index, 1);
+                    delete $tcheckboxs[$key];
+                } else if (idx !== '') {
+                    $.extend($tcheckboxs, {[$key]: [$value, $type, $title]})
+                } else {
+                    $.extend($tcheckboxs, {[$key]: [$value, $type, $title]})
+                }
+            }
             $('#form_filter #float').trigger('click');
         } else {
             switch (el.attr('type')) {
@@ -200,7 +227,6 @@ $(document).ready(function () {
     }
 
     function set_array(key, value, type, title, action) {
-        console.log(key, value, type, title, action)
         $("#reset").addClass('active')
         $("#filter_badge").addClass('active')
         $newelem = {[key]: value}
@@ -247,8 +273,6 @@ $(document).ready(function () {
                         delete $tcheckboxs[k + v]
                     }
                 });
-                // console.log($checkboxs);
-                // console.log($tcheckboxs);
                 break;
             case 'number':
                 let min = ''
@@ -305,7 +329,6 @@ $(document).ready(function () {
                     delete $tranges[key]
                     delete $ranges[key]
                 }
-                // console.log($tranges);
                 break;
             case 'radio':
                 if (Object.getOwnPropertyNames($radios).length === 0) {
@@ -330,7 +353,6 @@ $(document).ready(function () {
                         $.extend($tradios, {[key]: [value, type, title]})
                     }
                 }
-                // console.log($tradios);
                 break;
         }
         $('#form_filter #float').trigger('click')
