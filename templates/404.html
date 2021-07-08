@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}
     Page 404
 {% endblock %}
 
 {% block content %}
-    <h1>404</h1>
+    <div class="not_found">
+        <img src="{{ MEDIA_URL }}icons/not_found.svg" alt="not found">
+        <h3>{% trans "404 Not found" %}...</h3>
+    </div>
 {% endblock %}

@@ -2,62 +2,20 @@
 
 {#Model list#}
 <div class="card-model-list">
-{#    {% for model in brand_models %}#}
-{#        <div class="col-lg-3 col-md-4 col-sm-6 p-2">#}
-{#            <div class="card card-model-item btn">#}
-{#                <a href="/model/{{ model.1 }}" class="brand_model_link"#}
-{#                   style="background-image:url('{% if model.4 is not None %}{{ MEDIA_URL }}images/{{ model.4|cut:';' }}{% else %}{{ MEDIA_URL }}images/no-image.png{% endif %}')">#}
-{#                </a>#}
-{#                <a href="/model/{{ model.1 }}"><h6 class="brand_model_title">{{ model.2 }}</h6></a>#}
-{#            </div>#}
-{#        </div>#}
-{#    {% endfor %}#}
+    <div class="not-found">{% if lang == 'ru' %}Ничего не найдено{% else %}Nothing found{% endif %}</div>
     <div class="row"></div>
-    <div id="load_more">Загрузка ...</div>
+    <div id="load_more">&nbsp;</div>
 </div>
 {#Model list end#}
 
-{#Paginator#}
-{% if pages.1 > 0 %}
-    <div class="row">
-        <nav class="p-4 w-100">
-            <ul class="pagination justify-content-center">
-                {% for i in pages %}
-                    {% if page >= 3 and i != page and i == 0 %}
-                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a>
-                        </li>
-                        {% if page > 3 %}
-                            <li class="page-item"><a class="page-link">...</a></li>
-                        {% endif %}
-                    {% endif %}
-                    {% if i > page|minus:3 and i < page|plus:3 and  i != page %}
-                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a>
-                        </li>
-                    {% endif %}
-                    {% if i == page %}
-                        <li class="page-item active"><a class="page-link"
-                                                        href="?page={{ i }}">{{ i|add:1 }}</a>
-                        </li>
-                    {% endif %}
-                    {% if i == pages|length|minus:1 and page < pages|length|minus:3 %}
-                        {% if page|minus:1 <= pages|length and page < pages|length|minus:4 %}
-                            <li class="page-item"><a class="page-link">...</a></li>
-                        {% endif %}
-                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i|add:1 }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </nav>
-    </div>
-{% endif %}
-{#Paginator end#}
 
 {% block ajaxjs %}
     <script type="text/javascript">
         function jqueryLoaded() {
             brand_models = "{{ brand_models }}"
             media_url = "{{ MEDIA_URL }}"
+            currency = "{{ currency }}"
+            lang = "{{ lang }}"
             $ajax_script = "{% static 'model_ajax.js' %}"
             $.getScript($ajax_script)
         }

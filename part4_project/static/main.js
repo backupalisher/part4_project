@@ -1,11 +1,36 @@
 $(document).ready(function () {
-    let userLang = navigator.language || navigator.userAgent;
-    let brand_models = ""
-    let media_url = "{{ MEDIA_URL }}"
-    let $loading = false
-    let $page_count = 0
+    //Toggle themes
+    if (Cookies.get('theme')) {
+        if (Cookies.get('theme') === 'light-theme') {
+            $('#body').removeClass('dark-theme')
+            $('#body').addClass('light-theme')
+        } else {
+            $('#body').removeClass('light-theme')
+            $('#body').addClass('dark-theme')
+        }
+    } else {
+        $('#body').addClass('dark-theme')
+    }
+    $('.toggle-theme').click(function () {
+        console.log('toggle-theme')
+        if ($('#body').hasClass('dark-theme')) {
+            $('#body').removeClass('dark-theme')
+            $('#body').addClass('light-theme')
+            Cookies.set('theme', 'light-theme', {expires: 365})
+        } else {
+            $('#body').removeClass('light-theme')
+            $('#body').addClass('dark-theme')
+            Cookies.set('theme', 'dark-theme', {expires: 365})
+        }
+    })
     $pathname = window.location.pathname;
-    //Wait for element exist
+
+    // Toggle language
+    $('#language_select label').click(function () {
+        $('#language_select .custom-select').toggleClass('active')
+    })
+
+    // Wait for element exist
     var waitForEl = function (selector, callback) {
         if (jQuery(selector).length) {
             callback();
@@ -19,7 +44,7 @@ $(document).ready(function () {
     var inProgress = false;
     var startFrom = 10;
     $('#to_up').click(function () {
-        $('html, body').animate( { scrollTop: 0 }, 200 );
+        $('html, body').animate({scrollTop: 0}, 200);
     })
     $(window).scroll(function () {
         if ($(window).scrollTop() >= 200 && !$('#to_up').hasClass('visible')) {
@@ -36,188 +61,11 @@ $(document).ready(function () {
         }
     });
 
-    //Scrollbar
+    // Scrollbar
     jQuery(document).ready(function () {
         jQuery('.scrollbar-macosx').scrollbar();
     });
 
-
-
-    // Ajax filter
-    if ($('#filter_model').length) {
-        $checkboxs = {}
-        $ranges = {}
-        $radios = {}
-        $("#form_filter input").change(function () {
-            console.log('change')
-            if ($(this).attr('type') === 'checkbox') {
-                $key = $(this).attr('name')
-                $value = $(this).attr('id')
-                set_array($key, $value, $(this).attr('type'))
-            }
-            if ($(this).attr('type') === 'number') {
-                $key = $(this).attr('name')
-                $value = $(this).val()
-                set_array($key, $value, $(this).attr('type'))
-            }
-            if ($(this).attr('type') === 'radio') {
-                $key = $(this).attr('name')
-                $value = $(this).attr('id')
-                set_array($key, $value, $(this).attr('type'))
-            }
-
-            function set_array(key, value, type) {
-                // console.log(key, value, type)
-                $newelem = {[key]: value}
-                switch (type) {
-                    case 'checkbox':
-                        if (Object.getOwnPropertyNames($checkboxs).length === 0) {
-                            $.extend($checkboxs, {[key]: [value]})
-                        } else {
-                            let idx = ''
-                            let index = null
-                            $.each($checkboxs, function (k, v) {
-                                if (key === k) {
-                                    idx = k
-                                    if (Array.isArray(v)) {
-                                        $.each(v, function (i, val) {
-                                            if (val === value) {
-                                                index = i
-                                            }
-                                        })
-                                    }
-                                }
-                            })
-                            console.log(idx)
-                            if (idx !== '' && index !== null) {
-                                $checkboxs[idx].splice(index, 1);
-                            } else if (idx !== '') {
-                                $checkboxs[idx].push(value)
-                                // $.extend($checkboxs, val)
-                            } else {
-                                $.extend($checkboxs, {[key]: [value]})
-                            }
-                        }
-                        break;
-                    case 'number':
-                        let min = ''
-                        let max = ''
-                        if (key.indexOf('min') > 0) {
-                            min = key.replace('min', '')
-                        }
-                        if (key.indexOf('max') > 0) {
-                            max = key.replace('max', '')
-                        }
-                        if (Object.getOwnPropertyNames($ranges).length === 0) {
-                            if (min !== '') {
-                                $.extend($ranges, {[min]: [parseInt(value, 10)]})
-                                $ranges[min].push(0)
-                            } else if (max !== '') {
-                                $.extend($ranges, {[max]: [0]})
-                                $ranges[max].push(parseInt(value, 10))
-                            }
-                        } else {
-                            let idx = ''
-                            if (min !== '') {
-                                $.each($ranges, function (key, arr) {
-                                    if (key === min) {
-                                        idx = key
-                                    }
-                                })
-                                if (idx !== '') {
-                                    $ranges[idx][0] = parseInt(value, 10)
-                                } else {
-                                    $.extend($ranges, {[min]: [parseInt(value, 10)]})
-                                    $ranges[min].push(0)
-                                }
-                            } else if (max !== '') {
-                                $.each($ranges, function (key, arr) {
-                                    if (key === max) {
-                                        idx = key
-                                    }
-                                })
-                                if (idx !== '') {
-                                    $ranges[idx][1] = parseInt(value, 10)
-                                } else {
-                                    $.extend($ranges, {[max]: [0]})
-                                    $ranges[max].push(parseInt(value, 10))
-                                }
-                            }
-                        }
-                        console.log($ranges)
-                        break
-                    case 'radio':
-                        if (Object.getOwnPropertyNames($radios).length === 0) {
-                            $.extend($radios, $newelem)
-                        } else {
-                            let idx = ''
-                            $.each($radios, function (k, item) {
-                                if (key === k) {
-                                    idx = k
-                                }
-                            })
-                            if (idx !== '') {
-                                $radios[idx] = value;
-                            } else {
-                                $.extend($radios, $newelem)
-                            }
-                        }
-                        break
-                }
-            }
-            console.log($checkboxs)
-            console.log($ranges)
-            console.log($radios)
-
-            if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0) {
-                $('#filter_model a.btn').removeClass("disabled");
-            } else {
-                $('#filter_model a.btn').addClass("disabled");
-            }
-        })
-        $("#form_filter #reset").click(function () {
-            $checkboxs = {}
-            $ranges = {}
-            $radios = {}
-            $("form").trigger("reset");
-        })
-        $("#form_filter #submit").click(function (event) {
-            if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0) {
-                console.log('test')
-                event.preventDefault();
-                let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                $.ajax({
-                    type: 'POST',
-                    url: '',
-                    headers: {'X-CSRFToken': csrftoken},
-                    data: {
-                        "checkboxs": JSON.stringify($checkboxs),
-                        "ranges": JSON.stringify($ranges),
-                        "radios": JSON.stringify($radios)
-                    },
-                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                    success: function (data) {
-                        $("#filter_model_result").html('').append(
-                            data
-                        );
-                    }
-                });
-            }
-        })
-    }
-
-
-    //Toggle themes
-    $('#toggle-theme').click(function () {
-        console.log('change')
-        if ($('#body').hasClass('dark-theme')) {
-            $('#body').removeClass('dark-theme')
-            $('#body').addClass('light-theme')
-        } else {
-            $('#body').removeClass('light-theme')
-            $('#body').addClass('dark-theme')
-        }
-    })
 
     //Search position and vals save
     if ($pathname.indexOf('search') > 0) {
@@ -234,28 +82,30 @@ $(document).ready(function () {
         }
     }
 
-    // if ($pathname.indexOf('brands') > 0) {
-    //     $("form").submit(function (event) {
-    //             /* Serialize the submitted form control values to be sent to the web server with the request */
-    //             let formValues = $(this).serialize();
-    //             // Stop form from submitting normally
-    //             event.preventDefault();
-    //             let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    //             $.ajax({
-    //                 type: 'POST',
-    //                 url: '',
-    //                 csrfmiddlewaretoken: csrftoken,
-    //                 headers: {'X-CSRFToken': csrftoken},
-    //                 data: {formValues},
-    //                 success: function (data) {
-    //                     $("#brands").html('').append(
-    //                         data
-    //                     );
-    //                 }
-    //             });
-    //         }
-    //     )
-    // }
+    // Brands
+    // brands$ = $('.brands .brand').length
+    // $('.brands').css('height', (brands$ - 1) * 134.5)
+    // $('.brands').css('height', $('.brands').parent().width())
+    // $( window ).resize(function() {
+    //     $('.brands').css('height', $('.brands').parent().width())
+    // })
+
+    // Active ursl
+    $('#filters h2').removeClass('active')
+    $('#filters h2 span').removeClass('active')
+    $('.filter').removeClass('active')
+    if ($pathname.indexOf('market') > 0) {
+        $('#nav_market').parent().addClass('active')
+        $('.filter_market').addClass('active')
+    } else if ($pathname.indexOf('supplies') > 0) {
+        $('#nav_consumables').parent().addClass('active')
+        $('.filter_partcodes').addClass('active')
+    } else if ($pathname.indexOf('about') > 0) {
+        $('#nav_about').parent().addClass('active')
+    } else {
+        $('#nav_models').parent().addClass('active')
+        $('.filter_model').addClass('active')
+    }
 })
 
 function getUrlVars() {
@@ -274,7 +124,7 @@ $('#detailTabs a').click(function () {
     $id = $(this).attr('aria-controls')
     $('.tab-pane').removeClass('hide')
     $('.tab_controls a').removeClass('active')
-    $('#controls_'+$id+'-tab').addClass('active')
+    $('#controls_' + $id + '-tab').addClass('active')
 })
 $('.tab_controls a').click(function () {
     $id = $(this).attr('data-toggle')
@@ -283,7 +133,7 @@ $('.tab_controls a').click(function () {
         $($href).toggleClass('hide')
         $(this).removeClass('active')
     } else {
-        $('#'+$id).click()
+        $('#' + $id).click()
     }
 })
 
@@ -291,3 +141,115 @@ $('.tab_controls a').click(function () {
 $('#filter-title').click(function () {
     $('#filter_model').toggleClass('show')
 })
+
+// Change url
+$('.nav-tabs a').click(function () {
+    window.history.pushState('', '', $pathname + '?tab=' + $(this).attr('aria-controls'))
+});
+
+// Scroll horizontal
+$(document).ready(function () {
+    $('.brands').on('.brands', function (e, delta) {
+        console.log(e, delta)
+        this.scrollLeft -= (delta * 40);
+        e.preventDefault();
+    });
+});
+
+// error_result models toggle show
+$('.error_result_models_show').click(function () {
+    $('#' + $(this).attr('aria-label')).toggle()
+    $(this).children('.btn_show').toggle()
+    $(this).children('.btn_hide').toggle()
+});
+
+
+$('#send_contact').click(function (event) {
+    if ($('.c_name').val().length > 3 && ($('.c_phone').val().length > 8 || $('.c_email').val().length > 4)) {
+        console.log(event)
+        event.stopPropagation();
+        event.preventDefault();
+        let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        $.ajax({
+            type: 'POST',
+            url: '/sendmail/contact',
+            headers: {'X-CSRFToken': csrftoken},
+            data: {
+                "name": JSON.stringify($('.c_name').val()),
+                "phone": JSON.stringify($('.c_phone').val()),
+                "email": JSON.stringify($('.c_email').val()),
+                'message': JSON.stringify($('.c_message').val()),
+                'url': JSON.stringify(location.pathname),
+            },
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            success: function (data) {
+                $(".c_successful").toggleClass('active')
+                $('.c_form').css('display', 'none')
+            }
+        });
+    } else {
+        console.log('invalid')
+    }
+})
+$('.contact_close').click(function () {
+    $('.main_overlay').toggleClass('active')
+    $('.modal.contact').toggleClass('active')
+});
+
+// Show-hide filter
+$('.filter_show').click(function () {
+   $('.filter_show').toggleClass('active');
+   $('#filter_model').toggleClass('active');
+});
+
+// Show-hide model list for search
+$(document).on('click','.search_result_model button', function() {
+    $('#'+$(this).val()).toggle()
+});
+
+// Show-hide main menu
+$('.btn_menu').click(function () {
+    $('.btn_menu').toggleClass('active');
+    $('.top_menu').toggleClass('active');
+})
+
+// Show hide main search
+$('.btn_search').click(function () {
+    $('.form_search').toggleClass('active');
+})
+
+// Nav's set active
+$(document).ready(function () {
+    $('.nav-item').removeClass('active');
+    if ($pathname.indexOf('model') > 0) {
+        $('.nav-item.models').addClass('active');
+    } else if ($pathname.indexOf('partcodes') > 0) {
+        $('.nav-item.consumables').addClass('active');
+    } else if ($pathname.indexOf('market') > 0) {
+        $('.nav-item.market').addClass('active');
+    } else {
+        $('.nav-item.models').addClass('active');
+    }
+})
+
+// Show hide filter
+$('.btn_filter, .btn_close_filter').click(function() {
+    $('aside').toggleClass('active');
+})
+
+// Expand modules
+$('.parts_module').click(function() {
+    $(this).toggleClass('active')
+})
+
+$('.module-title').click(function() {
+    $text = $(this).html()
+    $('#selected_module').html($text)
+})
+
+
+// Show hide account menu
+$('.account_btn').click(function () {
+    $('.account_menu').toggleClass('active')
+})
+

@@ -1,55 +1,41 @@
-{% extends "base.html" %}
-
+{% extends 'registration/index.html' %}
+{% load static compress i18n %}
 {% block content %}
-
+    <h1>{% if lang == 'ru' %}Авторизация{% else %}Authorization{% endif %}</h1>
     {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
+        {% for field in form %}
+            {% for error in field.errors %}
+                <p class="text-danger"> {{ error }} </p>
+            {% endfor %}
+        {% endfor %}
     {% endif %}
 
     {% if next %}
-        {% if user.is_authenticated %}
-            <p>Your account doesn't have access to this page. To proceed,
-                please login with an account that has access.</p>
-        {% else %}
-            <p>Please login to see this page.</p>
-        {% endif %}
+        <p>Что-то пошло не так!</p>
     {% endif %}
 
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        <table>
-
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-            </tr>
-
-            <tr>
-                <td>{{ form.password.label_tag }}</td>
-                <td>{{ form.password }}</td>
-            </tr>
-        </table>
-
-        <input type="submit" value="login"/>
-        <input type="hidden" name="next" value="{{ next }}"/>
-    </form>
-
-    {# Assumes you setup the password_reset view in your URLconf #}
-    <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
-
-    <p><a href="{% url 'register' %}">Зарегистрироваться</a></p>
-
-{% endblock %}
-
-{% block breadcrumbs %}
-    <div class="container">
-        <div class="row">
-            <nav class="nav-breadcrumb w-100">
-                <ul>
-                    <li class="nav-breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="nav-breadcrumb-item active">Вход</li>
-                </ul>
-            </nav>
+        <div class="form-group">
+            <label for="id_username">{% if lang == 'ru' %}Имя пользователя{% else %}Username{% endif %}:</label>
+            <input type="text" name="username" id="id_username" class="form-control">
+            <!--small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small-->
         </div>
-    </div>
+        <div class="form-group">
+            <label for="id_password">{% if lang == 'ru' %}Пароль{% else %}Password{% endif %}:</label>
+            <input type="password" name="password" id="id_password" class="form-control">
+        </div>
+        {% if error %}
+            <div class="form-group form-error">
+                {% if lang == 'ru' %}{{ error_ru }}{% else %}{{ error }}{% endif %}
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+            <div class="form-group g-recaptcha" data-sitekey="6Ldk2MQaAAAAANSedI-aLE9pgWUUrGkmG_Yo8zGI"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">{% if lang == 'ru' %}Войти{% else %}Login{% endif %}</button>
+    </form>
+{% endblock %}
+{% block search %}
 {% endblock %}

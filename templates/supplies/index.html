@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {% if lang == 'ru' %}Расходные материалы{% else %}Consumables{% endif %}
+{% endblock %}
+{% block description %}
+    <meta name="description" content="Каталоги картриджей Brother, Canon, Dell, Epson, HP, IBM, Konica Minolta, Kyocera Mita, Lexmark, OKI, Olivetti, Panasonic, Philips, Ricoh, Samsung, Sharp, Toshiba, Xerox">
+{% endblock %}
+{% block keyword %}
+    <meta name="keyword" content="каталог картриджей, расходные материалы для оргтехники, картридж, картриджи, картриджи для принтеров, картридж для принтера">
+{% endblock %}
+{% block content %}
+    <div class="partcodes_wrap">
+        <div class="loading"><img src="{{ MEDIA_URL }}icons/loading_gear.svg" alt="loading" class="loading_gear"></div>
+        <div class="partcode_search">
+            <input type="text" id="supplie_search" class="form-control hover_btn"
+                   placeholder="{% if lang == 'ru' %}найти расходник{% else %}find supplies{% endif %}">
+        </div>
+        <div class="partcodes">
+            <div class="scrollbar-macosx">
+                <div id="supplie_table">
+                    {% include 'supplies/supplie_items.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

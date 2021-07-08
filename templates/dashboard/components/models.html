@@ -1,0 +1,39 @@
+{% load static mathfilters %}
+{% csrf_token %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-auto">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="model_search">
+                <label for="model_search">Search model:</label>
+            </div>
+            <div class="scrollbar-macosx">
+                <div id="model_list"></div>
+            </div>
+        </div>
+        <div class="col">
+            <div id="model_detail_result"></div>
+        </div>
+    </div>
+</div>
+
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function ModelLoaded() {
+            models = "{{ models }}"
+            $ajax_script = "{% static 'dashboard/models.js' %}"
+            $.getScript($ajax_script)
+        }
+
+        function checkMJquery() {
+            if (window.jQuery) {
+                ModelLoaded();
+            } else {
+                window.setTimeout(checkMJquery, 100);
+            }
+        }
+
+        checkMJquery();
+    </script>
+{% endblock %}

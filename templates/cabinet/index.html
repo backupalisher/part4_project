@@ -1,0 +1,109 @@
+{% load static compress i18n %}
+<!DOCTYPE html>
+<html lang="ru" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    {#    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">#}
+    {% block description %}
+        <meta name="description" content="{% trans "Description homepage" %}">
+    {% endblock %}
+    {% block keyword %}
+        <meta name="keyword" content="{% trans "Keyword homepage" %}">
+    {% endblock %}
+    {% compress css %}
+        {#        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">#}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.scrollbar.css' %}">
+        <link type="text/x-scss" href="{% static 'scss/main.scss' %}" rel="stylesheet" media="all">
+    {% endcompress %}
+    <title>
+        {% block title %}
+            Part4 |
+            {% if tab == 'profile' %}
+                {% if lang == 'ru' %}Профиль{% else %}Profile {% endif %}
+            {% elif tab == 'cart' %}
+                 {% if lang == 'ru' %}Корзина{% else %}Cart {% endif %}
+             {% elif tab == 'favorite' %}
+                 {% if lang == 'ru' %}Избранное{% else %}Favorite {% endif %}
+             {% endif %}
+        {% endblock %}
+    </title>
+</head>
+<body id="body" class="cabinet">
+    <div class="container">
+        <div class="grid_wrap">
+            <aside>
+                <a href="/" class="logotype"></a>
+                {% block tabs %}
+                    {% include 'cabinet/menu.html' %}
+                {% endblock %}
+            </aside>
+            <main>
+                <a href="/" class="close_window"><span class="material-icons-outlined cart_modal_close">close</span></a>
+                {% block content %}
+                     {% if tab == 'profile' %}
+                         {% include 'cabinet/profile.html' %}
+                     {% elif tab == 'cart' %}
+                         <div class="cart_wrap">
+                         {% include 'cabinet/cart.html' %}
+                         </div>
+                     {% elif tab == 'favorite' %}
+                         {% include 'cabinet/favorite.html' %}
+                     {% endif %}
+                {% endblock %}
+            </main>
+        </div>
+    </div>
+
+{% compress js inline %}
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    {#    <script src="{% static 'js/bootstrap.min.js' %}"></script>#}
+    <script src="{% static 'js/jquery.scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/js.cookie.min.js' %}"></script>
+    <script src="{% static 'main.js' %}"></script>
+    <script src="{% static 'cabinet.js' %}"></script>
+{% endcompress %}
+
+{% if debug is not True %}
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () {
+                (m[i].a = m[i].a || []).push(arguments)
+            };
+            m[i].l = 1 * new Date();
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(65013031, "init", {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true
+        });
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/65013031" style="position:absolute; left:-9999px;" alt=""/></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-170137027-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-170137027-1');
+    </script>
+{% endif %}
+
+</body>
+</html>

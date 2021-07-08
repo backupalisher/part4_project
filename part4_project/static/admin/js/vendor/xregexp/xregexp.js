@@ -1868,7 +1868,7 @@ XRegExp = XRegExp || (function (undef) {
     "use strict";
 
 /**
- * Returns a match detail object composed of the provided values.
+ * Returns a match partcode object composed of the provided values.
  * @private
  */
     function row(value, name, start, end) {

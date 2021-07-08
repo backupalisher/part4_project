@@ -1,0 +1,17 @@
+{% load static mfilters %}
+<div class="supplies_items">
+    <h4 class="supplies_title">{% if lang == 'ru' %}Парткод{% else %}Partcode{% endif %}</h4>
+    <h4 class="supplies_title">{% if lang == 'ru' %}Название{% else %}Title{% endif %}</h4>
+    {% for item in supplies %}
+        <div class="supplies_code"><a href="/partcode/{{ item.0 }}">{{ item.1 }}</a></div>
+        <div class="supplies_name">
+            <span>
+                {% if lang == 'ru' %}
+                    {% if item.17 %}{{ item.17 }}{% elif item.16 %}{{ item.16 }}{% endif %}
+                {% else %}
+                    {% if item.16 %}{{ item.16 }}{% elif item.17 %}{{ item.17 }}{% endif %}
+                {% endif %}
+            </span>
+        </div>
+    {% endfor %}
+</div>

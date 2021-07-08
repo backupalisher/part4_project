@@ -1,0 +1,31 @@
+{% load static %}
+
+<div id="partcode_items">
+    <div class="not-found">{% if lang == 'ru' %}Ничего не найдено{% else %}Nothing found{% endif %}</div>
+    <div class="row"></div>
+    <div id="load_more">&nbsp;</div>
+</div>
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function SupplieJqueryLoaded() {
+            $partcodes = "{{ partcodes }}"
+            $media_url = "{{ MEDIA_URL }}"
+            $lang = "{{ lang }}"
+            $ajax_script = "{% static 'supplie_ajax.js' %}"
+            $.getScript($ajax_script)
+            {#$('.collapse').collapse()#}
+        }
+
+        function SupplieCheckJquery() {
+            if (window.jQuery) {
+                SupplieJqueryLoaded();
+            } else {
+                window.setTimeout(SupplieCheckJquery, 100);
+            }
+        }
+
+        SupplieCheckJquery();
+    </script>
+    {#    <script src="{% static 'model_ajax.js' %}"></script>#}
+{% endblock %}

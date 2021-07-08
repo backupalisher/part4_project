@@ -1,0 +1,56 @@
+{% load static %}
+<div class="table-responsive">
+    <table class="table table-dark table-hover align-middle caption-top">
+        {% csrf_token %}
+        <caption>Brands:</caption>
+        <thead>
+        <tr>
+            <td>Name</td>
+            <td colspan="2">Logotype</td>
+            <td>action</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for brand in brands %}
+            <tr>
+                <td><input type="text" value="{{ brand.name }}" id="name{{ brand.id }}"></td>
+                <td>{% if brand.logotype is not None %}
+                        <img src="{{ MEDIA_URL }}brands/{{ brand.logotype }}" class="previews">
+                    {% else %}
+                        <img src="{{ MEDIA_URL }}no_image.svg" class="previews">
+                    {% endif %}
+                </td>
+                <td>
+                    <form action="./brands" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input name="filetoupload" type="file">
+                        <button type="submit" class="buttonformatting" onclick="showImage();">Download</button></a>
+                    </form>
+                    <input type="text" value="{{ brand.logotype }}" id="logotype{{ brand.id }}"></td>
+                <td>
+                    <button class="btn btn-success save" id="{{ brand.id }}">save</button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function BrandsLoaded() {
+            $ajax_script = "{% static 'dashboard/brands.js' %}"
+            $.getScript($ajax_script)
+        }
+
+        function checkBJquery() {
+            if (window.jQuery) {
+                BrandsLoaded();
+            } else {
+                window.setTimeout(checkBJquery, 100);
+            }
+        }
+
+        checkBJquery();
+    </script>
+{% endblock %}

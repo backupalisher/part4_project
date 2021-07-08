@@ -1,17 +1,15 @@
-<div class="row">
-    {% for brand in brands %}
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-3">
-            <div class="card btn">
-                <a href="/brand/{{ brand.id }}">
-                    <!--h5 class="text-center">{{ brand.name }}</h5-->
-                    {% if brand.logotype is not None %}
-                        <img src="{{ MEDIA_URL }}brands/{{ brand.logotype }}" class="img-fluid"
-                             alt="{{ brand.name }}">
-                    {% else %}
-                        <img src="{{ MEDIA_URL }}no-image.png" class="img-fluid" alt="{{ brand.name }}">
-                    {% endif %}
-                </a>
+<div class="scrollbar-macosx">
+    <div class="brands">
+        {% for brand in brands %}
+            <div class="brand hover_btn">
+                <label for="{{ brand.name }}" {% if brand.logotype is not None %}
+                       style="background-image: url('{{ MEDIA_URL }}brands/{{ brand.logotype }}')"
+                {% else %}
+                       style="background-image: url('{{ MEDIA_URL }}no-image.png')">
+                {% endif %}>
+                <input type="checkbox" id="{{ brand.name }}" name="{{ brand.id }}">
+                </label>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 </div>

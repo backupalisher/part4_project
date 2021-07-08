@@ -17,7 +17,7 @@ start_time = datetime.datetime.now()
 # Create your views here.
 def brands(request):
     title = 'Бренды'
-    brands = models.Brands.objects.all()
+    brands = models.Brands.objects.filter(logotype__isnull=False)
     if request.is_ajax():
         if request.method == 'POST':
             formdata = request.POST

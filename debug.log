@@ -1,0 +1,68 @@
+2021-01-31 17:29:10,755 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2021-01-31 17:31:25,403 django.request ERROR    Internal Server Error: /admin/login/
+Traceback (most recent call last):
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\views\decorators\cache.py", line 44, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\contrib\admin\sites.py", line 407, in login
+    return LoginView.as_view(**defaults)(request)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\views\generic\base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\utils\decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\views\decorators\debug.py", line 76, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\utils\decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\utils\decorators.py", line 130, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\utils\decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\views\decorators\cache.py", line 44, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\contrib\auth\views.py", line 63, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\views\generic\base.py", line 97, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\views\generic\edit.py", line 133, in get
+    return self.render_to_response(self.get_context_data())
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\contrib\auth\views.py", line 97, in get_context_data
+    current_site = get_current_site(self.request)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\contrib\sites\shortcuts.py", line 13, in get_current_site
+    return Site.objects.get_current(request)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\contrib\sites\models.py", line 58, in get_current
+    return self._get_site_by_id(site_id)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\contrib\sites\models.py", line 30, in _get_site_by_id
+    site = self.get(pk=site_id)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\pythonProject\part4_project\venv\lib\site-packages\django\db\models\query.py", line 415, in get
+    raise self.model.DoesNotExist(
+django.contrib.sites.models.Site.DoesNotExist: Site matching query does not exist.
+2021-01-31 17:31:50,159 django.utils.autoreload INFO     C:\pythonProject\part4_project\part4_project\settings.py changed, reloading.
+2021-01-31 17:31:50,159 asyncio      DEBUG    Using proactor: IocpProactor
+2021-01-31 17:31:50,815 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2021-01-31 17:32:01,041 django.utils.autoreload INFO     C:\pythonProject\part4_project\part4_project\settings.py changed, reloading.
+2021-01-31 17:32:01,042 asyncio      DEBUG    Using proactor: IocpProactor
+2021-01-31 17:32:01,744 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2021-01-31 17:32:05,830 django.request WARNING  Not Found: /static/admin/css/login.css
+2021-01-31 17:32:05,605 django.request ERROR    Internal Server Error: /static/admin/css/base.css
+2021-01-31 17:32:05,753 django.request ERROR    Internal Server Error: /static/admin/css/responsive.css
+2021-01-31 17:32:15,400 django.request WARNING  Not Found: /static/admin/css/base.css
+2021-01-31 17:32:15,401 django.request WARNING  Not Found: /static/admin/css/responsive.css
+2021-01-31 17:32:15,402 django.request WARNING  Not Found: /static/admin/css/dashboard.css
+2021-01-31 17:32:24,934 django.request WARNING  Not Found: /static/CACHE/css/output.bff9705e61f0.css
+2021-01-31 17:32:24,936 django.request WARNING  Not Found: /static/CACHE/css/output.23f2e3ea33e7.css
+2021-01-31 17:36:35,301 django.utils.autoreload INFO     C:\pythonProject\part4_project\part4_project\urls.py changed, reloading.
+2021-01-31 17:36:35,301 asyncio      DEBUG    Using proactor: IocpProactor
+2021-01-31 17:36:35,961 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2021-01-31 17:36:40,122 django.utils.autoreload INFO     C:\pythonProject\part4_project\part4_project\settings.py changed, reloading.
+2021-01-31 17:36:40,123 asyncio      DEBUG    Using proactor: IocpProactor
+2021-01-31 17:36:40,799 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2021-01-31 17:36:44,801 django.utils.autoreload INFO     C:\pythonProject\part4_project\part4_project\settings.py changed, reloading.
+2021-01-31 17:36:44,801 asyncio      DEBUG    Using proactor: IocpProactor

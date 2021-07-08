@@ -1,0 +1,48 @@
+{% load static mathfilters %}
+{% csrf_token %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-auto">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="search_prices" placeholder="">
+              <label for="search_prices">Prices:</label>
+            </div>
+            <div class="scrollbar-macosx">
+                <div class="" id="prices_list"></div>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="search_add" placeholder="">
+              <label for="search_add">Partcode or model:</label>
+            </div>
+            <div class="scrollbar-macosx">
+                <div class="" id="select_list"></div>
+            </div>
+        </div>
+        <div class="col">
+            <div id="price_item"></div>
+        </div>
+    </div>
+</div>
+
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function pricesLoaded() {
+            prices = "{{ prices }}"
+            models = "{{ models }}"
+            vendors = "{{ vendors }}"
+            $ajax_script = "{% static 'dashboard/prices.js' %}"
+            $.getScript($ajax_script)
+        }
+
+        function checkPJquery() {
+            if (window.jQuery) {
+                pricesLoaded();
+            } else {
+                window.setTimeout(checkPJquery, 100);
+            }
+        }
+
+        checkPJquery();
+    </script>
+{% endblock %}

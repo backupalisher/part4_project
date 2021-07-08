@@ -1,0 +1,80 @@
+{% load static compress %}
+<!DOCTYPE html>
+<html lang="ru" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    {% block description %}
+        <meta name="description"
+              content="Самый полный справочник оргтехники (принтеров, МФУ, сканеров). Здесь вы сможете найти технические характеристики, парткаталоги, коды ошибок и информацию о картриджах для самых распространенных моделей">
+    {% endblock %}
+    {% block keyword %}
+        <meta name="keyword"
+              content="принтеры, МФУ, сканеры, картриджи, технические характеристики, парткаталоги, коды ошибок">
+    {% endblock %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    {% compress css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.scrollbar.css' %}">
+        <link type="text/x-scss" href="{% static 'scss/main.scss' %}" rel="stylesheet" media="all">
+        <link type="text/x-scss" href="{% static 'scss/dashboard.scss' %}" rel="stylesheet" media="all">
+    {% endcompress %}
+    <title>
+        {% block title %}
+            Part4
+        {% endblock %}
+    </title>
+</head>
+<body id="body" class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <div class="wrap">
+        {% block head %}
+            {% block nav %}
+                <div class="header">
+                    <div class="container-fluid d-flex">
+                        <a class="logo hover_text" href="/">
+                            <span>Part4<br><small>Reference system</small></span>
+                        </a>
+                        <div class="left_side">
+                            <div id="toggle-theme" class="hover_btn"><div class="toggle"></div><div class="ico"></div></div>
+                            <a href="/logout" class="main_menu hover_btn">Log out</a>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+        {% endblock %}
+
+        {% block login %}
+
+        {% endblock login %}
+
+        <div class="container-fluid mt-2 main-content">
+            {% block breadcrumbs %}
+            {% endblock %}
+            {% block content %}
+                There is no any content for you
+            {% endblock %}
+        </div>
+    </div>
+</main>
+<footer class="footer mt-auto py-3">
+    {% block footer %}
+        {% block copyright %}
+            <p class="text-center">&copy; Part4 | <a href="mailto:info@part4.info" target="_blank">info@part4.info</a> </p>
+        {% endblock %}
+    {% endblock %}
+</footer>
+<div id="to_up"><img src="{{ MEDIA_URL }}to_up.png" alt="to_up"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+{% compress js inline %}
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/jquery.scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/js.cookie.min.js' %}"></script>
+    <script src="{% static 'main.js' %}"></script>
+{% endcompress %}
+{% block ajaxjs %}
+{% endblock %}
+</body>
+</html>

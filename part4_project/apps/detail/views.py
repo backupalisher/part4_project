@@ -13,31 +13,26 @@ start_time = datetime.datetime.now()
 
 
 def detail_view(request):
-    return render(request, 'detail/index.html')
+    return render(request, 'partcode/index.html')
 
 
 # добавление веса
 @sync_to_async
-def set_weight(detail_id):
-    # print(datetime.datetime.now() - start_time, 'обновление веса')
+def set_weight(partcode_id):
     _query(
-        f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE id = {detail_id}) w "
-        f"WHERE id = {detail_id}")
-    # print(datetime.datetime.now() - start_time, 'обновление веса завершено')
+        f"UPDATE details SET weight = (w.weight+1) FROM (SELECT weight FROM details WHERE partcode_id = {partcode_id}) w "
+        f"WHERE partcode_id = {partcode_id}")
 
 
 @sync_to_async
-def get_ids(detail_id):
-    pass
+def get_partcode(partcode_id):
+    return _query(f"SELECT * FROM full_partcodes WHERE id =  {partcode_id}")
 
 
 @sync_to_async
 def get_options(detail_id):
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение опций')
     q_options = f"SELECT * FROM all_options_for_details WHERE detail_id = {detail_id}"
     option_vals = _query(q_options)
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение опций завершен')
-    # print(datetime.datetime.now() - start_time, 'Сортировка опций')
     captions = []
     subcaptions = []
     values = []
@@ -54,105 +49,80 @@ def get_options(detail_id):
         else:
             values.append(opts)
     options = option_vals
-    # print(datetime.datetime.now() - start_time, 'Сортировка опций завершена')
     return options, captions, subcaptions, values
 
 
 @sync_to_async
 def get_cartridge_options(partcode):
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение картриджей')
     cartridge_options = _query(f"SELECT * FROM all_options_for_cartridges WHERE code = '{partcode}'")
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение картриджей завершен')
     return cartridge_options
 
 
-@sync_to_async
-def get_partcodes(model_id):
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение парткаталога')
-    partcatalog = _query(f"SELECT * FROM all_partcatalog WHERE model_id = {model_id}")
-    # print(datetime.datetime.now() - start_time, 'Запрос на получение парткаталога завершен')
-    return partcatalog
-
-
-async def init(detail_id):
-    async_tasks = [get_options(detail_id), get_ids(detail_id)]
+async def init(partcode_id):
+    async_tasks = [get_partcode(partcode_id)]
+    # async_tasks = [get_options(partcode_id), get_partcode(partcode_id)]
     results = await asyncio.gather(*async_tasks)
     return results
 
 
-async def past_init(request, model_id, partcode):
+async def past_init(request, partcode):
     if partcode != '-':
-        tasks = [
-            # get_partcodes(model_id),
-            get_cartridge_options(partcode),
-        ]
+        tasks = [get_cartridge_options(partcode),]
         results = await asyncio.gather(*tasks)
         return results
     else:
         return []
 
 
-def index(request, detail_id):
+def index(request, partcode_id):
     lang = request.LANGUAGE_CODE
-    print(lang)
-    # print(start_time, detail_id)
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop = asyncio.get_event_loop()
     loop.set_default_executor(concurrent.futures.ThreadPoolExecutor(max_workers=4))
-    loop.create_task(set_weight(detail_id))
-    # print(datetime.datetime.now() - start_time, 'start')
-    init_result = loop.run_until_complete(init(detail_id))
-    options = init_result[0][0]
-    captions = init_result[0][1]
-    subcaptions = init_result[0][2]
-    values = init_result[0][3]
+    loop.create_task(set_weight(partcode_id))
     try:
+        init_result = list(loop.run_until_complete(init(partcode_id))[0][0])
+    except:
+        init_result = None
+    vendors = models.Vendors.objects.all()
+    try:
+        model_ids = init_result[1]
+        model_names = init_result[2]
+        module_ids = init_result[3]
+        module_names = init_result[4]
+        module_ru_names = init_result[5]
+        detail_name = init_result[7]
+        detail_name_ru = init_result[8]
+        description = init_result[9]
+        partcode_description = init_result[10]
+        partcode = init_result[11]
+        images = init_result[12]
+        prices = list(set(init_result[13]))
+        vendor_ids = list(set(init_result[14]))
+        options = None
+        captions = None
+        subcaptions = None
+        values = None
         try:
-            partcode_id = models.Details.objects.filter(id=detail_id).values('partcode_id')[0]['partcode_id']
-            partcode = models.Partcodes.objects.filter(id=partcode_id).values().values('code')[0]['code']
-            partcodes = list(models.Partcodes.objects.filter(id=partcode_id).values())[0]
+            cartridge_options = loop.run_until_complete(get_cartridge_options(partcode))
         except:
-            partcodes = []
-            partcode = '-'
-        try:
-            model_id = models.Details.objects.filter(id=detail_id).values('model_id')[0]['model_id']
-            model = models.Models.objects.filter(id=model_id).values('name')[0]['name']
-        except:
-            model_id = None
-            model = '-'
-        try:
-            module_id = models.Details.objects.filter(id=detail_id).values('module_id')[0]['module_id']
-            module = list(models.SprModules.objects.filter(id=module_id).values())[0]
-        except:
-            module = '-'
-        try:
-            spr_detail_id = models.Details.objects.filter(id=detail_id).values('spr_detail_id')[0]['spr_detail_id']
-            detail_spr = models.SprDetails.objects.filter(id=spr_detail_id).values()[0]
-            detail_name = detail_spr['name']
-            detail_name_ru = detail_spr['name_ru']
-            detail_desc = detail_spr['desc']
-        except:
-            detail_name = '-'
-            detail_name_ru = ''
-            detail_desc = ''
-        print(detail_name, detail_name_ru, detail_desc)
-        post_result = loop.run_until_complete(past_init(request, model_id, partcode))
-        # partcatalog = post_result[0]
-        cartridge_options = post_result[0]
-        print(cartridge_options)
-        brand_id = models.Models.objects.filter(id=model_id).values('brand_id')[0]['brand_id']
-        brand_name = models.Brands.objects.filter(id=brand_id).values('name')[0]['name']
+            cartridge_options = None
         loop.run_until_complete(loop.shutdown_asyncgens())
         loop.close()
+        v_prices = []
+        c_models = []
+        for i in range(len(prices)):
+            v_prices.append([prices[i], vendor_ids[i]])
+        for i in range(len(module_ids)):
+            c_models.append([model_ids[i], model_names[i], module_ids[i], module_names[i], module_ru_names[i]])
     except:
         loop.run_until_complete(loop.shutdown_asyncgens())
         loop.close()
-        raise Http404('Страница отсутствует, с id: ' + str(detail_id))
-
-    return render(request, 'detail/index.html',
-                  {'partcodes': partcodes, 'detail_id': detail_id, 'model': model, 'model_id': model_id,
-                   'module': module, 'detail_name': detail_name, 'detail_name_ru': detail_name_ru,
-                   'detail_desc': detail_desc, 'options': options, 'captions': captions, 'subcaptions': subcaptions,
-                   'values': values, 'brand_id': brand_id, 'brand_name': brand_name, 'lang': lang,
-                   'cartridge_options': cartridge_options})
+        raise Http404('Страница отсутствует, с id: ' + str(partcode_id))
+    return render(request, 'partcode/index.html',
+                  {'lang': lang, "vendors": str(list(vendors.values_list())), 'cartridge_options': cartridge_options,
+                   'c_models': c_models, 'v_prices': v_prices,
+                   'detail_name': detail_name, 'detail_name_ru': detail_name_ru, 'options': options,
+                   'description': description, 'partcode_description': partcode_description, 'images': images,
+                   'captions': captions, 'subcaptions': subcaptions, 'values': values, 'partcode': partcode})

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static brand_extras %}
+{% block title %}
+    Part4
+{% endblock %}
+{% block description %}
+    <meta name="description"
+          content="Каталог моделей, характеристики, парт каталог, коды ошибок, расходные материалы, картриджи">
+{% endblock %}
+{% block keyword %}
+    <meta name="keyword"
+          content="характеристики, коды ошибок, принтеров, мфу, part, парт каталог, картриджи, картриджи для принтера, картриджи для принтеров, расходные материалы для оргтехники">
+{% endblock %}
+
+{% block content %}
+    <div class="" id="filter_badge">
+    </div>
+    <div class="loading"><img src="{{ MEDIA_URL }}icons/loading_gear.svg" alt="loading" class="loading_gear"></div>
+    <div class="row">
+        <div class="col filter-result">
+            {#Search#}
+            <div class="input-group w-100 filter_search hover_btn">
+                <input type="text" id="filter_search" name="filter_search" aria-label="Close"
+                       class="form-control"
+                       placeholder="{% if lang == 'ru' %}Поиск по модели{% else %}Search by model{% endif %}">
+            </div>
+            {#Search end#}
+            <div class="scrollbar-macosx mt-2">
+                <div id="filter_model_result">
+                    {% include 'filter/filter_result.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block breadcrumbs %}
+
+{% endblock %}
+
+{% block ajaxjs %}
+    <script src="{% static 'filter.js' %}"></script>
+{% endblock %}

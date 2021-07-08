@@ -1,0 +1,66 @@
+<h1> {% if lang == 'ru' %}Добро пожаловать, {% else %}Welcome {% endif %}
+    {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}
+</h1>
+<form action="" method="post" class="profile-form">
+    {% csrf_token %}
+    <div>
+        <div>
+        </div>
+        <div>
+            <label for="first_name">
+                <p>{% if lang == 'ru' %}Имя{% else %}First name{% endif %}:</p>
+                <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="First name"
+                       id="first_name">
+            </label>
+        </div>
+        <div>
+            <label for="last_name">
+                <p>{% if lang == 'ru' %}Фамилия{% else %}Last name{% endif %}:</p>
+                <input type="text" name="last_name" value="{{ user.last_name }}" placeholder="Last name" id="last_name">
+            </label>
+        </div>
+        <div>
+            <label for="email">
+                <p>{% if lang == 'ru' %}Email{% else %}Email{% endif %}:</p>
+                <input type="email" name="email" value="{{ user.email }}" placeholder="Email" id="email">
+            </label>
+        </div>
+    </div>
+    <div>
+        <div>
+            <label for="address">
+                <p>{% if lang == 'ru' %}Адрес{% else %}Address{% endif %}:</p>
+                <input type="text" name="address" value="{{ profile.1 }}" placeholder="Address" id="address">
+            </label>
+        </div>
+        <div>
+            <label for="phone">
+                <p>{% if lang == 'ru' %}Телефон{% else %}Phone{% endif %}:</p>
+                <input type="tel" name="phone" value="{{ profile.2 }}" placeholder="Phone" id="phone">
+            </label>
+        </div>
+    </div>
+    <div class="user_pass">
+        <div>
+            <label for="password">
+                <p>{% if lang == 'ru' %}Сменить пароль{% else %}Change password{% endif %}:</p>
+                <input type="password" name="password" placeholder="Password" id="password">
+            </label>
+        </div>
+        <div>
+            <label for="repassword">
+                <p>{% if lang == 'ru' %}Повторить пароль{% else %}Retype password{% endif %}:</p>
+                <input type="password" name="repassword" placeholder="Retype password" id="repassword">
+            </label>
+        </div>
+        <div>
+            <p class="warning">{% if lang == 'ru' %}Пароль не совпадает или содержить меньше 6 символов
+            {% else %}Passwords not compare or less 6 symbols{% endif %}</p>
+        </div>
+    </div>
+    <div class="last">
+        <button type="submit" class="btn disabled" disabled>{% if lang == 'ru' %}Сохранить{% else %}
+            Save{% endif %}</button>
+    </div>
+</form>
+

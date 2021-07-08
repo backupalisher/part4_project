@@ -1,0 +1,27 @@
+{% load static mathfilters %}
+<div id="model_detail"></div>
+
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function ModelItemLoaded() {
+            model = "{{ model }}"
+            brands = "{{ brands }}"
+            moduls = "{{ moduls }}"
+            vendors = "{{ vendors }}"
+            media_url = "{{ MEDIA_URL }}"
+            $ajax_script = "{% static 'dashboard/model_ajax.js' %}"
+            $.getScript($ajax_script)
+        }
+
+        function checkMIJquery() {
+            if (window.jQuery) {
+                ModelItemLoaded();
+            } else {
+                window.setTimeout(checkMIJquery, 100);
+            }
+        }
+
+        checkMIJquery();
+    </script>
+{% endblock %}

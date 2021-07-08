@@ -1,48 +1,24 @@
-{% load static mfilters %}
-<div class="table-responsive">
-    <table class="table">
-        {% for caption in captions %}
-            {% if 'Status' not in caption %}
-                <thead class="thead-light">
-                <tr>
-                    {% for subcaption in subcaptions %}
-                        {% if subcaption.2 == caption and subcaption.3|length > 0 %}
-                            <th colspan="2"><h5>{{ caption }}</h5></th>
-                        {% endif %}
-                    {% endfor %}
-                </tr>
-                </thead>
-                {% for subcaption in subcaptions %}
-                    {% if subcaption.2 == caption %}
-                        {% for subcap in subcaption.3 %}
-                            <tr>
-                                <td colspan="2">
-                                    {% if 'SubCaption' not in subcap %}
-                                        <h5 class="capt">{{ subcap|get_caption }}</h5>
-                                        <span class="val">{{ subcap|get_val }}</span>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        {% for value in values %}
-                            <tr>
-                                {% if value.0 == subcaption.1 %}
-                                    <td class="pl-3">
-                                        <h5>{{ value.2 }}</h5>
-                                        <div>
-                                            {% for val in value.3 %}
-                                                <span class="pl-5 capt">{{ val|get_caption }}</span>
-                                                <span class="val">{{ val|get_val }}</span>
-                                                <br>
-                                            {% endfor %}
-                                        </div>
-                                    </td>
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
-    </table>
-</div>
+{% load static mfilters main_extras %}
+{% for caption in captions %}
+    {% if 'Status' not in caption %}
+        <div class="option_item">
+            <h4>{{ caption }}</h4>
+            {% for option in options %}
+                {% if option.0 == caption %}
+                    <div class="option_inner">
+                        <h5><span>{{ option.1 }}</span></h5>
+                        <span>
+                            {% if '-' in option.2 %}
+                                <span class="material-icons" style="color: #D4554A;">do_disturb_alt</span>
+                            {% elif '+' in option.2 %}
+                                <span class="material-icons" style="color: #62DA94;">done</span>
+                            {% else %}
+                                {{ option.2|d_mask }}
+                            {% endif %}
+                        </span>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endfor %}

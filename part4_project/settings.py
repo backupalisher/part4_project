@@ -19,6 +19,7 @@ SECRET_KEY = '59bh9hwmjovry$@gjah!7pe5vrh*d+&_srj=udw*^w0w*y81ds'
 DEBUG = DEBUG_STATE
 
 ALLOWED_HOSTS = [
+    '*',
     '127.0.0.1',
     'localhost',
     '.d.part4.info',
@@ -46,44 +47,47 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'rest_framework',
+    'storages',
     # 'silk',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'compressor',
     'el_pagination',
     'sendmail',
     'accounts',
+    'dashboard',
     'db_model',
     'search',
-    'main',
+    'main_views',
     'user_passport',
-    'detail',
-    'model',
-    'about',
-    'contacts',
-    'brand',
-    'filter',
-    'cartridge'
+    # 'main',
+    # 'detail',
+    # 'model',
+    # 'about',
+    # 'contacts',
+    # 'brand',
+    # 'filter',
+    # 'supplies',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'silk.middleware.SilkyMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'part4_project.urls'
 
 AUTHENTICATION_BACKENDS = (
-        'django.contrib.auth.backends.ModelBackend',
-    )
-
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 TEMPLATES = [
     {
@@ -100,6 +104,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
                 "context_processors.views.main_menu",
+                "context_processors.views.currency",
                 'django.template.context_processors.request',
             ],
         },
@@ -155,6 +160,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
+LANGUAGES = (
+    ('ru', 'Russian'),
+    ('en', 'English'),
+)
+
 TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
@@ -167,6 +177,10 @@ LOGIN_REDIRECT_URL = '/account/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
@@ -199,15 +213,67 @@ AWS_SECRET_ACCESS_KEY = 'Indwm3AaawrvDBUYwqKl8gPbQ2GKrcN2SWGslTds'
 AWS_STORAGE_BUCKET_NAME = 'part4images'
 AWS_S3_REGION_NAME = 'ru-central1'
 
-SITE_ID = 1
+if DEBUG:
+    SITE_ID = 2
+else:
+    SITE_ID = 1
 
 X_FRAME_OPTIONS = 'ALLOW-FROM webvisor.com'
 
 # Send Mail settings
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_USE_TLS = True
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
 EMAIL_HOST = EMAIL_HOST
 EMAIL_HOST_USER = EMAIL_USER
 EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
 EMAIL_PORT = EMAIL_PORT
+
+AWS_ACCESS_KEY_ID = aws_access_key_id
+AWS_SECRET_ACCESS_KEY = aws_secret_access_key
+AWS_STORAGE_BUCKET_NAME = aws_bucket
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+DEFAULT_FILE_STORAGE = 'part4_project.storage_backends.MediaStorage'
+
+
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+
+GOOGLE_RECAPTCHA_SECRET_KEY = GOOGLE_RECAPTCHA_SECRET_KEY
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'console': {
+#             'format': '%(name)-12s %(levelname)-8s %(message)s'
+#         },
+#         'file': {
+#             'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+#         }
+#     },
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'console'
+#         },
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'formatter': 'file',
+#             'filename': 'debug.log'
+#         }
+#     },
+#     'loggers': {
+#         '': {
+#             'level': 'DEBUG',
+#             'handlers': ['console', 'file']
+#         }
+#     }
+# }

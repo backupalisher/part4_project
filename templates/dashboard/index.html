@@ -1,0 +1,29 @@
+{% extends 'dashboard/dashboard.html' %}
+{% load static %}
+{% block title %}
+    Part4 | Dashboard
+{% endblock %}
+{% block content %}
+    <div class="dashboard">
+        <div class="row">
+            <div class="sidebar col-auto">
+                {% include 'dashboard/components/sidebar.html' %}
+            </div>
+            <div class="col">
+                {% if tab == 'brands' %}
+                    {% include 'dashboard/components/brands.html' %}
+                {% elif tab == 'models' %}
+                    {% include 'dashboard/components/models.html' %}
+                {% elif tab == 'partcodes' %}
+                    {% include 'dashboard/components/partcodes.html' %}
+                {% elif tab == 'modules' %}
+                    {% include 'dashboard/components/modules.html' %}
+                {% elif tab == 'prices' %}
+                    {% include 'dashboard/components/prices.html' %}
+                {% else %}
+                    Dashboard
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% load static mathfilters %}
+<div id="detail_item"></div>
+
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function priceItemLoaded() {
+            price = "{{ price }}"
+            ptype = "{{ ptype }}"
+            models = "{{ models }}"
+            vendors = "{{ vendors }}"
+            nid = "{{ nid }}"
+            title = "{{ title }}"
+            media_url = "{{ MEDIA_URL }}"
+            $ajax_script = "{% static 'dashboard/price_ajax.js' %}"
+            $.getScript($ajax_script)
+        }
+
+        function checkPIJquery() {
+            if (window.jQuery) {
+                priceItemLoaded();
+            } else {
+                window.setTimeout(checkPIJquery, 100);
+            }
+        }
+
+        checkPIJquery();
+    </script>
+{% endblock %}

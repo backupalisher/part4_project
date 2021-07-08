@@ -1,0 +1,39 @@
+{% load static mathfilters %}
+{% csrf_token %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-auto">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="search_partcodes" placeholder="">
+              <label for="search_partcodes">Partcode:</label>
+            </div>
+            <div class="scrollbar-macosx">
+                <div class="" id="parcode_list"></div>
+            </div>
+        </div>
+        <div class="col">
+            <div id="detail_item"></div>
+        </div>
+    </div>
+</div>
+
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function PartsLoaded() {
+            partcodes = "{{ partcodes }}"
+            $ajax_script = "{% static 'dashboard/partcodes.js' %}"
+            $.getScript($ajax_script)
+        }
+
+        function checkPJquery() {
+            if (window.jQuery) {
+                PartsLoaded();
+            } else {
+                window.setTimeout(checkPJquery, 100);
+            }
+        }
+
+        checkPJquery();
+    </script>
+{% endblock %}

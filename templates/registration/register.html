@@ -1,0 +1,38 @@
+{% extends 'registration/index.html' %}
+{% block content %}
+    <h1>{% if lang == 'ru' %}Регистрация{% else %}Create your account{% endif %}</h1>
+    <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <p class="text-danger"> {{ error }} </p>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        <div class="form-group">
+            <label for="id_username">{% if lang == 'ru' %}Почта{% else %}Email{% endif %}: <span class="req_star">*</span></label>
+            <input type="email" name="username" class="form-control" id="id_username">
+            <small id="usernameHelp" class="form-text text-muted">
+                {% if lang == 'ru' %}Обязательное поле. Не более 150 символов. Только буквы, цифры и символы {% else %}Required. 150 symbols less. Only letters, digits and symbols {% endif %}
+                 @/./+/-/_.</small>
+        </div>
+        <div class="form-group">
+            <label for="id_password1">{% if lang == 'ru' %}Пароль{% else %}Password{% endif %}: <span class="req_star">*</span></label>
+            <input type="password" name="password1" class="form-control" id="id_password1">
+            <small id="passwordHelp" class="form-text text-muted">{% if lang == 'ru' %}Обязательное поле.{% else %}Required.{% endif %}</small>
+        </div>
+        <div class="form-group">
+            <label for="id_password2">{% if lang == 'ru' %}Подтверждение пароля{% else %}Password repeat{% endif %}:  <span class="req_star">*</span></label>
+            <input type="password" name="password2" class="form-control" id="id_password2">
+            <small id="repasswordHelp" class="form-text text-muted">
+                {% if lang == 'ru' %}Для подтверждения введите, пожалуйста, пароль ещё раз.{% else %}To confirm, please enter your password again{% endif %}
+                </small>
+        </div>
+        <button type="submit" class="btn btn-primary">{% if lang == 'ru' %}Зарегистрироваться{% else %}Create account{% endif %}</button>
+    </form>
+{% endblock %}
+{% block search %}
+{% endblock %}

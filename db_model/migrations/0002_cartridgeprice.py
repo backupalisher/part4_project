@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CartridgePrice',
             fields=[
-                ('cartridge', models.OneToOneField(on_delete=django.db.models.deletion.DO_NOTHING, primary_key=True, serialize=False, to='db_model.Cartridge')),
+                ('supplies', models.OneToOneField(on_delete=django.db.models.deletion.DO_NOTHING, primary_key=True, serialize=False, to='db_model.Cartridge')),
                 ('price', models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True)),
             ],
             options={

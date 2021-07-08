@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static mfilters main_extras mathfilters %}
+{% block title %}
+    Part4 |
+    {% if lang == 'ru' and partcode.models %}
+        {{ partcode.17 }}
+    {% else %}
+        {{ partcode.16 }}
+    {% endif %}
+{% endblock %}
+{% block description %}
+    <meta name="description"
+          content="деталь, {{ partcode.17 }}, {{ partcode.16 }}, парт код, {{ partcode.1 }}, модель, {{ partcode.14 }}, модуль">
+{% endblock %}
+{% block keyword %}
+    <meta name="keyword" content="{{ partcode.7 }}, {{ partcode.8 }}, {{ partcode.1 }}, part, парт каталог,
+                                    расходные материалы, ремкомплект, расходные материалы, запчасть, запчасти">
+{% endblock %}
+{% block content %}
+    <div class="partcode">
+        <div class="partcode_head">
+            <div class="partcode_image">
+                {% if partcode.4 %}
+                    <img src="{{ MEDIA_URL }}{{ partcode.4 }}"/>
+                {% elif partcode.18 %}
+                    <img src="{{ MEDIA_URL }}{{ partcode.18 }}"/>
+                {% else %}
+                    <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;"/>
+                {% endif %}
+            </div>
+            <div class="partcode_desc">
+                <h3 class="title">
+                    {% if lang == 'ru' and partcode.17 %}
+                        {{ partcode.17 }} <br><small>{{ partcode.16 }}</small>
+                    {% else %}{{ partcode.16 }}{% endif %}
+                </h3>
+                <div class="table-tech">
+                    <div>
+{#                        <h4><span>Partcode:</span></h4>#}
+                        <p>Partcode: {% if partcode.1 %}{{ partcode.1 }}{% elif partcode.2 %}{{ partcode.2 }}{% endif %}</p>
+                    </div>
+                    {%  if options %}
+                        {% for option in options %}
+                            <div>
+                                <h4><span>{% if lang == 'en' and option.1 %}{{ option.1 }}{% else %}{{ option.0 }}{% endif %}</span></h4>
+                                <p>{% if lang == 'en' and option.3 %}{{ option.3 }}{% else %}{{ option.2 }}{% endif %}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <p class="title_desc">
+                    {% if lang == 'ru' and partcode.20 %}{{ partcode.20 }}{% elif partcode.19 %}{{ partcode.19 }}{% endif %}
+                </p>
+            </div>
+            {% for price in prices %}
+                <div class="price">
+                    <p>
+                    {% if lang == 'ru' %}Цена: <span>{{ price.1|d_mask }} &#x20bd;</span>
+                    {% else %} Price: <span>${{ price.1|divide:currency|d_mask }} </span> {% endif %}
+                    </p>
+                    <p>{% if lang == 'ru' %}Доступно: {% else %}Available: {% endif %} <span>{{ price.2 }}</span></p>
+                </div>
+                <div class="btn_price">
+                    <button class="btn hover_btn c_phone" id="btn-buy" value="{{ price.3 }}">
+                        <span class="material-icons-outlined">add_shopping_cart</span>
+                        {% if lang == 'ru' %}в корзину{% else %}to cart{% endif %}
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="partcode_content">
+            {% if models|length > 0 %}
+                <h4>{% if lang == 'ru' %}Совместимые модели{% else %}Analog models{% endif %}:</h4>
+                <div class="partcode_content_inner">
+                <button class="error_result_models_show btn-link" aria-label="models-inner_1">
+                    <span class="btn_show" style="">{% if lang == 'ru' %}показать модели{% else %}show
+                                                                models{% endif %} {{ models|length }}</span>
+                    <span class="btn_hide" style="display: none;">{% if lang == 'ru' %}скрыть модели{% else %}hide
+                                                                models{% endif %}</span>
+                </button>
+                <div class="models-inner" id="models-inner_1" style="display: none;">
+                    {% for model in models %}
+                    <p><a href="/model/{{ model.0 }}">{{ model.1 }}</a></p>
+                    {% endfor %}
+                </div>
+                </div>
+            {% endif %}
+            {% if partcodes|length > 0 %}
+                <h4>{% if lang == 'ru' %}Совместимые расходники{% else %}Analog partcodes{% endif %}:</h4>
+                <div class="partcode_content_inner">
+                {% for partcode in partcodes %}
+                    <a href="/partcode/{{ partcode.0 }}">{{ partcode.1 }}</a>
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% include 'modals/contact.html' %}
+{% endblock %}
+
+{% block search %}
+{% endblock %}

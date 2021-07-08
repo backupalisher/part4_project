@@ -16,35 +16,23 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.contrib.sitemaps.views import sitemap
+
 from .apps.sitemap import All
 
 sitemaps = {
     'all': All,
 }
-
 urlpatterns = [
-                  path('', include('main.urls')),
-                  path('404', include('main.urls')),
-                  path('admin/', admin.site.urls),
-                  path('search/', include('main.urls')),
-                  path('about/', include('about.urls')),
-                  path('contacts/', include('contacts.urls')),
+                  re_path(r'^i18n/', include('django.conf.urls.i18n')),
+                  path('404', include('main_views.urls')),
                   path('auth/', include('user_passport.urls')),
                   path('cabinet/', include('user_passport.urls')),
-                  path('model/', include('model.urls')),
-                  path('detail/', include('detail.urls')),
-                  path('brand/', include('brand.urls')),
-                  path('filter/', include('filter.urls')),
-                  path('cartridge/', include('cartridge.urls')),
                   path('sendmail/', include('sendmail.urls')),
-                  # path('api/v1/brands/', include('brand.urls')),
-                  # path('api/v1/models/', include('model.urls')),
-                  # path('api/v1/cartridges/', include('cartridge.urls')),
-                  # path('api/v1/details/', include('detail.urls')),
-                  path('account/', include('accounts.urls')),
-                  path('accounts/', include('django.contrib.auth.urls')),
+                  path('dashboard/', include('dashboard.urls')),
+                  path('auth/', include('django.contrib.auth.urls')),
+                  path('', include('main_views.urls')),
                   path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

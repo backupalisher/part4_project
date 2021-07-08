@@ -1,0 +1,24 @@
+{% load static mathfilters %}
+<div id="detail_item"></div>
+
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function moduleItemLoaded() {
+            module = "{{ module }}"
+            media_url = "{{ MEDIA_URL }}"
+            $ajax_script = "{% static 'dashboard/module_ajax.js' %}"
+            $.getScript($ajax_script)
+        }
+
+        function checkMIJquery() {
+            if (window.jQuery) {
+                moduleItemLoaded();
+            } else {
+                window.setTimeout(checkMIJquery, 100);
+            }
+        }
+
+        checkMIJquery();
+    </script>
+{% endblock %}

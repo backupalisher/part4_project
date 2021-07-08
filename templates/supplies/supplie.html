@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static brand_extras mfilters main_extras mathfilters %}
+{% block title %}
+    {% if supplie.13 %}{{ supplie.13 }}{% endif %}
+    {% if supplie.14 %}{{ supplie.14 }}{% endif %}
+     {{ supplie.1 }}
+{% endblock %}
+{% block description %}
+    <meta name="description"{% if supplie.13 %}{{ supplie.13 }}{% endif %}, {% if supplie.14 %}{{ supplie.14 }}{% endif %}
+          content="Картридж для {{ supplie.6 }}, {{ supplie.2 }}, Код производителя: {{ supplie.1 }},  Наименование: {{ supplie.3 }}">
+{% endblock %}
+{% block keyword %}
+    <meta name="keyword" content="
+            {% if supplie.10 %}{% for model in supplie.10 %}{% if model.0 and model.0 != 'None' %}{{ model.1 }}, {% endif %}{% endfor %}{% endif %}">
+{% endblock %}
+{% block content %}
+    <div class="supplie">
+        <div class="supplie_head">
+            <div class="supplie_image">
+                {% if supplie.4 %}
+                    <img src="{{ MEDIA_URL }}{{ supplie.4 }}"/>
+                {% elif supplie.16 %}
+                    <img src="{{ MEDIA_URL }}{{ supplie.16 }}"/>
+                {% else %}
+                    <img src="{{ MEDIA_URL }}no_image.svg" style="width: 100%;"/>
+                {% endif %}
+            </div>
+            <div class="supplie_desc">
+                <h3 class="title">
+                    {% if supplie.1 %}{{ supplie.1 }}{% elif supplie.2 %}{{ supplie.2 }}{% endif %}
+                    {% if lang == 'ru' %}{{ supplie.14 }}{% else %}{{ supplie.13 }}{% endif %}
+                </h3>
+                <p>
+                    {% if lang == 'ru' %}{{ supplie.16 }}{% else %}{{ supplie.17 }}{% endif %}
+                </p>
+                <div class="table-tech">
+                    {% for option in option_ru %}
+                        <div>
+                            <h4><span>{{ option.0 }}</span></h4>
+                            <p>{{ option.1 }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% for price in prices %}
+                <div class="price">
+                    {% if lang == 'ru' %}Цена: <span>{{ price.1|d_mask }} &#x20bd;</span>
+                    {% else %} Price: <span>${{ price.1|divide:currency|d_mask }} </span> {% endif %}
+                </div>
+                <div class="btn_price">
+                    <button class="btn hover_btn c_phone" id="btn-buy">
+                        {% if lang == 'ru' %}Купить{% else %}Buy{% endif %}
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="supplie_content">
+            {% if models|length > 0 %}
+                <h4>{% if lang == 'ru' %}Совместимые модели{% else %}Analog models{% endif %}:</h4>
+                <div class="supplie_content_inner">
+                {% for model in models %}
+                    <a href="/model/{{ model.0 }}">{{ model.1 }}</a>
+                {% endfor %}
+                </div>
+            {% endif %}
+            {% if partcodes|length > 0 %}
+                <h4>{% if lang == 'ru' %}Совместимые расходники{% else %}Analog supplies{% endif %}:</h4>
+                <div class="supplie_content_inner">
+                {% for partcode in partcodes %}
+                    <a href="/supplie/{{ partcode.0 }}">{{ partcode.1 }}</a>
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% include 'modals/contact.html' %}
+
+{#{% block ajaxjs %}#}
+{#    <script type="text/javascript">#}
+{#        function jqueryLoaded() {#}
+{#            $ajax_script = "{% static 'supplies.js' %}"#}
+{#            $.getScript($ajax_script)#}
+{#        }#}
+{##}
+{#        function checkJquery() {#}
+{#            if (window.jQuery) {#}
+{#                jqueryLoaded();#}
+{#            } else {#}
+{#                window.setTimeout(checkJquery, 100);#}
+{#            }#}
+{#        }#}
+{##}
+{#        checkJquery();#}
+{#    </script>#}
+{#    <script src="{% static 'model_ajax.js' %}"></script>#}
+{#{% endblock %}#}

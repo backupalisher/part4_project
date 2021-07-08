@@ -1,67 +1,126 @@
-{% load static mfilters %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-3 col-12">
-            <div class="scrollbar-macosx">
-                <div class="tab-inner-scroll">
-                    {% for module in modules %}
-                        <div class="mb-3 module-title"
-                             {% if cur_module == module %}style="font-weight: 900"{% endif %}
-                             onclick=" $('.module-title').removeClass('selected-module'),
-                                     $(this).addClass('selected-module')
-                                     $( '.model-opts' ).css('display', 'none'),
-                                     $( '#opts{{ forloop.counter }}' ).toggle();">
-                            {{ module }}
-                        </div>
-                    {% endfor %}
-                </div>
+{% load static mfilters main_extras mathfilters %}
+<input type="text" id="parts_search" class="parts_search"
+           placeholder="{% if lang == 'ru' %}Поиск по парткодам{% else %}Search by partcodes{% endif %}">
+<div class="parts">
+    <div class="parts_module">
+        <span class="smodule visible_mobile">{% if lang == 'ru' %} Модуль: {% else %} Module: {% endif %} &nbsp;<span id='selected_module'></span></span>
+        <div class="scrollbar-macosx">
+            <div class="tab-inner-scroll">
+                {% for module in modules %}
+                    <div class="module-title opts{{ forloop.counter }}
+                        {% if cur_module is not None %}
+                            {% if lang == 'ru' and module.1 == cur_module %}selected-module
+                            {% elif module.0 == cur_module %}selected-module{% endif %}
+                        {% elif module.0 == modules.0.0 %}
+                            selected-module
+                        {% endif %}"
+                         onclick=" $('.module-title').removeClass('selected-module');
+                                 $(this).addClass('selected-module');
+                                 $( '.model-opts' ).css('display', 'none');
+                                 $( '#opts{{ forloop.counter }}' ).toggle();">
+                        {% if lang == 'ru' %}{% if module.0 %}{{ module.0 }}{% elif module.1 %}({{ module.1 }})
+                        {% endif %}
+                        {% else %}{% if module.0 %}{{ module.0 }}{% else %}{{ module.1 }}{% endif %}{% endif %}
+                    </div>
+                {% endfor %}
             </div>
         </div>
-        <div class="col">
-            <div class="scrollbar-macosx">
-                <div class="tab-inner-scroll">
-                    {% for module in modules %}
-                        <div class="model-opts pl-3"
-                             id="opts{{ forloop.counter }}"
-                                {% if cur_module == module %}
-                             style="display: block;"
-                                {% else %}
-                             style="display: none;"
-                                {% endif %}
-                        >
-                            {% for partc in partcatalog %}
-                                {% if module == partc.3 or module == partc.4 %}
-                                    <div style="margin-bottom: 15px; width: 100%; flex-direction: row; display: flex;">
-                                        <div style="width: 10%;">
-                                            {% if partc.9 %}
-                                                <img src="
-                                                        {{ MEDIA_URL }}{{ partc.9 }}"
-                                                     style="max-width: 100%; height: auto;"
-                                                     alt="{{ partc.9 }}">
-                                            {% else %}
-                                                <img src="{{ MEDIA_URL }}no_image_part.png"
-                                                     style="max-width: 100%; height: auto;"
-                                                     alt="{{ partc.9 }}">
-                                            {% endif %}
-                                        </div>
-                                        <div style="width: 89%; padding: 0 10px">
-                                            <a href="/detail/{{ partc.15 }}">
-                                                Парткод: {{ partc.8 }}
-                                            </a><br>
-                                            <span class="part-name">Деталь: </span>&nbsp;
-                                            {% if partc.11 %}
-                                                {{ partc.11 }}
-                                            {% else %}
-                                                {{ partc.10 }}
-                                            {% endif %}
+    </div>
+    <div class="parts_catalog">
+        <div class="scrollbar-macosx">
+            <div class="tab-inner-scroll">
+                {% for module in modules %}
+                    <div class="model-opts"
+                         id="opts{{ forloop.counter }}"
+                            {% if lang == 'ru' and module.1 is not None and module.1 == cur_module %}
+                         style="display: block;"
+                            {% elif module.0 == cur_module and module.0 is not None %}
+                         style="display: block;"
+                            {% elif module.0 == modules.0.0 %}
+                         style="display: block;"
+                            {% else %}
+                         style="display: none;"
+                            {% endif %}
+                    >
+                        {% for partc in partcatalog %}
+                            {% if module.0 == partc.3 %}
+                                <div class="part-item active">
+                                    <div class="part-item_img">
+                                        {% if partc.8 %}
+                                            <img src="{{ MEDIA_URL }}{{ partc.8 }}" alt="{{ partc.9 }}">
+                                        {% else %}
+                                            <img src="{{ MEDIA_URL }}no_image.svg" alt="{{ partc.9 }}">
+                                        {% endif %}
+                                    </div>
+                                    <div class="part-item_desc">
+                                        <div class="table table-responsive">
+                                            <table class="table">
+                                                <tr>
+                                                    <td><span class="part-name">
+                                                    {% if lang == 'ru' %}Деталь{% else %}Detail{% endif %}:</span>
+                                                    </td>
+                                                    <td>
+                                                        {% if lang == 'ru' %}
+                                                            {% if partc.10 %}{{ partc.10 }}{% else %}
+                                                                {{ partc.9 }}{% endif %}
+                                                        {% else %}
+                                                            {% if partc.9 %}{{ partc.9 }}{% else %}
+                                                                {{ partc.10 }}{% endif %}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{% if lang == 'ru' %}Парткод{% else %}Partcode{% endif %}:
+                                                    </td>
+                                                    <td><a href="/partcode/{{ partc.16 }}">{{ partc.5 }}</a></td>
+                                                </tr>
+                                                {% if partc.15 %}
+                                                <tr>
+                                                    <td>{% if lang == 'ru' %}Цена:{% else %} Price: {% endif %}</td>
+                                                    <td class="price">{% if lang == 'ru' %}{{ partc.15|d_mask }} &#x20bd;{% else %}${{ partc.15|divide:currency|d_mask }}{% endif %}</td>
+                                                </tr>
+                                                {% endif %}
+                                                {% if partc.14 is not None %}
+                                                    <tr>
+                                                        <td>{% if lang == 'ru' %}Цена{% else %}Price{% endif %}:
+                                                        </td>
+                                                        <td class="text-magenta">
+                                                            {% if lang == 'ru' %}
+                                                                <span>{{ partc.14|d_mask }} &#x20bd;</span>
+                                                            {% else %}
+                                                                <span>${{ partc.14|divide:currency|d_mask }} </span> {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            </table>
                                         </div>
                                     </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    {% endfor %}
-                </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
 </div>
+
+
+{% block ajaxjs %}
+    <script type="text/javascript">
+        function PartsJqueryIsLoaded() {
+            $parts_script = "{% static 'model_parts.js' %}"
+            $.getScript($parts_script)
+        }
+
+        function checkIsJquery() {
+            if (window.jQuery) {
+                PartsJqueryIsLoaded();
+            } else {
+                window.setTimeout(checkIsJquery, 100);
+            }
+        }
+
+        checkIsJquery();
+    </script>
+{% endblock %}
