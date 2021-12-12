@@ -1,0 +1,144 @@
+@media all and (max-width: 640px) {
+  main {
+    padding: 0;
+    background-color: var(--bg_main);
+  }
+  .grid_main {
+    grid-template-columns: auto;
+  }
+  .grid_content {
+    grid-template-rows: auto auto 40px;
+    grid-gap: 1em;
+    padding: 0;
+  }
+  .visible_desktop {
+    display: none !important;
+  }
+  .visible_mobile {
+    display: flex !important;
+    width: 100%;
+    flex-shrink: 0;
+  }
+  .right_side {
+    display: none;
+  }
+  .filter_show.active {
+    display: inline-block;
+  }
+  header {
+    justify-content: left;
+    flex-direction: column;
+  }
+  .logotype {
+    width: 13em;
+    height: 3em;
+    background-size: 13em 3em;
+  }
+  .form_search {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+  .table-tech {
+    font-size: 1.3em;
+    word-break: break-word;
+    div {
+      display: flex;
+      flex-direction: column;
+      grid-gap: .1em;
+      h4 {
+        span {
+          line-height: 1.2em;
+        }
+        &:after {
+          display: none;
+        }
+      }
+      p {
+        margin: 0;
+        padding-left: 1em;
+        line-height: 1.2em;
+        color: var(--white_black);
+      }
+    }
+  }
+  .top_menu {
+    display: none;
+    position: absolute;
+    width: 100%;
+    z-index: 9;
+    background-color: var(--bg_section);
+    height: 100vh;
+    padding: .5em 0;
+    font-size: 2em;
+    line-height: 2.4em;
+    color: var(--white_black);
+    top: 2em;
+
+    &.active {
+      display: flex;
+      flex-direction: column;
+    }
+    #nav_about {
+      color: var(--white_black);
+      text-decoration: none;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      span {
+        font-size: 1.3em;
+        margin: 0 0.2em 0 0;
+      }
+    }
+    .toggle-theme {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      .material-icons-outlined {
+        font-size: 1.3em;
+        margin: 0 0.2em 0 0;
+      }
+    }
+    .material-icons-outlined {
+      label {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+      }
+      .material-icons-outlined {
+        font-size: 1.3em;
+        margin: 0 0.2em 0 0;
+      }
+    }
+
+  }
+  aside {
+    .logotype {display: none;}
+    &.active {
+      position: absolute;
+      display: flex;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 99;
+      background-color: var(--bg_main);
+      .btn_close_filter {
+        display: flex;
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: var(--white);
+        z-index: 1;
+        width: 2em;
+        height: 2em;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    #filters {
+      z-index: 1;
+    }
+  }
+}

@@ -30,6 +30,58 @@ $(document).ready(function () {
 
 
     // Ajax filter
+    function ajaxPost(step) {
+        $('.loading').addClass('active');
+        $('.not-found').removeClass('active');
+        $('#float').css('top', $('.filter_settings').offset().top).css('display', 'none');
+        $inHtml = ''
+        $.each($tcheckboxs, function (key, arr) {
+            for (let i = 0; i < arr.length / 3; i++) {
+                $inHtml += '<div class="fbadge" key="' + key.replace(arr[i * 3], '') + '" id="' + key + '" type="' + arr[1 + i * 3] + '">'
+                    + arr[2] + '</div>'
+            }
+        });
+        $.each($tranges, function (key, arr) {
+            $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key + arr[0] + '" type="' + arr[1] + '">'
+                + arr[2] + '</div>'
+        });
+        $.each($tradios, function (key, arr) {
+            $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key + arr[0] + '" type="' + arr[1] + '">' + arr[2] + '</div>'
+        });
+        $('#filter_badge').addClass('active').html($inHtml);
+        let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        if ($brands.length < 1) {
+            $fbrands = null
+        } else {
+            $fbrands = $brands
+        }
+        $.ajax({
+            type: 'POST',
+            url: '',
+            headers: {'X-CSRFToken': csrftoken},
+            data: {
+                "reset": JSON.stringify(false),
+                "step": step;
+                "checkboxs": JSON.stringify($checkboxs),
+                "ranges": JSON.stringify($ranges),
+                "radios": JSON.stringify($radios),
+                'brands': JSON.stringify($fbrands)
+            },
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            success: function (data) {
+                $("#filter_model_result").html('').append(
+                    data
+                );
+                $('.loading').removeClass('active');
+                $('.filter_search').addClass('is_filtered');
+                if (data.trim().length > 712) {
+                    $('.not-found').removeClass('active');
+                } else {
+                    $('.not-found').addClass('active');
+                }
+            }
+        });
+    }
     if ($('.filter_model').length) {
         $("#form_filter #reset").click(function () {
             $("#reset").removeClass('active');
@@ -65,59 +117,14 @@ $(document).ready(function () {
             checkDisable(0);
             $('#filter_badge').removeClass('active');
         })
+        $("#form_filter #back-filter").click(function (event) {
+            event.preventDefault();
+            ajaxPost('back');
+        })
         $("#form_filter #submit, #form_filter #float").click(function (event) {
-            console.log($tranges, $tradios)
+            event.preventDefault();
             if (Object.keys($checkboxs).length > 0 || Object.keys($ranges).length > 0 || Object.keys($radios).length > 0 || $brands.length > 0) {
-                $('.loading').addClass('active');
-                $('.not-found').removeClass('active');
-                $('#float').css('top', $('.filter_settings').offset().top).css('display', 'none');
-                $inHtml = ''
-                $.each($tcheckboxs, function (key, arr) {
-                    for (let i = 0; i < arr.length / 3; i++) {
-                        $inHtml += '<div class="fbadge" key="' + key.replace(arr[i * 3], '') + '" id="' + key + '" type="' + arr[1 + i * 3] + '">'
-                            + arr[2] + '</div>'
-                    }
-                });
-                $.each($tranges, function (key, arr) {
-                    $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key + arr[0] + '" type="' + arr[1] + '">'
-                        + arr[2] + '</div>'
-                });
-                $.each($tradios, function (key, arr) {
-                    $inHtml += '<div class="fbadge" key="' + key + '"  id="' + key + arr[0] + '" type="' + arr[1] + '">' + arr[2] + '</div>'
-                });
-                $('#filter_badge').addClass('active').html($inHtml);
-                event.preventDefault();
-                let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                if ($brands.length < 1) {
-                    $fbrands = null
-                } else {
-                    $fbrands = $brands
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: '',
-                    headers: {'X-CSRFToken': csrftoken},
-                    data: {
-                        "reset": JSON.stringify(false),
-                        "checkboxs": JSON.stringify($checkboxs),
-                        "ranges": JSON.stringify($ranges),
-                        "radios": JSON.stringify($radios),
-                        'brands': JSON.stringify($fbrands)
-                    },
-                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                    success: function (data) {
-                        $("#filter_model_result").html('').append(
-                            data
-                        );
-                        $('.loading').removeClass('active');
-                        $('.filter_search').addClass('is_filtered');
-                        if (data.trim().length > 712) {
-                            $('.not-found').removeClass('active');
-                        } else {
-                            $('.not-found').addClass('active');
-                        }
-                    }
-                });
+                ajaxPost('new')
             } else {
                 document.getElementById('reset').click();
             }

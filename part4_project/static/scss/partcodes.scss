@@ -191,6 +191,9 @@
       background-color: var(--white);
       padding: 1em;
       border-radius: 0.8em;
+      img {
+        max-width: 100%;
+      }
     }
 
     .title {

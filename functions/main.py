@@ -11,8 +11,8 @@ class GetModels(object):
     def all(self, limit, offset, url):
         return preload(limit, offset, url)
 
-    def filtered(self, post):
-        print(post)
+    def filtered(self, post, step):
+        print(dict(post.lists()))
         checkboxs = {}
         ranges = {}
         radios = {}

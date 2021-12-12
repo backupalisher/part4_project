@@ -26,20 +26,16 @@
     </title>
 </head>
 <body id="body" class="d-flex flex-column h-100">
-<main class="flex-shrink-0">
+<main class="flex-shrink-0" id="dashboard">
     <div class="wrap">
         {% block head %}
             {% block nav %}
                 <div class="header">
-                    <div class="container-fluid d-flex">
-                        <a class="logo hover_text" href="/">
-                            <span>Part4<br><small>Reference system</small></span>
-                        </a>
-                        <div class="left_side">
-                            <div id="toggle-theme" class="hover_btn"><div class="toggle"></div><div class="ico"></div></div>
-                            <a href="/logout" class="main_menu hover_btn">Log out</a>
-                        </div>
-                    </div>
+                    <a href="/" class="logotype"></a>
+                    <a href="/logout" class="main_menu hover_btn">Log out</a>
+                    <!--div class="left_side">
+                        <div id="toggle-theme" class="hover_btn"><div class="toggle"></div><div class="ico"></div></div>
+                    </div-->
                 </div>
             {% endblock %}
         {% endblock %}

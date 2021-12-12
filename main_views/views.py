@@ -255,20 +255,20 @@ def index_models(request):
         if request.method == 'POST':
             if dict(request.POST.lists())['reset'][0] and 'true' in dict(request.POST.lists())['reset'][0]:
                 brand_models = get_all_models(limit, offset, '')
-                model_count = len(brand_models)
-                pages = math.ceil(model_count / limit)
+            elif dict(request.POST.lists())['step'][0] == 'back':
+                brand_models = gm().filtered(request.POST, 'back')
             else:
-                brand_models = gm().filtered(request.POST)
+                brand_models = gm().filtered(request.POST, 'new')
+            if brand_models:
+                model_count = len(brand_models)
+            else:
+                brand_models = request.session['brand_models']
                 if brand_models:
                     model_count = len(brand_models)
                 else:
-                    brand_models = request.session['brand_models']
-                    if brand_models:
-                        model_count = len(brand_models)
-                    else:
-                        brand_models = get_all_models(limit, offset, '')
-                        model_count = len(brand_models)
-                        pages = math.ceil(model_count / limit)
+                    brand_models = get_all_models(limit, offset, '')
+                    model_count = len(brand_models)
+                    pages = math.ceil(model_count / limit)
             return 'filter/filter_result.html', {'search_block': True, 'page': page,
                                                  'pages': range(pages), 'brand_models': str(brand_models),
                                                  'model_count': model_count}

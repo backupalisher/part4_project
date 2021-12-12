@@ -1,0 +1,26 @@
+@media all and (max-width: 1600px) {
+  .card-model-list {
+    background-color: var(--bg_section);
+
+    .row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}
+
+@media all and (max-width: 1440px) {
+  aside {
+    .filter {
+      .brand, .brands {
+          grid-template-columns: 1fr 1fr;
+      }
+    }
+  }
+}
+
+@media all and (max-width: 1280px) {
+  .grid_main {
+    grid-template-columns: 20% 1fr auto;
+  }
+}
+

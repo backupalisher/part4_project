@@ -1,0 +1,25 @@
+{% load static compress i18n %}
+{% compress css %}
+    <link type="text/x-scss" href="{% static 'scss/blocks/_lang.scss' %}" rel="stylesheet" media="all">
+{% endcompress %}
+<div id="language_select">
+    <label for="language_select">
+        <span class="material-icons-outlined">language</span> Language
+    </label>
+    <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+
+        <input name="next" type="hidden" value="{{ redirect_to }}"/>
+        <select class="custom-select" name="language" onchange="this.form.submit()">
+            {% for language in languages %}
+                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}
+                        selected="selected"{% endif %}>
+                    {{ language.code }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+</div>

@@ -1,0 +1,20 @@
+{% load static compress %}
+{% compress css %}
+    <link type="text/x-scss" href="{% static 'scss/blocks/_auth.scss' %}" rel="stylesheet" media="all">
+{% endcompress %}
+<div class="auth-block">
+    <div class="account_btn"><span class="material-icons">account_box</span></div>
+    <ul class="account_menu">
+        {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="/cabinet/">
+                {% if lang == 'ru' %}Кабинет{% else %}Cabinet{% endif %}
+            </a></li>
+            <li class="nav-item"><a class="nav-link"
+                                    href="{% url 'logout' %}">{% if lang == 'ru' %}Выйти{% else %}Exit{% endif %} {{ user.username }}</a></li>
+        {% else %}
+            <li class="nav-item"><a class="nav-link" href="/auth/login">{% if lang == 'ru' %}Войти{% else %}Login{% endif %}</a></li>
+            <li class="nan-item"><a class="nav-link" href="/auth/register">{% if lang == 'ru' %}Регистрация{% else %}Register{% endif %}</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

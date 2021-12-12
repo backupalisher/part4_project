@@ -1,0 +1,74 @@
+@media all and (max-width: 1000px) {
+  aside {
+    display: none;
+  }
+  header {
+    .logo {
+      display: inline-flex;
+    }
+  }
+}
+
+@media all and (max-width: 800px) {
+  .grid_main {
+    grid-template-columns: 1fr auto;
+  }
+  .right_side {
+    grid-template-rows: 16.5em auto 40px;
+
+    .heading {
+      flex-direction: column-reverse;
+      justify-content: flex-start;
+    }
+  }
+  .filter_search {
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    grid-gap: 1em;
+
+    .btn {
+      text-decoration: none;
+      background-color: var(--warning);
+      color: var(--white_black);
+      font-size: 1.4em;
+    }
+  }
+  .btn_filter {
+    display: inline-block;
+  }
+  aside {
+    &.active {
+      display: flex;
+    }
+
+    .logotype {
+      display: none;
+    }
+  }
+  .grid_main {
+    padding: 0.5em;
+  }
+  .card-model-list {
+    background-color: var(--bg_main);
+
+    .row {
+      grid-template-columns: 1fr;
+    }
+  }
+  .modal {
+    &.contact {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+  .partcodes_wrap {
+    .partcodes-item_overlay {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+}

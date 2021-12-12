@@ -1,0 +1,42 @@
+.auth-block {
+  font-size: 1.4em;
+  position: relative;
+
+  .account_btn {
+    color: var(--toggle_dl);
+    cursor: pointer;
+    &:hover {
+
+    }
+    .material-icons {
+      font-size: 3em;
+    }
+  }
+
+  .account_menu {
+    display: none;
+    position: absolute;
+    top: 3.5em;
+    right: 0;
+    z-index: 99;
+    margin: 0;
+    background-color: var(--bg_section);
+    padding: .8em;
+    border-radius: .3em;
+    flex-direction: column;
+    list-style: none;
+    gap: 0.5em;
+
+    &.active {
+      display: flex;
+    }
+    a {
+      text-decoration: none;
+      color: var(--text_link);
+
+      &:hover {
+        color: var(--accent);
+      }
+    }
+  }
+}
